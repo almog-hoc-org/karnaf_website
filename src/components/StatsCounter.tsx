@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const stats = [
@@ -18,7 +18,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated.current) {
           hasAnimated.current = true;
-          const mv = { val: 0 };
+          // count-up animation
           const duration = 2000;
           const start = performance.now();
           const step = (now: number) => {
