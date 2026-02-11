@@ -1,57 +1,59 @@
-const Services = () => {
-  const services = [
-    {
-      number: "01",
-      title: "RESIDENTIAL",
-      description: "Crafting homes that reflect individual lifestyles while maintaining architectural integrity"
-    },
-    {
-      number: "02", 
-      title: "COMMERCIAL",
-      description: "Designing functional spaces that enhance business environments and user experiences"
-    },
-    {
-      number: "03",
-      title: "RENOVATION",
-      description: "Transforming existing structures with contemporary sensibilities and sustainable practices"
-    },
-    {
-      number: "04",
-      title: "CONSULTATION",
-      description: "Providing expert guidance on design direction, planning, and architectural solutions"
-    }
-  ];
+import { motion } from "framer-motion";
+import { Gem, TrendingUp, Briefcase } from "lucide-react";
 
+const services = [
+  {
+    icon: Gem,
+    title: "שיווק נכסי יוקרה",
+    description: "אסטרטגיה שמוכרת מהר ובמחיר המקסימלי.",
+  },
+  {
+    icon: TrendingUp,
+    title: "ליווי משקיעים",
+    description: 'איתור "יהלומים" מתחת למחיר השוק באזורי ביקוש.',
+  },
+  {
+    icon: Briefcase,
+    title: "תיווך ומכירה",
+    description: "ניהול כל התהליך מא' עד ת', בראש שקט עבורכם.",
+  },
+];
+
+const Services = () => {
   return (
-    <section id="services" className="py-32 bg-background">
+    <section id="services" className="py-24 bg-secondary">
       <div className="container mx-auto px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-20">
-            <h2 className="text-minimal text-muted-foreground mb-4">SERVICES</h2>
-            <h3 className="text-4xl md:text-6xl font-light text-architectural">
-              What We Do
-            </h3>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-x-20 gap-y-16">
-            {services.map((service, index) => (
-              <div key={index} className="group">
-                <div className="flex items-start space-x-6">
-                  <span className="text-minimal text-muted-foreground font-medium">
-                    {service.number}
-                  </span>
-                  <div>
-                    <h4 className="text-2xl font-light mb-4 text-architectural group-hover:text-muted-foreground transition-colors duration-500">
-                      {service.title}
-                    </h4>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {service.description}
-                    </p>
-                  </div>
-                </div>
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-display text-4xl md:text-5xl text-center text-foreground mb-16"
+        >
+          השירותים <span className="text-primary">שלנו</span>
+        </motion.h2>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {services.map((service, i) => (
+            <motion.div
+              key={service.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: i * 0.15 }}
+              className="bg-card border border-border rounded-xl p-8 hover:border-primary/50 transition-colors duration-300 group"
+            >
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary/10 text-primary mb-6 group-hover:bg-primary/20 transition-colors">
+                <service.icon size={28} />
               </div>
-            ))}
-          </div>
+              <h3 className="text-heading text-xl text-foreground mb-3">
+                {service.title}
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {service.description}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
