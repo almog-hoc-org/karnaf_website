@@ -1,72 +1,75 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Phone, Menu, X } from "lucide-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const navItems = [
+    { label: "דף הבית", href: "/" },
+    { label: "נכסים למכירה", href: "#properties" },
+    { label: "שירותי הבית", href: "#services" },
+    { label: "סיפורו של קרנף", href: "#about" },
+    { label: "צור קשר", href: "#contact" },
+  ];
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <div className="text-minimal text-foreground">
-          ARCH STUDIO
-        </div>
-        
-        <div className="hidden md:flex items-center space-x-12">
-          <a href="/work" className="text-minimal text-muted-foreground hover:text-foreground transition-colors duration-300">
-            WORK
-          </a>
-          <a href="/services" className="text-minimal text-muted-foreground hover:text-foreground transition-colors duration-300">
-            SERVICES
-          </a>
-          <a href="/about" className="text-minimal text-muted-foreground hover:text-foreground transition-colors duration-300">
-            ABOUT
-          </a>
-          <a href="/blog" className="text-minimal text-muted-foreground hover:text-foreground transition-colors duration-300">
-            BLOG
-          </a>
-          <a href="/contact" className="text-minimal text-muted-foreground hover:text-foreground transition-colors duration-300">
-            CONTACT
-          </a>
+        {/* Logo - Right side in RTL */}
+        <div className="text-2xl font-black text-primary tracking-tight">
+          KARNAF
         </div>
 
-        <div className="hidden md:flex items-center space-x-4">
-          <ThemeToggle />
+        {/* Desktop Nav */}
+        <div className="hidden lg:flex items-center gap-10">
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300"
+            >
+              {item.label}
+            </a>
+          ))}
         </div>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          className="md:hidden"
+        {/* CTA - Left side in RTL */}
+        <div className="hidden lg:block">
+          <Button className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
+            <Phone size={16} />
+            שיחת ייעוץ מהירה
+          </Button>
+        </div>
+
+        {/* Mobile Toggle */}
+        <button
+          className="lg:hidden text-foreground"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          {isMenuOpen ? '✕' : '☰'}
-        </Button>
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-background border-b border-border">
+        <div className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border">
           <div className="container mx-auto px-6 py-6 space-y-4">
-            <a href="/work" className="block text-minimal text-muted-foreground hover:text-foreground transition-colors duration-300">
-              WORK
-            </a>
-            <a href="/services" className="block text-minimal text-muted-foreground hover:text-foreground transition-colors duration-300">
-              SERVICES
-            </a>
-            <a href="/about" className="block text-minimal text-muted-foreground hover:text-foreground transition-colors duration-300">
-              ABOUT
-            </a>
-            <a href="/blog" className="block text-minimal text-muted-foreground hover:text-foreground transition-colors duration-300">
-              BLOG
-            </a>
-            <a href="/contact" className="block text-minimal text-muted-foreground hover:text-foreground transition-colors duration-300">
-              CONTACT
-            </a>
-            
-            {/* Mobile Theme Toggle */}
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="block text-base font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                {item.label}
+              </a>
+            ))}
             <div className="pt-4 border-t border-border">
-              <ThemeToggle />
+              <Button className="w-full btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
+                <Phone size={16} />
+                שיחת ייעוץ מהירה
+              </Button>
             </div>
           </div>
         </div>
