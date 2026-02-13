@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Phone, Menu, X } from "lucide-react";
+import { MessageCircle, Menu, X } from "lucide-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,8 +14,7 @@ const Navigation = () => {
 
   const navItems = [
     { label: "דף הבית", href: "#" },
-    { label: "נכסים למכירה", href: "#properties" },
-    { label: "שירותי הבית", href: "#services" },
+    { label: "השירותים שלנו", href: "#services" },
     { label: "סיפורו של קרנף", href: "#about" },
     { label: "צור קשר", href: "#contact" },
   ];
@@ -58,10 +57,12 @@ const Navigation = () => {
         </div>
 
         <div className="hidden lg:block">
-          <Button className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
-            <Phone size={16} />
-            שיחת ייעוץ מהירה
-          </Button>
+          <a href="https://wa.me/972559966175" target="_blank" rel="noopener noreferrer">
+            <Button className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
+              <MessageCircle size={16} />
+              שיחת ייעוץ מהירה
+            </Button>
+          </a>
         </div>
 
         <button
@@ -86,10 +87,12 @@ const Navigation = () => {
               </a>
             ))}
             <div className="pt-4 border-t border-border">
-              <Button className="w-full btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
-                <Phone size={16} />
-                שיחת ייעוץ מהירה
-              </Button>
+              <a href="https://wa.me/972559966175" target="_blank" rel="noopener noreferrer">
+                <Button className="w-full btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
+                  <MessageCircle size={16} />
+                  שיחת ייעוץ מהירה
+                </Button>
+              </a>
             </div>
           </div>
         </div>

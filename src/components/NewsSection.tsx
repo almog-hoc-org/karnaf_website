@@ -9,20 +9,20 @@ const articles = [
   {
     image: blogMinimalist,
     date: "15 ינואר 2026",
-    title: "5 טיפים לרכישת דירה ראשונה בשנת 2026",
-    excerpt: "המדריך המלא לרוכשים צעירים - מה חשוב לבדוק, איך לנהל משא ומתן, ואיפה ההזדמנויות.",
+    title: "5 טעויות שרוכשי דירה ראשונה עושים — ואיך להימנע מהן",
+    excerpt: "טעויות נפוצות שעולות עשרות אלפי שקלים. המדריך שחייבים לקרוא לפני שחותמים.",
   },
   {
     image: blogSustainable,
     date: "8 ינואר 2026",
-    title: "שוק הנדל\"ן בישראל: מגמות ותחזיות",
-    excerpt: "ניתוח מעמיק של מגמות המחירים, אזורי הביקוש החדשים, והשפעת הריבית על השוק.",
+    title: "איך לנתח עסקת נדל\"ן ב-5 דקות",
+    excerpt: "הכלים והנוסחאות שמשקיעים מנוסים משתמשים בהם כדי לזהות הזדמנויות.",
   },
   {
     image: blogUrban,
     date: "2 ינואר 2026",
-    title: "השקעה בנדל\"ן מסחרי: המדריך המלא",
-    excerpt: "כל מה שצריך לדעת על השקעה בנכסים מסחריים - תשואות, סיכונים ואסטרטגיות.",
+    title: "השקעה בנדל\"ן 2026: מגמות ותחזיות",
+    excerpt: "ניתוח מעמיק של שוק הנדל\"ן — אזורי ביקוש, מחירים, והשפעת הריבית.",
   },
 ];
 
@@ -36,7 +36,7 @@ const NewsSection = () => {
           viewport={{ once: true }}
           className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-4"
         >
-          LATEST NEWS
+          KNOWLEDGE BASE
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -45,7 +45,7 @@ const NewsSection = () => {
           transition={{ duration: 0.7 }}
           className="text-display text-4xl md:text-5xl text-center text-foreground mb-12"
         >
-          חדשות <span className="text-primary">ועדכונים</span>
+          ידע <span className="text-primary">ותובנות</span>
         </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -82,10 +82,12 @@ const NewsSection = () => {
           viewport={{ once: true }}
           className="text-center mt-10"
         >
-          <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 font-bold gap-2">
-            לכל הכתבות
-            <ArrowLeft size={16} />
-          </Button>
+          <a href="https://www.youtube.com/@%D7%A7%D7%A8%D7%A0%D7%A3%D7%A0%D7%93%D7%9C%D7%9F" target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 font-bold gap-2">
+              לכל התכנים
+              <ArrowLeft size={16} />
+            </Button>
+          </a>
         </motion.div>
       </div>
     </section>

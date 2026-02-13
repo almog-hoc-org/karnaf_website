@@ -16,8 +16,8 @@ const Index = () => {
       <Hero />
       <StatsCounter />
       <Advantages />
-      <Properties />
       <Services />
+      <Properties />
       <NewsSection />
       <About />
       <BigCTA />

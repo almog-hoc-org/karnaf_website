@@ -22,7 +22,7 @@ const BigCTA = () => {
           viewport={{ once: true }}
           className="text-primary font-bold text-sm tracking-widest uppercase mb-6"
         >
-          BUILD. BETTER. FUTURE.
+          YOUR JOURNEY STARTS HERE
         </motion.p>
 
         <motion.h2
@@ -32,8 +32,8 @@ const BigCTA = () => {
           transition={{ duration: 0.8 }}
           className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6"
         >
-          בונים את העתיד שלכם.{" "}
-          <span className="text-primary">ביחד.</span>
+          מוכנים להתחיל את הדרך לדירה?{" "}
+          <span className="text-primary">בואו נדבר.</span>
         </motion.h2>
 
         <motion.p
@@ -43,7 +43,7 @@ const BigCTA = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-lg text-muted-foreground max-w-xl mx-auto mb-10"
         >
-          מוכנים לצעד הבא? דברו עם הקרנף ותנו לנו להוביל אתכם אל העסקה המושלמת.
+          דברו איתנו ונבנה יחד את התוכנית שלכם — בין אם אתם רוכשים דירה ראשונה או מחפשים את ההשקעה הבאה.
         </motion.p>
 
         <motion.div
@@ -53,7 +53,7 @@ const BigCTA = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <a
-            href="https://wa.me/972500000000"
+            href="https://wa.me/972559966175"
             target="_blank"
             rel="noopener noreferrer"
           >
