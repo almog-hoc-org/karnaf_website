@@ -45,7 +45,7 @@ const Services = () => {
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-4"
         >
           OUR SERVICES
@@ -53,7 +53,7 @@ const Services = () => {
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
           className="text-display text-4xl md:text-5xl text-center text-foreground mb-16"
         >
@@ -66,7 +66,7 @@ const Services = () => {
               key={service.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.7, delay: i * 0.2 }}
               className="bg-card border border-border rounded-2xl p-8 md:p-10 hover:border-primary/50 transition-colors duration-300 group flex flex-col"
             >

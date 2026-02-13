@@ -8,7 +8,7 @@ const About = () => {
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             className="text-primary font-bold text-sm tracking-widest uppercase mb-4"
           >
             OUR STORY
@@ -17,7 +17,7 @@ const About = () => {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.7 }}
             className="text-display text-4xl md:text-5xl text-foreground mb-8"
           >
@@ -27,7 +27,7 @@ const About = () => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.7, delay: 0.15 }}
             className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6"
           >
@@ -39,7 +39,7 @@ const About = () => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.7, delay: 0.3 }}
             className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8"
           >
