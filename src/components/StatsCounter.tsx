@@ -49,7 +49,7 @@ const StatsCounter = () => {
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-12"
         >
           THE NUMBERS SPEAK
@@ -60,7 +60,7 @@ const StatsCounter = () => {
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
             >
               <Counter value={stat.value} suffix={stat.suffix} />

@@ -33,7 +33,7 @@ const NewsSection = () => {
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-4"
         >
           KNOWLEDGE BASE
@@ -41,7 +41,7 @@ const NewsSection = () => {
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
           className="text-display text-4xl md:text-5xl text-center text-foreground mb-12"
         >
@@ -54,7 +54,7 @@ const NewsSection = () => {
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.7, delay: i * 0.15 }}
               className="group bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer"
             >
@@ -79,7 +79,7 @@ const NewsSection = () => {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
           className="text-center mt-10"
         >
           <a href="https://www.youtube.com/@%D7%A7%D7%A8%D7%A0%D7%A3%D7%A0%D7%93%D7%9C%D7%9F" target="_blank" rel="noopener noreferrer">
