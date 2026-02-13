@@ -12,8 +12,23 @@ const BigCTA = () => {
           alt="ארכיטקטורה מודרנית"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-background/85" />
+        <div className="absolute inset-0 bg-background/80" />
       </div>
+
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{
+          background: [
+            "radial-gradient(circle at 20% 50%, hsl(25 100% 50% / 0.08) 0%, transparent 50%)",
+            "radial-gradient(circle at 80% 50%, hsl(25 100% 50% / 0.08) 0%, transparent 50%)",
+            "radial-gradient(circle at 20% 50%, hsl(25 100% 50% / 0.08) 0%, transparent 50%)",
+          ],
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="absolute top-10 left-10 w-32 h-32 border border-primary/10 rounded-full animate-float pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-20 h-20 border border-primary/10 rounded-full animate-float pointer-events-none" style={{ animationDelay: "2s" }} />
 
       <div className="relative z-10 container mx-auto px-6 text-center">
         <motion.p
@@ -33,7 +48,7 @@ const BigCTA = () => {
           className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6"
         >
           מוכנים להתחיל את הדרך לדירה?{" "}
-          <span className="text-primary">בואו נדבר.</span>
+          <span className="text-primary text-glow-strong">בואו נדבר.</span>
         </motion.h2>
 
         <motion.p
@@ -59,7 +74,7 @@ const BigCTA = () => {
           >
             <Button
               size="lg"
-              className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-7 gap-3"
+              className="btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-7 gap-3 shadow-2xl"
             >
               <MessageCircle size={22} />
               דברו עם הקרנף

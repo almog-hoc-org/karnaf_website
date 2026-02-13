@@ -28,7 +28,7 @@ const articles = [
 
 const NewsSection = () => {
   return (
-    <section className="py-24">
+    <section className="py-24 relative">
       <div className="container mx-auto px-6">
         <motion.p
           initial={{ opacity: 0 }}
@@ -45,29 +45,30 @@ const NewsSection = () => {
           transition={{ duration: 0.7 }}
           className="text-display text-4xl md:text-5xl text-center text-foreground mb-12"
         >
-          ידע <span className="text-primary">ותובנות</span>
+          ידע <span className="text-gradient">ותובנות</span>
         </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-8">
           {articles.map((article, i) => (
             <motion.article
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.7, delay: i * 0.15 }}
-              className="group bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer"
+              className="group bg-card border border-border rounded-xl overflow-hidden card-hover-glow cursor-pointer"
             >
-              <div className="h-48 overflow-hidden">
+              <div className="h-48 overflow-hidden relative">
                 <img
                   src={article.image}
                   alt={article.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent opacity-60" />
               </div>
               <div className="p-6">
                 <span className="text-xs text-primary font-medium">{article.date}</span>
-                <h3 className="text-heading text-lg text-foreground mt-2 mb-3 group-hover:text-primary transition-colors">
+                <h3 className="text-heading text-lg text-foreground mt-2 mb-3 group-hover:text-primary transition-colors duration-300">
                   {article.title}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{article.excerpt}</p>
