@@ -1,21 +1,21 @@
 import { motion } from "framer-motion";
-import { Target, Shield, BarChart3 } from "lucide-react";
+import { BookOpen, Handshake, BarChart3 } from "lucide-react";
 
 const pillars = [
   {
-    icon: Target,
-    title: "מיקוד חסר פשרות",
-    description: "אנחנו מסתערים על היעדים שלכם עד לסגירת העסקה הטובה ביותר.",
+    icon: BookOpen,
+    title: "ידע שמגן עליכם",
+    description: "הכשרה מקצועית שחוסכת לכם טעויות יקרות. תלמדו לזהות עסקאות טובות, להבין חוזים ולקבל החלטות חכמות.",
   },
   {
-    icon: Shield,
-    title: "עור עבה בשטח",
-    description: "הניסיון שלנו מאפשר לנו לצלוח כל משא ומתן, מורכב ככל שיהיה.",
+    icon: Handshake,
+    title: "ליווי יד ביד",
+    description: "מומחה קרנף שנלחם בשבילכם מהרעיון ועד החוזה. לא לבד בשום שלב של התהליך.",
   },
   {
     icon: BarChart3,
-    title: "דיוק אנליטי",
-    description: "כל נכס נבחר בפינצטה, כל מספר נבדק לעומק.",
+    title: "החלטות מבוססות נתונים",
+    description: "כל עסקה נבחנת עם ניתוח אנליטי מדויק. מספרים, לא תחושות בטן.",
   },
 ];
 
@@ -23,6 +23,14 @@ const Advantages = () => {
   return (
     <section className="py-24 bg-secondary">
       <div className="container mx-auto px-6">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-4"
+        >
+          WHY KARNAF
+        </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

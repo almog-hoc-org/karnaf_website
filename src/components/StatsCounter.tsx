@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const stats = [
-  { value: 500, suffix: "+", label: "עסקאות שהושלמו" },
-  { value: 15, suffix: "+", label: "שנות ניסיון" },
-  { value: 1200, suffix: "+", label: "לקוחות מרוצים" },
+  { value: 150, suffix: "+", label: "לקוחות שליווינו" },
+  { value: 50, suffix: "+", label: "שיעורים בקורס" },
+  { value: 8, suffix: "+", label: "שנות ניסיון" },
   { value: 98, suffix: "%", label: "שביעות רצון" },
 ];
 
@@ -18,7 +18,6 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated.current) {
           hasAnimated.current = true;
-          // count-up animation
           const duration = 2000;
           const start = performance.now();
           const step = (now: number) => {
