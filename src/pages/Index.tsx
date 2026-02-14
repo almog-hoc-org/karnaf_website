@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import StatsCounter from "@/components/StatsCounter";
 import Advantages from "@/components/Advantages";
@@ -9,29 +8,31 @@ import NewsSection from "@/components/NewsSection";
 import About from "@/components/About";
 import BigCTA from "@/components/BigCTA";
 import Footer from "@/components/Footer";
-import SmoothScroll from "@/components/SmoothScroll";
 import LoadingScreen from "@/components/LoadingScreen";
 
 const Index = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const hasVisited = sessionStorage.getItem("karnaf-visited");
+  const [isLoading, setIsLoading] = useState(!hasVisited);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+    sessionStorage.setItem("karnaf-visited", "true");
+  };
 
   return (
     <>
-      {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
-      <SmoothScroll>
-        <div className="min-h-screen" id="top">
-          <Navigation />
-          <Hero />
-          <StatsCounter />
-          <Advantages />
-          <Services />
-          <Properties />
-          <NewsSection />
-          <About />
-          <BigCTA />
-          <Footer />
-        </div>
-      </SmoothScroll>
+      {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
+      <div id="top">
+        <Hero />
+        <StatsCounter />
+        <Advantages />
+        <Services />
+        <Properties />
+        <NewsSection />
+        <About />
+        <BigCTA />
+        <Footer />
+      </div>
     </>
   );
 };

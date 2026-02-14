@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { GraduationCap, Crown, Check, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const services = [
@@ -17,7 +18,7 @@ const services = [
       "גישה מלאה לתכנים — ללמוד בקצב שלכם",
     ],
     cta: "לפרטים נוספים",
-    ctaHref: "#contact",
+    ctaHref: "/course",
     popular: false,
   },
   {
@@ -34,8 +35,7 @@ const services = [
       "חיבור לבעלי מקצוע ותפירת חליפה אישית",
     ],
     cta: "בואו נדבר",
-    ctaHref: "https://wa.me/972559966175",
-    ctaExternal: true,
+    ctaHref: "/premium",
     popular: true,
   },
 ];
@@ -122,11 +122,7 @@ const Services = () => {
                 ))}
               </ul>
 
-              <a
-                href={service.ctaHref}
-                target={service.ctaExternal ? "_blank" : undefined}
-                rel={service.ctaExternal ? "noopener noreferrer" : undefined}
-              >
+              <Link to={service.ctaHref}>
                 <Button
                   className={`w-full font-bold h-12 text-lg ${
                     service.popular
@@ -136,7 +132,7 @@ const Services = () => {
                 >
                   {service.cta}
                 </Button>
-              </a>
+              </Link>
             </motion.div>
           ))}
         </div>

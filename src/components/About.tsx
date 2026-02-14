@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { Target, TrendingUp, Shield, Award } from "lucide-react";
+import { Target, TrendingUp, Shield, Award, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const milestones = [
   { icon: Target, year: "2016", text: "הקמת קרנף נדל\"ן" },
@@ -79,6 +81,21 @@ const About = () => {
                   <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
                 </div>
               ))}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="mt-8"
+            >
+              <Link to="/about">
+                <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 font-bold gap-2">
+                  קראו עוד על הסיפור שלנו
+                  <ArrowLeft size={16} />
+                </Button>
+              </Link>
             </motion.div>
           </div>
 

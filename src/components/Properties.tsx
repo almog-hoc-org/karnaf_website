@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Quote, Star, ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const testimonials = [
   {
@@ -151,6 +153,20 @@ const Properties = () => {
               <ChevronLeft size={18} />
             </button>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mt-8"
+          >
+            <Link to="/testimonials">
+              <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 font-bold gap-2">
+                כל סיפורי ההצלחה
+                <ArrowLeft size={16} />
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </div>
     </section>

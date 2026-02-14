@@ -1,24 +1,28 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 import blogMinimalist from "@/assets/blog-minimalist-living.jpg";
 import blogSustainable from "@/assets/blog-sustainable-architecture.jpg";
 import blogUrban from "@/assets/blog-urban-planning.jpg";
 
 const articles = [
   {
+    slug: "mistakes-first-buyers",
     image: blogMinimalist,
     date: "15 ינואר 2026",
     title: "5 טעויות שרוכשי דירה ראשונה עושים — ואיך להימנע מהן",
     excerpt: "טעויות נפוצות שעולות עשרות אלפי שקלים. המדריך שחייבים לקרוא לפני שחותמים.",
   },
   {
+    slug: "analyze-deal",
     image: blogSustainable,
     date: "8 ינואר 2026",
     title: "איך לנתח עסקת נדל\"ן ב-5 דקות",
     excerpt: "הכלים והנוסחאות שמשקיעים מנוסים משתמשים בהם כדי לזהות הזדמנויות.",
   },
   {
+    slug: "investment-2026",
     image: blogUrban,
     date: "2 ינואר 2026",
     title: "השקעה בנדל\"ן 2026: מגמות ותחזיות",
@@ -50,30 +54,32 @@ const NewsSection = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {articles.map((article, i) => (
-            <motion.article
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.7, delay: i * 0.15 }}
-              className="group bg-card border border-border rounded-xl overflow-hidden card-hover-glow cursor-pointer"
-            >
-              <div className="h-48 overflow-hidden relative">
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent opacity-60" />
-              </div>
-              <div className="p-6">
-                <span className="text-xs text-primary font-medium">{article.date}</span>
-                <h3 className="text-heading text-lg text-foreground mt-2 mb-3 group-hover:text-primary transition-colors duration-300">
-                  {article.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{article.excerpt}</p>
-              </div>
-            </motion.article>
+            <Link key={article.slug} to={`/blog/${article.slug}`}>
+              <motion.article
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.7, delay: i * 0.15 }}
+                className="group bg-card border border-border rounded-xl overflow-hidden card-hover-glow cursor-pointer h-full"
+              >
+                <div className="h-48 overflow-hidden relative">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent opacity-60" />
+                </div>
+                <div className="p-6">
+                  <span className="text-xs text-primary font-medium">{article.date}</span>
+                  <h3 className="text-heading text-lg text-foreground mt-2 mb-3 group-hover:text-primary transition-colors duration-300">
+                    {article.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{article.excerpt}</p>
+                </div>
+              </motion.article>
+            </Link>
           ))}
         </div>
 
@@ -83,12 +89,12 @@ const NewsSection = () => {
           viewport={{ once: true, amount: 0.1 }}
           className="text-center mt-10"
         >
-          <a href="https://www.youtube.com/@%D7%A7%D7%A8%D7%A0%D7%A3%D7%A0%D7%93%D7%9C%D7%9F" target="_blank" rel="noopener noreferrer">
+          <Link to="/blog">
             <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 font-bold gap-2">
               לכל התכנים
               <ArrowLeft size={16} />
             </Button>
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>
