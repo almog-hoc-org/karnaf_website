@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Send, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/hero-city.jpg";
 import ParticlesBackground from "./ParticlesBackground";
-
-const WHATSAPP_NUMBER = "972559966175";
+import { WHATSAPP_NUMBER } from "@/lib/constants";
 
 const headlineWords = ["להרוויח", "בנדל\"ן", "זה", "לא", "מזל."];
 
@@ -156,15 +156,15 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 1.4 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <a href="#services">
+            <Link to="/course">
               <Button
                 size="lg"
                 className="btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-8 py-6"
               >
                 לתוכנית "הדרך לדירה"
               </Button>
-            </a>
-            <a href="#services">
+            </Link>
+            <Link to="/premium">
               <Button
                 size="lg"
                 variant="outline"
@@ -172,7 +172,7 @@ const Hero = () => {
               >
                 לליווי קרנף פרימיום
               </Button>
-            </a>
+            </Link>
           </motion.div>
         </div>
 
