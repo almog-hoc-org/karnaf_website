@@ -21,7 +21,7 @@ const wordVariants = {
     transition: {
       delay: 0.3 + i * 0.12,
       duration: 0.6,
-      ease: [0.16, 1, 0.3, 1],
+      ease: [0.16, 1, 0.3, 1] as const,
     },
   }),
 };
@@ -197,7 +197,7 @@ const Hero = () => {
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
               >
-                <CheckCircle className="w-16 h-16 text-green-500" />
+                <CheckCircle className="w-16 h-16 text-primary" />
               </motion.div>
               <p className="text-foreground text-xl font-bold">תודה רבה!</p>
               <p className="text-muted-foreground text-sm">ניצור איתך קשר בהקדם</p>
