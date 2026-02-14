@@ -1,17 +1,23 @@
-import { useCallback } from "react";
-import Particles from "@tsparticles/react";
+import { useEffect, useState } from "react";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
-import type { Engine } from "@tsparticles/engine";
 
 const ParticlesBackground = () => {
-  const particlesInit = useCallback(async (engine: Engine) => {
-    await loadSlim(engine);
+  const [init, setInit] = useState(false);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => {
+      setInit(true);
+    });
   }, []);
+
+  if (!init) return null;
 
   return (
     <Particles
       id="hero-particles"
-      init={particlesInit}
       options={{
         fullScreen: false,
         fpsLimit: 60,
@@ -33,7 +39,7 @@ const ParticlesBackground = () => {
             outModes: { default: "out" },
           },
           number: {
-            density: { enable: true, area: 1200 },
+            density: { enable: true },
             value: 40,
           },
           opacity: {
@@ -41,7 +47,6 @@ const ParticlesBackground = () => {
             animation: {
               enable: true,
               speed: 0.5,
-              minimumValue: 0.05,
             },
           },
           shape: { type: "circle" },
