@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useInView } from "react-intersection-observer";
-import RP from "react-player";
-const ReactPlayer = RP as any;
+// @ts-ignore
+import ReactPlayer from "react-player/lazy";
 
 interface VideoPlayerProps {
   url: string;
