@@ -16,9 +16,9 @@ const categoryLabels: Record<Category, { label: string; icon: React.ElementType 
 };
 
 const categoryColor: Record<string, string> = {
-  article: "bg-blue-500/10 text-blue-400",
-  video: "bg-red-500/10 text-red-400",
-  tool: "bg-green-500/10 text-green-400",
+  article: "bg-blue-500/10 text-blue-600",
+  video: "bg-red-500/10 text-red-600",
+  tool: "bg-green-500/10 text-green-600",
 };
 
 const BlogPage = () => {

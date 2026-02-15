@@ -126,11 +126,11 @@ const MortgageCalculator = () => {
                     <stop offset="95%" stopColor="hsl(0 80% 55%)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(0 0% 20%)" />
-                <XAxis dataKey="year" tick={{ fontSize: 10, fill: "hsl(0 0% 45%)" }} interval={4} />
-                <YAxis tick={{ fontSize: 10, fill: "hsl(0 0% 45%)" }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}K`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 13% 90%)" />
+                <XAxis dataKey="year" tick={{ fontSize: 10, fill: "hsl(215 16% 47%)" }} interval={4} />
+                <YAxis tick={{ fontSize: 10, fill: "hsl(215 16% 47%)" }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}K`} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: "hsl(0 0% 10%)", border: "1px solid hsl(0 0% 20%)", borderRadius: 8, fontSize: 12 }}
+                  contentStyle={{ backgroundColor: "hsl(0 0% 100%)", border: "1px solid hsl(220 13% 90%)", borderRadius: 8, fontSize: 12, color: "hsl(215 40% 20%)" }}
                   formatter={(value: number, name: string) => [formatCurrency(value), name === "principal" ? "קרן" : "ריבית"]}
                 />
                 <Area type="monotone" dataKey="principal" stroke="hsl(25 100% 50%)" fill="url(#principalGrad)" strokeWidth={2} />

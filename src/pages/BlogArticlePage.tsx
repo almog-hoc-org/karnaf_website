@@ -36,9 +36,9 @@ const BlogArticlePage = () => {
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className={`text-xs font-medium px-2 py-0.5 rounded-full inline-block mb-4 ${
-              article.category === "article" ? "bg-blue-500/10 text-blue-400" :
-              article.category === "video" ? "bg-red-500/10 text-red-400" :
-              "bg-green-500/10 text-green-400"
+              article.category === "article" ? "bg-blue-500/10 text-blue-600" :
+              article.category === "video" ? "bg-red-500/10 text-red-600" :
+              "bg-green-500/10 text-green-600"
             }`}>
               {article.category === "article" ? "מאמר" : article.category === "video" ? "סרטון" : "כלי"}
             </span>
@@ -95,7 +95,7 @@ const BlogArticlePage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="prose prose-invert prose-orange max-w-none
+            className="prose prose-orange max-w-none
               prose-headings:text-foreground prose-headings:font-bold
               prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
               prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3

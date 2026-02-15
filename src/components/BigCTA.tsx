@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import heroArchitecture from "@/assets/hero-architecture.jpg";
+import mascotWelcome2 from "@/assets/mascot/mascot-welcome-2.png";
 
 const BigCTA = () => {
   return (
@@ -12,16 +13,16 @@ const BigCTA = () => {
           alt="ארכיטקטורה מודרנית"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-background/80" />
+        <div className="absolute inset-0 bg-background/85" />
       </div>
 
       <motion.div
         className="absolute inset-0 pointer-events-none"
         animate={{
           background: [
-            "radial-gradient(circle at 20% 50%, hsl(25 100% 50% / 0.08) 0%, transparent 50%)",
-            "radial-gradient(circle at 80% 50%, hsl(25 100% 50% / 0.08) 0%, transparent 50%)",
-            "radial-gradient(circle at 20% 50%, hsl(25 100% 50% / 0.08) 0%, transparent 50%)",
+            "radial-gradient(circle at 20% 50%, hsl(25 100% 50% / 0.05) 0%, transparent 50%)",
+            "radial-gradient(circle at 80% 50%, hsl(25 100% 50% / 0.05) 0%, transparent 50%)",
+            "radial-gradient(circle at 20% 50%, hsl(25 100% 50% / 0.05) 0%, transparent 50%)",
           ],
         }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -81,6 +82,17 @@ const BigCTA = () => {
             </Button>
           </a>
         </motion.div>
+
+        {/* Mascot decoration */}
+        <motion.img
+          src={mascotWelcome2}
+          alt="קרנף מזמין"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="hidden md:block absolute left-10 bottom-0 h-[220px] object-contain mascot-crop-text mascot-glow"
+        />
       </div>
     </section>
   );

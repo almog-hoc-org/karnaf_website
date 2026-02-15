@@ -101,15 +101,15 @@ const InvestmentSimulator = () => {
           <div className="bg-background rounded-xl p-4 border border-border">
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={result.chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(0 0% 20%)" />
-                <XAxis dataKey="year" tick={{ fontSize: 10, fill: "hsl(0 0% 45%)" }} interval={Math.max(1, Math.floor(holdYears / 5))} />
-                <YAxis tick={{ fontSize: 10, fill: "hsl(0 0% 45%)" }} tickFormatter={(v) => `${(v / 1000000).toFixed(1)}M`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 13% 90%)" />
+                <XAxis dataKey="year" tick={{ fontSize: 10, fill: "hsl(215 16% 47%)" }} interval={Math.max(1, Math.floor(holdYears / 5))} />
+                <YAxis tick={{ fontSize: 10, fill: "hsl(215 16% 47%)" }} tickFormatter={(v) => `${(v / 1000000).toFixed(1)}M`} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: "hsl(0 0% 10%)", border: "1px solid hsl(0 0% 20%)", borderRadius: 8, fontSize: 12 }}
+                  contentStyle={{ backgroundColor: "hsl(0 0% 100%)", border: "1px solid hsl(220 13% 90%)", borderRadius: 8, fontSize: 12, color: "hsl(215 40% 20%)" }}
                   formatter={(value: number, name: string) => [formatCurrency(value), name === "karnaf" ? "עם קרנף" : "ממוצע שוק"]}
                 />
                 <Legend formatter={(value) => (value === "karnaf" ? "עם קרנף" : "ממוצע שוק")} />
-                <Line type="monotone" dataKey="market" stroke="hsl(0 0% 50%)" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="market" stroke="hsl(215 16% 47%)" strokeWidth={2} dot={false} />
                 <Line type="monotone" dataKey="karnaf" stroke="hsl(25 100% 50%)" strokeWidth={2.5} dot={false} />
               </LineChart>
             </ResponsiveContainer>

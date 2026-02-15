@@ -61,10 +61,10 @@ const ServicesPage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-card border border-border rounded-2xl p-8 hover:border-blue-400/30 transition-all duration-300 group relative overflow-hidden"
+              className="bg-card border border-border rounded-2xl p-8 hover:border-blue-600/30 transition-all duration-300 group relative overflow-hidden"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-300" />
-              <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400 mb-6">
+              <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-600 mb-6">
                 <GraduationCap size={28} />
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-2">תוכנית &ldquo;הדרך לדירה&rdquo;</h3>
@@ -72,7 +72,7 @@ const ServicesPage = () => {
               <ul className="space-y-2 mb-8">
                 {courseFeatures.slice(0, 5).map((f) => (
                   <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <CheckCircle size={16} className="text-blue-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle size={16} className="text-blue-600 mt-0.5 flex-shrink-0" />
                     <span>{f}</span>
                   </li>
                 ))}
@@ -99,7 +99,7 @@ const ServicesPage = () => {
                 <Crown size={28} />
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-2">ליווי קרנף פרימיום</h3>
-              <p className="text-muted-foreground mb-6">אנחנו עושים את העבודה — אתם סוגרים עסקה מנצחת.</p>
+              <p className="text-muted-foreground mb-6">אנחנו עושים את העבודה — אנחנו איתכם מהרעיון הראשון ועד מפתח בדלת.</p>
               <ul className="space-y-2 mb-8">
                 {premiumFeatures.slice(0, 5).map((f) => (
                   <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -151,7 +151,7 @@ const ServicesPage = () => {
               <TableHeader>
                 <TableRow className="border-border hover:bg-transparent">
                   <TableHead className="text-right text-foreground font-bold w-1/4">היבט</TableHead>
-                  <TableHead className="text-right text-blue-400 font-bold w-[37.5%]">
+                  <TableHead className="text-right text-blue-600 font-bold w-[37.5%]">
                     <div className="flex items-center gap-2">
                       <GraduationCap size={16} />
                       הדרך לדירה

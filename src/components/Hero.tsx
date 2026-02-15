@@ -7,10 +7,11 @@ import { Send, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/hero-city.jpg";
+import mascotPointing from "@/assets/mascot/mascot-pointing.png";
 import ParticlesBackground from "./ParticlesBackground";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 
-const headlineWords = ["להרוויח", "בנדל\"ן", "זה", "לא", "מזל."];
+const headlineWords = ["הדירה", "הבאה", "שלכם", "מתחילה", "כאן."];
 
 const wordVariants = {
   hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
@@ -90,8 +91,8 @@ const Hero = () => {
         />
       </motion.div>
 
-      {/* Gradient overlay - Layer 2 */}
-      <div className="absolute inset-0 bg-gradient-to-l from-background via-background/85 to-background/60 z-[0]" />
+      {/* Gradient overlay - stronger for light theme readability */}
+      <div className="absolute inset-0 bg-gradient-to-l from-background via-background/90 to-background/70 z-[0]" />
 
       {/* Particles - Layer 3 */}
       <ParticlesBackground />
@@ -113,7 +114,7 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
             className="text-primary font-bold text-sm tracking-widest uppercase mb-4"
           >
-            KNOWLEDGE. STRATEGY. REAL ESTATE.
+            KNOWLEDGE. GUIDANCE. CONFIDENCE.
           </motion.p>
 
           {/* Word-by-word headline */}
@@ -135,9 +136,9 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-display text-5xl md:text-6xl lg:text-7xl text-primary text-glow mb-6"
+            className="text-display text-4xl md:text-5xl lg:text-6xl text-primary text-glow mb-6"
           >
-            זה מדע מדויק.
+            עם ידע, ליווי, ושקט בראש.
           </motion.h1>
 
           <motion.p
@@ -146,8 +147,8 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-8"
           >
-            קרנף נדל"ן מלווים משקיעים ורוכשי דירות ראשונות עם שיטה מבוססת נתונים.
-            בין אם אתם בתחילת הדרך או משקיעים מנוסים — יש לנו את הפתרון בדיוק בשבילכם.
+            מלווים צעד אחר צעד, עם ידע, ניסיון ואכפתיות אמיתית.
+            בין אם אתם בתחילת הדרך או משקיעים מנוסים — אנחנו כאן בשבילכם.
           </motion.p>
 
           <motion.div
@@ -174,6 +175,20 @@ const Hero = () => {
               </Button>
             </Link>
           </motion.div>
+
+          {/* Mascot - visible on desktop */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.6 }}
+            className="hidden lg:flex mt-8"
+          >
+            <img
+              src={mascotPointing}
+              alt="קרנף מצביע"
+              className="h-[200px] object-contain mascot-glow animate-float"
+            />
+          </motion.div>
         </div>
 
         {/* Form Side (Left in RTL) */}
@@ -181,10 +196,10 @@ const Hero = () => {
           initial={{ opacity: 0, x: -40, rotateY: -5 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="bg-card/60 backdrop-blur-2xl border border-border/50 rounded-2xl p-8 shadow-2xl gradient-border"
+          className="bg-card/80 backdrop-blur-2xl border border-border/50 rounded-2xl p-8 shadow-2xl gradient-border"
         >
-          <h3 className="text-heading text-2xl text-foreground mb-2">רוצים שנחזור אליכם?</h3>
-          <p className="text-muted-foreground text-sm mb-6">השאירו פרטים ונציג יחזור אליכם תוך דקות</p>
+          <h3 className="text-heading text-2xl text-foreground mb-2">נשמח להכיר אתכם</h3>
+          <p className="text-muted-foreground text-sm mb-6">השאירו פרטים ונחזור אליכם בהקדם</p>
 
           {isSubmitted ? (
             <motion.div
@@ -257,7 +272,7 @@ const Hero = () => {
                   ) : (
                     <>
                       <Send size={18} />
-                      שלחו לי פרטים
+                      בואו נדבר
                     </>
                   )}
                 </Button>

@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Menu, X, ChevronDown, GraduationCap, Crown } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
+import mascotLogo from "@/assets/mascot/mascot-pointing.png";
 
 const navItems = [
   { label: "דף הבית", to: "/" },
@@ -47,8 +48,8 @@ const Navigation = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-background/95 backdrop-blur-xl border-b border-border py-3"
-          : "bg-background/20 backdrop-blur-md py-5"
+          ? "bg-background/95 backdrop-blur-xl border-b border-border shadow-sm py-3"
+          : "bg-background/40 backdrop-blur-md py-5"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -58,9 +59,16 @@ const Navigation = () => {
         >
           <Link
             to="/"
-            className={`font-black text-primary tracking-tight transition-all duration-300 block ${isScrolled ? "text-xl" : "text-2xl"}`}
+            className="flex items-center gap-2"
           >
-            KARNAF
+            <img
+              src={mascotLogo}
+              alt="קרנף"
+              className={`rounded-full object-cover transition-all duration-300 ${isScrolled ? "w-7 h-7" : "w-9 h-9"}`}
+            />
+            <span className={`font-black text-primary tracking-tight transition-all duration-300 ${isScrolled ? "text-xl" : "text-2xl"}`}>
+              KARNAF
+            </span>
           </Link>
         </motion.div>
 
@@ -117,7 +125,7 @@ const Navigation = () => {
           <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
             <Button className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
               <MessageCircle size={16} />
-              שיחת ייעוץ מהירה
+              בואו נדבר
             </Button>
           </a>
         </div>
@@ -191,7 +199,7 @@ const Navigation = () => {
                 <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
                   <Button className="w-full btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
                     <MessageCircle size={16} />
-                    שיחת ייעוץ מהירה
+                    בואו נדבר
                   </Button>
                 </a>
               </motion.div>
