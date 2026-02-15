@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Target, TrendingUp, Shield, Award, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import mascotHandshake from "@/assets/mascot/mascot-handshake.png";
+import teamPhoto from "@/assets/team/itamar-almog-about.png";
 
 const milestones = [
   { icon: Target, year: "2016", text: "הקמת קרנף נדל\"ן" },
@@ -101,7 +101,7 @@ const About = () => {
           </div>
 
           <div className="relative">
-            {/* Mascot - Two rhinos handshake */}
+            {/* Team Photo - Itamar & Almog */}
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -110,9 +110,13 @@ const About = () => {
               className="flex justify-center mb-8"
             >
               <img
-                src={mascotHandshake}
-                alt="שני הקרנפים — איתמר ואלמוג"
-                className="w-[300px] object-contain mascot-glow"
+                src={teamPhoto}
+                alt="איתמר ואלמוג — מייסדי קרנף"
+                className="w-[280px] md:w-[350px] lg:w-[400px] object-contain rounded-2xl"
+                style={{
+                  maskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
+                }}
               />
             </motion.div>
 
