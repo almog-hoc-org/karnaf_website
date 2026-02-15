@@ -7,7 +7,7 @@ import { Send, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/hero-city.jpg";
-import teamHeroPhoto from "@/assets/team/itamar-almog-hero.png";
+import teamHeroPhoto from "@/assets/team/itamar-almog-hero-new.png";
 import ParticlesBackground from "./ParticlesBackground";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 
@@ -176,21 +176,21 @@ const Hero = () => {
             </Link>
           </motion.div>
 
-          {/* Team Photo - visible on desktop */}
+          {/* Team Photo - between buttons and form, visible on desktop */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.6 }}
-            className="hidden lg:flex mt-8 relative"
+            className="hidden lg:flex mt-6 relative justify-start"
           >
             <div className="relative">
               <img
                 src={teamHeroPhoto}
                 alt="איתמר ואלמוג — מייסדי קרנף"
-                className="h-[280px] object-contain relative z-10"
+                className="h-[320px] object-contain relative z-10"
                 style={{
-                  maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
-                  WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+                  maskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-20 pointer-events-none" />
