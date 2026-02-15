@@ -166,7 +166,7 @@ const AboutPage = () => {
             title="הצוות"
             highlight="שלנו"
           />
-          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             {team.map((member, i) => (
               <motion.div
                 key={member.name}
@@ -174,18 +174,31 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
-                className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-colors text-center"
+                className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all group"
               >
-                <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 overflow-hidden ring-2 ring-primary/20">
+                {/* Photo — large, professional */}
+                <div className="relative h-64 overflow-hidden">
                   {member.image ? (
-                    <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
                   ) : (
-                    <span className="text-primary font-bold text-3xl">{member.name.charAt(0)}</span>
+                    <div className="w-full h-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-primary font-bold text-6xl">{member.name.charAt(0)}</span>
+                    </div>
                   )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
                 </div>
-                <h4 className="text-foreground font-bold text-xl">{member.name}</h4>
-                <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
-                <p className="text-muted-foreground text-sm leading-relaxed">{member.bio}</p>
+
+                {/* Content */}
+                <div className="p-6 -mt-8 relative">
+                  <h4 className="text-foreground font-bold text-xl">{member.name}</h4>
+                  <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{member.bio}</p>
+                </div>
               </motion.div>
             ))}
           </div>

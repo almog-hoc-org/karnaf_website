@@ -1,15 +1,11 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Send, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/hero-city.jpg";
+import foundersPhoto from "@/assets/team/itamar-almog.png";
 import mascotPointing from "@/assets/mascot/mascot-pointing.png";
 import ParticlesBackground from "./ParticlesBackground";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
 
 const headlineWords = ["הדירה", "הבאה", "שלכם", "מתחילה", "כאן."];
 
@@ -28,13 +24,6 @@ const wordVariants = {
 };
 
 const Hero = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [service, setService] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const { toast } = useToast();
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -45,39 +34,6 @@ const Hero = () => {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!name.trim() || !phone.trim()) {
-      toast({ title: "נא למלא שם וטלפון", variant: "destructive" });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    const serviceLabel =
-      service === "derech" ? "הדרך לדירה" :
-      service === "premium" ? "ליווי קרנף פרימיום" :
-      service === "both" ? "שניהם" : "לא צוין";
-
-    const message = `🦏 ליד חדש מהאתר!\n\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email || "לא צוין"}\nשירות: ${serviceLabel}`;
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-    window.open(whatsappUrl, "_blank");
-
-    setIsSubmitted(true);
-    toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });
-
-    setTimeout(() => {
-      setName("");
-      setPhone("");
-      setEmail("");
-      setService("");
-      setIsSubmitting(false);
-      setIsSubmitted(false);
-    }, 3000);
-  };
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
@@ -96,6 +52,15 @@ const Hero = () => {
 
       {/* Particles - Layer 3 */}
       <ParticlesBackground />
+
+      {/* Subtle mascot as background watermark */}
+      <div className="absolute bottom-0 right-10 pointer-events-none z-[1] hidden xl:block">
+        <img
+          src={mascotPointing}
+          alt=""
+          className="h-[180px] object-contain mascot-fade-bottom opacity-[0.08] mix-blend-multiply"
+        />
+      </div>
 
       {/* Decorative Elements */}
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float pointer-events-none" />
@@ -175,110 +140,37 @@ const Hero = () => {
               </Button>
             </Link>
           </motion.div>
-
-          {/* Mascot - visible on desktop */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.6 }}
-            className="hidden lg:flex mt-8"
-          >
-            <img
-              src={mascotPointing}
-              alt="קרנף מצביע"
-              className="h-[200px] object-contain mascot-glow animate-float"
-            />
-          </motion.div>
         </div>
 
-        {/* Form Side (Left in RTL) */}
+        {/* Founders Photo Side (Left in RTL) */}
         <motion.div
-          initial={{ opacity: 0, x: -40, rotateY: -5 }}
-          animate={{ opacity: 1, x: 0, rotateY: 0 }}
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="bg-card/80 backdrop-blur-2xl border border-border/50 rounded-2xl p-8 shadow-2xl gradient-border"
+          className="hidden lg:block relative"
         >
-          <h3 className="text-heading text-2xl text-foreground mb-2">נשמח להכיר אתכם</h3>
-          <p className="text-muted-foreground text-sm mb-6">השאירו פרטים ונחזור אליכם בהקדם</p>
+          {/* Decorative ring behind photo */}
+          <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-primary/20 via-transparent to-primary/10 -z-10 blur-sm" />
 
-          {isSubmitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex flex-col items-center gap-4 py-12"
-            >
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
-              >
-                <CheckCircle className="w-16 h-16 text-primary" />
-              </motion.div>
-              <p className="text-foreground text-xl font-bold">תודה רבה!</p>
-              <p className="text-muted-foreground text-sm">ניצור איתך קשר בהקדם</p>
-            </motion.div>
-          ) : (
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.7 }}>
-                <Input
-                  placeholder="שם מלא"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-12 focus:border-primary/50 transition-colors"
-                />
-              </motion.div>
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.8 }}>
-                <Input
-                  type="tel"
-                  placeholder="טלפון"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-12 focus:border-primary/50 transition-colors"
-                />
-              </motion.div>
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.9 }}>
-                <Input
-                  type="email"
-                  placeholder="אימייל"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-12 focus:border-primary/50 transition-colors"
-                />
-              </motion.div>
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.0 }}>
-                <Select value={service} onValueChange={setService}>
-                  <SelectTrigger className="bg-background/50 border-border/50 text-foreground h-12">
-                    <SelectValue placeholder="אני מעוניין ב..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="derech">תוכנית "הדרך לדירה"</SelectItem>
-                    <SelectItem value="premium">ליווי קרנף פרימיום</SelectItem>
-                    <SelectItem value="both">שניהם</SelectItem>
-                  </SelectContent>
-                </Select>
-              </motion.div>
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-lg gap-2"
-                >
-                  {isSubmitting ? (
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                    />
-                  ) : (
-                    <>
-                      <Send size={18} />
-                      בואו נדבר
-                    </>
-                  )}
-                </Button>
-              </motion.div>
-            </form>
-          )}
+          <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+            <img
+              src={foundersPhoto}
+              alt="איתמר ואלמוג — מייסדי קרנף נדל״ן"
+              className="w-full h-[520px] object-cover object-top"
+              style={{
+                maskImage: "linear-gradient(to bottom, black 65%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to bottom, black 65%, transparent 100%)",
+              }}
+            />
+            {/* Overlay gradient for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+
+            {/* Names overlay at bottom */}
+            <div className="absolute bottom-6 inset-x-0 text-center">
+              <p className="text-foreground font-bold text-lg drop-shadow-sm">איתמר נחליאל & אלמוג חכמה</p>
+              <p className="text-primary text-sm font-medium">מייסדי קרנף נדל"ן</p>
+            </div>
+          </div>
         </motion.div>
       </motion.div>
 

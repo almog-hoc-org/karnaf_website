@@ -44,21 +44,17 @@ const services = [
 const Services = () => {
   return (
     <section id="services" className="py-24 bg-secondary relative overflow-hidden">
-      <div className="container mx-auto px-6">
-        {/* Mascot above title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex justify-center mb-6"
-        >
-          <img
-            src={mascotRealestate}
-            alt="קרנף מציג את השירותים"
-            className="h-[180px] object-contain mascot-crop-text mascot-glow"
-          />
-        </motion.div>
+      {/* Mascot as subtle background element on the left */}
+      <div className="absolute left-0 bottom-0 pointer-events-none hidden lg:block">
+        <img
+          src={mascotRealestate}
+          alt=""
+          className="h-[350px] object-contain mascot-fade-bottom opacity-[0.10]"
+          loading="lazy"
+        />
+      </div>
 
+      <div className="container mx-auto px-6 relative z-10">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

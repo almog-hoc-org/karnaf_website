@@ -101,20 +101,15 @@ const About = () => {
           </div>
 
           <div className="relative">
-            {/* Mascot - Two rhinos handshake */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="flex justify-center mb-8"
-            >
+            {/* Mascot as subtle watermark behind the timeline */}
+            <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
               <img
                 src={mascotHandshake}
-                alt="שני הקרנפים — איתמר ואלמוג"
-                className="w-[300px] object-contain mascot-glow"
+                alt=""
+                className="w-[400px] object-contain mascot-fade-edges opacity-[0.07]"
+                loading="lazy"
               />
-            </motion.div>
+            </div>
 
             <div className="absolute top-0 bottom-0 right-6 w-px bg-gradient-to-b from-transparent via-primary/20 to-transparent" />
 
@@ -125,7 +120,7 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.15 }}
-                className="flex items-center gap-6 mb-8 last:mb-0 group"
+                className="flex items-center gap-6 mb-8 last:mb-0 group relative z-10"
               >
                 <motion.div
                   whileInView={{ scale: [0, 1.2, 1] }}

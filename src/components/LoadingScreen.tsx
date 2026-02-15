@@ -29,7 +29,7 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="h-[160px] object-contain mascot-crop-text mascot-glow"
+              className="h-[160px] object-contain mascot-glow"
             />
 
             {/* Logo */}

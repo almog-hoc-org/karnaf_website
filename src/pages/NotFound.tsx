@@ -22,7 +22,7 @@ const NotFound = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, type: "spring" }}
-          className="h-[200px] object-contain mx-auto mb-4 mascot-crop-text mascot-glow"
+          className="h-[200px] object-contain mx-auto mb-4 mascot-glow"
         />
 
         <motion.div
