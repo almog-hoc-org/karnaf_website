@@ -176,27 +176,25 @@ const Hero = () => {
             </Link>
           </motion.div>
 
-          {/* Team Photo - between buttons and form, visible on desktop */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.6 }}
-            className="hidden lg:flex mt-6 relative justify-start"
-          >
-            <div className="relative">
-              <img
-                src={teamHeroPhoto}
-                alt="איתמר ואלמוג — מייסדי קרנף"
-                className="h-[320px] object-contain relative z-10"
-                style={{
-                  maskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
-                  WebkitMaskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-20 pointer-events-none" />
-            </div>
-          </motion.div>
         </div>
+
+        {/* Team Photo - left side of hero on desktop */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
+          className="hidden lg:flex items-end justify-center absolute bottom-0 left-[5%] z-10 pointer-events-none"
+        >
+          <img
+            src={teamHeroPhoto}
+            alt="איתמר ואלמוג — מייסדי קרנף"
+            className="h-[420px] object-contain"
+            style={{
+              maskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
+            }}
+          />
+        </motion.div>
 
         {/* Form Side (Left in RTL) */}
         <motion.div
