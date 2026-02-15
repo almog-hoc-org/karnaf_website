@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useInView } from "react-intersection-observer";
-import ReactPlayer from "react-player";
+import RP from "react-player";
+const ReactPlayer = RP as any;
 
 interface VideoPlayerProps {
   url: string;
@@ -28,6 +29,7 @@ const VideoPlayer = ({ url, title, thumbnail, ratio = 16 / 9 }: VideoPlayerProps
       <AspectRatio ratio={ratio}>
         {inView ? (
           <>
+            
             <ReactPlayer
               url={url}
               playing={playing}
@@ -39,7 +41,8 @@ const VideoPlayer = ({ url, title, thumbnail, ratio = 16 / 9 }: VideoPlayerProps
               onClickPreview={() => setPlaying(true)}
               config={{
                 youtube: {
-                  playerVars: { modestbranding: 1, rel: 0, hl: "he" },
+                  rel: 0,
+                  hl: "he",
                 },
               }}
             />
