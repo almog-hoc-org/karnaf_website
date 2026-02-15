@@ -7,7 +7,7 @@ import { Send, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/hero-city.jpg";
-import mascotPointing from "@/assets/mascot/mascot-pointing.png";
+import teamHeroPhoto from "@/assets/team/itamar-almog-hero.png";
 import ParticlesBackground from "./ParticlesBackground";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 
@@ -176,18 +176,25 @@ const Hero = () => {
             </Link>
           </motion.div>
 
-          {/* Mascot - visible on desktop */}
+          {/* Team Photo - visible on desktop */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.6 }}
-            className="hidden lg:flex mt-8"
+            className="hidden lg:flex mt-8 relative"
           >
-            <img
-              src={mascotPointing}
-              alt="קרנף מצביע"
-              className="h-[200px] object-contain mascot-glow animate-float"
-            />
+            <div className="relative">
+              <img
+                src={teamHeroPhoto}
+                alt="איתמר ואלמוג — מייסדי קרנף"
+                className="h-[280px] object-contain relative z-10"
+                style={{
+                  maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-20 pointer-events-none" />
+            </div>
           </motion.div>
         </div>
 
