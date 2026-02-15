@@ -5,14 +5,14 @@ import { useState } from "react";
 const pillars = [
   {
     icon: BookOpen,
-    title: "ידע שמגן עליכם",
-    description: "הכשרה מקצועית שחוסכת לכם טעויות יקרות. תלמדו לזהות עסקאות טובות, להבין חוזים ולקבל החלטות חכמות.",
+    title: "ידע שנותן ביטחון",
+    description: "הכשרה מקצועית שעוזרת לכם לקבל החלטות מושכלות. תלמדו לזהות עסקאות טובות, להבין חוזים ולהרגיש בטוחים בכל צעד.",
     step: "01",
   },
   {
     icon: Handshake,
     title: "ליווי יד ביד",
-    description: "מומחה קרנף שנלחם בשבילכם מהרעיון ועד החוזה. לא לבד בשום שלב של התהליך.",
+    description: "מומחה קרנף שהולך איתכם צעד אחר צעד מהרעיון ועד החוזה. לא לבד בשום שלב של התהליך.",
     step: "02",
   },
   {
@@ -86,7 +86,7 @@ const Advantages = () => {
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, delay: 0.5 }}
-            className="hidden md:block absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent z-0"
+            className="hidden md:block absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent z-0"
             style={{ originX: 0 }}
           />
 
@@ -100,8 +100,8 @@ const Advantages = () => {
               className="relative z-10"
             >
               <TiltCard className="h-full">
-                <div className="bg-card border border-border rounded-xl p-8 text-center card-hover-glow group h-full relative overflow-hidden">
-                  <span className="text-primary/10 text-8xl font-black absolute top-4 right-6 select-none group-hover:text-primary/20 transition-colors duration-500">
+                <div className="bg-card border border-border rounded-xl p-8 text-center card-hover-glow group h-full relative overflow-hidden shadow-sm">
+                  <span className="text-primary/10 text-8xl font-black absolute top-4 right-6 select-none group-hover:text-primary/15 transition-colors duration-500">
                     {pillar.step}
                   </span>
 

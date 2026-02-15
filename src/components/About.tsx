@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Target, TrendingUp, Shield, Award, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import mascotHandshake from "@/assets/mascot/mascot-handshake.png";
 
 const milestones = [
   { icon: Target, year: "2016", text: "הקמת קרנף נדל\"ן" },
@@ -100,7 +101,22 @@ const About = () => {
           </div>
 
           <div className="relative">
-            <div className="absolute top-0 bottom-0 right-6 w-px bg-gradient-to-b from-transparent via-primary/30 to-transparent" />
+            {/* Mascot - Two rhinos handshake */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="flex justify-center mb-8"
+            >
+              <img
+                src={mascotHandshake}
+                alt="שני הקרנפים — איתמר ואלמוג"
+                className="w-[300px] object-contain mascot-glow"
+              />
+            </motion.div>
+
+            <div className="absolute top-0 bottom-0 right-6 w-px bg-gradient-to-b from-transparent via-primary/20 to-transparent" />
 
             {milestones.map((milestone, i) => (
               <motion.div
@@ -120,7 +136,7 @@ const About = () => {
                   <milestone.icon size={20} className="text-primary" />
                 </motion.div>
 
-                <div className="bg-card/50 backdrop-blur-sm border border-border rounded-xl p-4 flex-1 group-hover:border-primary/30 transition-colors duration-300">
+                <div className="bg-card/80 backdrop-blur-sm border border-border rounded-xl p-4 flex-1 group-hover:border-primary/30 transition-colors duration-300 shadow-sm">
                   <span className="text-primary font-bold text-sm">{milestone.year}</span>
                   <p className="text-foreground font-medium">{milestone.text}</p>
                 </div>

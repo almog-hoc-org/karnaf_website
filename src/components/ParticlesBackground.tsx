@@ -16,12 +16,12 @@ const ParticlesBackground = () => {
         fullScreen: false,
         fpsLimit: 60,
         particles: {
-          color: { value: "#ff8c00" },
+          color: { value: "#1e3a5f" },
           links: {
-            color: "#ff8c00",
+            color: "#1e3a5f",
             distance: 150,
             enable: true,
-            opacity: 0.12,
+            opacity: 0.08,
             width: 1,
           },
           move: {
@@ -37,11 +37,11 @@ const ParticlesBackground = () => {
             value: 40,
           },
           opacity: {
-            value: { min: 0.05, max: 0.2 },
+            value: { min: 0.03, max: 0.12 },
             animation: {
               enable: true,
               speed: 0.5,
-              minimumValue: 0.05,
+              minimumValue: 0.03,
             },
           },
           shape: { type: "circle" },
@@ -56,7 +56,7 @@ const ParticlesBackground = () => {
           modes: {
             grab: {
               distance: 140,
-              links: { opacity: 0.3 },
+              links: { opacity: 0.2 },
             },
           },
         },

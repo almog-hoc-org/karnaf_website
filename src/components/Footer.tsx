@@ -55,10 +55,10 @@ const Footer = () => {
             transition={{ duration: 0.7 }}
           >
             <h2 className="text-display text-4xl md:text-5xl text-foreground mb-4">
-              אל תישאר מאחור
+              נשמח להכיר אתכם
             </h2>
             <p className="text-xl text-primary font-bold mb-10">
-              הצטרף לעדר המנצח.
+              השאירו פרטים ונתחיל לדבר.
             </p>
 
             {isSubmitted ? (
@@ -107,7 +107,7 @@ const Footer = () => {
                   className="w-full btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-lg gap-2"
                 >
                   <Send size={18} />
-                  שלחו לי פרטים
+                  בואו נדבר
                 </Button>
               </form>
             )}
@@ -127,7 +127,7 @@ const Footer = () => {
                 href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-border hover:border-primary/30 transition-colors group"
+                className="flex items-center gap-4 p-4 bg-card/80 rounded-xl border border-border hover:border-primary/30 transition-colors group shadow-sm"
               >
                 <div className="w-10 h-10 rounded-full bg-[#25D366]/10 flex items-center justify-center">
                   <MessageCircle size={20} className="text-[#25D366]" />
@@ -138,7 +138,7 @@ const Footer = () => {
                 </div>
               </a>
 
-              <div className="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-border">
+              <div className="flex items-center gap-4 p-4 bg-card/80 rounded-xl border border-border shadow-sm">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                   <Phone size={20} className="text-primary" />
                 </div>
@@ -148,7 +148,7 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 p-4 bg-card/50 rounded-xl border border-border">
+              <div className="flex items-center gap-4 p-4 bg-card/80 rounded-xl border border-border shadow-sm">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                   <Mail size={20} className="text-primary" />
                 </div>
@@ -183,7 +183,7 @@ const Footer = () => {
                   aria-label="TikTok"
                   whileHover={{ scale: 1.15, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:bg-purple-500/20 hover:text-purple-400 hover:border-purple-400/50 transition-all duration-300"
+                  className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:bg-purple-500/20 hover:text-purple-600 hover:border-purple-500/50 transition-all duration-300"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.7a8.16 8.16 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.13z" />

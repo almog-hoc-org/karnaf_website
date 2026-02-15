@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { GraduationCap, Crown, Check, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import mascotRealestate from "@/assets/mascot/mascot-realestate.png";
 
 const services = [
   {
@@ -10,7 +11,7 @@ const services = [
     title: 'תוכנית "הדרך לדירה"',
     subtitle: "הכשרה דיגיטלית מקיפה לרוכשי דירה ראשונה",
     description:
-      "הכשרה דיגיטלית מקיפה ומדויקת עם כל הידע החשוב בדרך לרכישת דירה ראשונה, בשילוב כלים ומחשבונים שיבטיחו לכם עסקה מנצחת בביטחון מלא.",
+      "הכשרה דיגיטלית מקיפה ומדויקת עם כל הידע החשוב בדרך לרכישת דירה ראשונה, בשילוב כלים ומחשבונים שיבטיחו לכם עסקה מוצלחת בביטחון מלא.",
     features: [
       "שיעורים דיגיטליים מובנים צעד אחר צעד",
       "מחשבונים וכלים לניתוח עסקאות",
@@ -25,9 +26,9 @@ const services = [
     icon: Crown,
     tag: "HAND IN HAND",
     title: "ליווי קרנף פרימיום",
-    subtitle: "ליווי משקיעים אישי מקצה לקצה",
+    subtitle: "ליווי אישי מקצה לקצה",
     description:
-      "ליווי אישי עם מומחה קרנף נדל\"ן, שלוקח אתכם יד ביד ממש משלב הרעיון ועד חתימת החוזה. תהליך רכישת דירה שייתן לכם שקט וביטחון לאורך כל הדרך.",
+      "ליווי אישי עם מומחה קרנף נדל\"ן, שהולך איתכם צעד אחר צעד מהרעיון הראשון ועד חתימת החוזה. תהליך רכישת דירה שנותן לכם שקט וביטחון לאורך כל הדרך.",
     features: [
       "ניתוח פיננסי אישי והגדרת אסטרטגיה",
       "איתור, חיפוש וסינון נכסים בשבילכם",
@@ -44,6 +45,20 @@ const Services = () => {
   return (
     <section id="services" className="py-24 bg-secondary relative overflow-hidden">
       <div className="container mx-auto px-6">
+        {/* Mascot above title */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex justify-center mb-6"
+        >
+          <img
+            src={mascotRealestate}
+            alt="קרנף מציג את השירותים"
+            className="h-[180px] object-contain mascot-crop-text mascot-glow"
+          />
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

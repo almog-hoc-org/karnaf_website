@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowRight } from "lucide-react";
+import mascotWelcome from "@/assets/mascot/mascot-welcome.png";
 
 const NotFound = () => {
   return (
@@ -14,6 +15,16 @@ const NotFound = () => {
         transition={{ duration: 0.7 }}
         className="text-center px-6"
       >
+        {/* Mascot */}
+        <motion.img
+          src={mascotWelcome}
+          alt="קרנף"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, type: "spring" }}
+          className="h-[200px] object-contain mx-auto mb-4 mascot-crop-text mascot-glow"
+        />
+
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}

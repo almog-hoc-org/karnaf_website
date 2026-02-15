@@ -56,7 +56,7 @@ const TestimonialVideoCard = ({ testimonial, index = 0 }: TestimonialVideoCardPr
         <div className="mt-3 pt-3 border-t border-border">
           <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
             testimonial.service === "course"
-              ? "bg-blue-500/10 text-blue-400"
+              ? "bg-blue-500/10 text-blue-600"
               : "bg-primary/10 text-primary"
           }`}>
             {testimonial.service === "course" ? "הדרך לדירה" : "ליווי פרימיום"}

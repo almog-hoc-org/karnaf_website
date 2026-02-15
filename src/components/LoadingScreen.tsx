@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import mascotWelcome from "@/assets/mascot/mascot-welcome.png";
 
 const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -20,12 +21,22 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-4">
+            {/* Mascot */}
+            <motion.img
+              src={mascotWelcome}
+              alt="קרנף"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="h-[160px] object-contain mascot-crop-text mascot-glow"
+            />
+
             {/* Logo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
               <span className="text-5xl md:text-7xl font-black text-primary tracking-tight">
@@ -47,7 +58,7 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="text-muted-foreground text-sm tracking-[0.3em] uppercase"
             >
-              כוח. עוצמה. נדל"ן.
+              ידע. ליווי. ביטחון.
             </motion.p>
 
             {/* Loading bar */}
