@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Menu, X, ChevronDown, GraduationCap, Crown } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
-import mascotLogo from "@/assets/mascot/mascot-pointing.png";
+import karnafLogo from "@/assets/mascot/karnaf-logo.svg";
 
 const navItems = [
   { label: "דף הבית", to: "/" },
@@ -62,9 +62,9 @@ const Navigation = () => {
             className="flex items-center gap-2"
           >
             <img
-              src={mascotLogo}
+              src={karnafLogo}
               alt="קרנף"
-              className={`rounded-full object-cover transition-all duration-300 ${isScrolled ? "w-7 h-7" : "w-9 h-9"}`}
+              className={`object-contain transition-all duration-300 ${isScrolled ? "w-8 h-8" : "w-10 h-10"}`}
             />
             <span className={`font-black text-primary tracking-tight transition-all duration-300 ${isScrolled ? "text-xl" : "text-2xl"}`}>
               KARNAF

@@ -176,8 +176,12 @@ const AboutPage = () => {
                 transition={{ delay: i * 0.15 }}
                 className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-colors text-center"
               >
-                <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-primary font-bold text-3xl">{member.name.charAt(0)}</span>
+                <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 overflow-hidden ring-2 ring-primary/20">
+                  {member.image ? (
+                    <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-primary font-bold text-3xl">{member.name.charAt(0)}</span>
+                  )}
                 </div>
                 <h4 className="text-foreground font-bold text-xl">{member.name}</h4>
                 <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
