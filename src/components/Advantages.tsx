@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { BookOpen, Handshake, BarChart3 } from "lucide-react";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const pillars = [
   {
@@ -56,8 +60,26 @@ const TiltCard = ({ children, className }: { children: React.ReactNode; classNam
 };
 
 const Advantages = () => {
+  // GSAP ScrollTrigger for cards
+  useLayoutEffect(() => {
+    const cards = document.querySelectorAll('.advantage-card');
+
+    gsap.from(cards, {
+      scrollTrigger: {
+        trigger: '.advantages-section',
+        start: 'top 70%',
+      },
+      opacity: 0,
+      y: 100,
+      rotationX: -20,
+      stagger: 0.15,
+      duration: 0.8,
+      ease: 'back.out(1.2)',
+    });
+  }, []);
+
   return (
-    <section className="py-24 bg-secondary relative overflow-hidden">
+    <section className="advantages-section py-24 bg-secondary relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary/3 rounded-full blur-3xl pointer-events-none" />
 
@@ -97,7 +119,7 @@ const Advantages = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.7, delay: i * 0.2 }}
-              className="relative z-10"
+              className="relative z-10 advantage-card"
             >
               <TiltCard className="h-full">
                 <div className="bg-card border border-border rounded-xl p-8 text-center card-hover-glow group h-full relative overflow-hidden shadow-sm">

@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { Users, BookOpen, CalendarDays, ThumbsUp } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
   { value: 150, suffix: "+", label: "לקוחות שליווינו", icon: Users },
@@ -10,35 +14,36 @@ const stats = [
 ];
 
 const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
-  const [display, setDisplay] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
-  const hasAnimated = useRef(false);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-          const duration = 2000;
-          const start = performance.now();
-          const step = (now: number) => {
-            const progress = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setDisplay(Math.floor(eased * value));
-            if (progress < 1) requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
-        }
+  useLayoutEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    // Set initial value to 0
+    element.textContent = `0${suffix}`;
+
+    // Animate counter with GSAP
+    gsap.from(element, {
+      scrollTrigger: {
+        trigger: element,
+        start: 'top 80%',
+        toggleActions: 'play none none none',
       },
-      { threshold: 0.5 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [value]);
+      textContent: 0,
+      duration: 2.5,
+      ease: 'power2.out',
+      snap: { textContent: 1 },
+      onUpdate: function() {
+        const current = Math.ceil(this.targets()[0].textContent);
+        element.textContent = `${current.toLocaleString('he-IL')}${suffix}`;
+      }
+    });
+  }, [value, suffix]);
 
   return (
-    <div ref={ref} className="text-display text-4xl md:text-5xl lg:text-6xl text-primary text-glow">
-      {display.toLocaleString()}{suffix}
+    <div ref={ref} className="text-display text-4xl md:text-5xl lg:text-6xl text-primary text-glow" data-value={value}>
+      0{suffix}
     </div>
   );
 };
