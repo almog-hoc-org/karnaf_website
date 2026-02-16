@@ -83,22 +83,20 @@ const BigCTA = () => {
           </a>
         </motion.div>
 
-        {/* Mascot decoration — blended with mask fade */}
+        {/* Mascot decoration — professional blend with radial mask */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="hidden md:block absolute left-0 bottom-0 pointer-events-none"
+          className="hidden md:block absolute left-10 bottom-10 pointer-events-none"
         >
-          <img
+          <motion.img
+            animate={{ scale: [1, 1.03, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             src={mascotWelcome2}
             alt=""
-            className="h-[300px] object-contain opacity-20"
-            style={{
-              maskImage: "linear-gradient(to top, transparent 0%, black 30%, black 70%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 30%, black 70%, transparent 100%)",
-            }}
+            className="h-[300px] object-contain opacity-[0.25] mascot-fade-radial mascot-blend-overlay"
             loading="lazy"
           />
         </motion.div>

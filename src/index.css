@@ -236,4 +236,124 @@
   .mascot-entrance {
     animation: mascot-slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+
+  /* Professional mascot blend modes */
+  .mascot-blend-multiply {
+    mix-blend-mode: multiply;
+  }
+
+  .mascot-blend-soft-light {
+    mix-blend-mode: soft-light;
+  }
+
+  .mascot-blend-overlay {
+    mix-blend-mode: overlay;
+  }
+
+  .mascot-blend-screen {
+    mix-blend-mode: screen;
+  }
+
+  /* Advanced mask gradients for professional mascot integration */
+
+  /* Corner fade (for About section) */
+  .mascot-fade-corner {
+    -webkit-mask-image: radial-gradient(
+      ellipse 100% 100% at bottom right,
+      black 20%,
+      rgba(0,0,0,0.5) 50%,
+      transparent 80%
+    );
+    mask-image: radial-gradient(
+      ellipse 100% 100% at bottom right,
+      black 20%,
+      rgba(0,0,0,0.5) 50%,
+      transparent 80%
+    );
+  }
+
+  /* Diagonal fade (for Services section) */
+  .mascot-fade-diagonal {
+    -webkit-mask-image: linear-gradient(
+      135deg,
+      transparent 0%,
+      black 30%,
+      black 70%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      135deg,
+      transparent 0%,
+      black 30%,
+      black 70%,
+      transparent 100%
+    );
+  }
+
+  /* Radial fade (for BigCTA section) */
+  .mascot-fade-radial {
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 70% at center,
+      black 30%,
+      rgba(0,0,0,0.6) 60%,
+      transparent 90%
+    );
+    mask-image: radial-gradient(
+      ellipse 80% 70% at center,
+      black 30%,
+      rgba(0,0,0,0.6) 60%,
+      transparent 90%
+    );
+  }
+
+  /* Slow floating animation for mascots */
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-8px) rotate(1deg);
+    }
+  }
+
+  .animate-float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+  }
+
+  /* Breathing scale animation */
+  @keyframes breathe {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.03);
+    }
+  }
+
+  .animate-breathe {
+    animation: breathe 6s ease-in-out infinite;
+  }
+
+  /* Professional shadow utilities for images */
+  .shadow-glow {
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.1),
+      0 8px 32px rgba(255, 102, 0, 0.08);
+  }
+
+  .shadow-glow-strong {
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.12),
+      0 16px 48px rgba(255, 102, 0, 0.12);
+  }
+
+  /* Hover state for founder photos */
+  .founder-photo {
+    @apply transition-all duration-500;
+  }
+
+  .founder-photo:hover {
+    @apply shadow-glow-strong;
+    transform: scale(1.02);
+  }
 }

@@ -101,17 +101,17 @@ const About = () => {
           </div>
 
           <div className="relative">
-            {/* Mascot as subtle watermark behind the timeline */}
-            <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+            {/* Mascot as professional corner watermark */}
+            <div className="absolute right-0 bottom-0 pointer-events-none">
               <img
                 src={mascotHandshake}
                 alt=""
-                className="w-[400px] object-contain mascot-fade-edges opacity-[0.07]"
+                className="w-[350px] object-contain mascot-fade-corner opacity-[0.15] mascot-blend-multiply animate-float-slow"
                 loading="lazy"
               />
             </div>
 
-            <div className="absolute top-0 bottom-0 right-6 w-px bg-gradient-to-b from-transparent via-primary/20 to-transparent" />
+            <div className="absolute top-0 bottom-0 right-6 w-px bg-gradient-to-b from-transparent via-primary/20 to-transparent shadow-[0_0_8px_rgba(255,102,0,0.1)]" />
 
             {milestones.map((milestone, i) => (
               <motion.div
