@@ -3,8 +3,7 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-city.jpg";
-import itamarPhoto from "@/assets/team/itamar.png";
-import almogPhoto from "@/assets/team/almog.png";
+import teamHeroPhoto from "@/assets/team/itamar-almog-hero-new.png";
 import mascotPointing from "@/assets/mascot/mascot-pointing.png";
 import ParticlesBackground from "./ParticlesBackground";
 
@@ -142,80 +141,25 @@ const Hero = () => {
               </Button>
             </Link>
           </motion.div>
+
         </div>
 
-        {/* Founders Photos Side (Left in RTL) - Dual Display */}
+        {/* Team Photo - left side of hero on desktop */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="hidden lg:block relative"
+          transition={{ duration: 1, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
+          className="hidden lg:flex items-end justify-center absolute bottom-0 left-[5%] z-10 pointer-events-none"
         >
-          {/* Decorative ring behind photos */}
-          <div className="absolute -inset-3 rounded-2xl bg-gradient-to-br from-primary/20 via-transparent to-primary/10 -z-10 blur-sm" />
-
-          {/* Grid of two founder photos */}
-          <div className="grid grid-cols-2 gap-4">
-            {/* איתמר */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="relative overflow-hidden rounded-2xl shadow-2xl founder-photo group"
-            >
-              <div className="aspect-[3/4] relative">
-                <img
-                  src={itamarPhoto}
-                  alt="איתמר נחליאל"
-                  className="w-full h-full object-cover object-top"
-                  loading="lazy"
-                />
-                {/* Overlay gradient for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-
-                {/* Name overlay at bottom */}
-                <div className="absolute bottom-4 inset-x-0 text-center">
-                  <p className="text-foreground font-bold text-base drop-shadow-sm">איתמר נחליאל</p>
-                  <p className="text-primary text-xs font-medium">מייסד שותף</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* אלמוג */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="relative overflow-hidden rounded-2xl shadow-2xl founder-photo group"
-            >
-              <div className="aspect-[3/4] relative">
-                <img
-                  src={almogPhoto}
-                  alt="אלמוג חכמה"
-                  className="w-full h-full object-cover object-top"
-                  loading="lazy"
-                />
-                {/* Overlay gradient for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-
-                {/* Name overlay at bottom */}
-                <div className="absolute bottom-4 inset-x-0 text-center">
-                  <p className="text-foreground font-bold text-base drop-shadow-sm">אלמוג חכמה</p>
-                  <p className="text-primary text-xs font-medium">מייסד שותף</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Caption below photos */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
-            className="mt-4 text-center"
-          >
-            <p className="text-sm text-muted-foreground">מייסדי קרנף נדל״ן</p>
-          </motion.div>
+          <img
+            src={teamHeroPhoto}
+            alt="איתמר ואלמוג — מייסדי קרנף"
+            className="h-[420px] object-contain"
+            style={{
+              maskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
+            }}
+          />
         </motion.div>
       </motion.div>
 

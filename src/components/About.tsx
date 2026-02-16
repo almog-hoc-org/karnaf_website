@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Target, TrendingUp, Shield, Award, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import mascotHandshake from "@/assets/mascot/mascot-handshake.png";
+import teamPhoto from "@/assets/team/itamar-almog-about.png";
 
 const milestones = [
   { icon: Target, year: "2016", text: "הקמת קרנף נדל\"ן" },
@@ -101,15 +101,24 @@ const About = () => {
           </div>
 
           <div className="relative">
-            {/* Mascot as professional corner watermark */}
-            <div className="absolute right-0 bottom-0 pointer-events-none">
+            {/* Team Photo - Itamar & Almog */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="flex justify-center mb-8"
+            >
               <img
-                src={mascotHandshake}
-                alt=""
-                className="w-[350px] object-contain mascot-fade-corner opacity-[0.15] mascot-blend-multiply animate-float-slow"
-                loading="lazy"
+                src={teamPhoto}
+                alt="איתמר ואלמוג — מייסדי קרנף"
+                className="w-[280px] md:w-[350px] lg:w-[400px] object-contain rounded-2xl"
+                style={{
+                  maskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
+                }}
               />
-            </div>
+            </motion.div>
 
             <div className="absolute top-0 bottom-0 right-6 w-px bg-gradient-to-b from-transparent via-primary/20 to-transparent shadow-[0_0_8px_rgba(255,102,0,0.1)]" />
 
