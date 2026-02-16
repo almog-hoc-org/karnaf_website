@@ -1,7 +1,8 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { GraduationCap, Crown, Check, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useRef } from "react";
 import mascotRealestate from "@/assets/mascot/mascot-realestate.png";
 
 const services = [
@@ -42,23 +43,32 @@ const services = [
 ];
 
 const Services = () => {
-  return (
-    <section id="services" className="py-24 bg-secondary relative overflow-hidden">
-      <div className="container mx-auto px-6">
-        {/* Mascot above title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex justify-center mb-6"
-        >
-          <img
-            src={mascotRealestate}
-            alt="קרנף מציג את השירותים"
-            className="h-[180px] object-contain mascot-crop-text mascot-glow"
-          />
-        </motion.div>
+  const sectionRef = useRef<HTMLElement>(null);
 
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const mascotY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const mascotOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.12, 0.18, 0.12]);
+
+  return (
+    <section ref={sectionRef} id="services" className="py-24 bg-secondary relative overflow-hidden">
+      {/* Mascot with parallax and professional blending */}
+      <motion.div
+        style={{ y: mascotY, opacity: mascotOpacity }}
+        className="absolute left-0 bottom-10 pointer-events-none hidden lg:block"
+      >
+        <img
+          src={mascotRealestate}
+          alt=""
+          className="h-[350px] object-contain mascot-fade-diagonal mascot-blend-soft-light"
+          loading="lazy"
+        />
+      </motion.div>
+
+      <div className="container mx-auto px-6 relative z-10">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -85,7 +95,8 @@ const Services = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.7, delay: i * 0.2 }}
-              className={`relative bg-card border rounded-2xl p-8 md:p-10 card-hover-glow group flex flex-col ${
+              whileHover={{ scale: 1.02, boxShadow: "0 8px 30px rgba(255, 102, 0, 0.15)" }}
+              className={`relative bg-card border rounded-2xl p-8 md:p-10 card-hover-glow group flex flex-col transition-all duration-500 ${
                 service.popular ? "border-primary/30" : "border-border"
               }`}
             >

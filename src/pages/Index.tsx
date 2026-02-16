@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Hero from "@/components/Hero";
+import ContactStrip from "@/components/ContactStrip";
 import StatsCounter from "@/components/StatsCounter";
 import Advantages from "@/components/Advantages";
 import Properties from "@/components/Properties";
@@ -24,6 +25,7 @@ const Index = () => {
       {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
       <div id="top">
         <Hero />
+        <ContactStrip />
         <StatsCounter />
         <Advantages />
         <Services />

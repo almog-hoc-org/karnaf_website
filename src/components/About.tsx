@@ -120,7 +120,7 @@ const About = () => {
               />
             </motion.div>
 
-            <div className="absolute top-0 bottom-0 right-6 w-px bg-gradient-to-b from-transparent via-primary/20 to-transparent" />
+            <div className="absolute top-0 bottom-0 right-6 w-px bg-gradient-to-b from-transparent via-primary/20 to-transparent shadow-[0_0_8px_rgba(255,102,0,0.1)]" />
 
             {milestones.map((milestone, i) => (
               <motion.div
@@ -129,7 +129,7 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.15 }}
-                className="flex items-center gap-6 mb-8 last:mb-0 group"
+                className="flex items-center gap-6 mb-8 last:mb-0 group relative z-10"
               >
                 <motion.div
                   whileInView={{ scale: [0, 1.2, 1] }}
