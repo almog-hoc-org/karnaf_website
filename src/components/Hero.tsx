@@ -165,21 +165,21 @@ const Hero = () => {
 
           <div
             ref={ctaRef}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-col sm:flex-row gap-3 md:gap-4"
           >
-            <Link to="/course">
+            <Link to="/course" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="bg-primary text-primary-foreground font-bold text-lg px-8 py-6 animate-pulse-glow"
+                className="w-full bg-primary text-primary-foreground font-bold text-base md:text-lg px-6 md:px-8 py-5 md:py-6 animate-pulse-glow"
               >
                 לתוכנית "הדרך לדירה" 🏠
               </Button>
             </Link>
-            <Link to="/premium">
+            <Link to="/premium" className="w-full sm:w-auto">
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary/50 text-primary hover:bg-primary/10 font-bold text-lg px-8 py-6 backdrop-blur-sm"
+                className="w-full border-primary/50 text-primary hover:bg-primary/10 font-bold text-base md:text-lg px-6 md:px-8 py-5 md:py-6 backdrop-blur-sm"
               >
                 לליווי קרנף פרימיום
               </Button>

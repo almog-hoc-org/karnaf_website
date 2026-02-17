@@ -79,41 +79,58 @@ const ContactStrip = () => {
               </div>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
-              <Input
-                placeholder="שם מלא"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-12 focus:border-primary/50 transition-colors"
-              />
-              <Input
-                type="tel"
-                placeholder="טלפון"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-12 focus:border-primary/50 transition-colors"
-              />
-              <Input
-                type="email"
-                placeholder="אימייל"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-12 focus:border-primary/50 transition-colors"
-              />
-              <Select value={service} onValueChange={setService}>
-                <SelectTrigger className="bg-background/50 border-border/50 text-foreground h-12">
-                  <SelectValue placeholder="אני מעוניין ב..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="derech">תוכנית "הדרך לדירה"</SelectItem>
-                  <SelectItem value="premium">ליווי קרנף פרימיום</SelectItem>
-                  <SelectItem value="both">שניהם</SelectItem>
-                </SelectContent>
-              </Select>
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
+              <div className="flex flex-col">
+                <label htmlFor="contact-name" className="sr-only">שם מלא</label>
+                <Input
+                  id="contact-name"
+                  placeholder="שם מלא"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="contact-phone" className="sr-only">טלפון</label>
+                <Input
+                  id="contact-phone"
+                  type="tel"
+                  placeholder="טלפון"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="contact-email" className="sr-only">אימייל (אופציונלי)</label>
+                <Input
+                  id="contact-email"
+                  type="email"
+                  placeholder="אימייל (אופציונלי)"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="contact-service" className="sr-only">בחירת שירות</label>
+                <Select value={service} onValueChange={setService}>
+                  <SelectTrigger id="contact-service" className="bg-background/50 border-border/50 text-foreground h-11 md:h-12">
+                    <SelectValue placeholder="אני מעוניין ב..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="derech">תוכנית "הדרך לדירה"</SelectItem>
+                    <SelectItem value="premium">ליווי קרנף פרימיום</SelectItem>
+                    <SelectItem value="both">שניהם</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-base gap-2"
+                className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-11 md:h-12 text-base gap-2 sm:col-span-2 lg:col-span-1"
               >
                 {isSubmitting ? (
                   <motion.div

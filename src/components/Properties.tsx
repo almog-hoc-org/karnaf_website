@@ -123,16 +123,20 @@ const Properties = () => {
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={prev}
+              aria-label="המלצה קודמת"
               className="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
             >
               <ChevronRight size={18} />
             </button>
 
-            <div className="flex gap-2">
-              {testimonials.map((_, i) => (
+            <div className="flex gap-2" role="tablist" aria-label="בחירת המלצה">
+              {testimonials.map((testimonial, i) => (
                 <button
                   key={i}
                   onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
+                  role="tab"
+                  aria-label={`המלצה ${i + 1} מאת ${testimonial.name}`}
+                  aria-selected={i === current}
                   className="relative w-8 h-1.5 rounded-full bg-border overflow-hidden"
                 >
                   {i === current && (
@@ -148,6 +152,7 @@ const Properties = () => {
 
             <button
               onClick={next}
+              aria-label="המלצה הבאה"
               className="w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
             >
               <ChevronLeft size={18} />
