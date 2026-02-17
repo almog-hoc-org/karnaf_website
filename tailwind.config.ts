@@ -58,6 +58,22 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
+      fontSize: {
+        'display-xl': ['8rem', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '900' }],
+        'display-lg': ['6rem', { lineHeight: '1.05', letterSpacing: '-0.02em', fontWeight: '900' }],
+        'display-md': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.01em', fontWeight: '800' }],
+        'display-sm': ['3rem', { lineHeight: '1.15', letterSpacing: '-0.01em', fontWeight: '800' }],
+      },
+      boxShadow: {
+        'glow-sm': '0 0 10px hsl(var(--primary) / 0.3)',
+        'glow-md': '0 0 20px hsl(var(--primary) / 0.4)',
+        'glow-lg': '0 0 40px hsl(var(--primary) / 0.5)',
+        'soft': '0 2px 40px rgba(0, 0, 0, 0.08)',
+        'lift': '0 10px 50px rgba(0, 0, 0, 0.15)',
+        'brutal': '8px 8px 0 hsl(var(--primary))',
+        'architectural': 'var(--shadow-architectural)',
+        'elegant': 'var(--shadow-elegant)',
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
