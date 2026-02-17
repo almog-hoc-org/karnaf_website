@@ -97,10 +97,7 @@ Deno.serve(async (req) => {
           const cleaned = googleKey.replace(/\\n/g, '\n');
           serviceAccount = JSON.parse(cleaned);
         }
-        console.log("DEBUG - Sheet ID:", sheetId);
-        console.log("DEBUG - SA email:", serviceAccount.client_email);
         const token = await getGoogleAccessToken(serviceAccount);
-        console.log("DEBUG - Got token:", !!token);
 
         const now = new Date().toLocaleString("he-IL", { timeZone: "Asia/Jerusalem" });
         const serviceLabel =
@@ -109,7 +106,7 @@ Deno.serve(async (req) => {
           service === "both" ? "שניהם" : "לא צוין";
 
         const sheetsRes = await fetch(
-          `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A:F:append?valueInputOption=USER_ENTERED`,
+          `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent("גיליון1")}!A:F:append?valueInputOption=USER_ENTERED`,
           {
             method: "POST",
             headers: {
