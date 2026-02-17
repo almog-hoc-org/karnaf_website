@@ -97,9 +97,6 @@ Deno.serve(async (req) => {
           const cleaned = googleKey.replace(/\\n/g, '\n');
           serviceAccount = JSON.parse(cleaned);
         }
-        console.log("SA keys:", Object.keys(serviceAccount));
-        console.log("Has private_key:", !!serviceAccount.private_key);
-        console.log("Has client_email:", !!serviceAccount.client_email);
         const token = await getGoogleAccessToken(serviceAccount);
 
         const now = new Date().toLocaleString("he-IL", { timeZone: "Asia/Jerusalem" });
