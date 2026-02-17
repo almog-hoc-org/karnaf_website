@@ -90,15 +90,16 @@ Deno.serve(async (req) => {
     if (googleKey && sheetId) {
       try {
         // Parse the service account JSON key
-        // Handle potentially escaped JSON from secrets
         let serviceAccount;
         try {
           serviceAccount = JSON.parse(googleKey);
         } catch {
-          // Try replacing escaped newlines
           const cleaned = googleKey.replace(/\\n/g, '\n');
           serviceAccount = JSON.parse(cleaned);
         }
+        console.log("SA keys:", Object.keys(serviceAccount));
+        console.log("Has private_key:", !!serviceAccount.private_key);
+        console.log("Has client_email:", !!serviceAccount.client_email);
         const token = await getGoogleAccessToken(serviceAccount);
 
         const now = new Date().toLocaleString("he-IL", { timeZone: "Asia/Jerusalem" });
