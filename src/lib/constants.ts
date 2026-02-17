@@ -12,4 +12,4 @@ export const socialLinks = [
 export const TIKTOK_URL = "https://www.tiktok.com/@karnaf.nadlan";
 export const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@%D7%A7%D7%A8%D7%A0%D7%A3%D7%A0%D7%93%D7%9C%D7%9F";
 export const PHONE_NUMBER = "055-996-6175";
-export const EMAIL = "karnaf.nadlan@gmail.com";
+export const EMAIL = "karnaf.yazamut@gmail.com";

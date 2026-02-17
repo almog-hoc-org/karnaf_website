@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import heroArchitecture from "@/assets/hero-architecture.jpg";
 import mascotWelcome2 from "@/assets/mascot/mascot-welcome-2.png";
+import { WHATSAPP_NUMBER } from "@/lib/constants";
 
 const BigCTA = () => {
   return (
@@ -69,7 +70,7 @@ const BigCTA = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <a
-            href="https://wa.me/972559966175"
+            href={`https://wa.me/${WHATSAPP_NUMBER}`}
             target="_blank"
             rel="noopener noreferrer"
           >

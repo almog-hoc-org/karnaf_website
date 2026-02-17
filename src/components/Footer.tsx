@@ -154,7 +154,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-foreground font-medium">אימייל</p>
-                  <p className="text-sm text-muted-foreground">karnaf.nadlan@gmail.com</p>
+                  <p className="text-sm text-muted-foreground">karnaf.yazamut@gmail.com</p>
                 </div>
               </div>
             </div>
