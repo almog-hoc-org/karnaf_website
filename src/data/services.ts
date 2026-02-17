@@ -1,7 +1,7 @@
-import { BookOpen, Calculator, Search, FileCheck, Handshake, UserCheck, Target, BarChart3, Building, Scale } from "lucide-react";
+import { BookOpen, Calculator, Search, FileCheck, Handshake, UserCheck, Target, BarChart3, Building, Scale, type LucideIcon } from "lucide-react";
 
 export interface ProcessStep {
-  icon: React.ElementType;
+  icon: LucideIcon;
   title: string;
   description: string;
 }
