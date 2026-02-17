@@ -71,8 +71,6 @@ export default {
         'soft': '0 2px 40px rgba(0, 0, 0, 0.08)',
         'lift': '0 10px 50px rgba(0, 0, 0, 0.15)',
         'brutal': '8px 8px 0 hsl(var(--primary))',
-        'architectural': 'var(--shadow-architectural)',
-        'elegant': 'var(--shadow-elegant)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -114,14 +112,6 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in-up": "fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
         "scale-in": "scale-in 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-      },
-      backgroundImage: {
-        'gradient-hero': 'var(--gradient-hero)',
-        'gradient-overlay': 'var(--gradient-overlay)',
-      },
-      boxShadow: {
-        'architectural': 'var(--shadow-architectural)',
-        'elegant': 'var(--shadow-elegant)',
       },
       transitionTimingFunction: {
         'smooth': 'cubic-bezier(0.16, 1, 0.3, 1)',

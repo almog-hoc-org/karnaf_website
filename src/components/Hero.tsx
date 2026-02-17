@@ -4,9 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Hero3DBackground } from "./Hero3DBackground";
-import { InteractiveGradientOrbs } from "./InteractiveGradientOrbs";
-import { MagneticButton } from "./ui/magnetic-button";
 import { SplitText } from "./ui/split-text";
 import heroImage from "@/assets/hero-city.jpg";
 import teamHeroPhoto from "@/assets/team/itamar-almog-hero-new.png";
@@ -14,7 +11,6 @@ import mascotPointing from "@/assets/mascot/mascot-pointing.png";
 import ParticlesBackground from "./ParticlesBackground";
 
 gsap.registerPlugin(ScrollTrigger);
-
 
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -73,24 +69,6 @@ const Hero = () => {
           ease: 'power2.out'
         });
       }
-
-      // Hero section scroll-based fade out
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
-        }
-      });
-
-      // Fade out entire hero
-      tl.to(sectionRef.current, {
-        opacity: 0,
-        scale: 0.95,
-        filter: 'blur(8px)',
-      });
-
     }, sectionRef);
 
     return () => ctx.revert();
@@ -98,13 +76,23 @@ const Hero = () => {
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* 3D Background Layer */}
-      <Hero3DBackground />
+      {/* Warm gradient orbs - CSS only, no JS overhead */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div
+          className="absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-20"
+          style={{ background: 'radial-gradient(circle, hsl(25 100% 50%) 0%, transparent 70%)' }}
+        />
+        <div
+          className="absolute top-1/2 -left-48 w-[500px] h-[500px] rounded-full blur-3xl opacity-15"
+          style={{ background: 'radial-gradient(circle, hsl(35 100% 55%) 0%, transparent 70%)' }}
+        />
+        <div
+          className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-10"
+          style={{ background: 'radial-gradient(circle, hsl(45 100% 60%) 0%, transparent 70%)' }}
+        />
+      </div>
 
-      {/* Interactive Gradient Orbs */}
-      <InteractiveGradientOrbs />
-
-      {/* Parallax Background - Layer 1 */}
+      {/* Parallax Background */}
       <motion.div className="absolute inset-0 -z-20" style={{ y: bgY, scale: bgScale }}>
         <img
           src={heroImage}
@@ -114,13 +102,13 @@ const Hero = () => {
         />
       </motion.div>
 
-      {/* Gradient overlay - stronger for light theme readability */}
+      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-l from-background via-background/90 to-background/70 -z-10" />
 
-      {/* Particles - Layer 3 */}
+      {/* Particles */}
       <ParticlesBackground />
 
-      {/* Subtle mascot as background watermark - improved positioning */}
+      {/* Subtle mascot as background watermark */}
       <div className="absolute bottom-10 right-20 pointer-events-none z-[1] hidden xl:block">
         <img
           src={mascotPointing}
@@ -180,9 +168,12 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-4"
           >
             <Link to="/course">
-              <MagneticButton className="animate-pulse-glow">
+              <Button
+                size="lg"
+                className="bg-primary text-primary-foreground font-bold text-lg px-8 py-6 animate-pulse-glow"
+              >
                 לתוכנית "הדרך לדירה" 🏠
-              </MagneticButton>
+              </Button>
             </Link>
             <Link to="/premium">
               <Button
@@ -217,7 +208,7 @@ const Hero = () => {
         </motion.div>
       </motion.div>
 
-      {/* Scroll Indicator - Mouse icon */}
+      {/* Scroll Indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-muted-foreground"
         initial={{ opacity: 0 }}

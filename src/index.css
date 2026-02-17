@@ -93,42 +93,6 @@
     background-image: linear-gradient(135deg, hsl(25 100% 50%), hsl(35 100% 55%), hsl(25 100% 45%));
   }
 
-  /* Outline text */
-  .text-outline {
-    -webkit-text-stroke: 2px hsl(var(--primary));
-    color: transparent;
-    font-weight: 900;
-  }
-
-  /* Animated gradient text */
-  .text-gradient-animated {
-    background: linear-gradient(
-      90deg,
-      hsl(25 100% 50%),
-      hsl(35 100% 55%),
-      hsl(45 100% 60%),
-      hsl(25 100% 50%)
-    );
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-shift 3s ease infinite;
-  }
-
-  @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  /* 3D text shadow */
-  .text-3d {
-    text-shadow:
-      1px 1px 0 hsl(25 100% 45%),
-      2px 2px 0 hsl(25 100% 40%),
-      3px 3px 0 hsl(25 100% 35%),
-      4px 4px 8px rgba(0,0,0,0.2);
-  }
-
   /* Glow effect for buttons */
   .btn-glow {
     @apply relative overflow-hidden;
@@ -261,66 +225,6 @@
 
   .animate-checkmark-burst {
     animation: checkmark-burst 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  /* Gradient Mesh Background */
-  @property --gradient-angle {
-    syntax: '<angle>';
-    initial-value: 0deg;
-    inherits: false;
-  }
-
-  @keyframes rotate-gradient {
-    to {
-      --gradient-angle: 360deg;
-    }
-  }
-
-  .gradient-mesh {
-    background: conic-gradient(
-      from var(--gradient-angle),
-      hsl(25 100% 50% / 0.08),
-      hsl(35 100% 55% / 0.12),
-      hsl(45 100% 60% / 0.08),
-      hsl(25 100% 50% / 0.08)
-    );
-    animation: rotate-gradient 10s linear infinite;
-  }
-
-  /* Enhanced Glassmorphism */
-  .glass-card-advanced {
-    background:
-      linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06)),
-      rgba(255,255,255,0.75);
-    backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.3);
-    box-shadow:
-      0 8px 32px rgba(0,0,0,0.08),
-      inset 0 1px 0 rgba(255,255,255,0.5),
-      inset 0 -1px 0 rgba(0,0,0,0.05);
-  }
-
-  .glass-card-advanced::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(
-      135deg,
-      rgba(255,255,255,0.4),
-      transparent 50%,
-      rgba(255,255,255,0.2)
-    );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
   }
 
   /* Mascot utility classes */
