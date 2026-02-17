@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useMagneticEffect } from '@/hooks/useMagneticEffect';
+import { useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface MagneticButtonProps {
@@ -13,11 +13,25 @@ export const MagneticButton = ({
   className,
   onClick
 }: MagneticButtonProps) => {
-  const { ref, position, handleMouseMove, handleMouseLeave } = useMagneticEffect(0.3);
+  const ref = useRef<HTMLButtonElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const element = ref.current;
+    if (!element) return;
+    const rect = element.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+    setPosition({ x, y });
+  };
+
+  const handleMouseLeave = () => {
+    setPosition({ x: 0, y: 0 });
+  };
 
   return (
     <motion.button
-      ref={ref as any}
+      ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}

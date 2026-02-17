@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Users, BookOpen, CalendarDays, ThumbsUp } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
   { value: 150, suffix: "+", label: "לקוחות שליווינו", icon: Users },
@@ -15,35 +11,46 @@ const stats = [
 
 const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [count, setCount] = useState(0);
+  const hasAnimated = useRef(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const element = ref.current;
     if (!element) return;
 
-    // Set initial value to 0
-    element.textContent = `0${suffix}`;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const duration = 2000;
+          const startTime = performance.now();
 
-    // Animate counter with GSAP
-    gsap.from(element, {
-      scrollTrigger: {
-        trigger: element,
-        start: 'top 80%',
-        toggleActions: 'play none none none',
+          const animate = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease out quad
+            const eased = 1 - (1 - progress) * (1 - progress);
+            const current = Math.round(eased * value);
+            setCount(current);
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+
+          requestAnimationFrame(animate);
+        }
       },
-      textContent: 0,
-      duration: 2.5,
-      ease: 'power2.out',
-      snap: { textContent: 1 },
-      onUpdate: function() {
-        const current = Math.ceil(this.targets()[0].textContent);
-        element.textContent = `${current.toLocaleString('he-IL')}${suffix}`;
-      }
-    });
-  }, [value, suffix]);
+      { threshold: 0.3 }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [value]);
 
   return (
-    <div ref={ref} className="text-display text-4xl md:text-5xl lg:text-6xl text-primary text-glow" data-value={value}>
-      0{suffix}
+    <div ref={ref} className="text-display text-4xl md:text-5xl lg:text-6xl text-primary text-glow">
+      {count.toLocaleString('he-IL')}{suffix}
     </div>
   );
 };

@@ -22,10 +22,12 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     // Sync Lenis with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    // Store the ticker callback so we can remove it later
+    const tickerCallback = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
 
+    gsap.ticker.add(tickerCallback);
     gsap.ticker.lagSmoothing(0);
 
     // Support anchor clicks with smooth scroll
@@ -47,9 +49,9 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     document.addEventListener("click", handleAnchorClick);
 
     return () => {
-      lenis.destroy();
+      gsap.ticker.remove(tickerCallback);
       document.removeEventListener("click", handleAnchorClick);
-      gsap.ticker.remove((time) => lenis.raf(time * 1000));
+      lenis.destroy();
     };
   }, []);
 

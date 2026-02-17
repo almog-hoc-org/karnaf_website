@@ -131,8 +131,10 @@ const Navigation = () => {
         </div>
 
         <button
-          className="lg:hidden text-foreground"
+          className="lg:hidden text-foreground hover:text-primary transition-colors"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
+          aria-expanded={isMenuOpen}
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
