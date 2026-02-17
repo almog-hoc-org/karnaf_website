@@ -6,9 +6,11 @@ import { Play, FileText, Wrench, ArrowLeft, Clock } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
 import { articles } from "@/data/articles";
 
+import type { LucideIcon } from "lucide-react";
+
 type Category = "all" | "article" | "video" | "tool";
 
-const categoryLabels: Record<Category, { label: string; icon: React.ElementType }> = {
+const categoryLabels: Record<Category, { label: string; icon: LucideIcon }> = {
   all: { label: "הכל", icon: FileText },
   article: { label: "מאמרים", icon: FileText },
   video: { label: "סרטונים", icon: Play },
