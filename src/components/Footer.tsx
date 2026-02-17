@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MessageCircle, Send, CheckCircle, Phone, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { WHATSAPP_NUMBER, socialLinks, TIKTOK_URL } from "@/lib/constants";
+import { supabase } from "@/integrations/supabase/client";
 
 const Footer = () => {
   const [name, setName] = useState("");
@@ -14,7 +15,7 @@ const Footer = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!name.trim() || !phone.trim()) {
@@ -22,17 +23,19 @@ const Footer = () => {
       return;
     }
 
-    const serviceLabel =
-      service === "derech" ? "הדרך לדירה" :
-      service === "premium" ? "ליווי קרנף פרימיום" :
-      service === "both" ? "שניהם" : "לא צוין";
+    try {
+      const { error } = await supabase.functions.invoke("submit-lead", {
+        body: { name, phone, service, source: "footer" },
+      });
 
-    const message = `🦏 ליד חדש מהאתר!\n\nשם: ${name}\nטלפון: ${phone}\nשירות: ${serviceLabel}`;
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, "_blank");
+      if (error) throw error;
 
-    setIsSubmitted(true);
-    toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });
+      setIsSubmitted(true);
+      toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });
+    } catch (err) {
+      console.error("Lead submit error:", err);
+      toast({ title: "שגיאה בשליחה", description: "נסו שוב או צרו קשר בוואטסאפ.", variant: "destructive" });
+    }
 
     setTimeout(() => {
       setName("");

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { supabase } from "@/integrations/supabase/client";
 
 const ContactStrip = () => {
   const [name, setName] = useState("");
@@ -26,25 +26,27 @@ const ContactStrip = () => {
 
     setIsSubmitting(true);
 
-    const serviceLabel =
-      service === "derech" ? "הדרך לדירה" :
-      service === "premium" ? "ליווי קרנף פרימיום" :
-      service === "both" ? "שניהם" : "לא צוין";
+    try {
+      const { error } = await supabase.functions.invoke("submit-lead", {
+        body: { name, phone, email, service, source: "contact-strip" },
+      });
 
-    const message = `🦏 ליד חדש מהאתר!\n\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email || "לא צוין"}\nשירות: ${serviceLabel}`;
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      if (error) throw error;
 
-    window.open(whatsappUrl, "_blank");
-
-    setIsSubmitted(true);
-    toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });
+      setIsSubmitted(true);
+      toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });
+    } catch (err) {
+      console.error("Lead submit error:", err);
+      toast({ title: "שגיאה בשליחה", description: "נסו שוב או צרו קשר בוואטסאפ.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
 
     setTimeout(() => {
       setName("");
       setPhone("");
       setEmail("");
       setService("");
-      setIsSubmitting(false);
       setIsSubmitted(false);
     }, 3000);
   };
