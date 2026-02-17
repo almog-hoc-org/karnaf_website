@@ -1,30 +1,26 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Hero3DBackground } from "./Hero3DBackground";
+import { InteractiveGradientOrbs } from "./InteractiveGradientOrbs";
+import { MagneticButton } from "./ui/magnetic-button";
+import { SplitText } from "./ui/split-text";
 import heroImage from "@/assets/hero-city.jpg";
 import teamHeroPhoto from "@/assets/team/itamar-almog-hero-new.png";
 import mascotPointing from "@/assets/mascot/mascot-pointing.png";
 import ParticlesBackground from "./ParticlesBackground";
 
-const headlineWords = ["הדירה", "הבאה", "שלכם", "מתחילה", "כאן."];
+gsap.registerPlugin(ScrollTrigger);
 
-const wordVariants = {
-  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      delay: 0.3 + i * 0.12,
-      duration: 0.6,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  }),
-};
 
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const subheadingRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -35,10 +31,81 @@ const Hero = () => {
   const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
+  // GSAP Animations
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // Character-by-character reveal for main headline
+      const chars = headingRef.current?.querySelectorAll('.char');
+
+      if (chars && chars.length > 0) {
+        gsap.from(chars, {
+          opacity: 0,
+          y: 80,
+          rotationX: -90,
+          stagger: 0.015,
+          ease: 'back.out(1.5)',
+          duration: 0.7,
+          delay: 0.3,
+          transformOrigin: '0% 50% -50'
+        });
+      }
+
+      // Subheading animation with blur
+      if (subheadingRef.current) {
+        gsap.from(subheadingRef.current, {
+          opacity: 0,
+          y: 40,
+          filter: 'blur(10px)',
+          duration: 0.9,
+          delay: 0.8,
+          ease: 'power3.out'
+        });
+      }
+
+      // CTA buttons animation
+      if (ctaRef.current) {
+        gsap.from(ctaRef.current.children, {
+          opacity: 0,
+          y: 30,
+          stagger: 0.15,
+          duration: 0.6,
+          delay: 1.2,
+          ease: 'power2.out'
+        });
+      }
+
+      // Hero section scroll-based fade out
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        }
+      });
+
+      // Fade out entire hero
+      tl.to(sectionRef.current, {
+        opacity: 0,
+        scale: 0.95,
+        filter: 'blur(8px)',
+      });
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
+      {/* 3D Background Layer */}
+      <Hero3DBackground />
+
+      {/* Interactive Gradient Orbs */}
+      <InteractiveGradientOrbs />
+
       {/* Parallax Background - Layer 1 */}
-      <motion.div className="absolute inset-0" style={{ y: bgY, scale: bgScale }}>
+      <motion.div className="absolute inset-0 -z-20" style={{ y: bgY, scale: bgScale }}>
         <img
           src={heroImage}
           alt="קו רקיע עירוני מודרני"
@@ -48,7 +115,7 @@ const Hero = () => {
       </motion.div>
 
       {/* Gradient overlay - stronger for light theme readability */}
-      <div className="absolute inset-0 bg-gradient-to-l from-background via-background/90 to-background/70 z-[0]" />
+      <div className="absolute inset-0 bg-gradient-to-l from-background via-background/90 to-background/70 -z-10" />
 
       {/* Particles - Layer 3 */}
       <ParticlesBackground />
@@ -83,29 +150,20 @@ const Hero = () => {
             KNOWLEDGE. GUIDANCE. CONFIDENCE.
           </motion.p>
 
-          {/* Word-by-word headline */}
-          <h1 className="text-display text-5xl md:text-6xl lg:text-7xl text-foreground mb-2">
-            {headlineWords.map((word, i) => (
-              <motion.span
-                key={i}
-                custom={i}
-                initial="hidden"
-                animate="visible"
-                variants={wordVariants}
-                className="inline-block ml-3"
-              >
-                {word}
-              </motion.span>
-            ))}
+          {/* Character-by-character headline with GSAP */}
+          <h1
+            ref={headingRef}
+            className="text-display text-5xl md:text-6xl lg:text-7xl text-foreground mb-4"
+          >
+            <SplitText text="הדירה הבאה שלכם מתחילה כאן" />
           </h1>
-          <motion.h1
-            initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-display text-4xl md:text-5xl lg:text-6xl text-primary text-glow mb-6"
+
+          <p
+            ref={subheadingRef}
+            className="text-display text-3xl md:text-4xl lg:text-5xl text-primary text-glow mb-6"
           >
             עם ידע, ליווי, ושקט בראש.
-          </motion.h1>
+          </p>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -117,19 +175,14 @@ const Hero = () => {
             בין אם אתם בתחילת הדרך או משקיעים מנוסים — אנחנו כאן בשבילכם.
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.4 }}
+          <div
+            ref={ctaRef}
             className="flex flex-col sm:flex-row gap-4"
           >
             <Link to="/course">
-              <Button
-                size="lg"
-                className="btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-8 py-6"
-              >
-                לתוכנית "הדרך לדירה"
-              </Button>
+              <MagneticButton className="animate-pulse-glow">
+                לתוכנית "הדרך לדירה" 🏠
+              </MagneticButton>
             </Link>
             <Link to="/premium">
               <Button
@@ -140,7 +193,7 @@ const Hero = () => {
                 לליווי קרנף פרימיום
               </Button>
             </Link>
-          </motion.div>
+          </div>
 
         </div>
 
