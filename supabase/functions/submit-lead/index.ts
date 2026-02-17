@@ -89,8 +89,7 @@ Deno.serve(async (req) => {
 
     if (googleKey && sheetId) {
       try {
-        console.log("Google key starts with:", googleKey.substring(0, 30));
-        console.log("Google key length:", googleKey.length);
+        // Parse the service account JSON key
         // Handle potentially escaped JSON from secrets
         let serviceAccount;
         try {
