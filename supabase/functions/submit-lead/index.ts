@@ -141,11 +141,22 @@ Deno.serve(async (req) => {
   }
 });
 
+// Helper: base64url encode (JWT requires this, not standard base64)
+function base64url(input: string | Uint8Array): string {
+  let b64: string;
+  if (typeof input === "string") {
+    b64 = btoa(input);
+  } else {
+    b64 = btoa(String.fromCharCode(...input));
+  }
+  return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
 // Helper: Get Google access token from service account
 async function getGoogleAccessToken(serviceAccount: { client_email: string; private_key: string }): Promise<string> {
-  const header = btoa(JSON.stringify({ alg: "RS256", typ: "JWT" }));
+  const header = base64url(JSON.stringify({ alg: "RS256", typ: "JWT" }));
   const now = Math.floor(Date.now() / 1000);
-  const claimSet = btoa(
+  const claimSet = base64url(
     JSON.stringify({
       iss: serviceAccount.client_email,
       scope: "https://www.googleapis.com/auth/spreadsheets",
@@ -179,7 +190,7 @@ async function getGoogleAccessToken(serviceAccount: { client_email: string; priv
     textEncoder.encode(inputStr)
   );
 
-  const sig = btoa(String.fromCharCode(...new Uint8Array(signature)));
+  const sig = base64url(new Uint8Array(signature));
   const jwt = `${header}.${claimSet}.${sig}`;
 
   const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
@@ -189,5 +200,8 @@ async function getGoogleAccessToken(serviceAccount: { client_email: string; priv
   });
 
   const tokenData = await tokenRes.json();
+  if (!tokenData.access_token) {
+    console.error("Google token error:", JSON.stringify(tokenData));
+  }
   return tokenData.access_token;
 }
