@@ -12,6 +12,35 @@ Deno.serve(async (req) => {
   }
 
   try {
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+    );
+
+    // --- Rate limiting (5 submissions per hour per IP) ---
+    const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() 
+      || req.headers.get("cf-connecting-ip") 
+      || "unknown";
+    
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { count } = await supabase
+      .from("rate_limits")
+      .select("*", { count: "exact", head: true })
+      .eq("ip_address", clientIP)
+      .eq("endpoint", "submit-lead")
+      .gte("created_at", oneHourAgo);
+
+    if ((count ?? 0) >= 5) {
+      return new Response(
+        JSON.stringify({ error: "יותר מדי בקשות. נסו שוב מאוחר יותר." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Record this request for rate limiting
+    await supabase.from("rate_limits").insert({ ip_address: clientIP, endpoint: "submit-lead" });
+
+    // --- Parse and validate input ---
     const { name, phone, email, service, source } = await req.json();
 
     if (!name || !phone) {
@@ -20,11 +49,6 @@ Deno.serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
-
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-    );
 
     // 1. Save lead to database
     const { error: dbError } = await supabase.from("leads").insert({
