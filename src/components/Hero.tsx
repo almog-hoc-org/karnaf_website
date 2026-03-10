@@ -129,14 +129,6 @@ const Hero = () => {
 
         {/* Text Side (Right in RTL) */}
         <div>
-          <motion.p
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-primary font-bold text-sm tracking-widest uppercase mb-4">
-
-            KNOWLEDGE. GUIDANCE. CONFIDENCE.
-          </motion.p>
 
           {/* Character-by-character headline with GSAP */}
           <h1
@@ -175,15 +167,6 @@ const Hero = () => {
                 לתוכנית "הדרך לדירה" 🏠
               </Button>
             </Link>
-            <Link to="/premium" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full border-primary/50 text-primary hover:bg-primary/10 font-bold text-base md:text-lg px-6 md:px-8 py-5 md:py-6 backdrop-blur-sm">
-
-                לליווי קרנף פרימיום
-              </Button>
-            </Link>
           </div>
 
         </div>
@@ -208,22 +191,6 @@ const Hero = () => {
         </motion.div>
       </motion.div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-muted-foreground"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}>
-
-        <span className="text-xs tracking-widest uppercase">גלול למטה</span>
-        <motion.div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex items-start justify-center p-1">
-          <motion.div
-            className="w-1.5 h-1.5 bg-primary rounded-full"
-            animate={{ y: [0, 16, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }} />
-
-        </motion.div>
-      </motion.div>
     </section>);
 
 };

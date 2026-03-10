@@ -39,8 +39,8 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
               transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
-              <span className="text-5xl md:text-7xl font-black text-primary tracking-tight">
-                KARNAF
+              <span className="text-4xl md:text-6xl font-black text-primary tracking-tight">
+                קרנף נדל״ן
               </span>
               <motion.div
                 className="absolute -bottom-2 left-0 right-0 h-1 bg-primary rounded-full"
@@ -58,7 +58,7 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="text-muted-foreground text-sm tracking-[0.3em] uppercase"
             >
-              ידע. ליווי. ביטחון.
+              השקעות נדל״ן מבוססות נתונים
             </motion.p>
 
             {/* Loading bar */}

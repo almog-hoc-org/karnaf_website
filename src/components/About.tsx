@@ -1,15 +1,8 @@
 import { motion } from "framer-motion";
-import { Target, TrendingUp, Shield, Award, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import teamPhoto from "@/assets/team/itamar-almog-about.png";
-
-const milestones = [
-  { icon: Target, year: "2016", text: "הקמת קרנף נדל\"ן" },
-  { icon: TrendingUp, year: "2020", text: "השקת תוכנית \"הדרך לדירה\"" },
-  { icon: Shield, year: "2022", text: "ליווי 100+ עסקאות מוצלחות" },
-  { icon: Award, year: "2024", text: "הרחבת שירותי הפרימיום" },
-];
 
 const About = () => {
   return (
@@ -19,15 +12,6 @@ const About = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, amount: 0.1 }}
-              className="text-primary font-bold text-sm tracking-widest uppercase mb-4"
-            >
-              OUR STORY
-            </motion.p>
-
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -61,7 +45,7 @@ const About = () => {
               בראש הצוות עומדים{" "}
               <span className="text-foreground font-semibold">איתמר נחליאל</span> ו
               <span className="text-foreground font-semibold">אלמוג חכמה</span> —
-              מומחי נדל"ן עם ניסיון מוכח בליווי עשרות עסקאות מוצלחות.
+              מומחי נדל"ן עם ניסיון מוכח בליווי מאות עסקאות מוצלחות.
               המשימה שלנו: שתגיעו לעסקה הנכונה, בביטחון מלא.
             </motion.p>
 
@@ -70,12 +54,11 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.4 }}
-              className="grid grid-cols-3 gap-6"
+              className="grid grid-cols-2 gap-6"
             >
               {[
                 { num: "8+", label: "שנות ניסיון" },
-                { num: "150+", label: "לקוחות מרוצים" },
-                { num: "98%", label: "שביעות רצון" },
+                { num: "375+", label: "לקוחות מרוצים" },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-2xl md:text-3xl font-black text-primary text-glow">{stat.num}</div>
@@ -100,14 +83,12 @@ const About = () => {
             </motion.div>
           </div>
 
-          <div className="relative">
-            {/* Team Photo - Itamar & Almog */}
+          <div className="relative flex justify-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex justify-center mb-8"
             >
               <img
                 src={teamPhoto}
@@ -119,33 +100,6 @@ const About = () => {
                 }}
               />
             </motion.div>
-
-            <div className="absolute top-0 bottom-0 right-6 w-px bg-gradient-to-b from-transparent via-primary/20 to-transparent shadow-[0_0_8px_rgba(255,102,0,0.1)]" />
-
-            {milestones.map((milestone, i) => (
-              <motion.div
-                key={milestone.year}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.15 }}
-                className="flex items-center gap-6 mb-8 last:mb-0 group relative z-10"
-              >
-                <motion.div
-                  whileInView={{ scale: [0, 1.2, 1] }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + i * 0.15 }}
-                  className="w-12 h-12 rounded-full bg-card border-2 border-primary/30 flex items-center justify-center shrink-0 group-hover:border-primary transition-colors duration-300"
-                >
-                  <milestone.icon size={20} className="text-primary" />
-                </motion.div>
-
-                <div className="bg-card/80 backdrop-blur-sm border border-border rounded-xl p-4 flex-1 group-hover:border-primary/30 transition-colors duration-300 shadow-sm">
-                  <span className="text-primary font-bold text-sm">{milestone.year}</span>
-                  <p className="text-foreground font-medium">{milestone.text}</p>
-                </div>
-              </motion.div>
-            ))}
           </div>
         </div>
       </div>

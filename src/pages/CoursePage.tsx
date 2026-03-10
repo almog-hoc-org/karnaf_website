@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { GraduationCap, CheckCircle, MessageCircle, Star, Clock, Users, BookOpen } from "lucide-react";
+import { GraduationCap, CheckCircle, MessageCircle, Star, Clock, Users, BookOpen, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import PageHero from "@/layouts/PageHero";
 import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
 import VideoPlayer from "@/components/rich-media/VideoPlayer";
 import ProcessStepper from "@/components/rich-media/ProcessStepper";
-import MortgageCalculator from "@/components/rich-media/MortgageCalculator";
+import FitQuiz from "@/components/rich-media/FitQuiz";
 import CurriculumAccordion from "@/components/rich-media/CurriculumAccordion";
 import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { courseFeatures, courseProcessSteps } from "@/data/services";
@@ -23,7 +23,7 @@ const highlights = [
   { icon: BookOpen, value: "50+", label: "שיעורים" },
   { icon: Clock, value: "5+", label: "שעות תוכן" },
   { icon: Users, value: "300+", label: "בוגרים" },
-  { icon: Star, value: "4.9", label: "דירוג ממוצע" },
+  { icon: Calculator, value: "6+", label: "כלים ומחשבונים מתקדמים" },
 ];
 
 const CoursePage = () => {
@@ -31,14 +31,13 @@ const CoursePage = () => {
     <>
       <Helmet>
         <title>הדרך לדירה — קורס דיגיטלי | קרנף נדל"ן</title>
-        <meta name="description" content="קורס דיגיטלי מקיף לרוכשי דירות ראשונות — 50+ שיעורים, מחשבונים, כלים וקהילת בוגרים. למדו לקנות דירה בצורה חכמה." />
+        <meta name="description" content="קורס דיגיטלי מקיף לרוכשי דירות ראשונות — 50+ שיעורים, מחשבונים, כלים וליווי צמוד של אנליסט נדל״ן." />
       </Helmet>
 
       <PageHero
-        tag="DIGITAL COURSE"
         title="הדרך"
         highlight="לדירה"
-        subtitle="תוכנית דיגיטלית מקיפה שמלמדת אתכם לקנות דירה חכם — מא' ועד ת'."
+        subtitle="תוכנית הליווי הדיגיטלית שתלמד אתכם לקנות דירה חכם — מא׳ ועד ת׳."
         badge="50+ שיעורים · גישה מיידית"
       />
 
@@ -68,7 +67,6 @@ const CoursePage = () => {
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-4xl">
           <AnimatedSectionHeader
-            tag="COURSE TRAILER"
             title="צפו בטריילר"
             highlight="של הקורס"
             subtitle="3 דקות שמסבירות בדיוק מה תקבלו ואיך זה עובד."
@@ -84,10 +82,8 @@ const CoursePage = () => {
       <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-5xl">
           <AnimatedSectionHeader
-            tag="THE PROCESS"
-            title="איך זה"
-            highlight="עובד?"
-            subtitle="5 שלבים פשוטים מהרשמה ועד סגירת עסקה."
+            title="מה בתוכנית?"
+            highlight=""
           />
           <ProcessStepper steps={courseProcessSteps} />
         </div>
@@ -97,25 +93,22 @@ const CoursePage = () => {
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader
-            tag="CURRICULUM"
             title="מה"
             highlight="לומדים?"
-            subtitle="6 מודולים מעשיים שמכסים הכל — משוק ומימון ועד חוזה וחתימה."
           />
           <CurriculumAccordion />
         </div>
       </section>
 
-      {/* Mortgage Calculator */}
+      {/* Fit Quiz */}
       <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-4xl">
           <AnimatedSectionHeader
-            tag="INTERACTIVE TOOL"
-            title="מחשבון"
-            highlight="משכנתא"
-            subtitle="כלי אינטראקטיבי שעוזר להבין כמה באמת תשלמו — הזיזו את המחוונים ותראו את התוצאה."
+            title="האם התוכנית"
+            highlight="מתאימה לי?"
+            subtitle="ענו על מספר שאלות קצרות וגלו עד כמה התוכנית מתאימה בדיוק בשבילכם."
           />
-          <MortgageCalculator />
+          <FitQuiz />
         </div>
       </section>
 
@@ -123,7 +116,6 @@ const CoursePage = () => {
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader
-            tag="WHAT YOU GET"
             title="מה כולל"
             highlight="הקורס?"
           />
@@ -149,7 +141,6 @@ const CoursePage = () => {
       <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-5xl">
           <AnimatedSectionHeader
-            tag="REVIEWS"
             title="מה הבוגרים"
             highlight="אומרים?"
           />
@@ -172,7 +163,7 @@ const CoursePage = () => {
       {/* FAQ */}
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-3xl">
-          <AnimatedSectionHeader tag="FAQ" title="שאלות" highlight="נפוצות" />
+          <AnimatedSectionHeader title="שאלות" highlight="נפוצות" />
           <Accordion type="single" collapsible className="space-y-2">
             {faqData.course.map((item, i) => (
               <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-xl px-4 bg-card">

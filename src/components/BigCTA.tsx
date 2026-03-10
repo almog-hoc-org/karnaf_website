@@ -37,9 +37,8 @@ const BigCTA = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-primary font-bold text-sm tracking-widest uppercase mb-6">
+          className="text-primary font-bold text-sm tracking-widest mb-6">
 
-          YOUR JOURNEY STARTS HERE
         </motion.p>
 
         <motion.h2

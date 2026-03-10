@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 interface PageHeroProps {
-  tag: string;
+  tag?: string;
   title: string;
   highlight?: string;
   subtitle?: string;
@@ -27,14 +27,16 @@ const PageHero = ({ tag, title, highlight, subtitle, badge, backgroundImage }: P
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float pointer-events-none" />
 
       <div className="relative z-10 container mx-auto px-6 text-center">
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-primary font-bold text-sm tracking-widest uppercase mb-4"
-        >
-          {tag}
-        </motion.p>
+        {tag && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-primary font-bold text-sm tracking-widest uppercase mb-4"
+          >
+            {tag}
+          </motion.p>
+        )}
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}

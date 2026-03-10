@@ -10,10 +10,7 @@ import Index from "./pages/Index";
 
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 const CoursePage = lazy(() => import("./pages/CoursePage"));
-const PremiumPage = lazy(() => import("./pages/PremiumPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
-const BlogPage = lazy(() => import("./pages/BlogPage"));
-const BlogArticlePage = lazy(() => import("./pages/BlogArticlePage"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -32,10 +29,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/course" element={<CoursePage />} />
-              <Route path="/premium" element={<PremiumPage />} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/blog/:slug" element={<BlogArticlePage />} />
               <Route path="/testimonials" element={<TestimonialsPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="*" element={<NotFound />} />

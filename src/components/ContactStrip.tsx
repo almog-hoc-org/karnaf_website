@@ -63,7 +63,7 @@ const ContactStrip = () => {
         >
           <div className="flex items-center justify-between mb-4 md:mb-0">
             <div className="hidden md:block">
-              <h3 className="text-foreground font-bold text-lg">נשמח להכיר אתכם</h3>
+              <h3 className="text-foreground font-bold text-lg">הרשמו לוובינר הבא שלנו</h3>
               <p className="text-muted-foreground text-sm">השאירו פרטים ונחזור אליכם בהקדם</p>
             </div>
           </div>
@@ -124,8 +124,7 @@ const ContactStrip = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="derech">תוכנית "הדרך לדירה"</SelectItem>
-                    <SelectItem value="premium">ליווי קרנף פרימיום</SelectItem>
-                    <SelectItem value="both">שניהם</SelectItem>
+                    <SelectItem value="webinar">וובינר</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
