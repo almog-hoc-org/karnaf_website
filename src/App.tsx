@@ -10,10 +10,7 @@ import Index from "./pages/Index";
 
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 const CoursePage = lazy(() => import("./pages/CoursePage"));
-const PremiumPage = lazy(() => import("./pages/PremiumPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
-const BlogPage = lazy(() => import("./pages/BlogPage"));
-const BlogArticlePage = lazy(() => import("./pages/BlogArticlePage"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
