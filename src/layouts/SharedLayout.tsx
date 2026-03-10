@@ -41,6 +41,8 @@ const SharedLayout = () => {
         </AnimatePresence>
         <FooterBar />
         <WhatsAppFAB />
+        <AccessibilityWidget />
+      </div>
       </div>
     </SmoothScroll>
   );
