@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Users, BookOpen, CalendarDays, ThumbsUp } from "lucide-react";
+import { Users, BookOpen, CalendarDays } from "lucide-react";
 
 const stats = [
-  { value: 150, suffix: "+", label: "לקוחות שליווינו", icon: Users },
+  { value: 375, suffix: "+", label: "לקוחות מרוצים", icon: Users },
   { value: 50, suffix: "+", label: "שיעורים בקורס", icon: BookOpen },
   { value: 8, suffix: "+", label: "שנות ניסיון", icon: CalendarDays },
-  { value: 98, suffix: "%", label: "שביעות רצון", icon: ThumbsUp },
 ];
 
 const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
@@ -28,7 +27,6 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
           const animate = (currentTime: number) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            // Ease out quad
             const eased = 1 - (1 - progress) * (1 - progress);
             const current = Math.round(eased * value);
             setCount(current);
@@ -64,15 +62,15 @@ const StatsCounter = () => {
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <motion.p
+        <motion.h3
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.1 }}
-          className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-12"
+          className="text-center text-foreground font-bold text-2xl mb-12"
         >
-          THE NUMBERS SPEAK
-        </motion.p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          סיפורו של <span className="text-primary">קרנף נדל״ן</span>
+        </motion.h3>
+        <div className="grid grid-cols-3 gap-8 text-center max-w-3xl mx-auto">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}

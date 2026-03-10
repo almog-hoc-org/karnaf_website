@@ -101,8 +101,7 @@ const Footer = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="derech">תוכנית "הדרך לדירה"</SelectItem>
-                    <SelectItem value="premium">ליווי קרנף פרימיום</SelectItem>
-                    <SelectItem value="both">שניהם</SelectItem>
+                    <SelectItem value="webinar">וובינר</SelectItem>
                   </SelectContent>
                 </Select>
                 <Button
