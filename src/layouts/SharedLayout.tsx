@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import FooterBar from "@/components/FooterBar";
 import WhatsAppFAB from "@/components/WhatsAppFAB";
+import AccessibilityWidget from "@/components/AccessibilityWidget";
 import SmoothScroll from "@/components/SmoothScroll";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
