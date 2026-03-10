@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 interface PageHeroProps {
-  tag: string;
+  tag?: string;
   title: string;
   highlight?: string;
   subtitle?: string;
