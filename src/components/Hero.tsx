@@ -167,15 +167,6 @@ const Hero = () => {
                 לתוכנית "הדרך לדירה" 🏠
               </Button>
             </Link>
-            <Link to="/premium" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full border-primary/50 text-primary hover:bg-primary/10 font-bold text-base md:text-lg px-6 md:px-8 py-5 md:py-6 backdrop-blur-sm">
-
-                לליווי קרנף פרימיום
-              </Button>
-            </Link>
           </div>
 
         </div>
