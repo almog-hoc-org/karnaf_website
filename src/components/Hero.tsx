@@ -129,14 +129,6 @@ const Hero = () => {
 
         {/* Text Side (Right in RTL) */}
         <div>
-          <motion.p
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-primary font-bold text-sm tracking-widest uppercase mb-4">
-
-            KNOWLEDGE. GUIDANCE. CONFIDENCE.
-          </motion.p>
 
           {/* Character-by-character headline with GSAP */}
           <h1
