@@ -5,7 +5,7 @@ import StatsCounter from "@/components/StatsCounter";
 import Advantages from "@/components/Advantages";
 import Properties from "@/components/Properties";
 import Services from "@/components/Services";
-import NewsSection from "@/components/NewsSection";
+
 import About from "@/components/About";
 import BigCTA from "@/components/BigCTA";
 import Footer from "@/components/Footer";
