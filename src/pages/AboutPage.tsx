@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { Heart, Target, Eye, Shield, MessageCircle, ArrowLeft } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/layouts/PageHero";
 import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
@@ -12,19 +11,16 @@ import { WHATSAPP_NUMBER } from "@/lib/constants";
 import StatsCounter from "@/components/StatsCounter";
 import BigCTA from "@/components/BigCTA";
 
-const values = [
-  { icon: Shield, title: "שקיפות", description: "אנחנו מראים את הכל — מספרים, תהליכים ותוצאות. בלי הפתעות." },
-  { icon: Target, title: "מקצועיות", description: "כל החלטה מבוססת על נתונים, ניתוח שוק ושנים של ניסיון." },
-  { icon: Heart, title: "אכפתיות", description: "כל לקוח הוא שותף. אנחנו דואגים לאינטרסים שלכם כאילו זה הכסף שלנו." },
-  { icon: Eye, title: "חזון", description: "אנחנו לא רק עוזרים לקנות דירה — אנחנו בונים עתיד פיננסי." },
-];
-
 const timeline = [
-  { year: "2017", title: "ההתחלה", description: "איתמר ואלמוג נפגשים ומגלים תשוקה משותפת לנדל\"ן." },
-  { year: "2019", title: "העסקה הראשונה", description: "ליווי העסקה הראשונה — זוג צעיר שקנה דירה בבאר שבע." },
-  { year: "2021", title: "הדרך לדירה", description: "השקת התוכנית הדיגיטלית — 50+ שיעורים ומחשבונים." },
-  { year: "2023", title: "ליווי פרימיום", description: "השקת שירות הליווי האישי — יד ביד מהרגע הראשון." },
-  { year: "2025", title: "150+ עסקאות", description: "ציון דרך: למעלה מ-150 עסקאות מוצלחות ו-98% שביעות רצון." },
+  { year: "2016", title: "קצינים בקבע", description: "איתמר ואלמוג משרתים כקצינים בצה\"ל ומתחילים להתעניין בעולם הנדל\"ן." },
+  { year: "2017", title: "הפליפ הראשון", description: "העסקה הראשונה — רכישה, שיפוץ ומכירה ברווח." },
+  { year: "2018", title: "השקעות בחו\"ל", description: "התרחבות להשקעות בחו\"ל וצבירת ניסיון נוסף בארץ." },
+  { year: "2021", title: "עסקת תמ\"א", description: "כניסה לעולם ההתחדשות העירונית עם עסקת תמ\"א מוצלחת." },
+  { year: "2022", title: "קרקעות ויזמות", description: "נכנסים לעולם הקרקעות והיזמות הנדל\"נית." },
+  { year: "2023", title: "קרנף נולד", description: "קרנף נדל\"ן מוקם רשמית — הלקוחות הראשונים מצטרפים." },
+  { year: "2024", title: "מתפוצצים ברשתות", description: "צמיחה מסיבית ברשתות החברתיות — עשרות אלפי עוקבים חדשים." },
+  { year: "2025", title: "50 עסקאות, 300 תלמידים", description: "50 עסקאות מוצלחות ו-300 תלמידים בהכשרות הדיגיטליות." },
+  { year: "2026", title: "הקהילה גדלה", description: "עשרות אלפי עוקבים ברשתות, מעל ל-350 לקוחות ותלמידים." },
 ];
 
 const galleryImages = [
@@ -41,17 +37,16 @@ const AboutPage = () => {
     <>
       <Helmet>
         <title>אודות קרנף נדל"ן | הסיפור שלנו</title>
-        <meta name="description" content="הכירו את קרנף נדל&quot;ן — הצוות, הסיפור, הערכים. למעלה מ-150 עסקאות מוצלחות ו-8+ שנות ניסיון בליווי רוכשי דירות." />
+        <meta name="description" content="הכירו את קרנף נדל&quot;ן — הצוות, הסיפור, הניסיון. מעל 350 לקוחות ותלמידים ו-8+ שנות ניסיון." />
       </Helmet>
 
       <PageHero
-        tag="ABOUT US"
         title="סיפורו של"
         highlight="הקרנף"
-        subtitle={'איך שני חברים הפכו תשוקה לנדל"ן לחברה שעוזרת למאות ישראלים לקנות דירה בצורה חכמה.'}
+        subtitle="2 קצינים צעירים בקבע מחליטים להפוך את התשוקה שלהם לניתוח, נתונים ומספרים ולהקים חברה שעוזרת לאנשים לרכוש דירה בישראל בביטחון מלא."
       />
 
-      {/* Story */}
+      {/* Why Karnaf - moved to top */}
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-4xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -60,7 +55,6 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-primary font-bold text-sm tracking-widest uppercase mb-4">THE STORY</h3>
               <h2 className="text-display text-3xl md:text-4xl text-foreground mb-6">
                 למה <span className="text-gradient">קרנף?</span>
               </h2>
@@ -74,7 +68,7 @@ const AboutPage = () => {
                   החלטנו שזה חייב להשתנות.
                 </p>
                 <p>
-                  היום, אחרי 150+ עסקאות מוצלחות, אנחנו ממשיכים באותה משימה: לתת לכל ישראלי את הכלים והידע לקנות דירה בצורה חכמה.
+                  היום, אחרי מעל 350 לקוחות ותלמידים, אנחנו ממשיכים באותה משימה: לתת לכל ישראלי את הכלים והידע לקנות דירה בצורה חכמה.
                 </p>
               </div>
             </motion.div>
@@ -96,38 +90,10 @@ const AboutPage = () => {
 
       <StatsCounter />
 
-      {/* Values */}
-      <section className="py-20">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <AnimatedSectionHeader
-            tag="VALUES"
-            title="הערכים"
-            highlight="שלנו"
-          />
-          <div className="grid sm:grid-cols-2 gap-6">
-            {values.map((v, i) => (
-              <motion.div
-                key={v.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-colors"
-              >
-                <v.icon size={24} className="text-primary mb-4" />
-                <h4 className="text-foreground font-bold text-lg mb-2">{v.title}</h4>
-                <p className="text-muted-foreground text-sm leading-relaxed">{v.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Timeline */}
       <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader
-            tag="TIMELINE"
             title="ציר"
             highlight="הזמן"
           />
@@ -162,7 +128,6 @@ const AboutPage = () => {
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-4xl">
           <AnimatedSectionHeader
-            tag="THE TEAM"
             title="הצוות"
             highlight="שלנו"
           />
@@ -176,7 +141,6 @@ const AboutPage = () => {
                 transition={{ delay: i * 0.15 }}
                 className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all group"
               >
-                {/* Photo — large, professional */}
                 <div className="relative h-64 overflow-hidden">
                   {member.image ? (
                     <img
@@ -193,7 +157,6 @@ const AboutPage = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
                 </div>
 
-                {/* Content */}
                 <div className="p-6 -mt-8 relative">
                   <h4 className="text-foreground font-bold text-xl">{member.name}</h4>
                   <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
@@ -209,7 +172,6 @@ const AboutPage = () => {
       <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-4xl">
           <AnimatedSectionHeader
-            tag="GALLERY"
             title="גלריית"
             highlight="תמונות"
           />
