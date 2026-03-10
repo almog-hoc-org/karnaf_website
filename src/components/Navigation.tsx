@@ -2,22 +2,14 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Menu, X, ChevronDown, GraduationCap, Crown } from "lucide-react";
+import { MessageCircle, Menu, X } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import karnafLogo from "@/assets/mascot/karnaf-logo.svg";
 
 const navItems = [
   { label: "דף הבית", to: "/" },
-  {
-    label: "השירותים שלנו",
-    to: "/services",
-    children: [
-      { label: 'תוכנית "הדרך לדירה"', to: "/course", icon: GraduationCap },
-      { label: "ליווי קרנף פרימיום", to: "/premium", icon: Crown },
-    ],
-  },
+  { label: "הדרך לדירה", to: "/course" },
   { label: "סיפורו של קרנף", to: "/about" },
-  { label: "ידע ותובנות", to: "/blog" },
   { label: "סיפורי הצלחה", to: "/testimonials" },
   { label: "צור קשר", to: "/contact" },
 ];
@@ -25,7 +17,6 @@ const navItems = [
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -36,7 +27,6 @@ const Navigation = () => {
 
   useEffect(() => {
     setIsMenuOpen(false);
-    setOpenDropdown(null);
   }, [location.pathname]);
 
   const isActive = (to: string) => {
@@ -57,67 +47,34 @@ const Navigation = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
         >
-          <Link
-            to="/"
-            className="flex items-center gap-2"
-          >
+          <Link to="/" className="flex items-center gap-2">
             <img
               src={karnafLogo}
               alt="קרנף"
               className={`object-contain transition-all duration-300 ${isScrolled ? "w-8 h-8" : "w-10 h-10"}`}
             />
-            <span className={`font-black text-primary tracking-tight transition-all duration-300 ${isScrolled ? "text-xl" : "text-2xl"}`}>
-              KARNAF
+            <span className={`font-black text-primary tracking-tight transition-all duration-300 ${isScrolled ? "text-lg" : "text-xl"}`}>
+              קרנף נדל״ן
             </span>
           </Link>
         </motion.div>
 
         <div className="hidden lg:flex items-center gap-10">
           {navItems.map((item) => (
-            <div
+            <Link
               key={item.label}
-              className="relative"
-              onMouseEnter={() => item.children && setOpenDropdown(item.label)}
-              onMouseLeave={() => setOpenDropdown(null)}
+              to={item.to}
+              className="relative text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300 py-1"
             >
-              <Link
-                to={item.to}
-                className="relative text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300 py-1 flex items-center gap-1"
-              >
-                {item.label}
-                {item.children && <ChevronDown size={14} className={`transition-transform duration-200 ${openDropdown === item.label ? "rotate-180" : ""}`} />}
-                {isActive(item.to) && (
-                  <motion.div
-                    layoutId="nav-underline"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
-              </Link>
-
-              <AnimatePresence>
-                {item.children && openDropdown === item.label && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute top-full right-0 mt-2 w-64 bg-card/95 backdrop-blur-xl border border-border rounded-xl shadow-2xl overflow-hidden z-50"
-                  >
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.to}
-                        to={child.to}
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors"
-                      >
-                        <child.icon size={18} className="text-primary/70" />
-                        <span>{child.label}</span>
-                      </Link>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+              {item.label}
+              {isActive(item.to) && (
+                <motion.div
+                  layoutId="nav-underline"
+                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+              )}
+            </Link>
           ))}
         </div>
 
@@ -151,45 +108,21 @@ const Navigation = () => {
           >
             <div className="container mx-auto px-6 py-6 space-y-1">
               {navItems.map((item, i) => (
-                <div key={item.label}>
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
+                  <Link
+                    to={item.to}
+                    className={`block text-base font-medium transition-colors py-3 border-b border-border/50 ${
+                      isActive(item.to) ? "text-primary" : "text-muted-foreground hover:text-primary"
+                    }`}
                   >
-                    <Link
-                      to={item.to}
-                      className={`block text-base font-medium transition-colors py-3 border-b border-border/50 ${
-                        isActive(item.to) ? "text-primary" : "text-muted-foreground hover:text-primary"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.div>
-
-                  {item.children && (
-                    <div className="pr-6 space-y-0">
-                      {item.children.map((child, ci) => (
-                        <motion.div
-                          key={child.to}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.05 + (ci + 1) * 0.03 }}
-                        >
-                          <Link
-                            to={child.to}
-                            className={`flex items-center gap-2 text-sm py-2.5 transition-colors ${
-                              isActive(child.to) ? "text-primary" : "text-muted-foreground hover:text-primary"
-                            }`}
-                          >
-                            <child.icon size={16} className="text-primary/70" />
-                            {child.label}
-                          </Link>
-                        </motion.div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                    {item.label}
+                  </Link>
+                </motion.div>
               ))}
 
               <motion.div

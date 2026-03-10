@@ -58,7 +58,7 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="text-muted-foreground text-sm tracking-[0.3em] uppercase"
             >
-              ידע. ליווי. ביטחון.
+              השקעות נדל״ן מבוססות נתונים
             </motion.p>
 
             {/* Loading bar */}
