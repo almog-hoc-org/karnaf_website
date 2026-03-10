@@ -43,7 +43,6 @@ const SharedLayout = () => {
         <WhatsAppFAB />
         <AccessibilityWidget />
       </div>
-      </div>
     </SmoothScroll>
   );
 };
