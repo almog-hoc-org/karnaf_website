@@ -15,20 +15,20 @@ const ContactPage = () => {
       </Helmet>
 
       <PageHero
-        tag="CONTACT US"
         title="צרו"
         highlight="קשר"
-        subtitle="נשמח לשמוע מכם. פגישת היכרות ראשונה — בחינם וללא התחייבות."
+        subtitle="נשמח לשמוע מכם ולעזור לכם בדרך לדירה."
       />
 
-      {/* Contact Form (reuse existing Footer component) */}
-      <Footer />
+      {/* Contact Form - reduced top padding for closer proximity */}
+      <div className="-mt-8">
+        <Footer />
+      </div>
 
       {/* FAQ */}
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader
-            tag="FAQ"
             title="שאלות"
             highlight="נפוצות"
           />

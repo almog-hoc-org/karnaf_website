@@ -7,56 +7,51 @@ import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader
 import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
-import StatsCounter from "@/components/StatsCounter";
 import BigCTA from "@/components/BigCTA";
 
 const TestimonialsPage = () => {
   const courseTestimonials = testimonials.filter((t) => t.service === "course");
   const premiumTestimonials = testimonials.filter((t) => t.service === "premium");
+  const allTestimonials = [...premiumTestimonials, ...courseTestimonials];
 
   return (
     <>
       <Helmet>
         <title>סיפורי הצלחה | קרנף נדל"ן</title>
-        <meta name="description" content="קראו עדויות של לקוחות שרכשו דירות בליווי קרנף נדל&quot;ן — בוגרי הקורס ולקוחות פרימיום משתפים את הסיפור שלהם." />
+        <meta name="description" content="קראו עדויות של לקוחות שרכשו דירות בליווי קרנף נדל&quot;ן — בוגרי התוכנית משתפים את הסיפור שלהם." />
       </Helmet>
 
       <PageHero
-        tag="SUCCESS STORIES"
         title="סיפורי"
         highlight="הצלחה"
         subtitle="מאות ישראלים כבר רכשו דירה בצורה חכמה עם קרנף. הנה חלק מהסיפורים שלהם."
       />
 
-      <StatsCounter />
-
-      {/* Premium Testimonials */}
-      <section className="py-20">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <AnimatedSectionHeader
-            tag="PREMIUM CLIENTS"
-            title="לקוחות"
-            highlight="פרימיום"
-            subtitle="אנשים שבחרו בליווי אישי מקצה לקצה."
-          />
-          <div className="grid md:grid-cols-2 gap-6">
-            {premiumTestimonials.map((t, i) => (
-              <TestimonialVideoCard key={t.name} testimonial={t} index={i} />
-            ))}
+      {/* Stats - reduced spacing */}
+      <section className="py-10 bg-card border-y border-border">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 gap-8 max-w-md mx-auto text-center">
+            <div>
+              <p className="text-4xl font-black text-primary text-glow">375+</p>
+              <p className="text-sm text-muted-foreground mt-1">לקוחות בתוכניות השונות</p>
+            </div>
+            <div>
+              <p className="text-4xl font-black text-primary text-glow">8+</p>
+              <p className="text-sm text-muted-foreground mt-1">שנות ניסיון</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Course Testimonials */}
-      <section className="py-20 bg-secondary/30">
+      {/* All Testimonials */}
+      <section className="py-20">
         <div className="container mx-auto px-6 max-w-5xl">
           <AnimatedSectionHeader
-            tag="COURSE GRADUATES"
-            title='בוגרי "הדרך לדירה"'
-            subtitle="למדו לבד — ורכשו דירה בביטחון."
+            title="מה הלקוחות"
+            highlight="אומרים?"
           />
           <div className="grid md:grid-cols-2 gap-6">
-            {courseTestimonials.map((t, i) => (
+            {allTestimonials.map((t, i) => (
               <TestimonialVideoCard key={t.name} testimonial={t} index={i} />
             ))}
           </div>
@@ -64,7 +59,7 @@ const TestimonialsPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-20">
+      <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-6 text-center max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
