@@ -5,9 +5,9 @@ import StatsCounter from "@/components/StatsCounter";
 import Advantages from "@/components/Advantages";
 import Properties from "@/components/Properties";
 import Services from "@/components/Services";
-
 import About from "@/components/About";
 import BigCTA from "@/components/BigCTA";
+import CommunitySection from "@/components/CommunitySection";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
 
@@ -30,9 +30,9 @@ const Index = () => {
         <Advantages />
         <Services />
         <Properties />
-        
         <About />
         <BigCTA />
+        <CommunitySection />
         <Footer />
       </div>
     </>
