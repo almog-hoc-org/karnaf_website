@@ -7,7 +7,7 @@ import {
   XCircle,
   MessageCircle,
   Star,
-  Clock,
+  
   Users,
   BookOpen,
   Calculator,
@@ -37,7 +37,6 @@ const courseTestimonials = testimonials.filter((t) => t.service === "course");
 
 const highlights = [
   { icon: BookOpen, value: "50+", label: "שיעורים" },
-  { icon: Clock, value: "5+", label: "שעות תוכן" },
   { icon: Users, value: "300+", label: "בוגרים" },
   { icon: Calculator, value: "6+", label: "כלים ומחשבונים מתקדמים" },
 ];
@@ -104,7 +103,7 @@ const totalLessons = curriculum.reduce(
   (sum, mod) => sum + mod.lessons.length,
   0
 );
-const totalHours = "5+";
+
 
 const CoursePage = () => {
   return (
@@ -394,11 +393,6 @@ const CoursePage = () => {
                 <strong className="text-foreground">{totalLessons}</strong>{" "}
                 שיעורים
               </span>
-              <span className="text-border">·</span>
-              <span className="text-sm text-muted-foreground">
-                <strong className="text-foreground">{totalHours}</strong> שעות
-                תוכן
-              </span>
             </div>
             <CurriculumAccordion />
           </div>
@@ -451,9 +445,9 @@ const CoursePage = () => {
               הצטרפו ל-300+ בוגרים שכבר רכשו דירה בצורה חכמה.
             </p>
 
-            {/* Price placeholder */}
+            {/* Price */}
             <div className="text-5xl font-black text-primary text-glow mb-8">
-              &#8362;XXX
+              &#8362;3,450
             </div>
 
             {/* Value list */}

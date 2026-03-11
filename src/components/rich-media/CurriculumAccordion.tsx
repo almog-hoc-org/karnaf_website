@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Play, FileText, HelpCircle, Clock, BookOpen } from "lucide-react";
+import { Play, FileText, HelpCircle, BookOpen } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { curriculum } from "@/data/curriculum";
 
@@ -53,10 +53,6 @@ const CurriculumAccordion = () => {
                   <p className="text-foreground font-bold text-sm">{module.title}</p>
                   <p className="text-muted-foreground text-xs">{module.subtitle}</p>
                 </div>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground flex-shrink-0">
-                  <Clock size={12} />
-                  <span>{module.duration}</span>
-                </div>
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-4 pb-3 pt-0">
@@ -73,7 +69,6 @@ const CurriculumAccordion = () => {
                         <Icon size={14} />
                       </div>
                       <span className="text-sm text-foreground flex-1">{lesson.title}</span>
-                      <span className="text-xs text-muted-foreground flex-shrink-0">{lesson.duration}</span>
                     </div>
                   );
                 })}
