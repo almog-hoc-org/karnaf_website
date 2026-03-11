@@ -86,7 +86,7 @@ const Services = () => {
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.7, delay: i * 0.2 }}
               whileHover={{ scale: 1.02, boxShadow: "0 8px 30px rgba(255, 102, 0, 0.15)" }}
-              className="relative bg-card border border-border rounded-2xl p-8 card-hover-glow group flex flex-col transition-all duration-500"
+              className="relative card-premium p-8 group flex flex-col"
             >
               <motion.div
                 whileHover={{ rotate: 5, scale: 1.1 }}

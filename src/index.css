@@ -482,4 +482,79 @@
     animation: none !important;
     transition-duration: 0s !important;
   }
+
+  /* Mesh gradient background for hero/feature sections */
+  .mesh-gradient-bg {
+    background:
+      radial-gradient(ellipse at 20% 50%, hsl(25 100% 50% / 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, hsl(35 100% 55% / 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, hsl(25 100% 45% / 0.04) 0%, transparent 50%);
+  }
+
+  /* Premium card — glass + gradient border + enhanced hover */
+  .card-premium {
+    @apply bg-card/90 backdrop-blur-xl border border-border/50 shadow-xl rounded-2xl;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, hsl(25 100% 50% / 0.3), transparent 50%, hsl(25 100% 50% / 0.15));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  .card-premium:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 40px rgba(255, 102, 0, 0.12), 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-color: hsl(25 100% 50% / 0.4);
+  }
+
+  /* Decorative gradient line between sections */
+  .section-divider {
+    @apply relative;
+  }
+  .section-divider::after {
+    content: '';
+    @apply absolute bottom-0 left-1/2 -translate-x-1/2 h-px;
+    width: min(80%, 600px);
+    background: linear-gradient(to right, transparent, hsl(25 100% 50% / 0.2), transparent);
+  }
+
+  /* Dark dramatic gradient for course page hero */
+  .course-hero-bg {
+    background:
+      linear-gradient(135deg, hsl(215 40% 12%) 0%, hsl(215 35% 18%) 50%, hsl(25 30% 15%) 100%);
+  }
+
+  /* Cold gray background for problem section */
+  .problem-bg {
+    background: linear-gradient(135deg, hsl(220 15% 95%) 0%, hsl(220 10% 92%) 100%);
+  }
+
+  /* Warm gradient for solution section */
+  .solution-bg {
+    background: linear-gradient(135deg, hsl(25 100% 50% / 0.04) 0%, hsl(35 100% 55% / 0.06) 100%);
+    border-right: 3px solid hsl(25 100% 50% / 0.3);
+  }
+
+  /* Glow effect for pricing card */
+  .pricing-glow {
+    box-shadow:
+      0 0 0 1px hsl(25 100% 50% / 0.2),
+      0 8px 40px hsl(25 100% 50% / 0.1),
+      0 4px 20px rgba(0, 0, 0, 0.06);
+  }
+  .pricing-glow:hover {
+    box-shadow:
+      0 0 0 1px hsl(25 100% 50% / 0.3),
+      0 12px 50px hsl(25 100% 50% / 0.15),
+      0 8px 30px rgba(0, 0, 0, 0.08);
+  }
 }

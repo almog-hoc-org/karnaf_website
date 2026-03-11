@@ -84,7 +84,7 @@ const Advantages = () => {
             className="relative z-10"
           >
             <TiltCard className="h-full">
-              <div className="bg-card border border-border rounded-xl p-8 text-center card-hover-glow group h-full relative overflow-hidden shadow-sm">
+              <div className="card-premium rounded-xl p-8 text-center group h-full relative overflow-hidden">
                 <span className="text-primary/10 text-8xl font-black absolute top-4 right-6 select-none group-hover:text-primary/15 transition-colors duration-500">
                   01
                 </span>
@@ -129,7 +129,7 @@ const Advantages = () => {
             className="relative z-10"
           >
             <TiltCard className="h-full">
-              <div className="bg-card border border-border rounded-xl p-8 text-center card-hover-glow group h-full relative overflow-hidden shadow-sm">
+              <div className="card-premium rounded-xl p-8 text-center group h-full relative overflow-hidden">
                 <span className="text-primary/10 text-8xl font-black absolute top-4 right-6 select-none group-hover:text-primary/15 transition-colors duration-500">
                   02
                 </span>
@@ -160,7 +160,7 @@ const Advantages = () => {
             className="relative z-10"
           >
             <TiltCard className="h-full">
-              <div className="bg-card border border-border rounded-xl p-8 text-center card-hover-glow group h-full relative overflow-hidden shadow-sm">
+              <div className="card-premium rounded-xl p-8 text-center group h-full relative overflow-hidden">
                 <span className="text-primary/10 text-8xl font-black absolute top-4 right-6 select-none group-hover:text-primary/15 transition-colors duration-500">
                   03
                 </span>
