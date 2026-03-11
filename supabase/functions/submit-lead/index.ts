@@ -180,7 +180,7 @@ Deno.serve(async (req) => {
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-              values: [[now, name, phone, email || "", serviceLabel, validatedSource]],
+              values: [[now, name, phone, email || "", serviceLabel, validatedSource, message || ""]],
             }),
           }
         );
