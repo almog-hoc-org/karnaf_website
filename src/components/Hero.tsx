@@ -161,7 +161,7 @@ const Hero = () => {
             <img
               src={mascotPointing}
               alt=""
-              className="h-[70px] object-contain opacity-30 hidden sm:block"
+              className="h-[110px] object-contain opacity-60 hidden sm:block"
               loading="lazy" />
           </div>
 
