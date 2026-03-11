@@ -95,20 +95,12 @@ const Navigation = () => {
         </div>
 
         <div className="flex lg:hidden items-center gap-2">
-          <TooltipProvider delayDuration={300}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <a href="https://www.karnaf.net/ourplans" target="_blank" rel="noopener noreferrer" aria-label="אזור תלמידים">
-                  <Button variant="ghost" size="icon" className="text-foreground hover:text-primary">
-                    <GraduationCap size={20} />
-                  </Button>
-                </a>
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <p>אזור תלמידים</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <a href="https://www.karnaf.net/ourplans" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-0.5">
+            <Button variant="ghost" size="icon" className="text-primary hover:text-primary/80 h-8 w-8">
+              <GraduationCap size={20} />
+            </Button>
+            <span className="text-[10px] font-bold text-primary leading-none">אזור תלמידים</span>
+          </a>
           <button
             className="text-foreground hover:text-primary transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
