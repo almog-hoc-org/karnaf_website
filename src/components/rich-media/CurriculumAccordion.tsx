@@ -69,7 +69,6 @@ const CurriculumAccordion = () => {
                         <Icon size={14} />
                       </div>
                       <span className="text-sm text-foreground flex-1">{lesson.title}</span>
-                      <span className="text-xs text-muted-foreground flex-shrink-0">{lesson.duration}</span>
                     </div>
                   );
                 })}
