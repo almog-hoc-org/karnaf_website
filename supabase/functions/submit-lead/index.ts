@@ -11,6 +11,7 @@ const MAX_NAME = 100;
 const MAX_PHONE = 20;
 const MAX_EMAIL = 254;
 const MAX_SOURCE = 50;
+const MAX_MESSAGE = 1000;
 const ALLOWED_SERVICES = ["derech", "webinar"];
 const ALLOWED_SOURCES = ["contact-strip", "footer", "website", "services-page", "course-page"];
 const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
