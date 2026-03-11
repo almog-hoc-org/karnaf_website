@@ -108,15 +108,6 @@ const Hero = () => {
       {/* Particles */}
       <ParticlesBackground />
 
-      {/* Subtle mascot as background watermark */}
-      <div className="absolute bottom-10 right-20 pointer-events-none z-[1] hidden xl:block">
-        <img
-          src={mascotPointing}
-          alt=""
-          className="h-[180px] object-contain mascot-fade-bottom opacity-[0.12] mascot-blend-soft-light animate-float-slow"
-          loading="lazy" />
-
-      </div>
 
       {/* Decorative Elements */}
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float pointer-events-none" />
@@ -157,7 +148,7 @@ const Hero = () => {
 
           <div
             ref={ctaRef}
-            className="flex flex-col sm:flex-row gap-3 md:gap-4">
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 items-center">
 
             <Link to="/course" className="w-full sm:w-auto">
               <Button
@@ -167,6 +158,11 @@ const Hero = () => {
                 לתוכנית "הדרך לדירה" 🏠
               </Button>
             </Link>
+            <img
+              src={mascotPointing}
+              alt=""
+              className="h-[70px] object-contain opacity-30 hidden sm:block"
+              loading="lazy" />
           </div>
 
         </div>
@@ -177,18 +173,19 @@ const Hero = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
           className="hidden lg:flex items-end justify-start absolute bottom-0 left-0 z-10 pointer-events-none overflow-hidden"
-          style={{ height: '85%', width: '45%' }}>
+          style={{ height: '75%', width: '38%' }}>
 
           <img
             src={foundersDuo}
             alt="איתמר ואלמוג — מייסדי קרנף"
             className="w-full object-contain object-bottom"
             style={{
-              maskImage: "linear-gradient(to top, transparent 0%, black 12%, black 80%, transparent 100%), linear-gradient(to right, black 70%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 12%, black 80%, transparent 100%)",
+              maskImage: "linear-gradient(to top, transparent 2%, black 18%, black 70%, transparent 95%), linear-gradient(to right, transparent 0%, black 15%, black 70%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to top, transparent 2%, black 18%, black 70%, transparent 95%), linear-gradient(to right, transparent 0%, black 15%, black 70%, transparent 100%)",
+              maskComposite: "intersect",
+              WebkitMaskComposite: "destination-in",
               filter: "drop-shadow(0 8px 40px rgba(0,0,0,0.4))",
               opacity: 0.85,
-              mixBlendMode: "luminosity",
             }} />
 
         </motion.div>
