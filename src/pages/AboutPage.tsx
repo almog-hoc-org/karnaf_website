@@ -39,7 +39,7 @@ const AboutPage = () => {
       />
 
       {/* Why Karnaf - moved to top */}
-      <section className="pt-0 pb-10 -mt-8">
+      <section className="pt-0 pb-10">
         <div className="container mx-auto px-6 max-w-4xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div
