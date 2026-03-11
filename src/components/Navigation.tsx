@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Menu, X } from "lucide-react";
+import { MessageCircle, Menu, X, GraduationCap } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import karnafLogo from "@/assets/mascot/karnaf-logo.svg";
 
@@ -78,7 +78,13 @@ const Navigation = () => {
           ))}
         </div>
 
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex items-center gap-3">
+          <a href="https://www.karnaf.net/ourplans" target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" size="sm" className="gap-2 font-medium">
+              <GraduationCap size={16} />
+              אזור תלמידים
+            </Button>
+          </a>
           <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
             <Button className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
               <MessageCircle size={16} />
@@ -87,14 +93,21 @@ const Navigation = () => {
           </a>
         </div>
 
-        <button
-          className="lg:hidden text-foreground hover:text-primary transition-colors"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
-          aria-expanded={isMenuOpen}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex lg:hidden items-center gap-2">
+          <a href="https://www.karnaf.net/ourplans" target="_blank" rel="noopener noreferrer" aria-label="אזור תלמידים">
+            <Button variant="ghost" size="icon" className="text-foreground hover:text-primary">
+              <GraduationCap size={20} />
+            </Button>
+          </a>
+          <button
+            className="text-foreground hover:text-primary transition-colors"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
