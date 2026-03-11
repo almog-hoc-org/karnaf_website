@@ -108,15 +108,6 @@ const Hero = () => {
       {/* Particles */}
       <ParticlesBackground />
 
-      {/* Subtle mascot as background watermark */}
-      <div className="absolute bottom-10 right-20 pointer-events-none z-[1] hidden xl:block">
-        <img
-          src={mascotPointing}
-          alt=""
-          className="h-[180px] object-contain mascot-fade-bottom opacity-[0.12] mascot-blend-soft-light animate-float-slow"
-          loading="lazy" />
-
-      </div>
 
       {/* Decorative Elements */}
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float pointer-events-none" />
