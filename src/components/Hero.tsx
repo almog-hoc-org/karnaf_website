@@ -173,18 +173,19 @@ const Hero = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
           className="hidden lg:flex items-end justify-start absolute bottom-0 left-0 z-10 pointer-events-none overflow-hidden"
-          style={{ height: '85%', width: '45%' }}>
+          style={{ height: '75%', width: '38%' }}>
 
           <img
             src={foundersDuo}
             alt="איתמר ואלמוג — מייסדי קרנף"
             className="w-full object-contain object-bottom"
             style={{
-              maskImage: "linear-gradient(to top, transparent 0%, black 12%, black 80%, transparent 100%), linear-gradient(to right, black 70%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 12%, black 80%, transparent 100%)",
+              maskImage: "linear-gradient(to top, transparent 2%, black 18%, black 70%, transparent 95%), linear-gradient(to right, transparent 0%, black 15%, black 70%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to top, transparent 2%, black 18%, black 70%, transparent 95%), linear-gradient(to right, transparent 0%, black 15%, black 70%, transparent 100%)",
+              maskComposite: "intersect",
+              WebkitMaskComposite: "destination-in",
               filter: "drop-shadow(0 8px 40px rgba(0,0,0,0.4))",
               opacity: 0.85,
-              mixBlendMode: "luminosity",
             }} />
 
         </motion.div>
