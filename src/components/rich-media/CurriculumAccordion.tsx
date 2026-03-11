@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Play, FileText, HelpCircle, Clock, BookOpen } from "lucide-react";
+import { Play, FileText, HelpCircle, BookOpen } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { curriculum } from "@/data/curriculum";
 
