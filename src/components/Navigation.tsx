@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { MessageCircle, Menu, X, GraduationCap } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import karnafLogo from "@/assets/mascot/karnaf-logo.svg";
@@ -94,11 +95,20 @@ const Navigation = () => {
         </div>
 
         <div className="flex lg:hidden items-center gap-2">
-          <a href="https://www.karnaf.net/ourplans" target="_blank" rel="noopener noreferrer" aria-label="אזור תלמידים">
-            <Button variant="ghost" size="icon" className="text-foreground hover:text-primary">
-              <GraduationCap size={20} />
-            </Button>
-          </a>
+          <TooltipProvider delayDuration={300}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a href="https://www.karnaf.net/ourplans" target="_blank" rel="noopener noreferrer" aria-label="אזור תלמידים">
+                  <Button variant="ghost" size="icon" className="text-foreground hover:text-primary">
+                    <GraduationCap size={20} />
+                  </Button>
+                </a>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <p>אזור תלמידים</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <button
             className="text-foreground hover:text-primary transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
