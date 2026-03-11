@@ -450,9 +450,9 @@ const CoursePage = () => {
               הצטרפו ל-300+ בוגרים שכבר רכשו דירה בצורה חכמה.
             </p>
 
-            {/* Price placeholder */}
+            {/* Price */}
             <div className="text-5xl font-black text-primary text-glow mb-8">
-              &#8362;XXX
+              &#8362;3,450
             </div>
 
             {/* Value list */}

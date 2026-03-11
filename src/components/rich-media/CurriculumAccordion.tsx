@@ -53,10 +53,6 @@ const CurriculumAccordion = () => {
                   <p className="text-foreground font-bold text-sm">{module.title}</p>
                   <p className="text-muted-foreground text-xs">{module.subtitle}</p>
                 </div>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground flex-shrink-0">
-                  <Clock size={12} />
-                  <span>{module.duration}</span>
-                </div>
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-4 pb-3 pt-0">
