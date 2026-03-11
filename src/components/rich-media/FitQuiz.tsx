@@ -56,6 +56,7 @@ const FitQuiz = () => {
                   value={[answers[q.id] || 5]}
                   onValueChange={(v) => handleChange(q.id, v)}
                   className="flex-1"
+                  aria-label={q.label}
                 />
                 <span className="text-xs text-muted-foreground w-4">10</span>
                 <span className="text-primary font-bold text-sm w-6 text-center">{answers[q.id] || 5}</span>

@@ -79,7 +79,7 @@ const Properties = () => {
           viewport={{ once: true, amount: 0.1 }}
           className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-4"
         >
-          SUCCESS STORIES
+          סיפורי הצלחה
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 30 }}

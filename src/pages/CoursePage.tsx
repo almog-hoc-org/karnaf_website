@@ -33,7 +33,7 @@ import { curriculum } from "@/data/curriculum";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import BigCTA from "@/components/BigCTA";
 
-const courseTestimonials = testimonials.filter((t) => t.service === "course");
+const courseTestimonials = testimonials;
 
 const highlights = [
   { icon: BookOpen, value: "50+", label: "שיעורים" },
@@ -477,7 +477,7 @@ const CoursePage = () => {
             </div>
 
             {/* Primary CTA */}
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("היי! אני רוצה לרכוש את תוכנית הדרך לדירה")}`} target="_blank" rel="noopener noreferrer">
               <Button
                 size="lg"
                 className="btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-7 w-full sm:w-auto gap-3 mb-4"

@@ -4,8 +4,8 @@ import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/layouts/PageHero";
 import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
-import VideoPlayer from "@/components/rich-media/VideoPlayer";
-import ImageLightbox from "@/components/rich-media/ImageLightbox";
+
+
 import { team } from "@/data/team";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import StatsCounter from "@/components/StatsCounter";
@@ -23,14 +23,6 @@ const timeline = [
   { year: "2026", title: "הקהילה גדלה", description: "עשרות אלפי עוקבים ברשתות, מעל ל-350 לקוחות ותלמידים." },
 ];
 
-const galleryImages = [
-  { src: "/placeholder.svg", alt: "צוות קרנף" },
-  { src: "/placeholder.svg", alt: "פגישת לקוחות" },
-  { src: "/placeholder.svg", alt: "חתימת חוזה" },
-  { src: "/placeholder.svg", alt: "מסירת מפתח" },
-  { src: "/placeholder.svg", alt: "הרצאה" },
-  { src: "/placeholder.svg", alt: "ניתוח שוק" },
-];
 
 const AboutPage = () => {
   return (
@@ -79,10 +71,12 @@ const AboutPage = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <VideoPlayer
-                url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                title="הסיפור של קרנף"
-              />
+              <div className="rounded-2xl overflow-hidden border border-primary/20 shadow-lg">
+                <div className="flex flex-col items-center justify-center py-16 bg-card">
+                  <p className="text-lg font-bold text-foreground mb-2">הסרטון בדרך</p>
+                  <p className="text-sm text-muted-foreground">בקרוב כאן</p>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -168,16 +162,6 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="py-20 bg-secondary/30">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <AnimatedSectionHeader
-            title="גלריית"
-            highlight="תמונות"
-          />
-          <ImageLightbox images={galleryImages} columns={3} />
-        </div>
-      </section>
 
       <BigCTA />
     </>
