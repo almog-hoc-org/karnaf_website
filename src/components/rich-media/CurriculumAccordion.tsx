@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Play, FileText, HelpCircle, BookOpen } from "lucide-react";
+import { Play, FileText, HelpCircle, Wrench, BookOpen } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { curriculum } from "@/data/curriculum";
 
@@ -7,12 +7,14 @@ const lessonTypeIcon = {
   video: Play,
   document: FileText,
   quiz: HelpCircle,
+  tool: Wrench,
 };
 
 const lessonTypeColor = {
   video: "text-primary bg-primary/10",
   document: "text-blue-400 bg-blue-400/10",
   quiz: "text-green-400 bg-green-400/10",
+  tool: "text-orange-400 bg-orange-400/10",
 };
 
 const CurriculumAccordion = () => {
