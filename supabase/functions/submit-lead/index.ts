@@ -98,6 +98,7 @@ Deno.serve(async (req) => {
       email: email || null,
       service: validatedService,
       source: validatedSource,
+      message: message || null,
     });
 
     if (dbError) {
