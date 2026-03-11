@@ -148,7 +148,7 @@ const Hero = () => {
 
           <div
             ref={ctaRef}
-            className="flex flex-col sm:flex-row gap-3 md:gap-4">
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 items-center">
 
             <Link to="/course" className="w-full sm:w-auto">
               <Button
@@ -158,6 +158,11 @@ const Hero = () => {
                 לתוכנית "הדרך לדירה" 🏠
               </Button>
             </Link>
+            <img
+              src={mascotPointing}
+              alt=""
+              className="h-[70px] object-contain opacity-30 hidden sm:block"
+              loading="lazy" />
           </div>
 
         </div>
