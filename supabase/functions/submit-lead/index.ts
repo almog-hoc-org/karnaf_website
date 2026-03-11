@@ -135,7 +135,8 @@ Deno.serve(async (req) => {
                   <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">טלפון</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${esc(phone)}</td></tr>
                   <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">אימייל</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${email ? esc(email) : "לא צוין"}</td></tr>
                   <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">שירות</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${serviceLabel}</td></tr>
-                  <tr><td style="padding: 8px; font-weight: bold;">מקור</td><td style="padding: 8px;">${validatedSource}</td></tr>
+                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">מקור</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${validatedSource}</td></tr>
+                  ${message ? `<tr><td style="padding: 8px; font-weight: bold;">הודעה</td><td style="padding: 8px;">${esc(message)}</td></tr>` : ""}
                 </table>
               </div>
             `,
