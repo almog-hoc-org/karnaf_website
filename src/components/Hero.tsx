@@ -161,7 +161,7 @@ const Hero = () => {
             <img
               src={mascotPointing}
               alt=""
-              className="h-[70px] object-contain opacity-30 hidden sm:block"
+              className="h-[110px] object-contain opacity-60 hidden sm:block"
               loading="lazy" />
           </div>
 
@@ -173,15 +173,15 @@ const Hero = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
           className="hidden lg:flex items-end justify-start absolute bottom-0 left-0 z-10 pointer-events-none overflow-hidden"
-          style={{ height: '75%', width: '38%' }}>
+          style={{ height: '65%', width: '32%' }}>
 
           <img
             src={foundersDuo}
             alt="איתמר ואלמוג — מייסדי קרנף"
             className="w-full object-contain object-bottom"
             style={{
-              maskImage: "linear-gradient(to top, transparent 0%, black 20%, black 65%, transparent 90%)",
-              WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 20%, black 65%, transparent 90%)",
+              maskImage: "linear-gradient(to top, transparent 0%, black 20%, black 60%, transparent 95%)",
+              WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 20%, black 60%, transparent 95%)",
               filter: "drop-shadow(0 8px 40px rgba(0,0,0,0.3))",
               opacity: 0.9,
             }} />
