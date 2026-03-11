@@ -11,6 +11,7 @@ const MAX_NAME = 100;
 const MAX_PHONE = 20;
 const MAX_EMAIL = 254;
 const MAX_SOURCE = 50;
+const MAX_MESSAGE = 1000;
 const ALLOWED_SERVICES = ["derech", "webinar"];
 const ALLOWED_SOURCES = ["contact-strip", "footer", "website", "services-page", "course-page"];
 const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -64,6 +65,7 @@ Deno.serve(async (req) => {
     const email = sanitizeString(body.email, MAX_EMAIL);
     const service = sanitizeString(body.service, 30);
     const source = sanitizeString(body.source, MAX_SOURCE);
+    const message = sanitizeString(body.message, MAX_MESSAGE);
 
     if (!name || !phone) {
       return new Response(
@@ -96,6 +98,7 @@ Deno.serve(async (req) => {
       email: email || null,
       service: validatedService,
       source: validatedSource,
+      message: message || null,
     });
 
     if (dbError) {
@@ -132,7 +135,8 @@ Deno.serve(async (req) => {
                   <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">טלפון</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${esc(phone)}</td></tr>
                   <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">אימייל</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${email ? esc(email) : "לא צוין"}</td></tr>
                   <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">שירות</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${serviceLabel}</td></tr>
-                  <tr><td style="padding: 8px; font-weight: bold;">מקור</td><td style="padding: 8px;">${validatedSource}</td></tr>
+                  <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">מקור</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${validatedSource}</td></tr>
+                  ${message ? `<tr><td style="padding: 8px; font-weight: bold;">הודעה</td><td style="padding: 8px;">${esc(message)}</td></tr>` : ""}
                 </table>
               </div>
             `,
@@ -176,7 +180,7 @@ Deno.serve(async (req) => {
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-              values: [[now, name, phone, email || "", serviceLabel, validatedSource]],
+              values: [[now, name, phone, email || "", serviceLabel, validatedSource, message || ""]],
             }),
           }
         );

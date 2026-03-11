@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -12,6 +13,7 @@ const ContactStrip = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [service, setService] = useState("");
+  const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -19,8 +21,8 @@ const ContactStrip = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name.trim() || !phone.trim()) {
-      toast({ title: "נא למלא שם וטלפון", variant: "destructive" });
+    if (!name.trim() || !phone.trim() || !email.trim()) {
+      toast({ title: "נא למלא שם, טלפון ואימייל", variant: "destructive" });
       return;
     }
 
@@ -28,7 +30,7 @@ const ContactStrip = () => {
 
     try {
       const { error } = await supabase.functions.invoke("submit-lead", {
-        body: { name, phone, email, service, source: "contact-strip" },
+        body: { name, phone, email, service, message, source: "contact-strip" },
       });
 
       if (error) throw error;
@@ -47,6 +49,7 @@ const ContactStrip = () => {
       setPhone("");
       setEmail("");
       setService("");
+      setMessage("");
       setIsSubmitted(false);
     }, 3000);
   };
@@ -81,12 +84,12 @@ const ContactStrip = () => {
               </div>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               <div className="flex flex-col">
                 <label htmlFor="contact-name" className="sr-only">שם מלא</label>
                 <Input
                   id="contact-name"
-                  placeholder="שם מלא"
+                  placeholder="שם מלא *"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -98,7 +101,7 @@ const ContactStrip = () => {
                 <Input
                   id="contact-phone"
                   type="tel"
-                  placeholder="טלפון"
+                  placeholder="טלפון *"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
@@ -106,13 +109,14 @@ const ContactStrip = () => {
                 />
               </div>
               <div className="flex flex-col">
-                <label htmlFor="contact-email" className="sr-only">אימייל (אופציונלי)</label>
+                <label htmlFor="contact-email" className="sr-only">אימייל</label>
                 <Input
                   id="contact-email"
                   type="email"
-                  placeholder="אימייל (אופציונלי)"
+                  placeholder="אימייל *"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                   className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors"
                 />
               </div>
@@ -127,6 +131,17 @@ const ContactStrip = () => {
                     <SelectItem value="webinar">וובינר</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+              <div className="flex flex-col sm:col-span-2 lg:col-span-1">
+                <label htmlFor="contact-message" className="sr-only">הודעה חופשית</label>
+                <Textarea
+                  id="contact-message"
+                  placeholder="הודעה חופשית (אופציונלי)"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  rows={1}
+                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors resize-none min-h-[2.75rem]"
+                />
               </div>
               <Button
                 type="submit"

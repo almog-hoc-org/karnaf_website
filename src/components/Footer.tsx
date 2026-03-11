@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MessageCircle, Send, CheckCircle, Phone, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -11,21 +12,23 @@ import { supabase } from "@/integrations/supabase/client";
 const Footer = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [service, setService] = useState("");
+  const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name.trim() || !phone.trim()) {
-      toast({ title: "נא למלא שם וטלפון", variant: "destructive" });
+    if (!name.trim() || !phone.trim() || !email.trim()) {
+      toast({ title: "נא למלא שם, טלפון ואימייל", variant: "destructive" });
       return;
     }
 
     try {
       const { error } = await supabase.functions.invoke("submit-lead", {
-        body: { name, phone, service, source: "footer" },
+        body: { name, phone, email, service, message, source: "footer" },
       });
 
       if (error) throw error;
@@ -40,7 +43,9 @@ const Footer = () => {
     setTimeout(() => {
       setName("");
       setPhone("");
+      setEmail("");
       setService("");
+      setMessage("");
       setIsSubmitted(false);
     }, 3000);
   };
@@ -83,16 +88,26 @@ const Footer = () => {
             ) : (
               <form className="space-y-4" onSubmit={handleSubmit}>
                 <Input
-                  placeholder="שם מלא"
+                  placeholder="שם מלא *"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  required
                   className="bg-card border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50 transition-colors"
                 />
                 <Input
                   type="tel"
-                  placeholder="טלפון"
+                  placeholder="טלפון *"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  required
+                  className="bg-card border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50 transition-colors"
+                />
+                <Input
+                  type="email"
+                  placeholder="אימייל *"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                   className="bg-card border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50 transition-colors"
                 />
                 <Select value={service} onValueChange={setService}>
@@ -104,6 +119,13 @@ const Footer = () => {
                     <SelectItem value="webinar">וובינר</SelectItem>
                   </SelectContent>
                 </Select>
+                <Textarea
+                  placeholder="הודעה חופשית (אופציונלי)"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  rows={3}
+                  className="bg-card border-border text-foreground placeholder:text-muted-foreground text-right focus:border-primary/50 transition-colors resize-none"
+                />
                 <Button
                   type="submit"
                   className="w-full btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-lg gap-2"
