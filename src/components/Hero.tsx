@@ -171,21 +171,24 @@ const Hero = () => {
 
         </div>
 
-        {/* Team Photo - left side of hero on desktop */}
+        {/* Founders Photo - left side of hero on desktop */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
-          className="hidden lg:flex items-end justify-center absolute bottom-0 left-[8%] z-10 pointer-events-none">
+          className="hidden lg:flex items-end justify-center absolute bottom-0 left-[5%] z-10 pointer-events-none">
 
           <img
-            src={teamHeroPhoto}
+            src={foundersDuo}
             alt="איתמר ואלמוג — מייסדי קרנף"
-            className="h-[500px] object-contain opacity-80"
+            className="h-[520px] object-contain"
             style={{
-              maskImage: "linear-gradient(to bottom, black 60%, transparent 100%), linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-              filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.15))"
+              maskImage: "linear-gradient(to bottom, black 55%, transparent 98%), linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, black 55%, transparent 98%)",
+              maskComposite: "intersect",
+              WebkitMaskComposite: "source-in",
+              filter: "drop-shadow(0 8px 40px rgba(0,0,0,0.3))",
+              opacity: 0.85,
             }} />
 
         </motion.div>
