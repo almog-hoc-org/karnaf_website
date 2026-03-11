@@ -180,12 +180,10 @@ const Hero = () => {
             alt="איתמר ואלמוג — מייסדי קרנף"
             className="w-full object-contain object-bottom"
             style={{
-              maskImage: "linear-gradient(to top, transparent 2%, black 18%, black 70%, transparent 95%), linear-gradient(to right, transparent 0%, black 15%, black 70%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to top, transparent 2%, black 18%, black 70%, transparent 95%), linear-gradient(to right, transparent 0%, black 15%, black 70%, transparent 100%)",
-              maskComposite: "intersect",
-              WebkitMaskComposite: "destination-in",
-              filter: "drop-shadow(0 8px 40px rgba(0,0,0,0.4))",
-              opacity: 0.85,
+              maskImage: "linear-gradient(to top, transparent 0%, black 20%, black 65%, transparent 90%)",
+              WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 20%, black 65%, transparent 90%)",
+              filter: "drop-shadow(0 8px 40px rgba(0,0,0,0.3))",
+              opacity: 0.9,
             }} />
 
         </motion.div>
