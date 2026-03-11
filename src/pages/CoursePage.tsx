@@ -393,11 +393,6 @@ const CoursePage = () => {
                 <strong className="text-foreground">{totalLessons}</strong>{" "}
                 שיעורים
               </span>
-              <span className="text-border">·</span>
-              <span className="text-sm text-muted-foreground">
-                <strong className="text-foreground">{totalHours}</strong> שעות
-                תוכן
-              </span>
             </div>
             <CurriculumAccordion />
           </div>
