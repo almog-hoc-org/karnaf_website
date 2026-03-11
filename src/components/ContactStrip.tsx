@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -12,6 +13,7 @@ const ContactStrip = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [service, setService] = useState("");
+  const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -19,8 +21,8 @@ const ContactStrip = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name.trim() || !phone.trim()) {
-      toast({ title: "נא למלא שם וטלפון", variant: "destructive" });
+    if (!name.trim() || !phone.trim() || !email.trim()) {
+      toast({ title: "נא למלא שם, טלפון ואימייל", variant: "destructive" });
       return;
     }
 
@@ -28,7 +30,7 @@ const ContactStrip = () => {
 
     try {
       const { error } = await supabase.functions.invoke("submit-lead", {
-        body: { name, phone, email, service, source: "contact-strip" },
+        body: { name, phone, email, service, message, source: "contact-strip" },
       });
 
       if (error) throw error;
@@ -47,6 +49,7 @@ const ContactStrip = () => {
       setPhone("");
       setEmail("");
       setService("");
+      setMessage("");
       setIsSubmitted(false);
     }, 3000);
   };
