@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "./ui/split-text";
 import heroImage from "@/assets/hero-city.jpg";
-import teamHeroPhoto from "@/assets/team/itamar-almog-hero-new.png";
+import foundersDuo from "@/assets/team/founders-duo.png";
 import mascotPointing from "@/assets/mascot/mascot-pointing.png";
 import ParticlesBackground from "./ParticlesBackground";
 
