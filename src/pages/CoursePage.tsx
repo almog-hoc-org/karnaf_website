@@ -103,7 +103,7 @@ const totalLessons = curriculum.reduce(
   (sum, mod) => sum + mod.lessons.length,
   0
 );
-const totalHours = "5+";
+
 
 const CoursePage = () => {
   return (
