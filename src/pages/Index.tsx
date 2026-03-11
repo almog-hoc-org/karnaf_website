@@ -10,6 +10,7 @@ import BigCTA from "@/components/BigCTA";
 import CommunitySection from "@/components/CommunitySection";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
+import WelcomePopup from "@/components/WelcomePopup";
 
 const Index = () => {
   const hasVisited = sessionStorage.getItem("karnaf-visited");
@@ -23,6 +24,7 @@ const Index = () => {
   return (
     <>
       {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
+      {!isLoading && <WelcomePopup />}
       <div id="top">
         <Hero />
         <ContactStrip />
