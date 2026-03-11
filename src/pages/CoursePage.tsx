@@ -37,7 +37,6 @@ const courseTestimonials = testimonials.filter((t) => t.service === "course");
 
 const highlights = [
   { icon: BookOpen, value: "50+", label: "שיעורים" },
-  { icon: Clock, value: "5+", label: "שעות תוכן" },
   { icon: Users, value: "300+", label: "בוגרים" },
   { icon: Calculator, value: "6+", label: "כלים ומחשבונים מתקדמים" },
 ];
