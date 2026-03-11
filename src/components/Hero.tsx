@@ -173,7 +173,7 @@ const Hero = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
           className="hidden lg:flex items-end justify-start absolute bottom-0 left-0 z-10 pointer-events-none overflow-hidden"
-          style={{ height: '58%', width: '28%' }}>
+          style={{ height: '68%', width: '34%' }}>
 
           <img
             src={foundersDuo}
