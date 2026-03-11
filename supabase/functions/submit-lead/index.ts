@@ -65,6 +65,7 @@ Deno.serve(async (req) => {
     const email = sanitizeString(body.email, MAX_EMAIL);
     const service = sanitizeString(body.service, 30);
     const source = sanitizeString(body.source, MAX_SOURCE);
+    const message = sanitizeString(body.message, MAX_MESSAGE);
 
     if (!name || !phone) {
       return new Response(
