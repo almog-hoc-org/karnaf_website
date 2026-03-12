@@ -25,7 +25,7 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-4 text-center"
+          className="text-base md:text-xl text-muted-foreground leading-relaxed mb-3 md:mb-4 text-center"
         >
           קרנף נדל"ן הוקמה מתוך אמונה שכל אדם יכול לקבל החלטות חכמות בנדל"ן —
           אם רק ייתנו לו את הכלים, הידע והליווי הנכון. אנחנו מלווים רוכשי דירות
