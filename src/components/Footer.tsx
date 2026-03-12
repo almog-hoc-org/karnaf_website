@@ -55,7 +55,7 @@ const Footer = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary to-background" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
