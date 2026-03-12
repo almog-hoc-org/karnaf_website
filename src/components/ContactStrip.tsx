@@ -141,7 +141,7 @@ const ContactStrip = () => {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={1}
-                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors resize-none min-h-[2.75rem]"
+                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors resize-none min-h-[2.75rem] text-right"
                 />
               </div>
               <Button
