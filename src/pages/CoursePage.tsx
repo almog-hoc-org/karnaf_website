@@ -325,7 +325,7 @@ const CoursePage = () => {
         <div className="container mx-auto px-6 max-w-6xl">
           <AnimatedSectionHeader title="מה בתוכנית?" highlight="" />
 
-          <div className="grid md:grid-cols-3 gap-8 mt-12">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-8 mt-6 md:mt-12">
             {programCards.map((card, i) => (
               <motion.div
                 key={card.title}
