@@ -124,7 +124,7 @@ const ContactStrip = () => {
               <div className="flex flex-col">
                 <label htmlFor="contact-service" className="sr-only">בחירת שירות</label>
                 <Select value={service} onValueChange={setService}>
-                  <SelectTrigger id="contact-service" className="bg-background/50 border-border/50 text-foreground h-11 md:h-12 text-right">
+                  <SelectTrigger id="contact-service" dir="rtl" className="bg-background/50 border-border/50 text-foreground h-11 md:h-12 text-right">
                     <SelectValue placeholder="אני מעוניין ב..." />
                   </SelectTrigger>
                   <SelectContent>
