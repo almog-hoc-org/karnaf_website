@@ -65,7 +65,7 @@ const Advantages = () => {
           למה <span className="text-gradient">קרנף?</span>
         </motion.h2>
 
-        <div className="grid md:grid-cols-3 gap-8 relative">
+        <div className="grid md:grid-cols-3 gap-4 md:gap-8 relative">
           <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
