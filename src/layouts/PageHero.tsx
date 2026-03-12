@@ -11,7 +11,7 @@ interface PageHeroProps {
 
 const PageHero = ({ tag, title, highlight, subtitle, badge, backgroundImage }: PageHeroProps) => {
   return (
-    <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden">
+    <section className="relative pt-24 pb-8 md:pt-32 md:pb-12 overflow-hidden">
       {backgroundImage && (
         <>
           <div className="absolute inset-0">
