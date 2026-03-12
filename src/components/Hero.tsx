@@ -75,7 +75,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative min-h-[50vh] md:min-h-screen flex items-center overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-[70vh] md:min-h-screen flex items-center overflow-hidden">
       {/* Warm gradient orbs - CSS only, no JS overhead */}
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
         <div
@@ -116,7 +116,7 @@ const Hero = () => {
       {/* Content Grid */}
       <motion.div
         style={{ opacity: contentOpacity }}
-        className="relative z-10 container mx-auto px-6 py-4 md:py-32 grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+        className="relative z-10 container mx-auto px-6 py-10 md:py-32 grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
 
         {/* Text Side (Right in RTL) */}
         <div>
