@@ -382,7 +382,7 @@ const CoursePage = () => {
           </div>
 
           {/* Curriculum with summary bar */}
-          <div className="max-w-3xl mx-auto mt-16">
+          <div className="max-w-3xl mx-auto mt-8 md:mt-16">
             <div className="flex items-center justify-center gap-6 mb-6">
               <span className="text-sm text-muted-foreground">
                 <strong className="text-foreground">{totalModules}</strong>{" "}
