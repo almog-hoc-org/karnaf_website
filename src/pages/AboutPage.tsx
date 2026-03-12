@@ -99,7 +99,7 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="flex gap-6 mb-8 last:mb-0"
+                className="flex gap-6 mb-6 last:mb-0"
               >
                 <div className="relative flex-shrink-0">
                   <div className="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center text-primary font-bold text-xs">
