@@ -84,7 +84,7 @@ const AboutPage = () => {
       <StatsCounter />
 
       {/* Timeline */}
-      <section className="py-12 bg-secondary/30">
+      <section className="py-8 md:py-12 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader
             title="ציר"
