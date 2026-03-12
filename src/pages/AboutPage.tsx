@@ -46,7 +46,7 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-display text-3xl md:text-4xl text-foreground mb-6">
+              <h2 className="text-display text-2xl md:text-4xl text-foreground mb-3 md:mb-6">
                 למה <span className="text-gradient">קרנף?</span>
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
