@@ -14,7 +14,7 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-foreground mb-4 text-center"
+          className="text-display text-3xl md:text-5xl text-foreground mb-2 md:mb-4 text-center"
         >
           סיפורו של{" "}
           <span className="text-gradient">קרנף נדל"ן</span>
