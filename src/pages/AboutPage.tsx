@@ -118,7 +118,7 @@ const AboutPage = () => {
       </section>
 
       {/* Team */}
-      <section className="py-20">
+      <section className="py-12">
         <div className="container mx-auto px-6 max-w-4xl">
           <AnimatedSectionHeader
             title="הצוות"
