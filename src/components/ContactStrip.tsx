@@ -84,7 +84,7 @@ const ContactStrip = () => {
               </div>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
               <div className="flex flex-col">
                 <label htmlFor="contact-name" className="sr-only">שם מלא</label>
                 <Input
