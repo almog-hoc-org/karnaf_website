@@ -515,7 +515,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 8: Testimonials */}
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-6 max-w-5xl">
           <AnimatedSectionHeader
             title="מה הבוגרים"
