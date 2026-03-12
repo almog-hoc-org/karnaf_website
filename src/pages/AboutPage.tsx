@@ -124,7 +124,7 @@ const AboutPage = () => {
             title="הצוות"
             highlight="שלנו"
           />
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-8 max-w-3xl mx-auto">
             {team.map((member, i) => (
               <motion.div
                 key={member.name}

@@ -37,7 +37,7 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6 text-center"
+          className="text-base md:text-xl text-muted-foreground leading-relaxed mb-4 md:mb-6 text-center"
         >
           בראש הצוות עומדים{" "}
           <span className="text-foreground font-semibold">איתמר נחליאל</span> ו

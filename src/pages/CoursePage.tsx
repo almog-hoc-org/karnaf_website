@@ -545,7 +545,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 9: FAQ */}
-      <section className="py-20 bg-secondary/20">
+      <section className="py-10 md:py-20 bg-secondary/20">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader title="שאלות" highlight="נפוצות" />
           <Accordion type="single" collapsible className="space-y-2">

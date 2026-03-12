@@ -163,7 +163,7 @@ const Properties = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-center mt-8"
+            className="text-center mt-4 md:mt-8"
           >
             <Link to="/testimonials">
               <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 font-bold gap-2">

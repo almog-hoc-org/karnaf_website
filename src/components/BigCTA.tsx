@@ -57,7 +57,7 @@ const BigCTA = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="text-lg text-muted-foreground max-w-xl mx-auto mb-8">
+        className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-4 md:mb-8">
 
           דברו איתנו ונבנה יחד את התוכנית שלכם — בין אם אתם רוכשים דירה ראשונה או מחפשים את ההשקעה הבאה.
         </motion.p>

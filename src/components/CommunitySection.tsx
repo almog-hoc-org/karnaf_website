@@ -62,7 +62,7 @@ const CommunitySection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ scale: 1.05, y: -4 }}
-              className={`group bg-card border border-border rounded-2xl p-6 text-center transition-all duration-300 ${platform.hoverBorder}`}
+              className={`group bg-card border border-border rounded-2xl p-4 md:p-6 text-center transition-all duration-300 ${platform.hoverBorder}`}
             >
               <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${platform.color} text-white mb-4 group-hover:shadow-lg transition-shadow`}>
                 <platform.icon size={28} />

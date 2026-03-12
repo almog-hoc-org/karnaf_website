@@ -134,7 +134,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-8">מלווים אתכם צעד אחר צעד, בין אם אתם בתחילת הדרך או משקיעים מנוסים — אנחנו כאן.
+            className="text-base md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-4 md:mb-8">מלווים אתכם צעד אחר צעד, בין אם אתם בתחילת הדרך או משקיעים מנוסים — אנחנו כאן.
 
 
 

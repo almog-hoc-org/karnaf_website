@@ -126,7 +126,7 @@ const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.6 }}
-          className="text-center mt-12"
+          className="text-center mt-8 md:mt-12"
         >
           <Link to="/course">
             <Button className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-6">

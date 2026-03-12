@@ -65,7 +65,7 @@ const Footer = () => {
             <h2 className="text-display text-3xl md:text-5xl text-foreground mb-2 md:mb-4">
               נשמח להכיר אתכם
             </h2>
-            <p className="text-xl text-primary font-bold mb-10">
+            <p className="text-lg md:text-xl text-primary font-bold mb-6 md:mb-10">
               השאירו פרטים ונתחיל לדבר.
             </p>
 

@@ -70,7 +70,7 @@ const StatsCounter = () => {
         >
           סיפורו של <span className="text-primary">קרנף נדל״ן</span>
         </motion.h3>
-        <div className="grid grid-cols-3 gap-8 text-center max-w-3xl mx-auto">
+        <div className="grid grid-cols-3 gap-4 md:gap-8 text-center max-w-3xl mx-auto">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
