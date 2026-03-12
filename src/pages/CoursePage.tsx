@@ -214,7 +214,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 3: Problem -> Solution */}
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-6 max-w-5xl">
           <AnimatedSectionHeader
             title="בלי הכנה?"
