@@ -50,7 +50,7 @@ const communityLinks = [
 
 const Advantages = () => {
   return (
-    <section className="py-16 bg-secondary relative overflow-hidden">
+    <section className="py-10 md:py-16 bg-secondary relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary/3 rounded-full blur-3xl pointer-events-none" />
 
