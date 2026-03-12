@@ -42,7 +42,7 @@ const PageHero = ({ tag, title, highlight, subtitle, badge, backgroundImage }: P
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6"
+          className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-4"
         >
           {title}{" "}
           {highlight && <span className="text-gradient">{highlight}</span>}

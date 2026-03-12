@@ -45,7 +45,7 @@ const CommunitySection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-3xl md:text-4xl text-center text-foreground mb-12"
+          className="text-display text-3xl md:text-4xl text-center text-foreground mb-8"
         >
           הצטרפו <span className="text-gradient">לקהילה שלנו</span>
         </motion.h2>

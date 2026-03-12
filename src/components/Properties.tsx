@@ -86,7 +86,7 @@ const Properties = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-center text-foreground mb-12"
+          className="text-display text-4xl md:text-5xl text-center text-foreground mb-8"
         >
           הלקוחות שלנו <span className="text-gradient">מספרים</span>
         </motion.h2>
