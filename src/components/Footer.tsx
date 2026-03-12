@@ -62,7 +62,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-display text-4xl md:text-5xl text-foreground mb-4">
+            <h2 className="text-display text-3xl md:text-5xl text-foreground mb-2 md:mb-4">
               נשמח להכיר אתכם
             </h2>
             <p className="text-xl text-primary font-bold mb-10">
