@@ -94,7 +94,7 @@ const Properties = () => {
         <div className="max-w-3xl mx-auto relative">
           <Quote size={120} className="absolute -top-6 right-0 text-primary/5 pointer-events-none" />
 
-          <div className="relative min-h-[300px] flex items-center">
+          <div className="relative min-h-[250px] md:min-h-[300px] flex items-center">
             <AnimatePresence custom={direction} mode="wait">
               <motion.div
                 key={current}
