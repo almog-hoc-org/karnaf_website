@@ -426,7 +426,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 7: Pricing Card */}
-      <section id="pricing" className="py-20 bg-secondary/30">
+      <section id="pricing" className="py-10 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-6 text-center max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
