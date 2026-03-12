@@ -120,7 +120,7 @@ const Properties = () => {
             </AnimatePresence>
           </div>
 
-          <div className="flex items-center justify-center gap-4 mt-8">
+          <div className="flex items-center justify-center gap-4 mt-4 md:mt-8">
             <button
               onClick={prev}
               aria-label="המלצה קודמת"
