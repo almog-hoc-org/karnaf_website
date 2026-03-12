@@ -38,7 +38,7 @@ const platforms = [
 
 const CommunitySection = () => {
   return (
-    <section className="py-20 bg-secondary relative overflow-hidden">
+    <section className="py-14 bg-secondary relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
