@@ -77,7 +77,7 @@ const Properties = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.1 }}
-          className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-4"
+          className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-2 md:mb-4"
         >
           סיפורי הצלחה
         </motion.p>
