@@ -37,7 +37,7 @@ const courseTestimonials = testimonials;
 
 const highlights = [
   { icon: BookOpen, value: "50+", label: "שיעורים" },
-  { icon: Users, value: "300+", label: "בוגרים" },
+  { icon: MessageCircle, value: "✓", label: "ליווי אישי בוואטסאפ" },
   { icon: Calculator, value: "6+", label: "כלים ומחשבונים מתקדמים" },
 ];
 
