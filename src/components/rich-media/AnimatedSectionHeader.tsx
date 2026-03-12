@@ -33,7 +33,7 @@ const AnimatedSectionHeader = ({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="text-display text-3xl md:text-5xl lg:text-6xl text-foreground mb-3"
+        className="text-display text-2xl md:text-5xl lg:text-6xl text-foreground mb-2 md:mb-3"
       >
         {title}{" "}
         {highlight && <span className="text-gradient">{highlight}</span>}
