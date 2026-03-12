@@ -77,7 +77,7 @@ const Services = () => {
           הדרך לדירה — <span className="text-gradient">מה בתוכנית?</span>
         </motion.h2>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
           {cards.map((card, i) => (
             <motion.div
               key={card.title}
