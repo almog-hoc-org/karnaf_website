@@ -400,7 +400,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 6: Fit Quiz */}
-      <section className="py-20 bg-secondary/30 relative">
+      <section className="py-10 md:py-20 bg-secondary/30 relative">
         <div className="absolute inset-0 rounded-none border-t border-b border-primary/10" />
         <div className="container mx-auto px-6 max-w-4xl relative z-10">
           <AnimatedSectionHeader
