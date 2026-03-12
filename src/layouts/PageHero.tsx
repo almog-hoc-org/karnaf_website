@@ -11,7 +11,7 @@ interface PageHeroProps {
 
 const PageHero = ({ tag, title, highlight, subtitle, badge, backgroundImage }: PageHeroProps) => {
   return (
-    <section className="relative pt-24 pb-8 md:pt-32 md:pb-12 overflow-hidden">
+    <section className="relative pt-20 pb-4 md:pt-32 md:pb-12 overflow-hidden">
       {backgroundImage && (
         <>
           <div className="absolute inset-0">
@@ -42,7 +42,7 @@ const PageHero = ({ tag, title, highlight, subtitle, badge, backgroundImage }: P
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-4"
+          className="text-display text-3xl md:text-6xl lg:text-7xl text-foreground mb-2 md:mb-4"
         >
           {title}{" "}
           {highlight && <span className="text-gradient">{highlight}</span>}

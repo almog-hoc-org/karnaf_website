@@ -69,7 +69,7 @@ const Properties = () => {
   };
 
   return (
-    <section id="testimonials" className="py-16 relative overflow-hidden">
+    <section id="testimonials" className="py-10 md:py-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/3 to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-6">
@@ -77,7 +77,7 @@ const Properties = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.1 }}
-          className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-4"
+          className="text-center text-primary font-bold text-sm tracking-widest uppercase mb-2 md:mb-4"
         >
           סיפורי הצלחה
         </motion.p>
@@ -86,7 +86,7 @@ const Properties = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-center text-foreground mb-8"
+          className="text-display text-3xl md:text-5xl text-center text-foreground mb-4 md:mb-8"
         >
           הלקוחות שלנו <span className="text-gradient">מספרים</span>
         </motion.h2>
@@ -94,7 +94,7 @@ const Properties = () => {
         <div className="max-w-3xl mx-auto relative">
           <Quote size={120} className="absolute -top-6 right-0 text-primary/5 pointer-events-none" />
 
-          <div className="relative min-h-[300px] flex items-center">
+          <div className="relative min-h-[250px] md:min-h-[300px] flex items-center">
             <AnimatePresence custom={direction} mode="wait">
               <motion.div
                 key={current}
@@ -120,7 +120,7 @@ const Properties = () => {
             </AnimatePresence>
           </div>
 
-          <div className="flex items-center justify-center gap-4 mt-8">
+          <div className="flex items-center justify-center gap-4 mt-4 md:mt-8">
             <button
               onClick={prev}
               aria-label="המלצה קודמת"
@@ -163,7 +163,7 @@ const Properties = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-center mt-8"
+            className="text-center mt-4 md:mt-8"
           >
             <Link to="/testimonials">
               <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 font-bold gap-2">

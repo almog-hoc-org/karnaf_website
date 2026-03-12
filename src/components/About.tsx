@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const About = () => {
   return (
-    <section id="about" className="py-10 relative overflow-hidden">
+    <section id="about" className="py-6 md:py-10 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10 max-w-3xl">
@@ -14,7 +14,7 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-foreground mb-4 text-center"
+          className="text-display text-3xl md:text-5xl text-foreground mb-2 md:mb-4 text-center"
         >
           סיפורו של{" "}
           <span className="text-gradient">קרנף נדל"ן</span>
@@ -25,7 +25,7 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-4 text-center"
+          className="text-base md:text-xl text-muted-foreground leading-relaxed mb-3 md:mb-4 text-center"
         >
           קרנף נדל"ן הוקמה מתוך אמונה שכל אדם יכול לקבל החלטות חכמות בנדל"ן —
           אם רק ייתנו לו את הכלים, הידע והליווי הנכון. אנחנו מלווים רוכשי דירות
@@ -37,7 +37,7 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6 text-center"
+          className="text-base md:text-xl text-muted-foreground leading-relaxed mb-4 md:mb-6 text-center"
         >
           בראש הצוות עומדים{" "}
           <span className="text-foreground font-semibold">איתמר נחליאל</span> ו

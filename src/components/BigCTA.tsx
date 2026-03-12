@@ -7,7 +7,7 @@ import { WHATSAPP_NUMBER } from "@/lib/constants";
 
 const BigCTA = () => {
   return (
-    <section className="relative py-20 overflow-hidden">
+    <section className="relative py-12 md:py-20 overflow-hidden">
       <div className="absolute inset-0">
         <img
           src={heroArchitecture}
@@ -46,7 +46,7 @@ const BigCTA = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
+          className="text-display text-3xl md:text-6xl lg:text-7xl text-foreground mb-3 md:mb-6">
 
           מוכנים להתחיל את הדרך לדירה?{" "}
           <span className="text-primary text-glow-strong">
@@ -57,7 +57,7 @@ const BigCTA = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="text-lg text-muted-foreground max-w-xl mx-auto mb-8">
+        className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-4 md:mb-8">
 
           דברו איתנו ונבנה יחד את התוכנית שלכם — בין אם אתם רוכשים דירה ראשונה או מחפשים את ההשקעה הבאה.
         </motion.p>

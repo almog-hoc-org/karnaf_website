@@ -50,7 +50,7 @@ const communityLinks = [
 
 const Advantages = () => {
   return (
-    <section className="py-16 bg-secondary relative overflow-hidden">
+    <section className="py-10 md:py-16 bg-secondary relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary/3 rounded-full blur-3xl pointer-events-none" />
 
@@ -60,12 +60,12 @@ const Advantages = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-center text-foreground mb-10">
+          className="text-display text-3xl md:text-5xl text-center text-foreground mb-6 md:mb-10">
           
           למה <span className="text-gradient">קרנף?</span>
         </motion.h2>
 
-        <div className="grid md:grid-cols-3 gap-8 relative">
+        <div className="grid md:grid-cols-3 gap-4 md:gap-8 relative">
           <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
@@ -84,7 +84,7 @@ const Advantages = () => {
             className="relative z-10">
             
             <TiltCard className="h-full">
-              <div className="card-premium rounded-xl p-8 text-center group h-full relative overflow-hidden">
+              <div className="card-premium rounded-xl p-5 md:p-8 text-center group h-full relative overflow-hidden">
                 <span className="text-primary/10 text-8xl font-black absolute top-4 right-6 select-none group-hover:text-primary/15 transition-colors duration-500">
                   01
                 </span>
@@ -129,7 +129,7 @@ const Advantages = () => {
             className="relative z-10">
             
             <TiltCard className="h-full">
-              <div className="card-premium rounded-xl p-8 text-center group h-full relative overflow-hidden">
+              <div className="card-premium rounded-xl p-5 md:p-8 text-center group h-full relative overflow-hidden">
                 <span className="text-primary/10 text-8xl font-black absolute top-4 right-6 select-none group-hover:text-primary/15 transition-colors duration-500">
                   02
                 </span>
@@ -160,7 +160,7 @@ const Advantages = () => {
             className="relative z-10">
             
             <TiltCard className="h-full">
-              <div className="card-premium rounded-xl p-8 text-center group h-full relative overflow-hidden">
+              <div className="card-premium rounded-xl p-5 md:p-8 text-center group h-full relative overflow-hidden">
                 <span className="text-primary/10 text-8xl font-black absolute top-4 right-6 select-none group-hover:text-primary/15 transition-colors duration-500">
                   03
                 </span>

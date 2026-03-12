@@ -38,19 +38,19 @@ const platforms = [
 
 const CommunitySection = () => {
   return (
-    <section className="py-14 bg-secondary relative overflow-hidden">
+    <section className="py-8 md:py-14 bg-secondary relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-3xl md:text-4xl text-center text-foreground mb-8"
+          className="text-display text-2xl md:text-4xl text-center text-foreground mb-4 md:mb-8"
         >
           הצטרפו <span className="text-gradient">לקהילה שלנו</span>
         </motion.h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-4xl mx-auto">
           {platforms.map((platform, i) => (
             <motion.a
               key={platform.label}
@@ -62,7 +62,7 @@ const CommunitySection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ scale: 1.05, y: -4 }}
-              className={`group bg-card border border-border rounded-2xl p-6 text-center transition-all duration-300 ${platform.hoverBorder}`}
+              className={`group bg-card border border-border rounded-2xl p-4 md:p-6 text-center transition-all duration-300 ${platform.hoverBorder}`}
             >
               <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${platform.color} text-white mb-4 group-hover:shadow-lg transition-shadow`}>
                 <platform.icon size={28} />

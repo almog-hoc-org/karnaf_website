@@ -214,13 +214,13 @@ const CoursePage = () => {
       </section>
 
       {/* Section 3: Problem -> Solution */}
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-6 max-w-5xl">
           <AnimatedSectionHeader
             title="בלי הכנה?"
             highlight="זה עולה ביוקר."
           />
-          <div className="grid md:grid-cols-2 gap-8 mt-12">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-12">
             {/* Problems */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
@@ -285,7 +285,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 4: Video Trailer */}
-      <section className="py-20 bg-secondary/30">
+      <section className="py-10 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-4xl">
           <AnimatedSectionHeader
             title="ראו"
@@ -321,11 +321,11 @@ const CoursePage = () => {
       </section>
 
       {/* Section 5: "מה בתוכנית?" — 3 Feature Cards */}
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-6 max-w-6xl">
           <AnimatedSectionHeader title="מה בתוכנית?" highlight="" />
 
-          <div className="grid md:grid-cols-3 gap-8 mt-12">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-8 mt-6 md:mt-12">
             {programCards.map((card, i) => (
               <motion.div
                 key={card.title}
@@ -382,7 +382,7 @@ const CoursePage = () => {
           </div>
 
           {/* Curriculum with summary bar */}
-          <div className="max-w-3xl mx-auto mt-16">
+          <div className="max-w-3xl mx-auto mt-8 md:mt-16">
             <div className="flex items-center justify-center gap-6 mb-6">
               <span className="text-sm text-muted-foreground">
                 <strong className="text-foreground">{totalModules}</strong>{" "}
@@ -400,7 +400,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 6: Fit Quiz */}
-      <section className="py-20 bg-secondary/30 relative">
+      <section className="py-10 md:py-20 bg-secondary/30 relative">
         <div className="absolute inset-0 rounded-none border-t border-b border-primary/10" />
         <div className="container mx-auto px-6 max-w-4xl relative z-10">
           <AnimatedSectionHeader
@@ -426,7 +426,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 7: Pricing Card */}
-      <section id="pricing" className="py-20 bg-secondary/30">
+      <section id="pricing" className="py-10 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-6 text-center max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -515,7 +515,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 8: Testimonials */}
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-6 max-w-5xl">
           <AnimatedSectionHeader
             title="מה הבוגרים"
@@ -545,7 +545,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 9: FAQ */}
-      <section className="py-20 bg-secondary/20">
+      <section className="py-10 md:py-20 bg-secondary/20">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader title="שאלות" highlight="נפוצות" />
           <Accordion type="single" collapsible className="space-y-2">

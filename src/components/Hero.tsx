@@ -116,7 +116,7 @@ const Hero = () => {
       {/* Content Grid */}
       <motion.div
         style={{ opacity: contentOpacity }}
-        className="relative z-10 container mx-auto px-6 py-32 grid lg:grid-cols-2 gap-12 items-center">
+        className="relative z-10 container mx-auto px-6 py-20 md:py-32 grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
 
         {/* Text Side (Right in RTL) */}
         <div>
@@ -124,7 +124,7 @@ const Hero = () => {
           {/* Character-by-character headline with GSAP */}
           <h1
             ref={headingRef}
-            className="text-display text-5xl md:text-6xl lg:text-7xl text-foreground mb-4">
+            className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-2 md:mb-4">
 
             <SplitText text="הדירה הבאה שלכם מתחילה כאן" />
           </h1>
@@ -134,7 +134,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-8">מלווים אתכם צעד אחר צעד, בין אם אתם בתחילת הדרך או משקיעים מנוסים — אנחנו כאן.
+            className="text-base md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-4 md:mb-8">מלווים אתכם צעד אחר צעד, בין אם אתם בתחילת הדרך או משקיעים מנוסים — אנחנו כאן.
 
 
 

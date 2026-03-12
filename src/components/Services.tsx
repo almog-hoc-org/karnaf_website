@@ -53,7 +53,7 @@ const Services = () => {
   const mascotOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.12, 0.18, 0.12]);
 
   return (
-    <section ref={sectionRef} id="services" className="py-16 bg-secondary relative overflow-hidden">
+    <section ref={sectionRef} id="services" className="py-10 md:py-16 bg-secondary relative overflow-hidden">
       <motion.div
         style={{ y: mascotY, opacity: mascotOpacity }}
         className="absolute left-0 bottom-10 pointer-events-none hidden lg:block"
@@ -72,12 +72,12 @@ const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-center text-foreground mb-10"
+          className="text-display text-3xl md:text-5xl text-center text-foreground mb-6 md:mb-10"
         >
           הדרך לדירה — <span className="text-gradient">מה בתוכנית?</span>
         </motion.h2>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
           {cards.map((card, i) => (
             <motion.div
               key={card.title}
@@ -126,7 +126,7 @@ const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.6 }}
-          className="text-center mt-12"
+          className="text-center mt-8 md:mt-12"
         >
           <Link to="/course">
             <Button className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-6">

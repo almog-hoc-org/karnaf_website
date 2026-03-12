@@ -55,7 +55,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
 
 const StatsCounter = () => {
   return (
-    <section className="py-12 relative overflow-hidden section-divider">
+    <section className="py-8 md:py-12 relative overflow-hidden section-divider">
       <div className="absolute inset-0 bg-card" />
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -66,11 +66,11 @@ const StatsCounter = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.1 }}
-          className="text-center text-foreground font-bold text-2xl mb-8"
+          className="text-center text-foreground font-bold text-xl md:text-2xl mb-4 md:mb-8"
         >
           סיפורו של <span className="text-primary">קרנף נדל״ן</span>
         </motion.h3>
-        <div className="grid grid-cols-3 gap-8 text-center max-w-3xl mx-auto">
+        <div className="grid grid-cols-3 gap-4 md:gap-8 text-center max-w-3xl mx-auto">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}

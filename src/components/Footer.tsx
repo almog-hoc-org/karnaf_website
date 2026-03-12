@@ -51,21 +51,21 @@ const Footer = () => {
   };
 
   return (
-    <section id="contact" className="py-16 bg-secondary relative overflow-hidden">
+    <section id="contact" className="py-10 md:py-16 bg-secondary relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary to-background" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-display text-4xl md:text-5xl text-foreground mb-4">
+            <h2 className="text-display text-3xl md:text-5xl text-foreground mb-2 md:mb-4">
               נשמח להכיר אתכם
             </h2>
-            <p className="text-xl text-primary font-bold mb-10">
+            <p className="text-lg md:text-xl text-primary font-bold mb-6 md:mb-10">
               השאירו פרטים ונתחיל לדבר.
             </p>
 

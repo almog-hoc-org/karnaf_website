@@ -38,15 +38,15 @@ const AboutPage = () => {
       />
 
       {/* Why Karnaf - moved to top */}
-      <section className="pt-0 pb-10">
+      <section className="pt-0 pb-6 md:pb-10">
         <div className="container mx-auto px-6 max-w-4xl">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-display text-3xl md:text-4xl text-foreground mb-6">
+              <h2 className="text-display text-2xl md:text-4xl text-foreground mb-3 md:mb-6">
                 למה <span className="text-gradient">קרנף?</span>
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
@@ -84,7 +84,7 @@ const AboutPage = () => {
       <StatsCounter />
 
       {/* Timeline */}
-      <section className="py-12 bg-secondary/30">
+      <section className="py-8 md:py-12 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader
             title="ציר"
@@ -99,7 +99,7 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="flex gap-6 mb-6 last:mb-0"
+                className="flex gap-4 md:gap-6 mb-4 md:mb-6 last:mb-0"
               >
                 <div className="relative flex-shrink-0">
                   <div className="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center text-primary font-bold text-xs">
@@ -118,13 +118,13 @@ const AboutPage = () => {
       </section>
 
       {/* Team */}
-      <section className="py-12">
+      <section className="py-8 md:py-12">
         <div className="container mx-auto px-6 max-w-4xl">
           <AnimatedSectionHeader
             title="הצוות"
             highlight="שלנו"
           />
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-8 max-w-3xl mx-auto">
             {team.map((member, i) => (
               <motion.div
                 key={member.name}
