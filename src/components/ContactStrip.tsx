@@ -93,7 +93,7 @@ const ContactStrip = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors"
+                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors text-right"
                 />
               </div>
               <div className="flex flex-col">
