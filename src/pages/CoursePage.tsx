@@ -321,7 +321,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 5: "מה בתוכנית?" — 3 Feature Cards */}
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <div className="container mx-auto px-6 max-w-6xl">
           <AnimatedSectionHeader title="מה בתוכנית?" highlight="" />
 
