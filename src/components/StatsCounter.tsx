@@ -66,7 +66,7 @@ const StatsCounter = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.1 }}
-          className="text-center text-foreground font-bold text-2xl mb-8"
+          className="text-center text-foreground font-bold text-xl md:text-2xl mb-4 md:mb-8"
         >
           סיפורו של <span className="text-primary">קרנף נדל״ן</span>
         </motion.h3>
