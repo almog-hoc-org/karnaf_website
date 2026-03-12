@@ -50,7 +50,7 @@ const CommunitySection = () => {
           הצטרפו <span className="text-gradient">לקהילה שלנו</span>
         </motion.h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-4xl mx-auto">
           {platforms.map((platform, i) => (
             <motion.a
               key={platform.label}
