@@ -220,7 +220,7 @@ const CoursePage = () => {
             title="בלי הכנה?"
             highlight="זה עולה ביוקר."
           />
-          <div className="grid md:grid-cols-2 gap-8 mt-12">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-12">
             {/* Problems */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
