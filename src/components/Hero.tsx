@@ -116,7 +116,7 @@ const Hero = () => {
       {/* Content Grid */}
       <motion.div
         style={{ opacity: contentOpacity }}
-        className="relative z-10 container mx-auto px-6 pt-10 pb-4 md:py-32 grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+        className="relative z-10 container mx-auto px-6 pt-8 pb-2 md:py-32 grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
 
         {/* Text Side (Right in RTL) */}
         <div>
