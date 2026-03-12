@@ -69,7 +69,7 @@ const Properties = () => {
   };
 
   return (
-    <section id="testimonials" className="py-16 relative overflow-hidden">
+    <section id="testimonials" className="py-10 md:py-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/3 to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-6">
