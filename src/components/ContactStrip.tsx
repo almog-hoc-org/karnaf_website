@@ -62,7 +62,7 @@ const ContactStrip = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="glass-card rounded-2xl p-6 md:p-8"
+          className="glass-card rounded-2xl p-4 md:p-8"
         >
           <div className="flex items-center justify-between mb-4 md:mb-0">
             <div className="hidden md:block">
@@ -84,7 +84,7 @@ const ContactStrip = () => {
               </div>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
               <div className="flex flex-col">
                 <label htmlFor="contact-name" className="sr-only">שם מלא</label>
                 <Input
@@ -101,11 +101,12 @@ const ContactStrip = () => {
                 <Input
                   id="contact-phone"
                   type="tel"
+                  dir="rtl"
                   placeholder="טלפון *"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
-                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors"
+                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors text-right"
                 />
               </div>
               <div className="flex flex-col">
@@ -140,7 +141,7 @@ const ContactStrip = () => {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={1}
-                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors resize-none min-h-[2.75rem]"
+                  className="bg-background/50 border-border/50 text-foreground placeholder:text-muted-foreground h-11 md:h-12 focus:border-primary/50 transition-colors resize-none min-h-[2.75rem] text-right"
                 />
               </div>
               <Button
