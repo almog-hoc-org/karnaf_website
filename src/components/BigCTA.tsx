@@ -46,7 +46,7 @@ const BigCTA = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
+          className="text-display text-3xl md:text-6xl lg:text-7xl text-foreground mb-3 md:mb-6">
 
           מוכנים להתחיל את הדרך לדירה?{" "}
           <span className="text-primary text-glow-strong">
