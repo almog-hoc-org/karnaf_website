@@ -124,7 +124,7 @@ const Hero = () => {
           {/* Character-by-character headline with GSAP */}
           <h1
             ref={headingRef}
-            className="text-display text-5xl md:text-6xl lg:text-7xl text-foreground mb-4">
+            className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-2 md:mb-4">
 
             <SplitText text="הדירה הבאה שלכם מתחילה כאן" />
           </h1>
