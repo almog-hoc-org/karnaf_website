@@ -55,7 +55,7 @@ const ContactStrip = () => {
   };
 
   return (
-    <section className="relative -mt-16 z-20">
+    <section className="relative -mt-4 md:-mt-16 z-20">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
