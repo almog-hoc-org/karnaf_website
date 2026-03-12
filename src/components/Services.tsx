@@ -72,7 +72,7 @@ const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-center text-foreground mb-10"
+          className="text-display text-3xl md:text-5xl text-center text-foreground mb-6 md:mb-10"
         >
           הדרך לדירה — <span className="text-gradient">מה בתוכנית?</span>
         </motion.h2>
