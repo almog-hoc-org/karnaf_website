@@ -37,7 +37,7 @@ const courseTestimonials = testimonials;
 
 const highlights = [
   { icon: BookOpen, value: "50+", label: "שיעורים" },
-  { icon: Users, value: "300+", label: "בוגרים" },
+  { icon: MessageCircle, value: "✓", label: "ליווי אישי בוואטסאפ" },
   { icon: Calculator, value: "6+", label: "כלים ומחשבונים מתקדמים" },
 ];
 
@@ -194,7 +194,7 @@ const CoursePage = () => {
       {/* Section 2: Trust Bar */}
       <section className="py-10 bg-card border-y border-border">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
             {highlights.map((h, i) => (
               <motion.div
                 key={h.label}

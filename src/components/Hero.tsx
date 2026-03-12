@@ -129,12 +129,6 @@ const Hero = () => {
             <SplitText text="הדירה הבאה שלכם מתחילה כאן" />
           </h1>
 
-          <p
-            ref={subheadingRef}
-            className="text-display text-3xl md:text-4xl lg:text-5xl text-primary text-glow mb-6">
-
-            עם ידע, ליווי, ושקט בראש.
-          </p>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}

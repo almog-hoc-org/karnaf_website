@@ -69,7 +69,7 @@ const Properties = () => {
   };
 
   return (
-    <section id="testimonials" className="py-24 relative overflow-hidden">
+    <section id="testimonials" className="py-16 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/3 to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-6">
@@ -86,7 +86,7 @@ const Properties = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-center text-foreground mb-12"
+          className="text-display text-4xl md:text-5xl text-center text-foreground mb-8"
         >
           הלקוחות שלנו <span className="text-gradient">מספרים</span>
         </motion.h2>

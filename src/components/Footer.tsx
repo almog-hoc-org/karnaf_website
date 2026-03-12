@@ -51,7 +51,7 @@ const Footer = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-secondary relative overflow-hidden">
+    <section id="contact" className="py-16 bg-secondary relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary to-background" />
 
       <div className="container mx-auto px-6 relative z-10">
@@ -111,7 +111,7 @@ const Footer = () => {
                   className="bg-card border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50 transition-colors"
                 />
                 <Select value={service} onValueChange={setService}>
-                  <SelectTrigger className="bg-card border-border text-foreground h-12">
+                  <SelectTrigger className="bg-card border-border text-foreground h-12 text-right">
                     <SelectValue placeholder="אני מעוניין ב..." />
                   </SelectTrigger>
                   <SelectContent>

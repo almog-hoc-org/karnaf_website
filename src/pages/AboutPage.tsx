@@ -35,13 +35,12 @@ const AboutPage = () => {
       <PageHero
         title="סיפורו של"
         highlight="הקרנף"
-        subtitle="2 קצינים צעירים בקבע מחליטים להפוך את התשוקה שלהם לניתוח, נתונים ומספרים ולהקים חברה שעוזרת לאנשים לרכוש דירה בישראל בביטחון מלא."
       />
 
       {/* Why Karnaf - moved to top */}
       <section className="pt-0 pb-10">
         <div className="container mx-auto px-6 max-w-4xl">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -85,7 +84,7 @@ const AboutPage = () => {
       <StatsCounter />
 
       {/* Timeline */}
-      <section className="py-20 bg-secondary/30">
+      <section className="py-12 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader
             title="ציר"
@@ -100,7 +99,7 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="flex gap-6 mb-8 last:mb-0"
+                className="flex gap-6 mb-6 last:mb-0"
               >
                 <div className="relative flex-shrink-0">
                   <div className="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center text-primary font-bold text-xs">
@@ -119,7 +118,7 @@ const AboutPage = () => {
       </section>
 
       {/* Team */}
-      <section className="py-20">
+      <section className="py-12">
         <div className="container mx-auto px-6 max-w-4xl">
           <AnimatedSectionHeader
             title="הצוות"

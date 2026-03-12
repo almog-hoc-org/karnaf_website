@@ -38,14 +38,14 @@ const platforms = [
 
 const CommunitySection = () => {
   return (
-    <section className="py-20 bg-secondary relative overflow-hidden">
+    <section className="py-14 bg-secondary relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-3xl md:text-4xl text-center text-foreground mb-12"
+          className="text-display text-3xl md:text-4xl text-center text-foreground mb-8"
         >
           הצטרפו <span className="text-gradient">לקהילה שלנו</span>
         </motion.h2>

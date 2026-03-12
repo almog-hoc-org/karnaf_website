@@ -53,7 +53,7 @@ const Services = () => {
   const mascotOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.12, 0.18, 0.12]);
 
   return (
-    <section ref={sectionRef} id="services" className="py-24 bg-secondary relative overflow-hidden">
+    <section ref={sectionRef} id="services" className="py-16 bg-secondary relative overflow-hidden">
       <motion.div
         style={{ y: mascotY, opacity: mascotOpacity }}
         className="absolute left-0 bottom-10 pointer-events-none hidden lg:block"
@@ -72,7 +72,7 @@ const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-center text-foreground mb-16"
+          className="text-display text-4xl md:text-5xl text-center text-foreground mb-10"
         >
           הדרך לדירה — <span className="text-gradient">מה בתוכנית?</span>
         </motion.h2>

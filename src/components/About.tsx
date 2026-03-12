@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const About = () => {
   return (
-    <section id="about" className="py-14 relative overflow-hidden">
+    <section id="about" className="py-10 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10 max-w-3xl">
@@ -14,7 +14,7 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-foreground mb-6 text-center"
+          className="text-display text-4xl md:text-5xl text-foreground mb-4 text-center"
         >
           סיפורו של{" "}
           <span className="text-gradient">קרנף נדל"ן</span>

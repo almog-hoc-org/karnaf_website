@@ -50,7 +50,7 @@ const communityLinks = [
 
 const Advantages = () => {
   return (
-    <section className="py-24 bg-secondary relative overflow-hidden">
+    <section className="py-16 bg-secondary relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary/3 rounded-full blur-3xl pointer-events-none" />
 
@@ -60,7 +60,7 @@ const Advantages = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-center text-foreground mb-16"
+          className="text-display text-4xl md:text-5xl text-center text-foreground mb-10"
         >
           למה <span className="text-gradient">קרנף?</span>
         </motion.h2>
