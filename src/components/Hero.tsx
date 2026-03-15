@@ -167,15 +167,15 @@ const Hero = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
           className="hidden lg:flex items-end justify-start absolute bottom-0 left-0 z-10 pointer-events-none overflow-hidden"
-          style={{ height: '58%', width: '30%' }}>
+          style={{ height: '70%', width: '30%' }}>
 
           <img
             src={foundersDuo}
             alt="איתמר ואלמוג — מייסדי קרנף"
             className="w-full object-contain object-bottom"
             style={{
-              maskImage: "linear-gradient(to top, transparent 0%, black 15%, black 55%, transparent 85%), linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 15%, black 55%, transparent 85%), linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+              maskImage: "linear-gradient(to top, transparent 0%, black 5%, black 90%, transparent 95%), linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 5%, black 90%, transparent 95%), linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
               maskComposite: "intersect",
               WebkitMaskComposite: "destination-in",
               filter: "drop-shadow(0 8px 40px rgba(0,0,0,0.3))",
