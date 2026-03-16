@@ -61,7 +61,7 @@ export const organizationSchema = {
   alternateName: "Karnaf Real Estate",
   url: SITE_URL,
   logo: `${SITE_URL}/favicon.ico`,
-  description: "חברת ליווי והכשרה בנדל\"ן — עוזרים לישראלים לקנות דירה בצורה חכמה ומבוססת נתונים.",
+  description: "השקעות נדל\"ן מבוססות נתונים — עוזרים לישראלים לקנות דירה בצורה חכמה.",
   foundingDate: "2023",
   founders: [
     { "@type": "Person", name: "איתמר", jobTitle: "מייסד שותף — אסטרטגיה והשקעות" },
