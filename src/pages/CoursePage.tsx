@@ -116,8 +116,6 @@ const CoursePage = () => {
         keywords="קורס נדל״ן, קורס דיגיטלי רכישת דירה, הכשרת נדל״ן, סדנה דיגיטלית נדל״ן, לימודי נדל״ן, איך קונים דירה, קורס משכנתא, קרנף נדל״ן קורס"
         jsonLd={courseSchema}
       />
-        />
-      </Helmet>
 
       {/* Section 1: Course Hero */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden course-hero-bg">
