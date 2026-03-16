@@ -4,7 +4,7 @@ import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/layouts/PageHero";
 import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
-
+import SEOHead, { organizationSchema } from "@/components/SEOHead";
 
 import { team } from "@/data/team";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
