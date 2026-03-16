@@ -8,6 +8,7 @@ import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import BigCTA from "@/components/BigCTA";
+import SEOHead from "@/components/SEOHead";
 
 const TestimonialsPage = () => {
   const courseTestimonials = testimonials.filter((t) => t.service === "course");
