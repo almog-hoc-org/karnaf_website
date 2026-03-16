@@ -23,6 +23,18 @@ const ContactPage = () => {
             name: "צור קשר — קרנף נדל״ן",
             url: "https://www.karnafnadlan.com/contact",
           },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqData.contact.map((item) => ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.answer,
+              },
+            })),
+          },
         ]}
       />
 
