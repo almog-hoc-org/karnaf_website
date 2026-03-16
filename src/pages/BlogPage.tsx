@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Play, FileText, Wrench, ArrowLeft, Clock } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
+import SEOHead from "@/components/SEOHead";
 import { articles } from "@/data/articles";
 
 import type { LucideIcon } from "lucide-react";
@@ -23,6 +23,20 @@ const categoryColor: Record<string, string> = {
   tool: "bg-green-500/10 text-green-600",
 };
 
+const blogJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "ידע ותובנות | קרנף נדל\"ן",
+  description: "מאמרים, סרטונים וכלים על נדל\"ן — מדריכי רכישה, טיפים למשא ומתן, ניתוחי שוק ועוד.",
+  url: "https://www.karnafnadlan.com/blog",
+  inLanguage: "he",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "קרנף נדל\"ן",
+    url: "https://www.karnafnadlan.com",
+  },
+};
+
 const BlogPage = () => {
   const [activeCategory, setActiveCategory] = useState<Category>("all");
 
@@ -31,10 +45,13 @@ const BlogPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>ידע ותובנות | קרנף נדל"ן</title>
-        <meta name="description" content="מאמרים, סרטונים וכלים על נדל&quot;ן — מדריכי רכישה, טיפים למשא ומתן, ניתוחי שוק ועוד." />
-      </Helmet>
+      <SEOHead
+        title="ידע ותובנות | קרנף נדל״ן"
+        description='מאמרים, סרטונים וכלים על נדל"ן — מדריכי רכישה, טיפים למשא ומתן, ניתוחי שוק ועוד.'
+        path="/blog"
+        keywords="בלוג נדל״ן, מאמרים נדל״ן, טיפים רכישת דירה, ניתוח שוק נדל״ן"
+        jsonLd={blogJsonLd}
+      />
 
       <PageHero
         tag="BLOG & CONTENT"

@@ -1,8 +1,8 @@
 import { Link, useParams, Navigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SEOHead from "@/components/SEOHead";
 import VideoPlayer from "@/components/rich-media/VideoPlayer";
 import { articles } from "@/data/articles";
 import BigCTA from "@/components/BigCTA";
@@ -17,12 +17,35 @@ const BlogArticlePage = () => {
 
   const relatedArticles = articles.filter((a) => a.slug !== slug).slice(0, 3);
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    url: `https://www.karnafnadlan.com/blog/${article.slug}`,
+    image: article.image,
+    datePublished: article.date,
+    inLanguage: "he",
+    author: {
+      "@type": "Organization",
+      name: "קרנף נדל\"ן",
+      url: "https://www.karnafnadlan.com",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "קרנף נדל\"ן",
+      url: "https://www.karnafnadlan.com",
+    },
+  };
+
   return (
     <>
-      <Helmet>
-        <title>{article.title} | קרנף נדל"ן</title>
-        <meta name="description" content={article.excerpt} />
-      </Helmet>
+      <SEOHead
+        title={`${article.title} | קרנף נדל״ן`}
+        description={article.excerpt}
+        path={`/blog/${article.slug}`}
+        jsonLd={articleJsonLd}
+      />
 
       {/* Header */}
       <section className="pt-32 pb-12">
