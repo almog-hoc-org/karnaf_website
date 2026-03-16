@@ -11,6 +11,7 @@ import CommunitySection from "@/components/CommunitySection";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
 import WelcomePopup from "@/components/WelcomePopup";
+import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
 
 const Index = () => {
   const hasVisited = sessionStorage.getItem("karnaf-visited");
