@@ -17,10 +17,19 @@ const TestimonialsPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>סיפורי הצלחה | קרנף נדל"ן</title>
-        <meta name="description" content="קראו עדויות של לקוחות שרכשו דירות בליווי קרנף נדל&quot;ן — בוגרי התוכנית משתפים את הסיפור שלהם." />
-      </Helmet>
+      <SEOHead
+        title="סיפורי הצלחה | לקוחות קרנף נדל״ן משתפים"
+        description="קראו עדויות של לקוחות שרכשו דירות בליווי קרנף נדל״ן — בוגרי הסדנה הדיגיטלית ולקוחות פרימיום משתפים את הסיפור שלהם. 375+ לקוחות מרוצים."
+        path="/testimonials"
+        keywords="חוות דעת קרנף נדל״ן, סיפורי הצלחה נדל״ן, ביקורות לקוחות, רכישת דירה ראשונה חוויות, המלצות ליווי נדל״ן"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "סיפורי הצלחה — קרנף נדל״ן",
+          description: "עדויות של לקוחות קרנף נדל״ן",
+          url: "https://karnaf.lovable.app/testimonials",
+        }}
+      />
 
       <PageHero
         title="סיפורי"

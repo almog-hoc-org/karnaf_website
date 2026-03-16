@@ -24,6 +24,13 @@ const Index = () => {
 
   return (
     <>
+      <SEOHead
+        title="קרנף נדל״ן | ליווי והכשרה לרכישת דירה חכמה"
+        description="רוצים לקנות דירה ולא יודעים מאיפה להתחיל? קרנף נדל״ן מציעה ליווי אישי, סדנה דיגיטלית וכלי ניתוח מתקדמים שיביאו אתכם לדירה הנכונה — בביטחון מלא."
+        path="/"
+        keywords="רכישת דירה ראשונה, קורס נדל״ן, השקעות נדל״ן, ליווי רוכשי דירות, סדנה דיגיטלית נדל״ן, ייעוץ נדל״ן, ניתוח עסקאות, קרנף נדל״ן, קניית דירה, משכנתא"
+        jsonLd={[organizationSchema, websiteSchema]}
+      />
       {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
       {!isLoading && <WelcomePopup />}
       <div id="top">
