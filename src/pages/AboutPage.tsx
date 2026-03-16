@@ -39,7 +39,7 @@ const AboutPage = () => {
             "@type": "AboutPage",
             name: "אודות קרנף נדל״ן",
             description: "הסיפור של קרנף נדל״ן — מ-2016 ועד היום.",
-            url: "https://karnaf.lovable.app/about",
+            url: "https://www.karnafnadlan.com/about",
           },
         ]}
       />

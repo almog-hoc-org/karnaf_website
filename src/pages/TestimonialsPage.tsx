@@ -27,7 +27,7 @@ const TestimonialsPage = () => {
           "@type": "WebPage",
           name: "סיפורי הצלחה — קרנף נדל״ן",
           description: "עדויות של לקוחות קרנף נדל״ן",
-          url: "https://karnaf.lovable.app/testimonials",
+          url: "https://www.karnafnadlan.com/testimonials",
         }}
       />
 

@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const SITE_URL = "https://karnaf.lovable.app";
+const SITE_URL = "https://www.karnafnadlan.com";
 const SITE_NAME = "קרנף נדל\"ן";
 const DEFAULT_IMAGE = "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/437ecf3b-f7a3-4758-95a5-0fd12cbb6a4f/id-preview-896ec48b--36c514bb-1f75-46f9-90d5-48063cffef66.lovable.app-1773573498436.png";
 

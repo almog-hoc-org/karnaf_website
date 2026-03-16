@@ -21,7 +21,7 @@ const ContactPage = () => {
             "@context": "https://schema.org",
             "@type": "ContactPage",
             name: "צור קשר — קרנף נדל״ן",
-            url: "https://karnaf.lovable.app/contact",
+            url: "https://www.karnafnadlan.com/contact",
           },
         ]}
       />
