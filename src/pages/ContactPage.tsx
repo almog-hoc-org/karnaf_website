@@ -5,6 +5,7 @@ import PageHero from "@/layouts/PageHero";
 import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
 import Footer from "@/components/Footer";
 import { faqData } from "@/data/faq";
+import SEOHead, { localBusinessSchema } from "@/components/SEOHead";
 
 const ContactPage = () => {
   return (
