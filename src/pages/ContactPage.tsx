@@ -5,14 +5,26 @@ import PageHero from "@/layouts/PageHero";
 import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
 import Footer from "@/components/Footer";
 import { faqData } from "@/data/faq";
+import SEOHead, { localBusinessSchema } from "@/components/SEOHead";
 
 const ContactPage = () => {
   return (
     <>
-      <Helmet>
-        <title>צור קשר | קרנף נדל"ן</title>
-        <meta name="description" content="צרו קשר עם קרנף נדל&quot;ן — WhatsApp, טלפון, אימייל. פגישת היכרות ראשונה בחינם וללא התחייבות." />
-      </Helmet>
+      <SEOHead
+        title="צור קשר | קרנף נדל״ן — פגישת ייעוץ חינם"
+        description="צרו קשר עם קרנף נדל״ן — WhatsApp, טלפון, אימייל. פגישת היכרות ראשונה בחינם וללא התחייבות. ליווי אישי ברכישת דירה והשקעות נדל״ן."
+        path="/contact"
+        keywords="צור קשר קרנף נדל״ן, ייעוץ נדל״ן חינם, פגישת היכרות נדל״ן, טלפון קרנף, וואטסאפ קרנף"
+        jsonLd={[
+          localBusinessSchema,
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "צור קשר — קרנף נדל״ן",
+            url: "https://karnaf.lovable.app/contact",
+          },
+        ]}
+      />
 
       <PageHero
         title="צרו"

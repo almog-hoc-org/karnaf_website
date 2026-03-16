@@ -4,7 +4,7 @@ import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/layouts/PageHero";
 import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
-
+import SEOHead, { organizationSchema } from "@/components/SEOHead";
 
 import { team } from "@/data/team";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
@@ -27,10 +27,22 @@ const timeline = [
 const AboutPage = () => {
   return (
     <>
-      <Helmet>
-        <title>אודות קרנף נדל"ן | הסיפור שלנו</title>
-        <meta name="description" content="הכירו את קרנף נדל&quot;ן — הצוות, הסיפור, הניסיון. מעל 350 לקוחות ותלמידים ו-8+ שנות ניסיון." />
-      </Helmet>
+      <SEOHead
+        title="אודות קרנף נדל״ן | הסיפור, הצוות והניסיון"
+        description="הכירו את קרנף נדל״ן — צוות מומחים עם 8+ שנות ניסיון בהשקעות נדל״ן, ליווי רוכשי דירות והכשרות דיגיטליות. מעל 350 לקוחות ותלמידים מרוצים."
+        path="/about"
+        keywords="קרנף נדל״ן, אודות, צוות נדל״ן, ליווי רכישת דירה, השקעות נדל״ן ישראל, איתמר ואלמוג"
+        jsonLd={[
+          organizationSchema,
+          {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            name: "אודות קרנף נדל״ן",
+            description: "הסיפור של קרנף נדל״ן — מ-2016 ועד היום.",
+            url: "https://karnaf.lovable.app/about",
+          },
+        ]}
+      />
 
       <PageHero
         title="סיפורו של"

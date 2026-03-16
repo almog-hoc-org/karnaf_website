@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import SEOHead, { courseSchema } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import {
   GraduationCap,
@@ -108,13 +109,13 @@ const totalLessons = curriculum.reduce(
 const CoursePage = () => {
   return (
     <>
-      <Helmet>
-        <title>הדרך לדירה — קורס דיגיטלי | קרנף נדל"ן</title>
-        <meta
-          name="description"
-          content="קורס דיגיטלי מקיף לרוכשי דירות ראשונות — 50+ שיעורים, מחשבונים, כלים וליווי צמוד של אנליסט נדל״ן."
-        />
-      </Helmet>
+      <SEOHead
+        title="הדרך לדירה — קורס דיגיטלי לרכישת דירה | קרנף נדל״ן"
+        description="קורס דיגיטלי מקיף לרוכשי דירות ראשונות — 50+ שיעורים, מחשבונים, כלים וליווי צמוד של אנליסט נדל״ן. הצטרפו ל-300+ בוגרים שכבר רכשו דירה בצורה חכמה."
+        path="/course"
+        keywords="קורס נדל״ן, קורס דיגיטלי רכישת דירה, הכשרת נדל״ן, סדנה דיגיטלית נדל״ן, לימודי נדל״ן, איך קונים דירה, קורס משכנתא, קרנף נדל״ן קורס"
+        jsonLd={courseSchema}
+      />
 
       {/* Section 1: Course Hero */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden course-hero-bg">
