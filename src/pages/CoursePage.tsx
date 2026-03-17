@@ -34,6 +34,8 @@ import { testimonials } from "@/data/testimonials";
 import { faqData } from "@/data/faq";
 import { curriculum } from "@/data/curriculum";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import BigCTA from "@/components/BigCTA";
 
 const courseTestimonials = testimonials;
