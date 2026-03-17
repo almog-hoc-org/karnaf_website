@@ -110,6 +110,135 @@ const totalLessons = curriculum.reduce(
 );
 
 
+const WaitlistSection = () => {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { toast } = useToast();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === "#waitlist") {
+      setTimeout(() => {
+        document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" });
+      }, 500);
+    }
+  }, [location]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !phone.trim() || !email.trim()) {
+      toast({ title: "נא למלא שם, טלפון ואימייל", variant: "destructive" });
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke("submit-lead", {
+        body: { name, phone, email, service: "waitlist", message: "", source: "course-waitlist" },
+      });
+      if (error) throw error;
+      setIsSubmitted(true);
+      toast({ title: "נרשמת בהצלחה! 🎉", description: "נעדכן אותך ראשון/ה כשהתוכנית יוצאת לאוויר." });
+    } catch {
+      toast({ title: "שגיאה בשליחה", description: "נסו שוב או צרו קשר בוואטסאפ.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <section id="waitlist" className="py-10 md:py-20 bg-secondary/30">
+      <div className="container mx-auto px-6 text-center max-w-2xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="pricing-glow bg-card rounded-3xl p-8 md:p-12 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full" />
+
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary font-bold text-sm px-4 py-1.5 rounded-full mb-4">
+            🔔 בקרוב
+          </div>
+
+          <GraduationCap size={40} className="text-primary mx-auto mb-4" />
+          <h3 className="text-3xl md:text-4xl font-black text-foreground mb-2">
+            הירשמו לרשימת ההמתנה
+          </h3>
+          <p className="text-muted-foreground mb-8">
+            התוכנית בפינישים אחרונים — השאירו פרטים ותהיו הראשונים לדעת כשיוצאים לאוויר!
+          </p>
+
+          {isSubmitted ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex flex-col items-center gap-3 py-8"
+            >
+              <CheckCircle className="w-16 h-16 text-primary" />
+              <p className="text-foreground text-xl font-bold">נרשמת בהצלחה! 🎉</p>
+              <p className="text-muted-foreground">נעדכן אותך ראשון/ה כשהתוכנית יוצאת לאוויר</p>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4 max-w-sm mx-auto">
+              <Input
+                placeholder="שם מלא *"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="bg-background/50 border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50"
+              />
+              <Input
+                type="tel"
+                dir="rtl"
+                placeholder="טלפון *"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                className="bg-background/50 border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50"
+              />
+              <Input
+                type="email"
+                placeholder="אימייל *"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="bg-background/50 border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50"
+              />
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg h-14 gap-2"
+              >
+                {isSubmitting ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full"
+                  />
+                ) : (
+                  "שמרו לי מקום! 🔔"
+                )}
+              </Button>
+            </form>
+          )}
+
+          <div className="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-border">
+            {["ללא התחייבות", "נעדכן לפני כולם", "הרשמה חינמית"].map((badge) => (
+              <span key={badge} className="text-xs text-muted-foreground flex items-center gap-1.5">
+                <Shield size={12} className="text-primary" />
+                {badge}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 const CoursePage = () => {
   return (
     <>
