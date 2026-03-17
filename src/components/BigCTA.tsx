@@ -48,9 +48,9 @@ const BigCTA = () => {
           transition={{ duration: 0.8 }}
           className="text-display text-3xl md:text-6xl lg:text-7xl text-foreground mb-3 md:mb-6">
 
-          מוכנים להתחיל את הדרך לדירה?{" "}
+          הדרך לדירה בדרך אליכם!{" "}
           <span className="text-primary text-glow-strong">
-בואו נדבר.</span>
+הירשמו לרשימת ההמתנה.</span>
         </motion.h2>
 
         <motion.p initial={{ opacity: 0, y: 20 }}
