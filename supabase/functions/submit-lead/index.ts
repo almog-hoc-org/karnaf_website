@@ -170,6 +170,7 @@ Deno.serve(async (req) => {
         const now = new Date().toLocaleString("he-IL", { timeZone: "Asia/Jerusalem" });
         const serviceLabel =
           validatedService === "derech" ? "הדרך לדירה" :
+          validatedService === "waitlist" ? "רשימת המתנה — הדרך לדירה" :
           validatedService === "webinar" ? "וובינר" : "לא צוין";
 
         const sheetsRes = await fetch(
