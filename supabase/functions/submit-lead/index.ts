@@ -112,6 +112,7 @@ Deno.serve(async (req) => {
       try {
         const serviceLabel =
           validatedService === "derech" ? "הדרך לדירה" :
+          validatedService === "waitlist" ? "רשימת המתנה — הדרך לדירה" :
           validatedService === "webinar" ? "וובינר" : "לא צוין";
 
         // Escape HTML entities to prevent injection in email
