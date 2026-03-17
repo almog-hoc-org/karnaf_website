@@ -170,9 +170,9 @@ const CoursePage = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, type: "spring" }}
-            className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 bg-primary/20 border border-primary/40 text-primary font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm"
           >
-            50+ שיעורים · 6+ כלים מתקדמים · ליווי צמוד
+            🔔 בקרוב! הירשמו לרשימת ההמתנה
           </motion.div>
 
           {/* CTA */}
