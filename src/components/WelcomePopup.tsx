@@ -36,10 +36,10 @@ const WelcomePopup = () => {
             🎉 האתר החדש שלנו באוויר!
           </DialogTitle>
           <DialogDescription className="text-center text-base leading-relaxed">
-            תלמידים ותיקים יקרים — הגישה שלכם לפורטל הקורסים באתר הישן קיימת
-            בלחיצה על הכפתור{" "}
-            <strong className="text-primary">״אזור תלמידים״</strong> שנמצא
-            בצד שמאל למעלה.
+            תלמידים ותיקים — הגישה לפורטל הקורסים באתר הישן קיימת
+            בלחיצה על <strong className="text-primary">״אזור תלמידים״</strong> למעלה.
+            <br /><br />
+            📢 <strong>התוכנית ״הדרך לדירה״ בקרוב!</strong> הירשמו לרשימת ההמתנה ותהיו הראשונים לדעת.
           </DialogDescription>
         </DialogHeader>
         <Button onClick={handleClose} className="w-full mt-2 font-bold">

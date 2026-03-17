@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroArchitecture from "@/assets/hero-architecture.jpg";
 import mascotWelcome2 from "@/assets/mascot/mascot-welcome-2.png";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
 
 const BigCTA = () => {
   return (
@@ -48,9 +47,9 @@ const BigCTA = () => {
           transition={{ duration: 0.8 }}
           className="text-display text-3xl md:text-6xl lg:text-7xl text-foreground mb-3 md:mb-6">
 
-          מוכנים להתחיל את הדרך לדירה?{" "}
+          הדרך לדירה בדרך אליכם!{" "}
           <span className="text-primary text-glow-strong">
-בואו נדבר.</span>
+הירשמו לרשימת ההמתנה.</span>
         </motion.h2>
 
         <motion.p initial={{ opacity: 0, y: 20 }}
@@ -59,7 +58,7 @@ const BigCTA = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-4 md:mb-8">
 
-          דברו איתנו ונבנה יחד את התוכנית שלכם — בין אם אתם רוכשים דירה ראשונה או מחפשים את ההשקעה הבאה.
+          התוכנית המלאה בפינישים אחרונים — השאירו פרטים ותהיו הראשונים לשמוע כשיוצאים לאוויר!
         </motion.p>
 
         <motion.div
@@ -68,19 +67,16 @@ const BigCTA = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}>
 
-          <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
-            target="_blank"
-            rel="noopener noreferrer">
+          <Link
+            to="/course#waitlist">
 
             <Button
               size="lg"
               className="btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-7 gap-3 shadow-2xl">
 
-              <MessageCircle size={22} />
-              דברו עם הקרנף
+              שמרו לי מקום! 🔔
             </Button>
-          </a>
+          </Link>
         </motion.div>
 
       </div>

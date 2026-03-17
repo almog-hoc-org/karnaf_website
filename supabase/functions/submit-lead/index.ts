@@ -12,8 +12,8 @@ const MAX_PHONE = 20;
 const MAX_EMAIL = 254;
 const MAX_SOURCE = 50;
 const MAX_MESSAGE = 1000;
-const ALLOWED_SERVICES = ["derech", "webinar"];
-const ALLOWED_SOURCES = ["contact-strip", "footer", "website", "services-page", "course-page"];
+const ALLOWED_SERVICES = ["derech", "webinar", "waitlist"];
+const ALLOWED_SOURCES = ["contact-strip", "footer", "website", "services-page", "course-page", "course-waitlist"];
 const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const PHONE_REGEX = /^[\d\s\-+()]{7,20}$/;
 
@@ -112,6 +112,7 @@ Deno.serve(async (req) => {
       try {
         const serviceLabel =
           validatedService === "derech" ? "הדרך לדירה" :
+          validatedService === "waitlist" ? "רשימת המתנה — הדרך לדירה" :
           validatedService === "webinar" ? "וובינר" : "לא צוין";
 
         // Escape HTML entities to prevent injection in email
@@ -169,6 +170,7 @@ Deno.serve(async (req) => {
         const now = new Date().toLocaleString("he-IL", { timeZone: "Asia/Jerusalem" });
         const serviceLabel =
           validatedService === "derech" ? "הדרך לדירה" :
+          validatedService === "waitlist" ? "רשימת המתנה — הדרך לדירה" :
           validatedService === "webinar" ? "וובינר" : "לא צוין";
 
         const sheetsRes = await fetch(

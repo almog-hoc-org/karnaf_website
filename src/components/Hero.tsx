@@ -144,12 +144,12 @@ const Hero = () => {
             ref={ctaRef}
             className="flex flex-col sm:flex-row gap-3 md:gap-4 items-center">
 
-            <Link to="/course" className="w-full sm:w-auto">
+            <Link to="/course#waitlist" className="w-full sm:w-auto">
               <Button
                 size="lg"
                 className="w-full bg-primary text-primary-foreground font-bold text-base md:text-lg px-6 md:px-8 py-5 md:py-6 animate-pulse-glow">
 
-                לתוכנית "הדרך לדירה" 🏠
+                הדרך לדירה — בקרוב! 🔔
               </Button>
             </Link>
             <img
