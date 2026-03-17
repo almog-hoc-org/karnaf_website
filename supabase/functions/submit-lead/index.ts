@@ -12,8 +12,8 @@ const MAX_PHONE = 20;
 const MAX_EMAIL = 254;
 const MAX_SOURCE = 50;
 const MAX_MESSAGE = 1000;
-const ALLOWED_SERVICES = ["derech", "webinar"];
-const ALLOWED_SOURCES = ["contact-strip", "footer", "website", "services-page", "course-page"];
+const ALLOWED_SERVICES = ["derech", "webinar", "waitlist"];
+const ALLOWED_SOURCES = ["contact-strip", "footer", "website", "services-page", "course-page", "course-waitlist"];
 const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const PHONE_REGEX = /^[\d\s\-+()]{7,20}$/;
 
