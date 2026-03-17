@@ -185,12 +185,12 @@ const CoursePage = () => {
               size="lg"
               onClick={() =>
                 document
-                  .getElementById("pricing")
+                  .getElementById("waitlist")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
               className="btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-7"
             >
-              גלו את התוכנית
+              שמרו לי מקום! 🔔
             </Button>
           </motion.div>
         </div>
