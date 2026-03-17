@@ -68,19 +68,16 @@ const BigCTA = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}>
 
-          <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
-            target="_blank"
-            rel="noopener noreferrer">
+          <Link
+            to="/course#waitlist">
 
             <Button
               size="lg"
               className="btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-7 gap-3 shadow-2xl">
 
-              <MessageCircle size={22} />
-              דברו עם הקרנף
+              שמרו לי מקום! 🔔
             </Button>
-          </a>
+          </Link>
         </motion.div>
 
       </div>
