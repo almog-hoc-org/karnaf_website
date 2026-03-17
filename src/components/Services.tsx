@@ -74,7 +74,7 @@ const Services = () => {
           transition={{ duration: 0.7 }}
           className="text-display text-3xl md:text-5xl text-center text-foreground mb-6 md:mb-10"
         >
-          הדרך לדירה — <span className="text-gradient">מה בתוכנית?</span>
+          הדרך לדירה — <span className="text-gradient">בקרוב!</span>
         </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
