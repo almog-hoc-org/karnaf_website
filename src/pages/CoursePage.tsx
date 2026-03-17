@@ -307,12 +307,12 @@ const CoursePage = () => {
                   variant="outline"
                   onClick={() =>
                     document
-                      .getElementById("pricing")
+                      .getElementById("waitlist")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
                   className="border-primary/30 text-primary hover:bg-primary/10"
                 >
-                  בינתיים — גלו את התוכנית
+                  בינתיים — הצטרפו לרשימת ההמתנה
                 </Button>
               </div>
             ) : (
