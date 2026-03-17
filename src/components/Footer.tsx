@@ -115,7 +115,7 @@ const Footer = () => {
                     <SelectValue placeholder="אני מעוניין ב..." />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="derech">תוכנית "הדרך לדירה"</SelectItem>
+                    <SelectItem value="waitlist">רשימת המתנה — הדרך לדירה</SelectItem>
                     <SelectItem value="webinar">וובינר</SelectItem>
                   </SelectContent>
                 </Select>

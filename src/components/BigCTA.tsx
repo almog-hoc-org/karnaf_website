@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroArchitecture from "@/assets/hero-architecture.jpg";
 import mascotWelcome2 from "@/assets/mascot/mascot-welcome-2.png";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
 
 const BigCTA = () => {
   return (
