@@ -75,7 +75,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative min-h-[60vh] md:min-h-screen flex items-center overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-[60vh] md:min-h-screen flex items-center overflow-hidden pt-16 md:pt-0">
       {/* Warm gradient orbs - CSS only, no JS overhead */}
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
         <div
