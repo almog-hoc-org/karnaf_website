@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowRight } from "lucide-react";
-import mascotWelcome from "@/assets/mascot/mascot-welcome.png";
+import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
 
 const NotFound = () => {
   return (

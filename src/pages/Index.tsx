@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Hero from "@/components/Hero";
 import ContactStrip from "@/components/ContactStrip";
 import StatsCounter from "@/components/StatsCounter";
@@ -10,19 +9,10 @@ import WebinarSection from "@/components/WebinarSection";
 import BigCTA from "@/components/BigCTA";
 import CommunitySection from "@/components/CommunitySection";
 import Footer from "@/components/Footer";
-import LoadingScreen from "@/components/LoadingScreen";
 import WelcomePopup from "@/components/WelcomePopup";
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
 
 const Index = () => {
-  const hasVisited = sessionStorage.getItem("karnaf-visited");
-  const [isLoading, setIsLoading] = useState(!hasVisited);
-
-  const handleLoadingComplete = () => {
-    setIsLoading(false);
-    sessionStorage.setItem("karnaf-visited", "true");
-  };
-
   return (
     <>
       <SEOHead
@@ -32,8 +22,7 @@ const Index = () => {
         keywords="רכישת דירה ראשונה, קורס נדל״ן, השקעות נדל״ן, ליווי רוכשי דירות, סדנה דיגיטלית נדל״ן, ייעוץ נדל״ן, ניתוח עסקאות, קרנף נדל״ן, קניית דירה, משכנתא"
         jsonLd={[organizationSchema, websiteSchema]}
       />
-      {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
-      {!isLoading && <WelcomePopup />}
+      <WelcomePopup />
       <div id="top">
         <Hero />
         <ContactStrip />

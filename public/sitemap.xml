@@ -30,4 +30,34 @@
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
+  <url>
+    <loc>https://www.karnafnadlan.com/blog/first-apartment-guide</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.karnafnadlan.com/blog/mortgage-types-explained</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.karnafnadlan.com/blog/real-estate-investment-tips</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.karnafnadlan.com/blog/negotiation-secrets</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.karnafnadlan.com/blog/market-update-2025</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.karnafnadlan.com/blog/due-diligence-checklist</loc>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

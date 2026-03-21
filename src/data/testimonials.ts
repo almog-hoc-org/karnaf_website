@@ -5,6 +5,7 @@ export interface Testimonial {
   rating: number;
   service: "course" | "premium";
   videoUrl?: string;
+  metric?: string;
 }
 
 export const testimonials: Testimonial[] = [
@@ -14,6 +15,7 @@ export const testimonials: Testimonial[] = [
     quote: "הגעתי לקרנף בלי שום ידע על נדל\"ן. הם לקחו אותי יד ביד, הסבירו כל שלב, וחסכו לי עשרות אלפי שקלים בזכות משא ומתן חכם. היום יש לי דירה והרגשת ביטחון שעשיתי את העסקה הנכונה.",
     rating: 5,
     service: "premium",
+    metric: "חסך עשרות אלפי ₪",
   },
   {
     name: "אירית מ.",
@@ -28,6 +30,7 @@ export const testimonials: Testimonial[] = [
     quote: "התוכנית הדיגיטלית שינתה לי את הראש. הבנתי מה לבדוק, איך לנהל משא ומתן, ומה באמת קובע מחיר. רכשתי דירה מתחת למחיר השוק בזכות הכלים שקיבלתי.",
     rating: 5,
     service: "course",
+    metric: "קנה מתחת למחיר השוק",
   },
   {
     name: "דנה ויואב ר.",
@@ -35,6 +38,7 @@ export const testimonials: Testimonial[] = [
     quote: "היינו מפוחדים מהתהליך, אבל הליווי של קרנף הפך את הכל לפשוט ונעים. מצאו לנו דירה מושלמת באזור שלא חשבנו עליו, וחסכו לנו כמעט 100 אלף שקל במשא ומתן.",
     rating: 5,
     service: "premium",
+    metric: "חסכו ~₪100,000",
   },
   {
     name: "רותם ש.",

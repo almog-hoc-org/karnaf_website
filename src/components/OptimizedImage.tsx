@@ -5,26 +5,17 @@ interface OptimizedImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   alt: string;
   width?: number;
   height?: number;
+  priority?: boolean;
 }
 
-/**
- * OptimizedImage - A performance-optimized image component
- *
- * Features:
- * - Lazy loading by default
- * - Async decoding for non-blocking rendering
- * - Consistent API with standard img element
- *
- * Usage:
- * <OptimizedImage src="/path/to/image.jpg" alt="Description" />
- */
 export function OptimizedImage({
   src,
   alt,
   className = '',
   width,
   height,
-  loading = 'lazy',
+  priority = false,
+  loading,
   decoding = 'async',
   ...props
 }: OptimizedImageProps) {
@@ -34,8 +25,10 @@ export function OptimizedImage({
       alt={alt}
       width={width}
       height={height}
-      loading={loading}
-      decoding={decoding}
+      loading={priority ? 'eager' : (loading ?? 'lazy')}
+      decoding={priority ? 'sync' : decoding}
+      // @ts-expect-error -- fetchPriority is valid HTML but not yet in React types
+      fetchPriority={priority ? 'high' : undefined}
       className={className}
       {...props}
     />

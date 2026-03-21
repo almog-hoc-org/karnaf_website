@@ -11,6 +11,7 @@ const stats = [
 const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [count, setCount] = useState(0);
+  const [isCounting, setIsCounting] = useState(false);
   const hasAnimated = useRef(false);
 
   useEffect(() => {
@@ -21,6 +22,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated.current) {
           hasAnimated.current = true;
+          setIsCounting(true);
           const duration = 2000;
           const startTime = performance.now();
 
@@ -30,7 +32,11 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
             const eased = 1 - (1 - progress) * (1 - progress);
             const current = Math.round(eased * value);
             setCount(current);
-            if (progress < 1) requestAnimationFrame(animate);
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              setIsCounting(false);
+            }
           };
 
           requestAnimationFrame(animate);
@@ -44,7 +50,11 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   }, [value]);
 
   return (
-    <div ref={ref} className="text-display text-display-md text-accent">
+    <div
+      ref={ref}
+      className="text-display text-display-md text-accent tabular-nums transition-transform duration-300"
+      style={{ transform: isCounting ? 'scale(1.08)' : 'scale(1)' }}
+    >
       {count.toLocaleString('he-IL')}{suffix}
     </div>
   );

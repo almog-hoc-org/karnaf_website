@@ -148,7 +148,6 @@ export const articles: Article[] = [
     category: "video",
     date: "2025-04-05",
     readTime: "12 דקות צפייה",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     content: `
 ## משא ומתן בנדל"ן
 
@@ -171,7 +170,6 @@ export const articles: Article[] = [
     category: "video",
     date: "2025-05-20",
     readTime: "15 דקות צפייה",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     content: `
 ## סקירת שוק 2025
 

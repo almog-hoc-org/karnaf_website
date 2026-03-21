@@ -42,10 +42,10 @@ const ScrollProgress = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] h-[2px]">
+    <div className="fixed top-0 left-0 right-0 z-[60] h-[3px] pointer-events-none">
       <div
         ref={barRef}
-        className="h-full bg-accent origin-right"
+        className="h-full bg-gradient-to-l from-accent via-accent to-accent/60 origin-right"
         style={{ transform: "scaleX(0)" }}
       />
     </div>
@@ -59,10 +59,14 @@ const SharedLayout = () => {
   return (
     <SmoothScroll key={location.pathname}>
       <div className="min-h-screen">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-accent focus:text-accent-foreground focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold">
+          דלג לתוכן הראשי
+        </a>
         <ScrollProgress />
         <Navigation />
         <AnimatePresence mode="wait">
           <motion.main
+            id="main-content"
             key={location.pathname}
             initial={{ opacity: 0, y: 20, scale: 0.99 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}

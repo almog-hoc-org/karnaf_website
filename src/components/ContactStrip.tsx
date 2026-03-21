@@ -84,7 +84,7 @@ const ContactStrip = () => {
               <div className="flex flex-col">
                 <label htmlFor="contact-name" className="sr-only">שם מלא</label>
                 <Input
-                  id="contact-name"
+                  id="contact-name" autoComplete="name"
                   placeholder="שם מלא *"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -95,7 +95,7 @@ const ContactStrip = () => {
               <div className="flex flex-col">
                 <label htmlFor="contact-phone" className="sr-only">טלפון</label>
                 <Input
-                  id="contact-phone"
+                  id="contact-phone" autoComplete="tel" inputMode="tel"
                   type="tel"
                   dir="ltr"
                   placeholder="טלפון *"
@@ -108,7 +108,7 @@ const ContactStrip = () => {
               <div className="flex flex-col">
                 <label htmlFor="contact-email" className="sr-only">אימייל</label>
                 <Input
-                  id="contact-email"
+                  id="contact-email" autoComplete="email"
                   type="email"
                   placeholder="אימייל *"
                   value={email}
