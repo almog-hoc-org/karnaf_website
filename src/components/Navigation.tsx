@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
-import karnafLogo from "@/assets/mascot/karnaf-logo.svg";
+import karnafLogo from "@/assets/mascot/karnaf-logo.png";
 
 const navItems = [
   { label: "דף הבית", to: "/" },
@@ -66,7 +66,7 @@ const Navigation = () => {
         }}
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2" aria-label="קרנף נדל״ן — דף הבית">
             <img
               src={karnafLogo}
               alt="קרנף"

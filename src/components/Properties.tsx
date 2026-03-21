@@ -11,6 +11,7 @@ const testimonials = [
     role: "רוכש דירה ראשונה",
     quote: "הגעתי לקרנף בלי שום ידע על נדל\"ן. הם לקחו אותי יד ביד, הסבירו כל שלב, וחסכו לי עשרות אלפי שקלים בזכות משא ומתן חכם. היום יש לי דירה והרגשת ביטחון שעשיתי את העסקה הנכונה.",
     rating: 5,
+    metric: "חסך עשרות אלפי ₪",
   },
   {
     name: "אירית מ.",
@@ -23,6 +24,7 @@ const testimonials = [
     role: 'בוגר "הדרך לדירה"',
     quote: "התוכנית הדיגיטלית שינתה לי את הראש. הבנתי מה לבדוק, איך לנהל משא ומתן, ומה באמת קובע מחיר. רכשתי דירה מתחת למחיר השוק בזכות הכלים שקיבלתי.",
     rating: 5,
+    metric: "קנה מתחת למחיר השוק",
   },
 ];
 
@@ -98,10 +100,20 @@ const Properties = () => {
                   "{testimonials[current].quote}"
                 </p>
 
-                <div>
-                  <p className="text-foreground font-bold text-lg">{testimonials[current].name}</p>
-                  <p className="text-accent text-sm">{testimonials[current].role}</p>
+                <div className="flex items-center justify-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-accent/10 border-2 border-accent/30 flex items-center justify-center text-accent font-bold text-lg">
+                    {testimonials[current].name.charAt(0)}
+                  </div>
+                  <div className="text-right">
+                    <p className="text-foreground font-bold text-lg">{testimonials[current].name}</p>
+                    <p className="text-accent text-sm">{testimonials[current].role}</p>
+                  </div>
                 </div>
+                {testimonials[current].metric && (
+                  <div className="mt-4 inline-flex items-center gap-2 bg-accent/5 border border-accent/20 rounded-full px-4 py-1.5">
+                    <span className="text-xs font-bold text-accent">{testimonials[current].metric}</span>
+                  </div>
+                )}
               </motion.div>
             </AnimatePresence>
           </div>

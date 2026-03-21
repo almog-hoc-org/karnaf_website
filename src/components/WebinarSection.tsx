@@ -78,7 +78,7 @@ const WebinarSection = () => {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
               <Input
-                placeholder="שם מלא"
+                autoComplete="name" placeholder="שם מלא"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -86,14 +86,14 @@ const WebinarSection = () => {
               />
               <Input
                 type="email"
-                placeholder="אימייל"
+                autoComplete="email" placeholder="אימייל"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="bg-white border-white/20 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-xl"
               />
               <Input
                 type="tel"
-                placeholder="טלפון"
+                autoComplete="tel" inputMode="tel" placeholder="טלפון"
                 dir="ltr"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}

@@ -79,14 +79,14 @@ const Footer = () => {
             ) : (
               <form className="space-y-4" onSubmit={handleSubmit}>
                 <Input
-                  placeholder="שם מלא"
+                  autoComplete="name" placeholder="שם מלא"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="bg-card border-border text-foreground placeholder:text-muted-foreground h-14 text-right rounded-xl focus:shadow-depth-1 focus:border-primary/50 transition-all"
                 />
                 <Input
                   type="tel"
-                  placeholder="טלפון"
+                  autoComplete="tel" inputMode="tel" placeholder="טלפון"
                   dir="ltr"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -131,25 +131,31 @@ const Footer = () => {
                 </div>
               </a>
 
-              <div className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border shadow-depth-1">
+              <a
+                href="tel:+972559966175"
+                className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border hover:border-accent/30 transition-all duration-200 group shadow-depth-1"
+              >
                 <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
                   <Phone size={20} className="text-accent" />
                 </div>
                 <div>
-                  <p className="text-foreground font-medium">טלפון</p>
+                  <p className="text-foreground font-medium group-hover:text-accent transition-colors">טלפון</p>
                   <p className="text-sm text-muted-foreground" dir="ltr">055-996-6175</p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border shadow-depth-1">
+              <a
+                href="mailto:karnaf.yazamut@gmail.com"
+                className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border hover:border-accent/30 transition-all duration-200 group shadow-depth-1"
+              >
                 <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
                   <Mail size={20} className="text-accent" />
                 </div>
                 <div>
-                  <p className="text-foreground font-medium">אימייל</p>
+                  <p className="text-foreground font-medium group-hover:text-accent transition-colors">אימייל</p>
                   <p className="text-sm text-muted-foreground">karnaf.yazamut@gmail.com</p>
                 </div>
-              </div>
+              </a>
             </div>
 
             <div>

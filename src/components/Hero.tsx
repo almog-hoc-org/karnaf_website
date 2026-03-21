@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "./ui/split-text";
 import heroImage from "@/assets/hero-city.jpg";
-import mascotWelcome from "@/assets/mascot/mascot-welcome.png";
+import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
 import { ChevronDown } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,16 +19,12 @@ const Hero = () => {
   const mascotRef = useRef<HTMLImageElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // GSAP parallax background + content fade
+  // GSAP parallax — single ScrollTrigger timeline
   useEffect(() => {
     if (!bgRef.current || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Background parallax
-      gsap.to(bgRef.current, {
-        yPercent: 30,
-        scale: 1.15,
-        ease: "none",
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
@@ -37,33 +33,14 @@ const Hero = () => {
         },
       });
 
-      // Content fade out on scroll
+      tl.to(bgRef.current, { yPercent: 30, scale: 1.15, ease: "none" }, 0);
+
       if (contentRef.current) {
-        gsap.to(contentRef.current, {
-          opacity: 0,
-          y: -50,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "50% top",
-            scrub: true,
-          },
-        });
+        tl.to(contentRef.current, { opacity: 0, y: -50, ease: "none" }, 0);
       }
 
-      // Mascot parallax (slower)
       if (mascotRef.current) {
-        gsap.to(mascotRef.current, {
-          yPercent: -15,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
+        tl.to(mascotRef.current, { yPercent: -15, ease: "none" }, 0);
       }
     }, sectionRef);
 
@@ -165,17 +142,25 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Mascot — GSAP parallax, no mask, prominent */}
+        {/* Mascot — GSAP parallax */}
         <div className="hidden lg:flex items-center justify-center pointer-events-none">
           <img
             ref={mascotRef}
             src={mascotWelcome}
             alt="קרנף נדל״ן — מנופף שלום"
-            className="h-[480px] object-contain mascot-glow"
+            className="h-[480px] object-contain mascot-glow mascot-float"
             style={{
-              transform: "scaleX(-1)",
               willChange: "transform",
             }}
+          />
+        </div>
+        {/* Mobile mascot */}
+        <div className="flex lg:hidden justify-center pointer-events-none -mt-4 mb-2">
+          <img
+            src={mascotWelcome}
+            alt=""
+            aria-hidden="true"
+            className="h-[140px] object-contain mascot-glow mascot-float"
           />
         </div>
       </div>

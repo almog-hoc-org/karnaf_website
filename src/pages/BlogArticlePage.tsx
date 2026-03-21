@@ -1,8 +1,9 @@
 import { Link, useParams, Navigate } from "react-router-dom";
-import { ArrowRight, Clock, Calendar } from "lucide-react";
+import { ArrowRight, Clock, Calendar, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
 import VideoPlayer from "@/components/rich-media/VideoPlayer";
+import ReactMarkdown from "react-markdown";
 import { articles } from "@/data/articles";
 import BigCTA from "@/components/BigCTA";
 
@@ -119,8 +120,30 @@ const BlogArticlePage = () => {
               prose-a:text-primary
               prose-ul:space-y-1
             "
-            dangerouslySetInnerHTML={{ __html: article.content.replace(/\n/g, "<br/>") }}
-          />
+          >
+            <ReactMarkdown>{article.content}</ReactMarkdown>
+          </div>
+        </div>
+      </section>
+
+      {/* Course CTA banner */}
+      <section className="pb-12">
+        <div className="container mx-auto px-6 max-w-3xl">
+          <div className="rounded-2xl bg-primary p-6 md:p-8 flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+            <div className="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+              <GraduationCap size={28} className="text-accent" />
+            </div>
+            <div className="flex-1 text-center sm:text-right">
+              <h3 className="text-lg font-bold text-primary-foreground mb-1">רוצים ללמוד עוד?</h3>
+              <p className="text-sm text-primary-foreground/70">50+ שיעורים, מחשבונים וליווי צמוד בתוכנית "הדרך לדירה"</p>
+            </div>
+            <Link to="/course">
+              <Button className="btn-polygon bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 whitespace-nowrap">
+                לתוכנית המלאה
+                <ArrowRight size={16} className="rotate-180" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 

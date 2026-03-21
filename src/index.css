@@ -58,6 +58,10 @@
 }
 
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
   * {
     @apply border-border;
   }
@@ -65,6 +69,28 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Rubik', sans-serif;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: hsl(var(--accent) / 0.15);
+  }
+
+  /* Global focus-visible ring */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-background;
+  }
+
+  /* Tabular numbers for stats/pricing */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* prefers-reduced-motion global fallback */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   /* Custom selection */
@@ -82,6 +108,14 @@
   }
   .lenis.lenis-smooth [data-lenis-prevent] {
     overscroll-behavior: contain;
+  }
+
+  /* Button press feedback — global */
+  button, a[role="button"], .btn-polygon {
+    transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease, box-shadow 0.3s ease;
+  }
+  button:active, a[role="button"]:active, .btn-polygon:active {
+    transform: scale(0.97);
   }
 
   /* Typography utilities */
@@ -145,6 +179,15 @@
   /* Mascot utilities */
   .mascot-glow {
     filter: drop-shadow(0 16px 40px hsl(217 42% 15% / 0.2));
+  }
+
+  .mascot-float {
+    animation: mascot-float 3s ease-in-out infinite;
+  }
+
+  @keyframes mascot-float {
+    0%, 100% { transform: scaleX(-1) translateY(0); }
+    50% { transform: scaleX(-1) translateY(-10px); }
   }
 
   .mascot-fade-bottom {

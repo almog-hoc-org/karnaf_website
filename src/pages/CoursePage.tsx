@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useGsapReveal } from "@/hooks/use-gsap-reveal";
@@ -95,8 +96,8 @@ const programCards = [
  },
 ];
 
-const VIDEO_URL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-const isPlaceholderVideo = VIDEO_URL.includes("dQw4w9WgXcQ");
+const VIDEO_URL = "";
+const isPlaceholderVideo = !VIDEO_URL || VIDEO_URL.includes("dQw4w9WgXcQ");
 
 const totalModules = curriculum.length;
 const totalLessons = curriculum.reduce(
@@ -203,14 +204,22 @@ const CoursePage = () => {
  />
  <div className="grid md:grid-cols-2 gap-8 mt-12">
  {/* Problems */}
- <div
+ <motion.div
+ initial={{ opacity: 0, x: 40 }}
+ whileInView={{ opacity: 1, x: 0 }}
+ viewport={{ once: true, margin: "-50px" }}
+ transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
  className="space-y-4 rounded-2xl p-6 bg-red-500/5 border border-red-500/10"
  >
  <h3 className="text-lg font-bold text-foreground mb-4">
  בלי התוכנית
  </h3>
  {problems.map((problem, i) => (
- <div key={i}
+ <motion.div key={i}
+ initial={{ opacity: 0, x: 20 }}
+ whileInView={{ opacity: 1, x: 0 }}
+ viewport={{ once: true }}
+ transition={{ duration: 0.4, delay: 0.1 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
  className="flex items-start gap-3"
  >
  <XCircle
@@ -220,19 +229,27 @@ const CoursePage = () => {
  <span className="text-sm text-muted-foreground">
  {problem}
  </span>
- </div>
+ </motion.div>
  ))}
- </div>
+ </motion.div>
 
  {/* Solutions */}
- <div
+ <motion.div
+ initial={{ opacity: 0, x: -40 }}
+ whileInView={{ opacity: 1, x: 0 }}
+ viewport={{ once: true, margin: "-50px" }}
+ transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
  className="space-y-4 rounded-2xl p-6 bg-accent/5 border border-accent/10 scale-[1.02] shadow-lg"
  >
  <h3 className="text-lg font-bold text-foreground mb-4">
  עם התוכנית
  </h3>
  {solutions.map((solution, i) => (
- <div key={i}
+ <motion.div key={i}
+ initial={{ opacity: 0, x: -20 }}
+ whileInView={{ opacity: 1, x: 0 }}
+ viewport={{ once: true }}
+ transition={{ duration: 0.4, delay: 0.3 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
  className="flex items-start gap-3"
  >
  <CheckCircle
@@ -240,9 +257,9 @@ const CoursePage = () => {
  className="text-accent mt-0.5 flex-shrink-0"
  />
  <span className="text-sm text-foreground">{solution}</span>
- </div>
+ </motion.div>
  ))}
- </div>
+ </motion.div>
  </div>
  </div>
  </section>
@@ -373,9 +390,30 @@ const CoursePage = () => {
 
  {/* Section 7: Pricing Card */}
  <section id="pricing" className="py-20 bg-secondary/30">
- <div className="container mx-auto px-6 text-center max-w-2xl">
+ <div className="container mx-auto px-6 text-center max-w-3xl">
+
+ {/* Comparison: without vs with */}
+ <div className="grid md:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto text-right">
+ <div className="rounded-2xl p-5 bg-red-500/5 border border-red-500/10">
+ <h4 className="font-bold text-foreground mb-3 text-center">בלי הקורס</h4>
+ <ul className="space-y-2 text-sm text-muted-foreground">
+ {["משלמים יותר על הדירה", "משכנתא לא מותאמת", "מפספסים עסקאות", "לומדים מטעויות יקרות"].map((item, i) => (
+ <li key={i} className="flex items-center gap-2"><XCircle size={14} className="text-red-500 flex-shrink-0" />{item}</li>
+ ))}
+ </ul>
+ </div>
+ <div className="rounded-2xl p-5 bg-accent/5 border border-accent/20 shadow-md">
+ <h4 className="font-bold text-foreground mb-3 text-center">עם הקורס</h4>
+ <ul className="space-y-2 text-sm text-foreground">
+ {["חוסכים עשרות אלפי ₪", "תמהיל משכנתא אופטימלי", "מזהים עסקאות לפני כולם", "ליווי מקצועי בכל שלב"].map((item, i) => (
+ <li key={i} className="flex items-center gap-2"><CheckCircle size={14} className="text-accent flex-shrink-0" />{item}</li>
+ ))}
+ </ul>
+ </div>
+ </div>
+
  <div
- className="shadow-depth-4 bg-card border-t-4 border-accent rounded-3xl p-8 md:p-12 relative overflow-hidden"
+ className="shadow-depth-4 bg-card border-t-4 border-accent rounded-3xl p-8 md:p-12 relative overflow-hidden max-w-2xl mx-auto"
  >
  {/* Decorative gradient corner */}
  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full" />
@@ -389,8 +427,8 @@ const CoursePage = () => {
  </p>
 
  {/* Price */}
- <div className="text-display-md text-accent mb-8">
- &#8362;5,490
+ <div className="text-display-md text-accent mb-8 tabular-nums">
+ {new Intl.NumberFormat("he-IL", { style: "currency", currency: "ILS", maximumFractionDigits: 0 }).format(5490)}
  </div>
 
  {/* Value list */}
@@ -448,6 +486,7 @@ const CoursePage = () => {
  </span>
  ))}
  </div>
+
  </div>
  </div>
  </section>
