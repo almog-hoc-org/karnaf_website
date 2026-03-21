@@ -1,5 +1,4 @@
 import { Link, useParams, Navigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { ArrowRight, Clock, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
@@ -57,7 +56,7 @@ const BlogArticlePage = () => {
             </Button>
           </Link>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <div >
             <span className={`text-xs font-medium px-2 py-0.5 rounded-full inline-block mb-4 ${
               article.category === "article" ? "bg-blue-500/10 text-blue-600" :
               article.category === "video" ? "bg-red-500/10 text-red-600" :
@@ -80,7 +79,7 @@ const BlogArticlePage = () => {
                 <span>{article.readTime}</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -94,11 +93,7 @@ const BlogArticlePage = () => {
       ) : (
         <section className="pb-12">
           <div className="container mx-auto px-6 max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="rounded-2xl overflow-hidden border border-border"
+            <div className="rounded-2xl overflow-hidden border border-border"
             >
               <img
                 src={article.image}
@@ -106,7 +101,7 @@ const BlogArticlePage = () => {
                 loading="lazy"
                 className="w-full aspect-video object-cover"
               />
-            </motion.div>
+            </div>
           </div>
         </section>
       )}
@@ -114,11 +109,7 @@ const BlogArticlePage = () => {
       {/* Content */}
       <section className="pb-20">
         <div className="container mx-auto px-6 max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="prose prose-orange max-w-none
+          <div className="prose prose-orange max-w-none
               prose-headings:text-foreground prose-headings:font-bold
               prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
               prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
@@ -143,11 +134,7 @@ const BlogArticlePage = () => {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedArticles.map((a) => (
                 <Link key={a.slug} to={`/blog/${a.slug}`}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-colors group"
+                  <div className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-colors group"
                   >
                     <div className="aspect-video overflow-hidden">
                       <img
@@ -163,7 +150,7 @@ const BlogArticlePage = () => {
                       </h4>
                       <p className="text-xs text-muted-foreground mt-1">{a.readTime}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 </Link>
               ))}
             </div>

@@ -67,7 +67,7 @@ const FitQuiz = () => {
           <Button
             onClick={handleCalculate}
             disabled={!allAnswered}
-            className="w-full btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-lg"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-lg"
           >
             חשב התאמה
           </Button>
@@ -80,7 +80,7 @@ const FitQuiz = () => {
         >
           <CheckCircle size={48} className="text-primary mx-auto" />
           <div>
-            <p className="text-5xl font-black text-primary text-glow">{result.score}%</p>
+            <p className="text-5xl font-black text-primary">{result.score}%</p>
             <p className="text-foreground font-bold text-lg mt-2">התאמה לתוכנית</p>
           </div>
           <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">

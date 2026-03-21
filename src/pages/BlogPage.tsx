@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { motion } from "framer-motion";
 import { Play, FileText, Wrench, ArrowLeft, Clock } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
 import { articles } from "@/data/articles";
@@ -48,11 +47,7 @@ const BlogPage = () => {
       <section className="py-12">
         <div className="container mx-auto px-6 max-w-5xl">
           <Link to={`/blog/${featured.slug}`}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="grid md:grid-cols-2 gap-6 bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-colors group"
+            <div className="grid md:grid-cols-2 gap-6 bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-colors group"
             >
               <div className="aspect-video md:aspect-auto relative overflow-hidden">
                 <img
@@ -86,7 +81,7 @@ const BlogPage = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </Link>
         </div>
       </section>
@@ -122,12 +117,7 @@ const BlogPage = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((article, i) => (
               <Link key={article.slug} to={`/blog/${article.slug}`}>
-                <motion.article
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                  className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 group h-full flex flex-col"
+                <motion.article className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300 group h-full flex flex-col"
                 >
                   <div className="relative aspect-video overflow-hidden">
                     <img

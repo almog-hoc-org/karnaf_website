@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Users, BookOpen, CalendarDays } from "lucide-react";
+import { useGsapReveal } from "@/hooks/use-gsap-reveal";
 
 const stats = [
   { value: 375, suffix: "+", label: "לקוחות מרוצים", icon: Users },
@@ -30,10 +30,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
             const eased = 1 - (1 - progress) * (1 - progress);
             const current = Math.round(eased * value);
             setCount(current);
-
-            if (progress < 1) {
-              requestAnimationFrame(animate);
-            }
+            if (progress < 1) requestAnimationFrame(animate);
           };
 
           requestAnimationFrame(animate);
@@ -47,54 +44,36 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   }, [value]);
 
   return (
-    <div ref={ref} className="text-display text-4xl md:text-5xl lg:text-6xl text-accent text-glow">
+    <div ref={ref} className="text-display text-display-md text-accent">
       {count.toLocaleString('he-IL')}{suffix}
     </div>
   );
 };
 
 const StatsCounter = () => {
+  const sectionRef = useGsapReveal<HTMLDivElement>({ y: 20, stagger: 0.12 });
+
   return (
     <section className="py-8 md:py-12 relative overflow-hidden section-divider">
       <div className="absolute inset-0 bg-card" />
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.h3
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.1 }}
-          className="text-center text-foreground font-bold text-xl md:text-2xl mb-4 md:mb-8"
-        >
+      <div className="container mx-auto px-5 md:px-6 relative z-10">
+        <h3 className="text-center text-foreground font-bold text-xl md:text-2xl mb-4 md:mb-8">
           <span className="text-accent">מספרים</span> ולא תחושות
-        </motion.h3>
-        <div className="grid grid-cols-3 gap-4 md:gap-8 text-center max-w-3xl mx-auto">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.7, delay: i * 0.15 }}
-              className={`relative group cursor-default ${i < stats.length - 1 ? "glow-divider" : ""}`}
-            >
-              <motion.div
-                initial={{ scale: 0, rotate: -20 }}
-                whileInView={{ scale: 1, rotate: 0 }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 200, delay: 0.3 + i * 0.15 }}
-                className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/10 text-accent mb-4 group-hover:bg-accent/20 transition-colors duration-300"
-              >
+        </h3>
+        <div ref={sectionRef} className="grid grid-cols-3 gap-4 md:gap-8 text-center max-w-3xl mx-auto">
+          {stats.map((stat) => (
+            <div key={stat.label} className="relative group cursor-default">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/10 text-accent mb-4">
                 <stat.icon size={24} />
-              </motion.div>
-
+              </div>
               <Counter value={stat.value} suffix={stat.suffix} />
-              <p className="text-muted-foreground mt-2 text-sm md:text-base group-hover:text-foreground transition-colors duration-300">
+              <p className="text-muted-foreground mt-2 text-sm md:text-base">
                 {stat.label}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

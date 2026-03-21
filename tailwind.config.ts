@@ -59,18 +59,18 @@ export default {
         },
       },
       fontSize: {
-        'display-xl': ['8rem', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '900' }],
-        'display-lg': ['6rem', { lineHeight: '1.05', letterSpacing: '-0.02em', fontWeight: '900' }],
-        'display-md': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.01em', fontWeight: '800' }],
-        'display-sm': ['3rem', { lineHeight: '1.15', letterSpacing: '-0.01em', fontWeight: '800' }],
+        'display-lg': ['clamp(2.25rem, 4vw, 3.75rem)', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '800' }],
+        'display-md': ['clamp(1.75rem, 3vw, 2.75rem)', { lineHeight: '1.15', letterSpacing: '-0.01em', fontWeight: '700' }],
+        'display-sm': ['clamp(1.375rem, 2vw, 1.75rem)', { lineHeight: '1.2', letterSpacing: '-0.01em', fontWeight: '600' }],
       },
       boxShadow: {
+        'depth-1': 'var(--shadow-sm)',
+        'depth-2': 'var(--shadow-md)',
+        'depth-3': 'var(--shadow-lg)',
+        'depth-4': 'var(--shadow-xl)',
         'glow-sm': '0 0 10px hsl(var(--primary) / 0.3)',
         'glow-md': '0 0 20px hsl(var(--primary) / 0.4)',
-        'glow-lg': '0 0 40px hsl(var(--primary) / 0.5)',
-        'soft': '0 2px 40px rgba(0, 0, 0, 0.08)',
-        'lift': '0 10px 50px rgba(0, 0, 0, 0.15)',
-        'brutal': '8px 8px 0 hsl(var(--primary))',
+        'glow-accent': '0 8px 32px hsl(var(--accent) / 0.3)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -87,25 +87,13 @@ export default {
           to: { height: "0" },
         },
         "fade-in-up": {
-          "0%": {
-            opacity: "0",
-            transform: "translateY(30px)"
-          },
-          "100%": {
-            opacity: "1",
-            transform: "translateY(0)"
-          }
+          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "scale-in": {
-          "0%": {
-            opacity: "0",
-            transform: "scale(0.95)"
-          },
-          "100%": {
-            opacity: "1",
-            transform: "scale(1)"
-          }
-        }
+          "0%": { opacity: "0", transform: "scale(0.95)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
