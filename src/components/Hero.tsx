@@ -1,5 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
@@ -7,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "./ui/split-text";
 import heroImage from "@/assets/hero-city.jpg";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.png";
+import { ChevronDown } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,20 +15,64 @@ const Hero = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subheadingRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const mascotRef = useRef<HTMLImageElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"]
-  });
+  // GSAP parallax background + content fade
+  useEffect(() => {
+    if (!bgRef.current || !sectionRef.current) return;
 
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+    const ctx = gsap.context(() => {
+      // Background parallax
+      gsap.to(bgRef.current, {
+        yPercent: 30,
+        scale: 1.15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
 
-  // GSAP Animations
+      // Content fade out on scroll
+      if (contentRef.current) {
+        gsap.to(contentRef.current, {
+          opacity: 0,
+          y: -50,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "50% top",
+            scrub: true,
+          },
+        });
+      }
+
+      // Mascot parallax (slower)
+      if (mascotRef.current) {
+        gsap.to(mascotRef.current, {
+          yPercent: -15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // GSAP entrance animations
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Character-by-character reveal for main headline
       const chars = headingRef.current?.querySelectorAll('.char');
 
       if (chars && chars.length > 0) {
@@ -44,7 +88,6 @@ const Hero = () => {
         });
       }
 
-      // Subheading animation with blur
       if (subheadingRef.current) {
         gsap.from(subheadingRef.current, {
           opacity: 0,
@@ -56,7 +99,6 @@ const Hero = () => {
         });
       }
 
-      // CTA buttons animation
       if (ctaRef.current) {
         gsap.from(ctaRef.current.children, {
           opacity: 0,
@@ -74,108 +116,76 @@ const Hero = () => {
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Warm gradient orbs - CSS only, no JS overhead */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div
-          className="absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-20"
-          style={{ background: 'radial-gradient(circle, hsl(217 45% 18%) 0%, transparent 70%)' }} />
-
-        <div
-          className="absolute top-1/2 -left-48 w-[500px] h-[500px] rounded-full blur-3xl opacity-15"
-          style={{ background: 'radial-gradient(circle, hsl(217 40% 25%) 0%, transparent 70%)' }} />
-
-        <div
-          className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-10"
-          style={{ background: 'radial-gradient(circle, hsl(28 58% 57%) 0%, transparent 70%)' }} />
-
-      </div>
-
-      {/* Parallax Background */}
-      <motion.div className="absolute inset-0 -z-20" style={{ y: bgY, scale: bgScale }}>
+      {/* Parallax Background — GSAP driven */}
+      <div ref={bgRef} className="absolute inset-0 -z-20" style={{ willChange: "transform" }}>
         <img
           src={heroImage}
           alt="קו רקיע עירוני מודרני"
           className="w-full h-[120%] object-cover -mt-[10%]"
-          style={{ willChange: "transform" }} />
+        />
+      </div>
 
-      </motion.div>
+      {/* Clean gradient overlay — stronger on text side for readability */}
+      <div className="absolute inset-0 bg-gradient-to-l from-background via-background/95 to-background/50 -z-10" />
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-l from-background via-background/90 to-background/70 -z-10" />
-
-
-      {/* Decorative Elements */}
-      <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float pointer-events-none" />
-      <div className="absolute bottom-1/4 right-10 w-48 h-48 bg-primary/5 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: "3s" }} />
-
-      {/* Content Grid */}
-      <motion.div
-        style={{ opacity: contentOpacity }}
-        className="relative z-10 container mx-auto px-6 py-32 grid lg:grid-cols-2 gap-12 items-center">
-
+      {/* Content */}
+      <div
+        ref={contentRef}
+        className="relative z-10 container mx-auto px-6 py-32 grid lg:grid-cols-2 gap-12 items-center"
+      >
         {/* Text Side (Right in RTL) */}
         <div>
-
-          {/* Character-by-character headline with GSAP */}
           <h1
             ref={headingRef}
-            className="text-display text-5xl md:text-6xl lg:text-7xl text-foreground mb-4">
-
+            className="text-display text-display-lg text-foreground mb-4"
+          >
             <SplitText text="הדירה הבאה שלכם מתחילה כאן" />
           </h1>
 
           <p
             ref={subheadingRef}
-            className="text-display text-3xl md:text-4xl lg:text-5xl text-accent text-glow mb-6">
-
+            className="text-display-md text-accent mb-6"
+          >
             לקנות דירה חכם ולהימנע מטעויות יקרות
           </p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-8">מלווים אתכם בשיטה מבוססת נתונים — מהצעד הראשון ועד חתימת החוזה. בלי לסמוך על אינטואיציה, בלי טעויות יקרות.
-          </motion.p>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-8">
+            מלווים אתכם בשיטה מבוססת נתונים — מהצעד הראשון ועד חתימת החוזה. בלי לסמוך על אינטואיציה, בלי טעויות יקרות.
+          </p>
 
-          <div
-            ref={ctaRef}
-            className="flex flex-col sm:flex-row gap-3 md:gap-4">
-
+          <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 md:gap-4">
             <Link to="/course" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="w-full bg-accent text-accent-foreground font-bold text-base md:text-lg px-6 md:px-8 py-5 md:py-6 animate-pulse-glow">
-
+                className="w-full btn-polygon bg-accent text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 shadow-glow-accent"
+              >
                 גלו איך קונים דירה חכם
               </Button>
             </Link>
           </div>
-
         </div>
 
-        {/* Mascot - left side of hero on desktop */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 1.4, type: "spring", stiffness: 120 }}
-          className="hidden lg:flex items-center justify-center pointer-events-none">
-
+        {/* Mascot — GSAP parallax, no mask, prominent */}
+        <div className="hidden lg:flex items-center justify-center pointer-events-none">
           <img
+            ref={mascotRef}
             src={mascotWelcome}
             alt="קרנף נדל״ן — מנופף שלום"
-            className="h-[520px] object-contain drop-shadow-2xl"
+            className="h-[480px] object-contain mascot-glow"
             style={{
               transform: "scaleX(-1)",
-              maskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
-            }} />
+              willChange: "transform",
+            }}
+          />
+        </div>
+      </div>
 
-        </motion.div>
-      </motion.div>
-
-    </section>);
-
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-muted-foreground/50">
+        <ChevronDown size={20} className="animate-bounce" />
+      </div>
+    </section>
+  );
 };
 
 export default Hero;

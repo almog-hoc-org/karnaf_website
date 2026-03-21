@@ -38,9 +38,6 @@ const SEOHead = ({ title, description, path, jsonLd, keywords }: SEOHeadProps) =
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={DEFAULT_IMAGE} />
 
-      {/* Language */}
-      <html lang="he" dir="rtl" />
-
       {/* JSON-LD Structured Data */}
       {jsonLdArray.map((ld, i) => (
         <script key={i} type="application/ld+json">

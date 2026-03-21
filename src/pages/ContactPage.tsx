@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet-async";
-import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import PageHero from "@/layouts/PageHero";
 import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
@@ -51,11 +50,7 @@ const ContactPage = () => {
       {/* Map embed */}
       <section className="py-12 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <div >
             <h3 className="text-display text-2xl text-foreground mb-4">
               פריסה <span className="text-gradient">ארצית</span>
             </h3>
@@ -74,7 +69,7 @@ const ContactPage = () => {
                 title="מפת ישראל"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </>

@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet-async";
-import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/layouts/PageHero";
@@ -43,11 +42,7 @@ const AboutPage = () => {
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-4xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
+            <div >
               <h2 className="text-display text-3xl md:text-4xl text-foreground mb-6">
                 למה <span className="text-gradient">קרנף?</span>
               </h2>
@@ -64,21 +59,16 @@ const AboutPage = () => {
                   היום, אחרי מעל 350 לקוחות ותלמידים, אנחנו ממשיכים באותה משימה: לתת לכל ישראלי את הכלים והידע לקנות דירה בצורה חכמה.
                 </p>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
+            <div >
               <div className="rounded-2xl overflow-hidden border border-primary/20 shadow-lg">
                 <div className="flex flex-col items-center justify-center py-16 bg-card">
                   <p className="text-lg font-bold text-foreground mb-2">הסרטון בדרך</p>
                   <p className="text-sm text-muted-foreground">בקרוב כאן</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -95,13 +85,8 @@ const AboutPage = () => {
           <div className="relative">
             <div className="absolute right-[19px] top-0 bottom-0 w-0.5 bg-primary/20" />
             {timeline.map((item, i) => (
-              <motion.div
-                key={item.year}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex gap-6 mb-8 last:mb-0"
+              <div
+                key={item.year} className="flex gap-6 mb-8 last:mb-0"
               >
                 <div className="relative flex-shrink-0">
                   <div className="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center text-primary font-bold text-xs">
@@ -113,7 +98,7 @@ const AboutPage = () => {
                   <h4 className="text-foreground font-bold mb-1">{item.title}</h4>
                   <p className="text-sm text-muted-foreground">{item.description}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -128,13 +113,8 @@ const AboutPage = () => {
           />
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             {team.map((member, i) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all group"
+              <div
+                key={member.name} className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all group"
               >
                 <div className="relative h-64 overflow-hidden">
                   {member.image ? (
@@ -157,7 +137,7 @@ const AboutPage = () => {
                   <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
                   <p className="text-muted-foreground text-sm leading-relaxed">{member.bio}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

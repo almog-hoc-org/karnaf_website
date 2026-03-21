@@ -1,9 +1,7 @@
-import { motion, useScroll, useTransform } from "framer-motion";
 import { BookOpen, Calculator, Headphones, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useRef } from "react";
-import mascotProperties from "@/assets/mascot/mascot-properties.png";
+import { useGsapReveal } from "@/hooks/use-gsap-reveal";
 
 const cards = [
   {
@@ -42,59 +40,29 @@ const cards = [
 ];
 
 const Services = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const mascotY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const mascotOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.25, 0.35, 0.25]);
+  const headerRef = useGsapReveal<HTMLHeadingElement>({ y: 30 });
+  const cardsRef = useGsapReveal<HTMLDivElement>({ y: 40, stagger: 0.15 });
+  const ctaRef = useGsapReveal<HTMLDivElement>({ y: 20, delay: 0.3 });
 
   return (
-    <section ref={sectionRef} id="services" className="py-24 bg-secondary relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.7 }}
-          className="text-display text-4xl md:text-5xl text-center text-foreground mb-8"
+    <section id="services" className="py-16 md:py-24 bg-secondary relative overflow-hidden">
+      <div className="container mx-auto px-5 md:px-6 relative z-10">
+        <h2
+          ref={headerRef}
+          className="text-display text-display-md text-center text-foreground mb-12"
         >
           הדרך לדירה — <span className="text-gradient">מה בתוכנית?</span>
-        </motion.h2>
+        </h2>
 
-        {/* Mascot — centered above cards */}
-        <motion.div
-          style={{ y: mascotY, opacity: mascotOpacity }}
-          className="hidden lg:flex justify-center mb-10 pointer-events-none"
-        >
-          <img
-            src={mascotProperties}
-            alt="קרנף מציג נכסים"
-            className="h-[200px] object-contain drop-shadow-lg"
-            loading="lazy"
-          />
-        </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {cards.map((card, i) => (
-            <motion.div
+        <div ref={cardsRef} className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {cards.map((card) => (
+            <div
               key={card.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.7, delay: i * 0.2 }}
-              whileHover={{ scale: 1.02, boxShadow: "0 8px 30px rgba(26, 39, 68, 0.15)" }}
-              className="relative card-premium p-8 group flex flex-col"
+              className="bg-card shadow-depth-2 border border-border/30 rounded-2xl p-8 group flex flex-col transition-all duration-300 hover:shadow-depth-4 hover:-translate-y-2 hover:border-accent/20"
             >
-              <motion.div
-                whileHover={{ rotate: 5, scale: 1.1 }}
-                className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-accent/10 text-accent mb-6 group-hover:bg-accent/20 transition-colors"
-              >
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary text-primary-foreground mb-6">
                 <card.icon size={28} />
-              </motion.div>
+              </div>
 
               <h3 className="text-heading text-xl md:text-2xl text-foreground mb-2">
                 {card.title}
@@ -104,37 +72,27 @@ const Services = () => {
               </p>
 
               <ul className="space-y-3 flex-1">
-                {card.features.map((feature, fi) => (
-                  <motion.li
+                {card.features.map((feature) => (
+                  <li
                     key={feature}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 + fi * 0.1 }}
                     className="flex items-start gap-3 text-sm text-muted-foreground"
                   >
                     <Check size={16} className="text-accent mt-0.5 shrink-0" />
                     <span>{feature}</span>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="text-center mt-12"
-        >
+        <div ref={ctaRef} className="text-center mt-12">
           <Link to="/course">
-            <Button className="btn-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg px-10 py-6">
+            <Button className="btn-polygon bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg px-10 py-6">
               לפרטים נוספים על התוכנית
             </Button>
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

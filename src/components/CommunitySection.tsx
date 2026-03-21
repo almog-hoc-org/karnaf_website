@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import { Instagram, Facebook, Youtube, Music } from "lucide-react";
+import { useGsapReveal } from "@/hooks/use-gsap-reveal";
 
 const platforms = [
   {
@@ -37,39 +37,34 @@ const platforms = [
 ];
 
 const CommunitySection = () => {
+  const headerRef = useGsapReveal<HTMLHeadingElement>({ y: 30 });
+  const cardsRef = useGsapReveal<HTMLDivElement>({ y: 30, stagger: 0.1 });
+
   return (
     <section className="py-8 md:py-14 bg-secondary relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.7 }}
-          className="text-display text-2xl md:text-4xl text-center text-foreground mb-4 md:mb-8"
+      <div className="container mx-auto px-5 md:px-6 relative z-10">
+        <h2
+          ref={headerRef}
+          className="text-display text-display-md text-center text-foreground mb-4 md:mb-8"
         >
           הצטרפו <span className="text-gradient">לקהילה שלנו</span>
-        </motion.h2>
+        </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-4xl mx-auto">
-          {platforms.map((platform, i) => (
-            <motion.a
+        <div ref={cardsRef} className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-4xl mx-auto">
+          {platforms.map((platform) => (
+            <a
               key={platform.label}
               href={platform.href}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ scale: 1.05, y: -4 }}
-              className={`group bg-card border border-border rounded-2xl p-4 md:p-6 text-center transition-all duration-300 ${platform.hoverBorder}`}
+              className={`group bg-card border border-border rounded-2xl p-4 md:p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-depth-2 ${platform.hoverBorder}`}
             >
               <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${platform.color} text-white mb-4 group-hover:shadow-lg transition-shadow`}>
                 <platform.icon size={28} />
               </div>
               <h3 className="text-foreground font-bold text-sm mb-1">{platform.label}</h3>
               <p className="text-muted-foreground text-xs leading-relaxed">{platform.description}</p>
-            </motion.a>
+            </a>
           ))}
         </div>
       </div>

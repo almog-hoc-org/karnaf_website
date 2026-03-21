@@ -7,6 +7,7 @@ import { MessageCircle, Send, CheckCircle, Phone, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { WHATSAPP_NUMBER, socialLinks, TIKTOK_URL } from "@/lib/constants";
 import { supabase } from "@/integrations/supabase/client";
+import { useGsapReveal } from "@/hooks/use-gsap-reveal";
 
 const Footer = () => {
   const [name, setName] = useState("");
@@ -14,6 +15,8 @@ const Footer = () => {
   const [service, setService] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const formRef = useGsapReveal<HTMLDivElement>({ y: 30 });
+  const contactRef = useGsapReveal<HTMLDivElement>({ y: 30, delay: 0.15 });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,18 +49,11 @@ const Footer = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-secondary relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary to-background" />
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="contact" className="py-16 md:py-24 bg-secondary relative overflow-hidden">
+      <div className="container mx-auto px-5 md:px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <h2 className="text-display text-4xl md:text-5xl text-foreground mb-4">
+          <div ref={formRef}>
+            <h2 className="text-display text-display-md text-foreground mb-4">
               נשמח להכיר אתכם
             </h2>
             <p className="text-xl text-accent font-bold mb-10">
@@ -86,17 +82,18 @@ const Footer = () => {
                   placeholder="שם מלא"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="bg-card border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50 transition-colors"
+                  className="bg-card border-border text-foreground placeholder:text-muted-foreground h-14 text-right rounded-xl focus:shadow-depth-1 focus:border-primary/50 transition-all"
                 />
                 <Input
                   type="tel"
                   placeholder="טלפון"
+                  dir="ltr"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="bg-card border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50 transition-colors"
+                  className="bg-card border-border text-foreground placeholder:text-muted-foreground h-14 text-right rounded-xl focus:shadow-depth-1 focus:border-primary/50 transition-all"
                 />
                 <Select value={service} onValueChange={setService}>
-                  <SelectTrigger className="bg-card border-border text-foreground h-12">
+                  <SelectTrigger className="bg-card border-border text-foreground h-14 rounded-xl">
                     <SelectValue placeholder="אני מעוניין ב..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -106,22 +103,16 @@ const Footer = () => {
                 </Select>
                 <Button
                   type="submit"
-                  className="w-full btn-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold h-12 text-lg gap-2"
+                  className="w-full btn-polygon bg-accent hover:bg-accent/90 text-accent-foreground font-bold h-14 text-lg gap-2"
                 >
                   <Send size={18} />
                   בואו נדבר — בלי התחייבות
                 </Button>
               </form>
             )}
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="flex flex-col justify-center"
-          >
+          <div ref={contactRef} className="flex flex-col justify-center">
             <h3 className="text-heading text-2xl text-foreground mb-6">דרכי יצירת קשר</h3>
 
             <div className="space-y-4 mb-8">
@@ -129,7 +120,7 @@ const Footer = () => {
                 href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 bg-card/80 rounded-xl border border-border hover:border-primary/30 transition-colors group shadow-sm"
+                className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border hover:border-accent/30 transition-all duration-200 group shadow-depth-1"
               >
                 <div className="w-10 h-10 rounded-full bg-[#25D366]/10 flex items-center justify-center">
                   <MessageCircle size={20} className="text-[#25D366]" />
@@ -140,7 +131,7 @@ const Footer = () => {
                 </div>
               </a>
 
-              <div className="flex items-center gap-4 p-4 bg-card/80 rounded-xl border border-border shadow-sm">
+              <div className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border shadow-depth-1">
                 <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
                   <Phone size={20} className="text-accent" />
                 </div>
@@ -150,7 +141,7 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 p-4 bg-card/80 rounded-xl border border-border shadow-sm">
+              <div className="flex items-center gap-4 p-4 bg-card rounded-xl border border-border shadow-depth-1">
                 <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
                   <Mail size={20} className="text-accent" />
                 </div>
@@ -165,35 +156,31 @@ const Footer = () => {
               <p className="text-sm text-muted-foreground mb-3">עקבו אחרינו</p>
               <div className="flex items-center gap-3">
                 {socialLinks.map((social) => (
-                  <motion.a
+                  <a
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    whileHover={{ scale: 1.15, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground transition-all duration-300 ${social.hoverColor}`}
+                    className={`w-11 h-11 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground transition-all duration-200 hover:scale-110 ${social.hoverColor}`}
                   >
                     <social.icon size={18} />
-                  </motion.a>
+                  </a>
                 ))}
-                <motion.a
+                <a
                   href={TIKTOK_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="TikTok"
-                  whileHover={{ scale: 1.15, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:bg-purple-500/20 hover:text-purple-600 hover:border-purple-500/50 transition-all duration-300"
+                  className="w-11 h-11 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:bg-purple-500/20 hover:text-purple-600 hover:border-purple-500/50 transition-all duration-200 hover:scale-110"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.7a8.16 8.16 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.13z" />
                   </svg>
-                </motion.a>
+                </a>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

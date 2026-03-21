@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Menu, X } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import karnafLogo from "@/assets/mascot/karnaf-logo.svg";
 
@@ -29,101 +29,120 @@ const Navigation = () => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isMenuOpen]);
+
   const isActive = (to: string) => {
     if (to === "/") return location.pathname === "/";
     return location.pathname.startsWith(to);
   };
 
-  // Pages with dark hero backgrounds need light nav text when not scrolled
   const isDarkHeroPage = location.pathname === "/course";
   const useLightText = isDarkHeroPage && !isScrolled;
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-xl border-b border-border shadow-sm py-3"
-          : isDarkHeroPage
-            ? "bg-transparent backdrop-blur-sm py-5"
-            : "bg-background/40 backdrop-blur-md py-5"
-      }`}
-    >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-        >
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled
+            ? "py-3 border-b border-white/10 shadow-depth-1"
+            : "py-6"
+        }`}
+        style={{
+          backgroundColor: isScrolled
+            ? "hsl(var(--background) / 0.6)"
+            : isDarkHeroPage
+              ? "transparent"
+              : "hsl(var(--background) / 0.2)",
+          backdropFilter: isScrolled
+            ? "blur(20px) saturate(1.8)"
+            : "blur(4px)",
+          WebkitBackdropFilter: isScrolled
+            ? "blur(20px) saturate(1.8)"
+            : "blur(4px)",
+        }}
+      >
+        <div className="container mx-auto px-6 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <img
               src={karnafLogo}
               alt="קרנף"
-              className={`object-contain transition-all duration-300 ${isScrolled ? "w-8 h-8" : "w-10 h-10"}`}
+              className={`object-contain transition-all duration-500 ${isScrolled ? "w-8 h-8" : "w-11 h-11"}`}
             />
-            <span className={`font-black tracking-tight transition-all duration-300 ${isScrolled ? "text-lg" : "text-xl"} ${useLightText ? "text-white" : "text-foreground"}`}>
+            <span className={`font-black tracking-tight transition-all duration-500 ${isScrolled ? "text-lg" : "text-xl"} ${useLightText ? "text-white" : "text-foreground"}`}>
               קרנף נדל״ן
             </span>
           </Link>
-        </motion.div>
 
-        <div className="hidden lg:flex items-center gap-10">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.to}
-              className={`relative text-sm font-medium transition-colors duration-300 py-1 ${useLightText ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-accent"}`}
-            >
-              {item.label}
-              {isActive(item.to) && (
-                <motion.div
-                  layoutId="nav-underline"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent rounded-full"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          <div className="hidden lg:flex items-center gap-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                className={`relative text-sm font-medium transition-colors duration-300 py-1 ${useLightText ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                {item.label}
+                <span
+                  className={`absolute -bottom-1 left-0 right-0 h-0.5 rounded-full transition-all duration-300 ${
+                    isActive(item.to) ? "bg-accent scale-x-100" : "bg-transparent scale-x-0"
+                  }`}
                 />
-              )}
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
+
+          <div className="hidden lg:block">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
+              <Button
+                className="btn-polygon bg-accent text-accent-foreground font-bold gap-2 px-8 py-2.5"
+              >
+                <MessageCircle size={16} />
+                בואו נדבר
+              </Button>
+            </a>
+          </div>
+
+          {/* Hamburger — animated 3 lines */}
+          <button
+            className={`lg:hidden relative w-8 h-6 flex flex-col justify-between transition-colors ${useLightText ? "text-white" : "text-foreground"}`}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
+            aria-expanded={isMenuOpen}
+          >
+            <span className={`block w-full h-0.5 bg-current transition-all duration-300 origin-right ${isMenuOpen ? "rotate-[-45deg] translate-y-[1px]" : ""}`} />
+            <span className={`block w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? "opacity-0 scale-x-0" : ""}`} />
+            <span className={`block w-full h-0.5 bg-current transition-all duration-300 origin-right ${isMenuOpen ? "rotate-[45deg] -translate-y-[1px]" : ""}`} />
+          </button>
         </div>
+      </nav>
 
-        <div className="hidden lg:block">
-          <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
-            <Button className="btn-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2">
-              <MessageCircle size={16} />
-              בואו נדבר
-            </Button>
-          </a>
-        </div>
-
-        <button
-          className={`lg:hidden transition-colors ${useLightText ? "text-white hover:text-white/80" : "text-foreground hover:text-accent"}`}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
-          aria-expanded={isMenuOpen}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
+      {/* Mobile Full-Screen Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 lg:hidden bg-background/98 backdrop-blur-xl flex flex-col justify-center items-center"
           >
-            <div className="container mx-auto px-6 py-6 space-y-1">
+            <div className="flex flex-col items-center gap-6">
               {navItems.map((item, i) => (
                 <motion.div
                   key={item.label}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ delay: i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <Link
                     to={item.to}
-                    className={`block text-base font-medium transition-colors py-3 border-b border-border/50 ${
-                      isActive(item.to) ? "text-accent" : "text-muted-foreground hover:text-accent"
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block text-2xl font-bold transition-colors ${
+                      isActive(item.to) ? "text-accent" : "text-foreground hover:text-accent"
                     }`}
                   >
                     {item.label}
@@ -132,14 +151,15 @@ const Navigation = () => {
               ))}
 
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ delay: 0.35, duration: 0.4 }}
                 className="pt-4"
               >
                 <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
-                  <Button className="w-full btn-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2">
-                    <MessageCircle size={16} />
+                  <Button className="btn-polygon bg-accent text-accent-foreground font-bold gap-2 px-10 py-3 text-lg">
+                    <MessageCircle size={18} />
                     בואו נדבר
                   </Button>
                 </a>
@@ -148,7 +168,7 @@ const Navigation = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 

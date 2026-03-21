@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useGsapReveal } from "@/hooks/use-gsap-reveal";
 
 const ContactStrip = () => {
   const [name, setName] = useState("");
@@ -17,6 +18,7 @@ const ContactStrip = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const cardRef = useGsapReveal<HTMLDivElement>({ y: 30 });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,14 +58,8 @@ const ContactStrip = () => {
 
   return (
     <section className="relative -mt-12 md:-mt-16 z-20">
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="glass-card rounded-2xl p-4 md:p-8"
-        >
+      <div className="container mx-auto px-5 md:px-6">
+        <div ref={cardRef} className="glass-card rounded-2xl p-4 md:p-8">
           <div className="flex items-center justify-between mb-4 md:mb-0">
             <div className="hidden md:block">
               <h3 className="text-foreground font-bold text-lg">הרשמו לוובינר הבא שלנו</h3>
@@ -101,7 +97,7 @@ const ContactStrip = () => {
                 <Input
                   id="contact-phone"
                   type="tel"
-                  dir="rtl"
+                  dir="ltr"
                   placeholder="טלפון *"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -147,14 +143,10 @@ const ContactStrip = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="btn-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold h-11 md:h-12 text-base gap-2 sm:col-span-2 lg:col-span-1"
+                className="btn-polygon bg-accent hover:bg-accent/90 text-accent-foreground font-bold h-11 md:h-12 text-base gap-2 sm:col-span-2 lg:col-span-1"
               >
                 {isSubmitting ? (
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                  />
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
                   <>
                     <Send size={16} />
@@ -164,7 +156,7 @@ const ContactStrip = () => {
               </Button>
             </form>
           )}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

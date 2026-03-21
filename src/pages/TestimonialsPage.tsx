@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet-async";
-import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/layouts/PageHero";
@@ -33,11 +32,11 @@ const TestimonialsPage = () => {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 gap-8 max-w-md mx-auto text-center">
             <div>
-              <p className="text-4xl font-black text-primary text-glow">375+</p>
+              <p className="text-4xl font-black text-primary">375+</p>
               <p className="text-sm text-muted-foreground mt-1">לקוחות בתוכניות השונות</p>
             </div>
             <div>
-              <p className="text-4xl font-black text-primary text-glow">8+</p>
+              <p className="text-4xl font-black text-primary">8+</p>
               <p className="text-sm text-muted-foreground mt-1">שנות ניסיון</p>
             </div>
           </div>
@@ -62,11 +61,7 @@ const TestimonialsPage = () => {
       {/* CTA */}
       <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-6 text-center max-w-2xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <div >
             <h3 className="text-display text-3xl md:text-4xl text-foreground mb-4">
               רוצים להיות הסיפור <span className="text-gradient">הבא?</span>
             </h3>
@@ -74,12 +69,12 @@ const TestimonialsPage = () => {
               הצטרפו למאות ישראלים שכבר רכשו דירה בצורה חכמה עם קרנף.
             </p>
             <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-7 gap-3">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-7 gap-3">
                 <MessageCircle size={20} />
                 דברו עם הקרנף
               </Button>
             </a>
-          </motion.div>
+          </div>
         </div>
       </section>
 
