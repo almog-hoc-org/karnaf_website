@@ -47,7 +47,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   }, [value]);
 
   return (
-    <div ref={ref} className="text-display text-4xl md:text-5xl lg:text-6xl text-primary text-glow">
+    <div ref={ref} className="text-display text-4xl md:text-5xl lg:text-6xl text-accent text-glow">
       {count.toLocaleString('he-IL')}{suffix}
     </div>
   );
@@ -68,7 +68,7 @@ const StatsCounter = () => {
           viewport={{ once: true, amount: 0.1 }}
           className="text-center text-foreground font-bold text-xl md:text-2xl mb-4 md:mb-8"
         >
-          סיפורו של <span className="text-primary">קרנף נדל״ן</span>
+          <span className="text-accent">מספרים</span> ולא תחושות
         </motion.h3>
         <div className="grid grid-cols-3 gap-4 md:gap-8 text-center max-w-3xl mx-auto">
           {stats.map((stat, i) => (
@@ -85,7 +85,7 @@ const StatsCounter = () => {
                 whileInView={{ scale: 1, rotate: 0 }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 200, delay: 0.3 + i * 0.15 }}
-                className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary mb-4 group-hover:bg-primary/20 transition-colors duration-300"
+                className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/10 text-accent mb-4 group-hover:bg-accent/20 transition-colors duration-300"
               >
                 <stat.icon size={24} />
               </motion.div>

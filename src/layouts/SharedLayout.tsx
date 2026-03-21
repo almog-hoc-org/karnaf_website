@@ -13,7 +13,7 @@ const PageLoadingSkeleton = () => (
     <motion.div
       animate={{ rotate: 360 }}
       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-      className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full"
+      className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full"
     />
   </div>
 );

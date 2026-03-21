@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
-import mascotIcon from "@/assets/mascot/mascot-pointing.png";
+import mascotIcon from "@/assets/mascot/mascot-thumbsup.png";
 
 const WhatsAppFAB = () => (
   <motion.a

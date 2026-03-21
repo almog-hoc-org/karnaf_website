@@ -4,7 +4,7 @@ import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/layouts/PageHero";
 import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
-import SEOHead, { organizationSchema } from "@/components/SEOHead";
+
 
 import { team } from "@/data/team";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
@@ -18,7 +18,7 @@ const timeline = [
   { year: "2021", title: "עסקת תמ\"א", description: "כניסה לעולם ההתחדשות העירונית עם עסקת תמ\"א מוצלחת." },
   { year: "2022", title: "קרקעות ויזמות", description: "נכנסים לעולם הקרקעות והיזמות הנדל\"נית." },
   { year: "2023", title: "קרנף נולד", description: "קרנף נדל\"ן מוקם רשמית — הלקוחות הראשונים מצטרפים." },
-  { year: "2024", title: "מתפוצצים ברשתות", description: "צמיחה מסיבית ברשתות החברתיות — אלפי עוקבים חדשים." },
+  { year: "2024", title: "מתפוצצים ברשתות", description: "צמיחה מסיבית ברשתות החברתיות — עשרות אלפי עוקבים חדשים." },
   { year: "2025", title: "50 עסקאות, 300 תלמידים", description: "50 עסקאות מוצלחות ו-300 תלמידים בהכשרות הדיגיטליות." },
   { year: "2026", title: "הקהילה גדלה", description: "עשרות אלפי עוקבים ברשתות, מעל ל-350 לקוחות ותלמידים." },
 ];
@@ -27,38 +27,28 @@ const timeline = [
 const AboutPage = () => {
   return (
     <>
-      <SEOHead
-        title="אודות קרנף נדל״ן | הסיפור, הצוות והניסיון"
-        description="הכירו את קרנף נדל״ן — צוות מומחים עם 8+ שנות ניסיון בהשקעות נדל״ן, ליווי רוכשי דירות והכשרות דיגיטליות. מעל 350 לקוחות ותלמידים מרוצים."
-        path="/about"
-        keywords="קרנף נדל״ן, אודות, צוות נדל״ן, ליווי רכישת דירה, השקעות נדל״ן ישראל, איתמר ואלמוג"
-        jsonLd={[
-          organizationSchema,
-          {
-            "@context": "https://schema.org",
-            "@type": "AboutPage",
-            name: "אודות קרנף נדל״ן",
-            description: "הסיפור של קרנף נדל״ן — מ-2016 ועד היום.",
-            url: "https://www.karnafnadlan.com/about",
-          },
-        ]}
-      />
+      <Helmet>
+        <title>אודות קרנף נדל"ן | הסיפור שלנו</title>
+        <meta name="description" content="הכירו את קרנף נדל&quot;ן — הצוות, הסיפור, הניסיון. מעל 350 לקוחות ותלמידים ו-8+ שנות ניסיון בליווי השקעות נדל&quot;ן." />
+        <link rel="canonical" href="https://www.karnafnadlan.com/about" />
+      </Helmet>
 
       <PageHero
         title="סיפורו של"
         highlight="הקרנף"
+        subtitle="2 קצינים צעירים בקבע מחליטים להפוך את התשוקה שלהם לניתוח, נתונים ומספרים ולהקים חברה שעוזרת לאנשים לרכוש דירה בישראל בביטחון מלא."
       />
 
       {/* Why Karnaf - moved to top */}
-      <section className="pt-0 pb-6 md:pb-10">
+      <section className="py-20">
         <div className="container mx-auto px-6 max-w-4xl">
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-display text-2xl md:text-4xl text-foreground mb-3 md:mb-6">
+              <h2 className="text-display text-3xl md:text-4xl text-foreground mb-6">
                 למה <span className="text-gradient">קרנף?</span>
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
@@ -96,7 +86,7 @@ const AboutPage = () => {
       <StatsCounter />
 
       {/* Timeline */}
-      <section className="py-8 md:py-12 bg-secondary/30">
+      <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader
             title="ציר"
@@ -111,7 +101,7 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="flex gap-4 md:gap-6 mb-4 md:mb-6 last:mb-0"
+                className="flex gap-6 mb-8 last:mb-0"
               >
                 <div className="relative flex-shrink-0">
                   <div className="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center text-primary font-bold text-xs">
@@ -130,13 +120,13 @@ const AboutPage = () => {
       </section>
 
       {/* Team */}
-      <section className="py-8 md:py-12">
+      <section className="py-20">
         <div className="container mx-auto px-6 max-w-4xl">
           <AnimatedSectionHeader
             title="הצוות"
             highlight="שלנו"
           />
-          <div className="grid md:grid-cols-2 gap-4 md:gap-8 max-w-3xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             {team.map((member, i) => (
               <motion.div
                 key={member.name}

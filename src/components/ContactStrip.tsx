@@ -77,7 +77,7 @@ const ContactStrip = () => {
               animate={{ opacity: 1, scale: 1 }}
               className="flex items-center justify-center gap-3 py-4"
             >
-              <CheckCircle className="w-8 h-8 text-primary" />
+              <CheckCircle className="w-8 h-8 text-accent" />
               <div>
                 <p className="text-foreground font-bold">תודה רבה!</p>
                 <p className="text-muted-foreground text-sm">ניצור איתך קשר בהקדם</p>
@@ -147,7 +147,7 @@ const ContactStrip = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-11 md:h-12 text-base gap-2 sm:col-span-2 lg:col-span-1"
+                className="btn-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold h-11 md:h-12 text-base gap-2 sm:col-span-2 lg:col-span-1"
               >
                 {isSubmitting ? (
                   <motion.div

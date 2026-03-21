@@ -8,7 +8,6 @@ import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import BigCTA from "@/components/BigCTA";
-import SEOHead from "@/components/SEOHead";
 
 const TestimonialsPage = () => {
   const courseTestimonials = testimonials.filter((t) => t.service === "course");
@@ -17,19 +16,11 @@ const TestimonialsPage = () => {
 
   return (
     <>
-      <SEOHead
-        title="סיפורי הצלחה | לקוחות קרנף נדל״ן משתפים"
-        description="קראו עדויות של לקוחות שרכשו דירות בליווי קרנף נדל״ן — בוגרי הסדנה הדיגיטלית ולקוחות פרימיום משתפים את הסיפור שלהם. 375+ לקוחות מרוצים."
-        path="/testimonials"
-        keywords="חוות דעת קרנף נדל״ן, סיפורי הצלחה נדל״ן, ביקורות לקוחות, רכישת דירה ראשונה חוויות, המלצות ליווי נדל״ן"
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          name: "סיפורי הצלחה — קרנף נדל״ן",
-          description: "עדויות של לקוחות קרנף נדל״ן",
-          url: "https://www.karnafnadlan.com/testimonials",
-        }}
-      />
+      <Helmet>
+        <title>סיפורי הצלחה | קרנף נדל"ן</title>
+        <meta name="description" content="קראו עדויות של לקוחות שרכשו דירות בליווי קרנף נדל&quot;ן — בוגרי התוכנית משתפים את הסיפור שלהם." />
+        <link rel="canonical" href="https://www.karnafnadlan.com/testimonials" />
+      </Helmet>
 
       <PageHero
         title="סיפורי"
@@ -54,7 +45,7 @@ const TestimonialsPage = () => {
       </section>
 
       {/* All Testimonials */}
-      <section className="py-10 md:py-20">
+      <section className="py-20">
         <div className="container mx-auto px-6 max-w-5xl">
           <AnimatedSectionHeader
             title="מה הלקוחות"
@@ -69,7 +60,7 @@ const TestimonialsPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-10 md:py-20 bg-secondary/30">
+      <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-6 text-center max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

@@ -32,7 +32,7 @@ const PageHero = ({ tag, title, highlight, subtitle, badge, backgroundImage }: P
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="text-primary font-bold text-sm tracking-widest uppercase mb-4"
+            className="text-accent font-bold text-sm tracking-widest uppercase mb-4"
           >
             {tag}
           </motion.p>
@@ -53,7 +53,7 @@ const PageHero = ({ tag, title, highlight, subtitle, badge, backgroundImage }: P
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, type: "spring" }}
-            className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 text-primary font-bold text-sm px-5 py-2 rounded-full mb-4"
+            className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 text-accent font-bold text-sm px-5 py-2 rounded-full mb-4"
           >
             {badge}
           </motion.div>

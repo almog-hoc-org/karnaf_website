@@ -6,9 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "./ui/split-text";
 import heroImage from "@/assets/hero-city.jpg";
-import foundersDuo from "@/assets/team/founders-duo.png";
-import mascotPointing from "@/assets/mascot/mascot-pointing.png";
-import ParticlesBackground from "./ParticlesBackground";
+import mascotWelcome from "@/assets/mascot/mascot-welcome.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,20 +73,20 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative min-h-[75vh] md:min-h-screen flex items-center overflow-hidden pt-20 pb-10 md:pt-0 md:pb-0">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
       {/* Warm gradient orbs - CSS only, no JS overhead */}
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
         <div
           className="absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-20"
-          style={{ background: 'radial-gradient(circle, hsl(25 100% 50%) 0%, transparent 70%)' }} />
+          style={{ background: 'radial-gradient(circle, hsl(217 45% 18%) 0%, transparent 70%)' }} />
 
         <div
           className="absolute top-1/2 -left-48 w-[500px] h-[500px] rounded-full blur-3xl opacity-15"
-          style={{ background: 'radial-gradient(circle, hsl(35 100% 55%) 0%, transparent 70%)' }} />
+          style={{ background: 'radial-gradient(circle, hsl(217 40% 25%) 0%, transparent 70%)' }} />
 
         <div
           className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-10"
-          style={{ background: 'radial-gradient(circle, hsl(45 100% 60%) 0%, transparent 70%)' }} />
+          style={{ background: 'radial-gradient(circle, hsl(28 58% 57%) 0%, transparent 70%)' }} />
 
       </div>
 
@@ -105,9 +103,6 @@ const Hero = () => {
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-l from-background via-background/90 to-background/70 -z-10" />
 
-      {/* Particles */}
-      <ParticlesBackground />
-
 
       {/* Decorative Elements */}
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float pointer-events-none" />
@@ -116,7 +111,7 @@ const Hero = () => {
       {/* Content Grid */}
       <motion.div
         style={{ opacity: contentOpacity }}
-        className="relative z-10 container mx-auto px-6 pt-8 pb-2 md:py-32 grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+        className="relative z-10 container mx-auto px-6 py-32 grid lg:grid-cols-2 gap-12 items-center">
 
         {/* Text Side (Right in RTL) */}
         <div>
@@ -124,63 +119,57 @@ const Hero = () => {
           {/* Character-by-character headline with GSAP */}
           <h1
             ref={headingRef}
-            className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-2 md:mb-4">
+            className="text-display text-5xl md:text-6xl lg:text-7xl text-foreground mb-4">
 
             <SplitText text="הדירה הבאה שלכם מתחילה כאן" />
           </h1>
 
+          <p
+            ref={subheadingRef}
+            className="text-display text-3xl md:text-4xl lg:text-5xl text-accent text-glow mb-6">
+
+            לקנות דירה חכם ולהימנע מטעויות יקרות
+          </p>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-base md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-4 md:mb-8">מלווים אתכם צעד אחר צעד, בין אם אתם בתחילת הדרך או משקיעים מנוסים — אנחנו כאן.
-
-
-
+            className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-8">מלווים אתכם בשיטה מבוססת נתונים — מהצעד הראשון ועד חתימת החוזה. בלי לסמוך על אינטואיציה, בלי טעויות יקרות.
           </motion.p>
 
           <div
             ref={ctaRef}
-            className="flex flex-col sm:flex-row gap-3 md:gap-4 items-center">
+            className="flex flex-col sm:flex-row gap-3 md:gap-4">
 
-            <Link to="/course#waitlist" className="w-full sm:w-auto">
+            <Link to="/course" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="w-full bg-primary text-primary-foreground font-bold text-base md:text-lg px-6 md:px-8 py-5 md:py-6 animate-pulse-glow">
+                className="w-full bg-accent text-accent-foreground font-bold text-base md:text-lg px-6 md:px-8 py-5 md:py-6 animate-pulse-glow">
 
-                הדרך לדירה — בקרוב! 🔔
+                גלו איך קונים דירה חכם
               </Button>
             </Link>
-            <img
-              src={mascotPointing}
-              alt=""
-              className="h-[110px] object-contain opacity-60 hidden sm:block"
-              loading="lazy" />
           </div>
 
         </div>
 
-        {/* Founders Photo - left side, cropped at bottom */}
+        {/* Mascot - left side of hero on desktop */}
         <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
-          className="hidden lg:flex items-end justify-start absolute bottom-0 left-0 z-10 pointer-events-none overflow-hidden"
-          style={{ height: '70%', width: '30%' }}>
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 1.4, type: "spring", stiffness: 120 }}
+          className="hidden lg:flex items-center justify-center pointer-events-none">
 
           <img
-            src={foundersDuo}
-            alt="איתמר ואלמוג — מייסדי קרנף"
-            className="w-full object-contain object-bottom"
+            src={mascotWelcome}
+            alt="קרנף נדל״ן — מנופף שלום"
+            className="h-[520px] object-contain drop-shadow-2xl"
             style={{
-              maskImage: "linear-gradient(to top, transparent 0%, black 5%, black 90%, transparent 95%), linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-              WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 5%, black 90%, transparent 95%), linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-              maskComposite: "intersect",
-              WebkitMaskComposite: "destination-in",
-              filter: "drop-shadow(0 8px 40px rgba(0,0,0,0.3))",
-              opacity: 0.9
-            } as React.CSSProperties} />
+              transform: "scaleX(-1)",
+              maskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, black 85%, transparent 100%)",
+            }} />
 
         </motion.div>
       </motion.div>

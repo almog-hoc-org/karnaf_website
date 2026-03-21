@@ -6,6 +6,7 @@ import Advantages from "@/components/Advantages";
 import Properties from "@/components/Properties";
 import Services from "@/components/Services";
 import About from "@/components/About";
+import WebinarSection from "@/components/WebinarSection";
 import BigCTA from "@/components/BigCTA";
 import CommunitySection from "@/components/CommunitySection";
 import Footer from "@/components/Footer";
@@ -39,6 +40,7 @@ const Index = () => {
         <StatsCounter />
         <Advantages />
         <Services />
+        <WebinarSection />
         <Properties />
         <About />
         <BigCTA />

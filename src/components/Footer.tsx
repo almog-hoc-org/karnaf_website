@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MessageCircle, Send, CheckCircle, Phone, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -12,23 +11,21 @@ import { supabase } from "@/integrations/supabase/client";
 const Footer = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
   const [service, setService] = useState("");
-  const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name.trim() || !phone.trim() || !email.trim()) {
-      toast({ title: "נא למלא שם, טלפון ואימייל", variant: "destructive" });
+    if (!name.trim() || !phone.trim()) {
+      toast({ title: "נא למלא שם וטלפון", variant: "destructive" });
       return;
     }
 
     try {
       const { error } = await supabase.functions.invoke("submit-lead", {
-        body: { name, phone, email, service, message, source: "footer" },
+        body: { name, phone, service, source: "footer" },
       });
 
       if (error) throw error;
@@ -43,29 +40,27 @@ const Footer = () => {
     setTimeout(() => {
       setName("");
       setPhone("");
-      setEmail("");
       setService("");
-      setMessage("");
       setIsSubmitted(false);
     }, 3000);
   };
 
   return (
-    <section id="contact" className="py-10 md:py-16 bg-secondary relative overflow-hidden">
+    <section id="contact" className="py-24 bg-secondary relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary to-background" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 max-w-5xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-display text-3xl md:text-5xl text-foreground mb-2 md:mb-4">
+            <h2 className="text-display text-4xl md:text-5xl text-foreground mb-4">
               נשמח להכיר אתכם
             </h2>
-            <p className="text-lg md:text-xl text-primary font-bold mb-6 md:mb-10">
+            <p className="text-xl text-accent font-bold mb-10">
               השאירו פרטים ונתחיל לדבר.
             </p>
 
@@ -88,50 +83,33 @@ const Footer = () => {
             ) : (
               <form className="space-y-4" onSubmit={handleSubmit}>
                 <Input
-                  placeholder="שם מלא *"
+                  placeholder="שם מלא"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  required
                   className="bg-card border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50 transition-colors"
                 />
                 <Input
                   type="tel"
-                  placeholder="טלפון *"
+                  placeholder="טלפון"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  required
-                  className="bg-card border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50 transition-colors"
-                />
-                <Input
-                  type="email"
-                  placeholder="אימייל *"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
                   className="bg-card border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50 transition-colors"
                 />
                 <Select value={service} onValueChange={setService}>
-                  <SelectTrigger className="bg-card border-border text-foreground h-12 text-right">
+                  <SelectTrigger className="bg-card border-border text-foreground h-12">
                     <SelectValue placeholder="אני מעוניין ב..." />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="waitlist">רשימת המתנה — הדרך לדירה</SelectItem>
+                    <SelectItem value="derech">תוכנית "הדרך לדירה"</SelectItem>
                     <SelectItem value="webinar">וובינר</SelectItem>
                   </SelectContent>
                 </Select>
-                <Textarea
-                  placeholder="הודעה חופשית (אופציונלי)"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  rows={3}
-                  className="bg-card border-border text-foreground placeholder:text-muted-foreground text-right focus:border-primary/50 transition-colors resize-none"
-                />
                 <Button
                   type="submit"
-                  className="w-full btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-lg gap-2"
+                  className="w-full btn-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold h-12 text-lg gap-2"
                 >
                   <Send size={18} />
-                  בואו נדבר
+                  בואו נדבר — בלי התחייבות
                 </Button>
               </form>
             )}
@@ -157,14 +135,14 @@ const Footer = () => {
                   <MessageCircle size={20} className="text-[#25D366]" />
                 </div>
                 <div>
-                  <p className="text-foreground font-medium group-hover:text-primary transition-colors">WhatsApp</p>
+                  <p className="text-foreground font-medium group-hover:text-accent transition-colors">WhatsApp</p>
                   <p className="text-sm text-muted-foreground">דברו איתנו עכשיו</p>
                 </div>
               </a>
 
               <div className="flex items-center gap-4 p-4 bg-card/80 rounded-xl border border-border shadow-sm">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Phone size={20} className="text-primary" />
+                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                  <Phone size={20} className="text-accent" />
                 </div>
                 <div>
                   <p className="text-foreground font-medium">טלפון</p>
@@ -173,8 +151,8 @@ const Footer = () => {
               </div>
 
               <div className="flex items-center gap-4 p-4 bg-card/80 rounded-xl border border-border shadow-sm">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Mail size={20} className="text-primary" />
+                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                  <Mail size={20} className="text-accent" />
                 </div>
                 <div>
                   <p className="text-foreground font-medium">אימייל</p>

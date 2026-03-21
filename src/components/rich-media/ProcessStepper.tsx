@@ -16,7 +16,7 @@ const ProcessStepper = ({ steps }: ProcessStepperProps) => {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="absolute top-8 left-8 right-8 h-0.5 bg-gradient-to-l from-primary via-primary/50 to-primary/20 origin-right"
+          className="absolute top-8 left-8 right-8 h-0.5 bg-gradient-to-l from-accent via-accent/50 to-accent/20 origin-right"
           style={{ zIndex: 0 }}
         />
 
@@ -31,7 +31,7 @@ const ProcessStepper = ({ steps }: ProcessStepperProps) => {
           >
             <motion.div
               whileHover={{ scale: 1.1, y: -4 }}
-              className="w-16 h-16 rounded-2xl bg-card border-2 border-primary/30 flex items-center justify-center text-primary mb-4 shadow-lg group-hover:border-primary group-hover:shadow-primary/20 transition-all duration-300"
+              className="w-16 h-16 rounded-2xl bg-card border-2 border-accent/30 flex items-center justify-center text-accent mb-4 shadow-lg group-hover:border-accent group-hover:shadow-accent/20 transition-all duration-300"
             >
               <step.icon size={24} />
             </motion.div>
@@ -40,7 +40,7 @@ const ProcessStepper = ({ steps }: ProcessStepperProps) => {
               {i + 1}
             </div>
 
-            <h4 className="text-foreground font-bold text-sm mb-1.5 group-hover:text-primary transition-colors">
+            <h4 className="text-foreground font-bold text-sm mb-1.5 group-hover:text-accent transition-colors">
               {step.title}
             </h4>
             <p className="text-muted-foreground text-xs leading-relaxed max-w-[180px]">
@@ -63,11 +63,11 @@ const ProcessStepper = ({ steps }: ProcessStepperProps) => {
           >
             {/* Vertical line */}
             {i < steps.length - 1 && (
-              <div className="absolute right-[31px] top-16 bottom-0 w-0.5 bg-primary/20" />
+              <div className="absolute right-[31px] top-16 bottom-0 w-0.5 bg-accent/20" />
             )}
 
             <div className="relative flex-shrink-0">
-              <div className="w-16 h-16 rounded-2xl bg-card border-2 border-primary/30 flex items-center justify-center text-primary shadow-lg">
+              <div className="w-16 h-16 rounded-2xl bg-card border-2 border-accent/30 flex items-center justify-center text-accent shadow-lg">
                 <step.icon size={22} />
               </div>
               <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">

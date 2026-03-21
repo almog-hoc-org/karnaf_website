@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { MessageCircle, Menu, X, GraduationCap } from "lucide-react";
+import { MessageCircle, Menu, X } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import karnafLogo from "@/assets/mascot/karnaf-logo.svg";
 
@@ -35,12 +34,18 @@ const Navigation = () => {
     return location.pathname.startsWith(to);
   };
 
+  // Pages with dark hero backgrounds need light nav text when not scrolled
+  const isDarkHeroPage = location.pathname === "/course";
+  const useLightText = isDarkHeroPage && !isScrolled;
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
           ? "bg-background/95 backdrop-blur-xl border-b border-border shadow-sm py-3"
-          : "bg-background/40 backdrop-blur-md py-5"
+          : isDarkHeroPage
+            ? "bg-transparent backdrop-blur-sm py-5"
+            : "bg-background/40 backdrop-blur-md py-5"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -54,7 +59,7 @@ const Navigation = () => {
               alt="קרנף"
               className={`object-contain transition-all duration-300 ${isScrolled ? "w-8 h-8" : "w-10 h-10"}`}
             />
-            <span className={`font-black text-primary tracking-tight transition-all duration-300 ${isScrolled ? "text-lg" : "text-xl"}`}>
+            <span className={`font-black tracking-tight transition-all duration-300 ${isScrolled ? "text-lg" : "text-xl"} ${useLightText ? "text-white" : "text-foreground"}`}>
               קרנף נדל״ן
             </span>
           </Link>
@@ -65,13 +70,13 @@ const Navigation = () => {
             <Link
               key={item.label}
               to={item.to}
-              className="relative text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300 py-1"
+              className={`relative text-sm font-medium transition-colors duration-300 py-1 ${useLightText ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-accent"}`}
             >
               {item.label}
               {isActive(item.to) && (
                 <motion.div
                   layoutId="nav-underline"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
+                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent rounded-full"
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
@@ -79,37 +84,23 @@ const Navigation = () => {
           ))}
         </div>
 
-        <div className="hidden lg:flex items-center gap-3">
-          <a href="https://www.karnaf.net/ourplans" target="_blank" rel="noopener noreferrer">
-            <Button variant="outline" size="sm" className="gap-2 font-medium">
-              <GraduationCap size={16} />
-              אזור תלמידים
-            </Button>
-          </a>
+        <div className="hidden lg:block">
           <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
-            <Button className="btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
+            <Button className="btn-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2">
               <MessageCircle size={16} />
               בואו נדבר
             </Button>
           </a>
         </div>
 
-        <div className="flex lg:hidden items-center gap-2">
-          <a href="https://www.karnaf.net/ourplans" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-0.5">
-            <Button variant="ghost" size="icon" className="text-primary hover:text-primary/80 h-8 w-8">
-              <GraduationCap size={20} />
-            </Button>
-            <span className="text-[10px] font-bold text-primary leading-none">אזור תלמידים</span>
-          </a>
-          <button
-            className="text-foreground hover:text-primary transition-colors"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
-            aria-expanded={isMenuOpen}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+        <button
+          className={`lg:hidden transition-colors ${useLightText ? "text-white hover:text-white/80" : "text-foreground hover:text-accent"}`}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
+          aria-expanded={isMenuOpen}
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
       <AnimatePresence>
@@ -132,7 +123,7 @@ const Navigation = () => {
                   <Link
                     to={item.to}
                     className={`block text-base font-medium transition-colors py-3 border-b border-border/50 ${
-                      isActive(item.to) ? "text-primary" : "text-muted-foreground hover:text-primary"
+                      isActive(item.to) ? "text-accent" : "text-muted-foreground hover:text-accent"
                     }`}
                   >
                     {item.label}
@@ -147,7 +138,7 @@ const Navigation = () => {
                 className="pt-4"
               >
                 <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
-                  <Button className="w-full btn-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold gap-2">
+                  <Button className="w-full btn-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2">
                     <MessageCircle size={16} />
                     בואו נדבר
                   </Button>

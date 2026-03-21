@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import SEOHead, { courseSchema } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import {
   GraduationCap,
@@ -18,7 +16,6 @@ import {
   Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Accordion,
   AccordionContent,
@@ -34,15 +31,13 @@ import { testimonials } from "@/data/testimonials";
 import { faqData } from "@/data/faq";
 import { curriculum } from "@/data/curriculum";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 import BigCTA from "@/components/BigCTA";
 
 const courseTestimonials = testimonials;
 
 const highlights = [
   { icon: BookOpen, value: "50+", label: "שיעורים" },
-  { icon: MessageCircle, value: "✓", label: "ליווי אישי בוואטסאפ" },
+  { icon: Users, value: "300+", label: "בוגרים" },
   { icon: Calculator, value: "6+", label: "כלים ומחשבונים מתקדמים" },
 ];
 
@@ -110,145 +105,17 @@ const totalLessons = curriculum.reduce(
 );
 
 
-const WaitlistSection = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const { toast } = useToast();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.hash === "#waitlist") {
-      setTimeout(() => {
-        document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" });
-      }, 500);
-    }
-  }, [location]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !phone.trim() || !email.trim()) {
-      toast({ title: "נא למלא שם, טלפון ואימייל", variant: "destructive" });
-      return;
-    }
-    setIsSubmitting(true);
-    try {
-      const { error } = await supabase.functions.invoke("submit-lead", {
-        body: { name, phone, email, service: "waitlist", message: "", source: "course-waitlist" },
-      });
-      if (error) throw error;
-      setIsSubmitted(true);
-      toast({ title: "נרשמת בהצלחה! 🎉", description: "נעדכן אותך ראשון/ה כשהתוכנית יוצאת לאוויר." });
-    } catch {
-      toast({ title: "שגיאה בשליחה", description: "נסו שוב או צרו קשר בוואטסאפ.", variant: "destructive" });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <section id="waitlist" className="py-10 md:py-20 bg-secondary/30">
-      <div className="container mx-auto px-6 text-center max-w-2xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="pricing-glow bg-card rounded-3xl p-8 md:p-12 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full" />
-
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary font-bold text-sm px-4 py-1.5 rounded-full mb-4">
-            🔔 בקרוב
-          </div>
-
-          <GraduationCap size={40} className="text-primary mx-auto mb-4" />
-          <h3 className="text-3xl md:text-4xl font-black text-foreground mb-2">
-            הירשמו לרשימת ההמתנה
-          </h3>
-          <p className="text-muted-foreground mb-8">
-            התוכנית בפינישים אחרונים — השאירו פרטים ותהיו הראשונים לדעת כשיוצאים לאוויר!
-          </p>
-
-          {isSubmitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex flex-col items-center gap-3 py-8"
-            >
-              <CheckCircle className="w-16 h-16 text-primary" />
-              <p className="text-foreground text-xl font-bold">נרשמת בהצלחה! 🎉</p>
-              <p className="text-muted-foreground">נעדכן אותך ראשון/ה כשהתוכנית יוצאת לאוויר</p>
-            </motion.div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 max-w-sm mx-auto">
-              <Input
-                placeholder="שם מלא *"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="bg-background/50 border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50"
-              />
-              <Input
-                type="tel"
-                dir="rtl"
-                placeholder="טלפון *"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-                className="bg-background/50 border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50"
-              />
-              <Input
-                type="email"
-                placeholder="אימייל *"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-background/50 border-border text-foreground placeholder:text-muted-foreground h-12 text-right focus:border-primary/50"
-              />
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg h-14 gap-2"
-              >
-                {isSubmitting ? (
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full"
-                  />
-                ) : (
-                  "שמרו לי מקום! 🔔"
-                )}
-              </Button>
-            </form>
-          )}
-
-          <div className="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-border">
-            {["ללא התחייבות", "נעדכן לפני כולם", "הרשמה חינמית"].map((badge) => (
-              <span key={badge} className="text-xs text-muted-foreground flex items-center gap-1.5">
-                <Shield size={12} className="text-primary" />
-                {badge}
-              </span>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-};
-
 const CoursePage = () => {
   return (
     <>
-      <SEOHead
-        title="הדרך לדירה — קורס דיגיטלי לרכישת דירה | קרנף נדל״ן"
-        description="קורס דיגיטלי מקיף לרוכשי דירות ראשונות — 50+ שיעורים, מחשבונים, כלים וליווי צמוד של אנליסט נדל״ן. הצטרפו ל-300+ בוגרים שכבר רכשו דירה בצורה חכמה."
-        path="/course"
-        keywords="קורס נדל״ן, קורס דיגיטלי רכישת דירה, הכשרת נדל״ן, סדנה דיגיטלית נדל״ן, לימודי נדל״ן, איך קונים דירה, קורס משכנתא, קרנף נדל״ן קורס"
-        jsonLd={courseSchema}
-      />
+      <Helmet>
+        <title>הדרך לדירה — קורס נדל"ן דיגיטלי | קרנף נדל"ן</title>
+        <meta
+          name="description"
+          content="קורס נדל&quot;ן דיגיטלי מקיף לרוכשי דירות ראשונות ומשקיעים — 50+ שיעורים, מחשבונים, כלים וליווי צמוד של אנליסט נדל&quot;ן."
+        />
+        <link rel="canonical" href="https://www.karnafnadlan.com/course" />
+      </Helmet>
 
       {/* Section 1: Course Hero */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden course-hero-bg">
@@ -299,9 +166,9 @@ const CoursePage = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, type: "spring" }}
-            className="inline-flex items-center gap-2 bg-primary/20 border border-primary/40 text-primary font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm"
           >
-            🔔 בקרוב! הירשמו לרשימת ההמתנה
+            50+ שיעורים · 6+ כלים מתקדמים · ליווי צמוד
           </motion.div>
 
           {/* CTA */}
@@ -314,12 +181,12 @@ const CoursePage = () => {
               size="lg"
               onClick={() =>
                 document
-                  .getElementById("waitlist")
+                  .getElementById("pricing")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-7"
+              className="btn-glow animate-pulse-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg px-10 py-7"
             >
-              שמרו לי מקום! 🔔
+              גלו את התוכנית
             </Button>
           </motion.div>
         </div>
@@ -328,7 +195,7 @@ const CoursePage = () => {
       {/* Section 2: Trust Bar */}
       <section className="py-10 bg-card border-y border-border">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
             {highlights.map((h, i) => (
               <motion.div
                 key={h.label}
@@ -338,7 +205,7 @@ const CoursePage = () => {
                 transition={{ delay: i * 0.1 }}
                 className="text-center"
               >
-                <h.icon size={24} className="text-primary mx-auto mb-2" />
+                <h.icon size={24} className="text-accent mx-auto mb-2" />
                 <p className="text-2xl font-bold text-foreground">{h.value}</p>
                 <p className="text-sm text-muted-foreground">{h.label}</p>
               </motion.div>
@@ -348,13 +215,13 @@ const CoursePage = () => {
       </section>
 
       {/* Section 3: Problem -> Solution */}
-      <section className="py-10 md:py-20">
+      <section className="py-20">
         <div className="container mx-auto px-6 max-w-5xl">
           <AnimatedSectionHeader
             title="בלי הכנה?"
             highlight="זה עולה ביוקר."
           />
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8 mt-6 md:mt-12">
+          <div className="grid md:grid-cols-2 gap-8 mt-12">
             {/* Problems */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
@@ -392,7 +259,7 @@ const CoursePage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="space-y-4 rounded-2xl p-6 bg-primary/5 border border-primary/10 scale-[1.02] shadow-lg"
+              className="space-y-4 rounded-2xl p-6 bg-accent/5 border border-accent/10 scale-[1.02] shadow-lg"
             >
               <h3 className="text-lg font-bold text-foreground mb-4">
                 עם התוכנית
@@ -408,7 +275,7 @@ const CoursePage = () => {
                 >
                   <CheckCircle
                     size={18}
-                    className="text-primary mt-0.5 flex-shrink-0"
+                    className="text-accent mt-0.5 flex-shrink-0"
                   />
                   <span className="text-sm text-foreground">{solution}</span>
                 </motion.div>
@@ -419,14 +286,14 @@ const CoursePage = () => {
       </section>
 
       {/* Section 4: Video Trailer */}
-      <section className="py-10 md:py-20 bg-secondary/30">
+      <section className="py-20 bg-secondary/30">
         <div className="container mx-auto px-6 max-w-4xl">
           <AnimatedSectionHeader
             title="ראו"
             highlight="בעצמכם"
             subtitle="3 דקות שמסבירות בדיוק מה תקבלו ואיך זה עובד."
           />
-          <div className="rounded-2xl overflow-hidden border border-primary/20 shadow-2xl">
+          <div className="rounded-2xl overflow-hidden border border-accent/20 shadow-2xl">
             {isPlaceholderVideo ? (
               <div className="flex flex-col items-center justify-center py-20 bg-card">
                 <p className="text-2xl font-bold text-foreground mb-4">
@@ -436,12 +303,12 @@ const CoursePage = () => {
                   variant="outline"
                   onClick={() =>
                     document
-                      .getElementById("waitlist")
+                      .getElementById("pricing")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="border-primary/30 text-primary hover:bg-primary/10"
+                  className="border-accent/30 text-accent hover:bg-accent/10"
                 >
-                  בינתיים — הצטרפו לרשימת ההמתנה
+                  בינתיים — גלו את התוכנית
                 </Button>
               </div>
             ) : (
@@ -455,11 +322,11 @@ const CoursePage = () => {
       </section>
 
       {/* Section 5: "מה בתוכנית?" — 3 Feature Cards */}
-      <section className="py-10 md:py-20">
+      <section className="py-20">
         <div className="container mx-auto px-6 max-w-6xl">
           <AnimatedSectionHeader title="מה בתוכנית?" highlight="" />
 
-          <div className="grid md:grid-cols-3 gap-4 md:gap-8 mt-6 md:mt-12">
+          <div className="grid md:grid-cols-3 gap-8 mt-12">
             {programCards.map((card, i) => (
               <motion.div
                 key={card.title}
@@ -469,7 +336,7 @@ const CoursePage = () => {
                 transition={{ duration: 0.7, delay: i * 0.2 }}
                 whileHover={{
                   scale: 1.02,
-                  boxShadow: "0 8px 30px rgba(255, 102, 0, 0.15)",
+                  boxShadow: "0 8px 30px rgba(26, 39, 68, 0.15)",
                 }}
                 className="relative card-premium bg-card border border-border rounded-2xl p-8 group flex flex-col transition-all duration-500"
               >
@@ -481,7 +348,7 @@ const CoursePage = () => {
 
                 <motion.div
                   whileHover={{ rotate: 5, scale: 1.1 }}
-                  className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 text-primary mb-6 group-hover:bg-primary/20 transition-colors"
+                  className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-accent/10 text-accent mb-6 group-hover:bg-accent/20 transition-colors"
                 >
                   <card.icon size={28} />
                 </motion.div>
@@ -505,7 +372,7 @@ const CoursePage = () => {
                     >
                       <Check
                         size={16}
-                        className="text-primary mt-0.5 shrink-0"
+                        className="text-accent mt-0.5 shrink-0"
                       />
                       <span>{feature}</span>
                     </motion.li>
@@ -516,7 +383,7 @@ const CoursePage = () => {
           </div>
 
           {/* Curriculum with summary bar */}
-          <div className="max-w-3xl mx-auto mt-8 md:mt-16">
+          <div className="max-w-3xl mx-auto mt-16">
             <div className="flex items-center justify-center gap-6 mb-6">
               <span className="text-sm text-muted-foreground">
                 <strong className="text-foreground">{totalModules}</strong>{" "}
@@ -534,8 +401,8 @@ const CoursePage = () => {
       </section>
 
       {/* Section 6: Fit Quiz */}
-      <section className="py-10 md:py-20 bg-secondary/30 relative">
-        <div className="absolute inset-0 rounded-none border-t border-b border-primary/10" />
+      <section className="py-20 bg-secondary/30 relative">
+        <div className="absolute inset-0 rounded-none border-t border-b border-accent/10" />
         <div className="container mx-auto px-6 max-w-4xl relative z-10">
           <AnimatedSectionHeader
             title="האם התוכנית"
@@ -548,22 +415,108 @@ const CoursePage = () => {
               variant="outline"
               onClick={() =>
                 document
-                  .getElementById("waitlist")
+                  .getElementById("pricing")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="border-primary/30 text-primary hover:bg-primary/10"
+              className="border-accent/30 text-accent hover:bg-accent/10"
             >
-              הצטרפו לרשימת ההמתנה
+              צפו בתוכנית המלאה
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Section 7: Waitlist Form */}
-      <WaitlistSection />
+      {/* Section 7: Pricing Card */}
+      <section id="pricing" className="py-20 bg-secondary/30">
+        <div className="container mx-auto px-6 text-center max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="pricing-glow bg-card rounded-3xl p-8 md:p-12 relative overflow-hidden"
+          >
+            {/* Decorative gradient corner */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full" />
+
+            <GraduationCap size={40} className="text-accent mx-auto mb-4" />
+            <h3 className="text-3xl md:text-4xl font-black text-foreground mb-2">
+              הצטרפו לתוכנית
+            </h3>
+            <p className="text-muted-foreground mb-6">
+              הצטרפו ל-300+ בוגרים שכבר רכשו דירה בצורה חכמה.
+            </p>
+
+            {/* Price */}
+            <div className="text-5xl font-black text-accent text-glow mb-8">
+              &#8362;5,490
+            </div>
+
+            {/* Value list */}
+            <div className="text-right max-w-sm mx-auto space-y-3 mb-8">
+              {[
+                "50+ שיעורים דיגיטליים",
+                "6+ כלים ומחשבונים מתקדמים",
+                "ליווי צמוד של אנליסט בוואטסאפ",
+                "גישה מלאה ל-12 חודשים",
+                "קהילת בוגרים פעילה",
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="flex items-center gap-3"
+                >
+                  <CheckCircle
+                    size={18}
+                    className="text-accent flex-shrink-0"
+                  />
+                  <span className="text-sm text-foreground">{item}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Primary CTA */}
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("היי! אני רוצה לרכוש את תוכנית הדרך לדירה")}`} target="_blank" rel="noopener noreferrer">
+              <Button
+                size="lg"
+                className="btn-glow animate-pulse-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg px-10 py-7 w-full sm:w-auto gap-3 mb-4"
+              >
+                לרכישה מאובטחת
+              </Button>
+            </a>
+
+            {/* Secondary */}
+            <div>
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("היי! אני מעוניין/ת בתוכנית הדרך לדירה")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground hover:text-accent transition-colors"
+              >
+                יש שאלות? דברו איתנו בוואטסאפ &larr;
+              </a>
+            </div>
+
+            {/* Trust badges */}
+            <div className="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-border">
+              {["תשלום מאובטח", "גישה מיידית", "ליווי צמוד"].map((badge) => (
+                <span
+                  key={badge}
+                  className="text-xs text-muted-foreground flex items-center gap-1.5"
+                >
+                  <Shield size={12} className="text-accent" />
+                  {badge}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Section 8: Testimonials */}
-      <section className="py-10 md:py-20">
+      <section className="py-20">
         <div className="container mx-auto px-6 max-w-5xl">
           <AnimatedSectionHeader
             title="מה הבוגרים"
@@ -582,7 +535,7 @@ const CoursePage = () => {
             <Link to="/testimonials">
               <Button
                 variant="outline"
-                className="border-primary/30 text-primary hover:bg-primary/10 gap-2"
+                className="border-accent/30 text-accent hover:bg-accent/10 gap-2"
               >
                 כל סיפורי ההצלחה
                 <Star size={16} />
@@ -593,7 +546,7 @@ const CoursePage = () => {
       </section>
 
       {/* Section 9: FAQ */}
-      <section className="py-10 md:py-20 bg-secondary/20">
+      <section className="py-20 bg-secondary/20">
         <div className="container mx-auto px-6 max-w-3xl">
           <AnimatedSectionHeader title="שאלות" highlight="נפוצות" />
           <Accordion type="single" collapsible className="space-y-2">
@@ -603,7 +556,7 @@ const CoursePage = () => {
                 value={`faq-${i}`}
                 className="border border-border rounded-xl px-4 bg-card"
               >
-                <AccordionTrigger className="text-sm font-bold text-foreground hover:no-underline hover:text-primary">
+                <AccordionTrigger className="text-sm font-bold text-foreground hover:no-underline hover:text-accent">
                   {item.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground leading-relaxed">

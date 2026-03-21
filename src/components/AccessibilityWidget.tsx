@@ -132,7 +132,7 @@ const AccessibilityWidget = () => {
         transition={{ delay: 2.2, type: "spring", stiffness: 200 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
         aria-label="פתח תפריט נגישות"
         title="נגישות"
       >
@@ -169,7 +169,7 @@ const AccessibilityWidget = () => {
               {/* Header */}
               <div className="sticky top-0 bg-card z-10 flex items-center justify-between p-4 border-b border-border">
                 <div className="flex items-center gap-2">
-                  <Accessibility className="w-5 h-5 text-primary" />
+                  <Accessibility className="w-5 h-5 text-accent" />
                   <h2 className="text-lg font-bold text-foreground">תפריט נגישות</h2>
                 </div>
                 <button

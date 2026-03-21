@@ -110,7 +110,7 @@ const InvestmentSimulator = () => {
                 />
                 <Legend formatter={(value) => (value === "karnaf" ? "עם קרנף" : "ממוצע שוק")} />
                 <Line type="monotone" dataKey="market" stroke="hsl(215 16% 47%)" strokeWidth={2} dot={false} />
-                <Line type="monotone" dataKey="karnaf" stroke="hsl(25 100% 50%)" strokeWidth={2.5} dot={false} />
+                <Line type="monotone" dataKey="karnaf" stroke="hsl(28 58% 57%)" strokeWidth={2.5} dot={false} />
               </LineChart>
             </ResponsiveContainer>
           </div>

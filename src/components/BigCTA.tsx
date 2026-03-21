@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { MessageCircle } from "lucide-react";
 import heroArchitecture from "@/assets/hero-architecture.jpg";
-import mascotWelcome2 from "@/assets/mascot/mascot-welcome-2.png";
+import mascotThumbsup from "@/assets/mascot/mascot-thumbsup.png";
+import { WHATSAPP_NUMBER } from "@/lib/constants";
 
 const BigCTA = () => {
   return (
-    <section className="relative py-12 md:py-20 overflow-hidden">
+    <section className="relative py-32 overflow-hidden">
       <div className="absolute inset-0">
         <img
           src={heroArchitecture}
@@ -20,9 +21,9 @@ const BigCTA = () => {
         className="absolute inset-0 pointer-events-none"
         animate={{
           background: [
-          "radial-gradient(circle at 20% 50%, hsl(25 100% 50% / 0.05) 0%, transparent 50%)",
-          "radial-gradient(circle at 80% 50%, hsl(25 100% 50% / 0.05) 0%, transparent 50%)",
-          "radial-gradient(circle at 20% 50%, hsl(25 100% 50% / 0.05) 0%, transparent 50%)"]
+          "radial-gradient(circle at 20% 50%, hsl(217 45% 18% / 0.08) 0%, transparent 50%)",
+          "radial-gradient(circle at 80% 50%, hsl(28 58% 57% / 0.06) 0%, transparent 50%)",
+          "radial-gradient(circle at 20% 50%, hsl(217 45% 18% / 0.08) 0%, transparent 50%)"]
 
         }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} />
@@ -45,20 +46,19 @@ const BigCTA = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-display text-3xl md:text-6xl lg:text-7xl text-foreground mb-3 md:mb-6">
+          className="text-display text-4xl md:text-6xl lg:text-7xl text-foreground mb-6">
 
-          הדרך לדירה בדרך אליכם!{" "}
-          <span className="text-primary text-glow-strong">
-הירשמו לרשימת ההמתנה.</span>
+          מוכנים לצעד הראשון?{" "}
+          <span className="text-accent text-glow-strong">בואו נתחיל.</span>
         </motion.h2>
 
         <motion.p initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-4 md:mb-8">
+        className="text-lg text-muted-foreground max-w-xl mx-auto mb-10">
 
-          התוכנית המלאה בפינישים אחרונים — השאירו פרטים ותהיו הראשונים לשמוע כשיוצאים לאוויר!
+          דברו איתנו ונבנה יחד את התוכנית שלכם — בין אם אתם רוכשים דירה ראשונה או מחפשים את ההשקעה הבאה.
         </motion.p>
 
         <motion.div
@@ -67,16 +67,19 @@ const BigCTA = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}>
 
-          <Link
-            to="/course#waitlist">
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            target="_blank"
+            rel="noopener noreferrer">
 
             <Button
               size="lg"
-              className="btn-glow animate-pulse-glow bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-10 py-7 gap-3 shadow-2xl">
+              className="btn-glow animate-pulse-glow bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg px-10 py-7 gap-3 shadow-2xl">
 
-              שמרו לי מקום! 🔔
+              <MessageCircle size={22} />
+              בואו נדבר — בלי התחייבות
             </Button>
-          </Link>
+          </a>
         </motion.div>
 
       </div>
@@ -87,14 +90,14 @@ const BigCTA = () => {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="hidden md:block absolute left-10 bottom-10 z-20 pointer-events-none">
+        className="hidden lg:block absolute left-6 bottom-0 z-0 pointer-events-none">
 
         <motion.img
           animate={{ scale: [1, 1.03, 1] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          src={mascotWelcome2}
+          src={mascotThumbsup}
           alt=""
-          className="h-[300px] object-contain opacity-[0.25] mascot-fade-radial mascot-blend-overlay"
+          className="h-[280px] object-contain opacity-[0.35] drop-shadow-lg"
           loading="lazy" />
 
       </motion.div>

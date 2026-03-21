@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import mascotWelcome from "@/assets/mascot/mascot-welcome.png";
+import mascotBriefcase from "@/assets/mascot/mascot-briefcase.png";
 
 const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -24,7 +24,7 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
           <div className="flex flex-col items-center gap-4">
             {/* Mascot */}
             <motion.img
-              src={mascotWelcome}
+              src={mascotBriefcase}
               alt="קרנף"
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -39,11 +39,11 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
               transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
-              <span className="text-4xl md:text-6xl font-black text-primary tracking-tight">
+              <span className="text-4xl md:text-6xl font-black text-accent tracking-tight">
                 קרנף נדל״ן
               </span>
               <motion.div
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-primary rounded-full"
+                className="absolute -bottom-2 left-0 right-0 h-1 bg-accent rounded-full"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -64,7 +64,7 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
             {/* Loading bar */}
             <motion.div className="w-48 h-0.5 bg-border rounded-full overflow-hidden mt-4">
               <motion.div
-                className="h-full bg-primary rounded-full"
+                className="h-full bg-accent rounded-full"
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 1.4, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}

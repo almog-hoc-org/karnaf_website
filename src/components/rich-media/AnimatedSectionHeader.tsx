@@ -22,7 +22,7 @@ const AnimatedSectionHeader = ({
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-primary font-bold text-sm tracking-widest uppercase mb-4"
+          className="text-accent font-bold text-sm tracking-widest uppercase mb-4"
         >
           {tag}
         </motion.p>
