@@ -60,7 +60,7 @@ export default {
       },
       fontFamily: {
         sans: ['Rubik', 'system-ui', 'sans-serif'],
-        display: ['"Frank Ruhl Libre"', 'Rubik', 'serif'],
+        display: ['Rubik', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'eyebrow': ['0.75rem', { lineHeight: '1.4', letterSpacing: '0.12em', fontWeight: '600' }],

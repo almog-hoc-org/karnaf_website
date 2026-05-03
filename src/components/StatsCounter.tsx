@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Users, BookOpen, CalendarDays } from "lucide-react";
 import { useGsapReveal } from "@/hooks/use-gsap-reveal";
 
 const stats = [
-  { value: 375, suffix: "+", label: "לקוחות מרוצים", icon: Users },
-  { value: 50, suffix: "+", label: "שיעורים בקורס", icon: BookOpen },
-  { value: 8, suffix: "+", label: "שנות ניסיון", icon: CalendarDays },
+  { value: 375, suffix: "+", label: "לקוחות מרוצים" },
+  { value: 50,  suffix: "+", label: "שיעורים בקורס" },
+  { value: 8,   suffix: "+", label: "שנות מחקר" },
 ];
 
 const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
@@ -32,13 +31,13 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
       hasAnimated.current = true;
       setCount(0);
       setIsCounting(true);
-      const duration = 1600;
+      const duration = 1800;
       const startTime = performance.now();
 
       const tick = (now: number) => {
         const elapsed = now - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - (1 - progress) * (1 - progress);
+        const eased = 1 - Math.pow(1 - progress, 3);
         setCount(Math.round(eased * value));
         if (progress < 1) {
           requestAnimationFrame(tick);
@@ -64,37 +63,70 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   return (
     <div
       ref={ref}
-      className="text-display text-display-md text-accent tabular-nums transition-transform duration-300"
-      style={{ transform: isCounting ? 'scale(1.08)' : 'scale(1)' }}
+      className="text-display-xl font-black tabular-nums text-transparent bg-clip-text bg-gradient-to-b from-foreground to-foreground/55 leading-[0.9] transition-transform duration-500"
+      style={{ transform: isCounting ? "scaleY(1.04)" : "scaleY(1)", transformOrigin: "bottom" }}
     >
-      {count.toLocaleString('he-IL')}{suffix}
+      {count.toLocaleString("he-IL")}
+      <span className="text-accent">{suffix}</span>
     </div>
   );
 };
 
 const StatsCounter = () => {
-  const sectionRef = useGsapReveal<HTMLDivElement>({ y: 20, stagger: 0.12 });
+  const sectionRef = useGsapReveal<HTMLDivElement>({ y: 30, stagger: 0.18 });
 
   return (
-    <section className="py-8 md:py-12 relative overflow-hidden section-divider">
-      <div className="absolute inset-0 bg-card" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+    <section className="relative py-section-md overflow-hidden">
+      {/* Subtle accent backdrop blob */}
+      <div
+        className="absolute inset-0 -z-10 opacity-60 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(60% 60% at 50% 50%, hsl(var(--accent) / 0.10) 0%, transparent 70%)",
+        }}
+        aria-hidden="true"
+      />
 
-      <div className="container mx-auto px-5 md:px-6 relative z-10">
-        <h3 className="text-center text-foreground font-bold text-xl md:text-2xl mb-4 md:mb-8">
-          <span className="text-accent">מספרים</span> ולא תחושות
-        </h3>
-        <div ref={sectionRef} className="grid grid-cols-3 gap-4 md:gap-8 text-center max-w-3xl mx-auto">
-          {stats.map((stat) => (
-            <div key={stat.label} className="relative group cursor-default">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/10 text-accent mb-4">
-                <stat.icon size={24} />
-              </div>
+      <div className="container mx-auto px-5 md:px-6">
+        <div className="text-center mb-10 md:mb-14">
+          <div className="text-eyebrow uppercase text-accent inline-flex items-center gap-3 mb-3">
+            <span className="w-8 h-px bg-accent" />
+            <span>הנתונים מאחורי השם</span>
+            <span className="w-8 h-px bg-accent" />
+          </div>
+          <h2 className="text-display-md md:text-display-lg font-black text-foreground">
+            <span className="text-accent">מספרים</span> ולא תחושות
+          </h2>
+        </div>
+
+        <div
+          ref={sectionRef}
+          className="grid grid-cols-3 gap-4 md:gap-12 max-w-5xl mx-auto items-start"
+        >
+          {stats.map((stat, i) => (
+            <div
+              key={stat.label}
+              className="relative text-center group"
+            >
+              {/* Vertical separator (between cells, hidden first) */}
+              {i > 0 && (
+                <span
+                  aria-hidden
+                  className="hidden md:block absolute -right-6 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-border to-transparent"
+                />
+              )}
+
               <Counter value={stat.value} suffix={stat.suffix} />
-              <p className="text-muted-foreground mt-2 text-sm md:text-base">
-                {stat.label}
-              </p>
+
+              <div className="mt-4 md:mt-5 flex flex-col items-center gap-2">
+                <span
+                  aria-hidden
+                  className="block w-8 h-px bg-accent/60 group-hover:w-14 transition-[width] duration-500"
+                />
+                <p className="text-label md:text-body uppercase tracking-[0.18em] text-muted-foreground">
+                  {stat.label}
+                </p>
+              </div>
             </div>
           ))}
         </div>

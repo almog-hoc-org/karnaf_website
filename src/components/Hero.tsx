@@ -1,13 +1,24 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import heroImage from "@/assets/hero-city.jpg";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
 import mascotPointing from "@/assets/mascot/mascot-pointing.webp";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const PARTICLES = Array.from({ length: 14 }, (_, i) => ({
+  id: i,
+  left: `${(i * 73) % 100}%`,
+  top: `${20 + ((i * 41) % 70)}%`,
+  size: 4 + (i % 4) * 2,
+  delay: `${(i * 0.6) % 6}s`,
+  dur: `${7 + (i % 5)}s`,
+  dx: `${i % 2 === 0 ? "-" : ""}${20 + (i * 7) % 60}px`,
+  dy: `${-(80 + (i * 13) % 120)}px`,
+  isAccent: i % 3 === 0,
+}));
 
 const Squiggle = () => (
   <svg
@@ -15,12 +26,12 @@ const Squiggle = () => (
     fill="none"
     preserveAspectRatio="none"
     aria-hidden="true"
-    className="absolute inset-x-0 -bottom-3 h-3 w-full pointer-events-none"
+    className="absolute inset-x-0 -bottom-3 h-4 w-full pointer-events-none"
   >
     <path
       d="M2 7 Q 28 1, 56 7 T 112 7 T 168 7 T 218 7"
       stroke="hsl(var(--accent))"
-      strokeWidth="3.5"
+      strokeWidth="4"
       strokeLinecap="round"
       className="squiggle-path"
     />
@@ -89,20 +100,47 @@ const MaskedWords = ({
   );
 };
 
+const TRUST_PILLARS = [
+  "8+ שנות מחקר",
+  "375+ בוגרים",
+  "מספרים, לא תחושות",
+  "ליווי צמוד",
+  "מחשבונים מתקדמים",
+  "קהילה פעילה",
+];
+
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
   const eyebrowRef = useRef<HTMLDivElement>(null);
   const subheadRef = useRef<HTMLParagraphElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
   const mascotPrimaryRef = useRef<HTMLImageElement>(null);
   const mascotSecondaryRef = useRef<HTMLImageElement>(null);
+  const haloRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Scroll-driven parallax + mascot dual-state crossfade
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
+
+  // Mouse-reactive 3D tilt on the headline (subtle, capped)
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduceMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / rect.width;
+    const dy = (e.clientY - cy) / rect.height;
+    setTilt({ rx: -dy * 5, ry: dx * 6 });
+  };
+  const handleMouseLeave = () => setTilt({ rx: 0, ry: 0 });
+
+  // Scroll-driven parallax + mascot dual-state crossfade + halo scale
   useEffect(() => {
-    if (!bgRef.current || !sectionRef.current) return;
+    if (!sectionRef.current) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = gsap.context(() => {
@@ -115,15 +153,16 @@ const Hero = () => {
         },
       });
 
-      tl.to(bgRef.current, { yPercent: 24, scale: 1.12, ease: "none" }, 0);
-
       if (contentRef.current) {
-        tl.to(contentRef.current, { opacity: 0, y: -40, ease: "none" }, 0);
+        tl.to(contentRef.current, { opacity: 0, y: -60, ease: "none" }, 0);
+      }
+      if (haloRef.current) {
+        tl.to(haloRef.current, { scale: 1.4, opacity: 0.3, ease: "none" }, 0);
       }
       if (mascotPrimaryRef.current) {
         tl.to(
           mascotPrimaryRef.current,
-          { yPercent: -10, opacity: 0, ease: "none" },
+          { yPercent: -16, opacity: 0, ease: "none" },
           0
         );
       }
@@ -131,7 +170,7 @@ const Hero = () => {
         tl.fromTo(
           mascotSecondaryRef.current,
           { opacity: 0, yPercent: 0 },
-          { opacity: 1, yPercent: -14, ease: "none" },
+          { opacity: 1, yPercent: -22, ease: "none" },
           0
         );
       }
@@ -140,7 +179,7 @@ const Hero = () => {
     return () => ctx.revert();
   }, []);
 
-  // Entrance animations: eyebrow / subhead / body / CTA
+  // Entrance animations
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -190,56 +229,83 @@ const Hero = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-stretch overflow-hidden"
     >
-      {/* Parallax background photo */}
-      <div
-        ref={bgRef}
-        className="absolute inset-0 -z-20"
-        style={{ willChange: "transform" }}
-      >
-        <img
-          src={heroImage}
-          alt="קו רקיע עירוני מודרני"
-          className="w-full h-[120%] object-cover -mt-[10%]"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
+      {/* Animated mesh-gradient background */}
+      <div className="absolute inset-0 -z-30 hero-mesh-bg" aria-hidden="true" />
 
-      {/* Editorial layered overlay — cream wash + warm radial glow + subtle grain */}
+      {/* Soft top vignette so navbar reads cleanly */}
       <div
-        className="absolute inset-0 -z-10 bg-gradient-to-l from-background via-background/95 to-background/55"
-      />
-      <div
-        className="absolute inset-0 -z-10 opacity-70"
+        className="absolute inset-x-0 top-0 h-40 -z-20 pointer-events-none"
         style={{
           background:
-            "radial-gradient(60% 80% at 78% 50%, hsl(var(--background) / 0.0) 0%, hsl(var(--background) / 0.25) 50%, hsl(var(--background) / 0.85) 100%)",
+            "linear-gradient(to bottom, hsl(var(--background) / 0.85), hsl(var(--background) / 0))",
         }}
+        aria-hidden="true"
       />
-      <div className="absolute inset-0 -z-10 grain-texture" />
+
+      {/* Floating ambient particles */}
+      <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
+        {PARTICLES.map((p) => (
+          <span
+            key={p.id}
+            className={`particle absolute rounded-full ${
+              p.isAccent ? "bg-accent/70" : "bg-primary/55"
+            }`}
+            style={
+              {
+                left: p.left,
+                top: p.top,
+                width: p.size,
+                height: p.size,
+                "--p-delay": p.delay,
+                "--p-dur": p.dur,
+                "--p-x": p.dx,
+                "--p-y": p.dy,
+              } as React.CSSProperties
+            }
+          />
+        ))}
+      </div>
+
+      {/* Subtle grain on top of everything for film texture */}
+      <div className="absolute inset-0 -z-10 grain-texture pointer-events-none" />
 
       {/* Content */}
       <div
         ref={contentRef}
-        className="relative z-10 container mx-auto px-6 py-32 lg:py-40 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] gap-10 lg:gap-16 items-center"
+        className="relative z-10 flex-1 container mx-auto px-6 pt-28 pb-16 lg:pt-36 lg:pb-24 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] gap-10 lg:gap-16 items-center"
       >
-        {/* Text side (right in RTL via grid order) */}
-        <div className="order-2 lg:order-1">
+        {/* Text side */}
+        <div
+          className="order-2 lg:order-1 [perspective:1200px]"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
           <div
             ref={eyebrowRef}
             className="text-eyebrow uppercase text-accent mb-5 flex items-center gap-3"
           >
-            <span className="inline-block w-10 h-px bg-accent/70" />
+            <span className="inline-block w-12 h-px bg-accent" />
             <span>ליווי נדל״ן מבוסס נתונים</span>
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75 animate-ping" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            </span>
           </div>
 
-          <h1 className="text-editorial text-display-lg md:text-display-xl text-foreground mb-6 lg:mb-8 leading-[0.95]">
-            <span className="block">
+          <h1
+            ref={headlineRef}
+            className="text-display-lg md:text-display-xl text-foreground mb-6 lg:mb-8 leading-[0.95] font-black tracking-tight transition-transform duration-200 will-change-transform"
+            style={{
+              transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+              transformStyle: "preserve-3d",
+            }}
+          >
+            <span className="block lg:whitespace-nowrap">
               <MaskedWords words={["הדירה", "הבאה", "שלכם"]} delay={0.2} />
             </span>
-            <span className="block mt-2">
+            <span className="block lg:whitespace-nowrap mt-2">
               <MaskedWords
                 words={["מתחילה", "כאן"]}
                 delay={0.55}
@@ -250,7 +316,7 @@ const Hero = () => {
 
           <p
             ref={subheadRef}
-            className="text-editorial text-display-sm md:text-display-md text-primary/85 mb-5 max-w-xl leading-snug"
+            className="text-display-sm md:text-display-md text-primary/85 mb-5 max-w-xl leading-snug font-bold"
           >
             לקנות דירה חכם ולהימנע מטעויות יקרות
           </p>
@@ -263,54 +329,106 @@ const Hero = () => {
             בלי לסמוך על אינטואיציה, בלי טעויות יקרות.
           </p>
 
-          <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 md:gap-4">
+          <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 md:gap-4 items-start">
             <Link to="/course" className="w-full sm:w-auto">
               <Button
                 size="lg"
-                className="w-full btn-polygon bg-accent text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 shadow-glow-accent"
+                className="w-full btn-polygon bg-accent text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 shadow-glow-accent hover:shadow-[0_0_60px_hsl(var(--accent)/0.6)] transition-shadow"
               >
                 גלו איך קונים דירה חכם
               </Button>
             </Link>
+            <a
+              href="#webinar"
+              className="hidden sm:inline-flex items-center gap-2 self-center text-foreground/80 hover:text-accent transition-colors text-base font-semibold underline-offset-4 hover:underline"
+            >
+              או — וובינר חינם השבוע
+              <span aria-hidden>←</span>
+            </a>
           </div>
         </div>
 
-        {/* Mascot — dual-state crossfade on scroll */}
-        <div className="order-1 lg:order-2 hidden lg:flex items-center justify-center pointer-events-none relative h-[480px]">
-          <img
-            ref={mascotPrimaryRef}
-            src={mascotWelcome}
-            alt="קרנף נדל״ן — מנופף שלום"
-            className="absolute h-[480px] object-contain mascot-glow mascot-float"
+        {/* Mascot side — halo + dual-state crossfade */}
+        <div className="order-1 lg:order-2 relative flex items-center justify-center pointer-events-none min-h-[280px] lg:min-h-[520px]">
+          {/* Halo */}
+          <div
+            ref={haloRef}
+            className="mascot-halo absolute w-[110%] aspect-square rounded-full -z-10"
             style={{ willChange: "transform, opacity" }}
-          />
-          <img
-            ref={mascotSecondaryRef}
-            src={mascotPointing}
-            alt=""
             aria-hidden="true"
-            className="absolute h-[480px] object-contain mascot-glow"
-            style={{ opacity: 0, willChange: "transform, opacity" }}
           />
-        </div>
+          {/* Decorative orbiting ring */}
+          <svg
+            viewBox="0 0 400 400"
+            className="absolute inset-0 w-full h-full -z-10 opacity-50 hidden lg:block"
+            aria-hidden="true"
+          >
+            <circle
+              cx="200"
+              cy="200"
+              r="180"
+              fill="none"
+              stroke="hsl(var(--accent))"
+              strokeWidth="1"
+              strokeDasharray="4 12"
+              opacity="0.4"
+            />
+            <circle
+              cx="200"
+              cy="200"
+              r="155"
+              fill="none"
+              stroke="hsl(var(--primary))"
+              strokeWidth="1"
+              strokeDasharray="2 10"
+              opacity="0.35"
+            />
+          </svg>
 
-        {/* Mobile mascot */}
-        <div className="order-1 lg:hidden flex justify-center pointer-events-none -mt-2 mb-2">
-          <img
-            src={mascotWelcome}
-            alt=""
-            aria-hidden="true"
-            className="h-[150px] object-contain mascot-glow mascot-float"
-            loading="eager"
-            decoding="async"
-          />
+          {/* Mascots */}
+          <div className="relative h-[260px] sm:h-[320px] lg:h-[480px] aspect-square flex items-center justify-center">
+            <img
+              ref={mascotPrimaryRef}
+              src={mascotWelcome}
+              alt="קרנף נדל״ן — מנופף שלום"
+              className="absolute inset-0 m-auto h-full w-auto object-contain mascot-glow mascot-float"
+              style={{ willChange: "transform, opacity" }}
+              loading="eager"
+              decoding="async"
+            />
+            <img
+              ref={mascotSecondaryRef}
+              src={mascotPointing}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 m-auto h-full w-auto object-contain mascot-glow"
+              style={{ opacity: 0, willChange: "transform, opacity" }}
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Trust marquee strip — full bleed bottom */}
+      <div className="relative z-10 border-y border-border/40 bg-background/40 backdrop-blur-sm overflow-hidden">
+        <div className="flex marquee-track whitespace-nowrap">
+          {[...TRUST_PILLARS, ...TRUST_PILLARS].map((label, i) => (
+            <span
+              key={i}
+              className="inline-flex items-center gap-3 px-6 py-3 text-eyebrow uppercase text-foreground/70"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-accent" aria-hidden />
+              <span>{label}</span>
+            </span>
+          ))}
         </div>
       </div>
 
       {/* Vertical kinetic scroll cue */}
       <div
         aria-hidden="true"
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-muted-foreground/70"
+        className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 text-muted-foreground/70"
       >
         <div className="text-eyebrow uppercase tracking-[0.3em] [writing-mode:vertical-rl] [text-orientation:mixed] rotate-180">
           גלילה
