@@ -1,27 +1,109 @@
-import { useLayoutEffect, useRef, useEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "./ui/split-text";
 import heroImage from "@/assets/hero-city.jpg";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
-import { ChevronDown } from "lucide-react";
+import mascotPointing from "@/assets/mascot/mascot-pointing.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const Squiggle = () => (
+  <svg
+    viewBox="0 0 220 14"
+    fill="none"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+    className="absolute inset-x-0 -bottom-3 h-3 w-full pointer-events-none"
+  >
+    <path
+      d="M2 7 Q 28 1, 56 7 T 112 7 T 168 7 T 218 7"
+      stroke="hsl(var(--accent))"
+      strokeWidth="3.5"
+      strokeLinecap="round"
+      className="squiggle-path"
+    />
+  </svg>
+);
+
+interface MaskedWordsProps {
+  words: string[];
+  delay?: number;
+  stagger?: number;
+  className?: string;
+  highlightIndex?: number;
+}
+
+const MaskedWords = ({
+  words,
+  delay = 0.15,
+  stagger = 0.08,
+  className,
+  highlightIndex,
+}: MaskedWordsProps) => {
+  const containerRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const root = containerRef.current;
+    if (!root) return;
+    const wraps = Array.from(root.querySelectorAll<HTMLElement>(".word-mask"));
+    if (!wraps.length) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduceMotion) {
+      wraps.forEach((w) => w.classList.add("is-revealed"));
+      return;
+    }
+
+    const timers: number[] = [];
+    wraps.forEach((wrap, i) => {
+      const t = window.setTimeout(
+        () => wrap.classList.add("is-revealed"),
+        (delay + stagger * i) * 1000
+      );
+      timers.push(t);
+    });
+
+    return () => timers.forEach((t) => window.clearTimeout(t));
+  }, [delay, stagger, words]);
+
+  return (
+    <span ref={containerRef} className={className}>
+      {words.map((w, i) => (
+        <span
+          key={`${w}-${i}`}
+          className={`word-mask${i < words.length - 1 ? " me-[0.28em]" : ""}`}
+        >
+          <span
+            className={`word ${i === highlightIndex ? "relative text-accent" : ""}`}
+          >
+            {w}
+            {i === highlightIndex && <Squiggle />}
+          </span>
+        </span>
+      ))}
+    </span>
+  );
+};
+
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const subheadingRef = useRef<HTMLParagraphElement>(null);
+  const eyebrowRef = useRef<HTMLDivElement>(null);
+  const subheadRef = useRef<HTMLParagraphElement>(null);
+  const bodyRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
-  const mascotRef = useRef<HTMLImageElement>(null);
+  const mascotPrimaryRef = useRef<HTMLImageElement>(null);
+  const mascotSecondaryRef = useRef<HTMLImageElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // GSAP parallax — single ScrollTrigger timeline
+  // Scroll-driven parallax + mascot dual-state crossfade
   useEffect(() => {
     if (!bgRef.current || !sectionRef.current) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
@@ -33,57 +115,71 @@ const Hero = () => {
         },
       });
 
-      tl.to(bgRef.current, { yPercent: 30, scale: 1.15, ease: "none" }, 0);
+      tl.to(bgRef.current, { yPercent: 24, scale: 1.12, ease: "none" }, 0);
 
       if (contentRef.current) {
-        tl.to(contentRef.current, { opacity: 0, y: -50, ease: "none" }, 0);
+        tl.to(contentRef.current, { opacity: 0, y: -40, ease: "none" }, 0);
       }
-
-      if (mascotRef.current) {
-        tl.to(mascotRef.current, { yPercent: -15, ease: "none" }, 0);
+      if (mascotPrimaryRef.current) {
+        tl.to(
+          mascotPrimaryRef.current,
+          { yPercent: -10, opacity: 0, ease: "none" },
+          0
+        );
+      }
+      if (mascotSecondaryRef.current) {
+        tl.fromTo(
+          mascotSecondaryRef.current,
+          { opacity: 0, yPercent: 0 },
+          { opacity: 1, yPercent: -14, ease: "none" },
+          0
+        );
       }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  // GSAP entrance animations
+  // Entrance animations: eyebrow / subhead / body / CTA
   useLayoutEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     const ctx = gsap.context(() => {
-      const chars = headingRef.current?.querySelectorAll('.char');
-
-      if (chars && chars.length > 0) {
-        gsap.from(chars, {
+      if (eyebrowRef.current) {
+        gsap.from(eyebrowRef.current, {
           opacity: 0,
-          y: 80,
-          rotationX: -90,
-          stagger: 0.015,
-          ease: 'back.out(1.5)',
-          duration: 0.7,
-          delay: 0.3,
-          transformOrigin: '0% 50% -50'
+          y: 12,
+          duration: 0.6,
+          delay: 0.05,
+          ease: "power2.out",
         });
       }
-
-      if (subheadingRef.current) {
-        gsap.from(subheadingRef.current, {
+      if (subheadRef.current) {
+        gsap.from(subheadRef.current, {
           opacity: 0,
-          y: 40,
-          filter: 'blur(10px)',
+          y: 28,
           duration: 0.9,
-          delay: 0.8,
-          ease: 'power3.out'
+          delay: 0.7,
+          ease: "power3.out",
         });
       }
-
+      if (bodyRef.current) {
+        gsap.from(bodyRef.current, {
+          opacity: 0,
+          y: 24,
+          duration: 0.8,
+          delay: 0.95,
+          ease: "power3.out",
+        });
+      }
       if (ctaRef.current) {
         gsap.from(ctaRef.current.children, {
           opacity: 0,
-          y: 30,
-          stagger: 0.15,
-          duration: 0.6,
-          delay: 1.2,
-          ease: 'power2.out'
+          y: 24,
+          stagger: 0.12,
+          duration: 0.7,
+          delay: 1.15,
+          ease: "power2.out",
         });
       }
     }, sectionRef);
@@ -92,42 +188,79 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Parallax Background — GSAP driven */}
-      <div ref={bgRef} className="absolute inset-0 -z-20" style={{ willChange: "transform" }}>
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen flex items-center overflow-hidden"
+    >
+      {/* Parallax background photo */}
+      <div
+        ref={bgRef}
+        className="absolute inset-0 -z-20"
+        style={{ willChange: "transform" }}
+      >
         <img
           src={heroImage}
           alt="קו רקיע עירוני מודרני"
           className="w-full h-[120%] object-cover -mt-[10%]"
+          loading="eager"
+          decoding="async"
         />
       </div>
 
-      {/* Clean gradient overlay — stronger on text side for readability */}
-      <div className="absolute inset-0 bg-gradient-to-l from-background via-background/95 to-background/50 -z-10" />
+      {/* Editorial layered overlay — cream wash + warm radial glow + subtle grain */}
+      <div
+        className="absolute inset-0 -z-10 bg-gradient-to-l from-background via-background/95 to-background/55"
+      />
+      <div
+        className="absolute inset-0 -z-10 opacity-70"
+        style={{
+          background:
+            "radial-gradient(60% 80% at 78% 50%, hsl(var(--background) / 0.0) 0%, hsl(var(--background) / 0.25) 50%, hsl(var(--background) / 0.85) 100%)",
+        }}
+      />
+      <div className="absolute inset-0 -z-10 grain-texture" />
 
       {/* Content */}
       <div
         ref={contentRef}
-        className="relative z-10 container mx-auto px-6 py-32 grid lg:grid-cols-2 gap-12 items-center"
+        className="relative z-10 container mx-auto px-6 py-32 lg:py-40 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] gap-10 lg:gap-16 items-center"
       >
-        {/* Text Side (Right in RTL) */}
-        <div>
-          <h1
-            ref={headingRef}
-            className="text-display text-display-lg text-foreground mb-4"
+        {/* Text side (right in RTL via grid order) */}
+        <div className="order-2 lg:order-1">
+          <div
+            ref={eyebrowRef}
+            className="text-eyebrow uppercase text-accent mb-5 flex items-center gap-3"
           >
-            <SplitText text="הדירה הבאה שלכם מתחילה כאן" />
+            <span className="inline-block w-10 h-px bg-accent/70" />
+            <span>ליווי נדל״ן מבוסס נתונים</span>
+          </div>
+
+          <h1 className="text-editorial text-display-lg md:text-display-xl text-foreground mb-6 lg:mb-8 leading-[0.95]">
+            <span className="block">
+              <MaskedWords words={["הדירה", "הבאה", "שלכם"]} delay={0.2} />
+            </span>
+            <span className="block mt-2">
+              <MaskedWords
+                words={["מתחילה", "כאן"]}
+                delay={0.55}
+                highlightIndex={1}
+              />
+            </span>
           </h1>
 
           <p
-            ref={subheadingRef}
-            className="text-display-md text-accent mb-6"
+            ref={subheadRef}
+            className="text-editorial text-display-sm md:text-display-md text-primary/85 mb-5 max-w-xl leading-snug"
           >
             לקנות דירה חכם ולהימנע מטעויות יקרות
           </p>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-8">
-            מלווים אתכם בשיטה מבוססת נתונים — מהצעד הראשון ועד חתימת החוזה. בלי לסמוך על אינטואיציה, בלי טעויות יקרות.
+          <p
+            ref={bodyRef}
+            className="text-body-lg text-muted-foreground max-w-lg leading-relaxed mb-8"
+          >
+            מלווים אתכם בשיטה מבוססת נתונים — מהצעד הראשון ועד חתימת החוזה.
+            בלי לסמוך על אינטואיציה, בלי טעויות יקרות.
           </p>
 
           <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 md:gap-4">
@@ -142,32 +275,49 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Mascot — GSAP parallax */}
-        <div className="hidden lg:flex items-center justify-center pointer-events-none">
+        {/* Mascot — dual-state crossfade on scroll */}
+        <div className="order-1 lg:order-2 hidden lg:flex items-center justify-center pointer-events-none relative h-[480px]">
           <img
-            ref={mascotRef}
+            ref={mascotPrimaryRef}
             src={mascotWelcome}
             alt="קרנף נדל״ן — מנופף שלום"
-            className="h-[480px] object-contain mascot-glow mascot-float"
-            style={{
-              willChange: "transform",
-            }}
+            className="absolute h-[480px] object-contain mascot-glow mascot-float"
+            style={{ willChange: "transform, opacity" }}
+          />
+          <img
+            ref={mascotSecondaryRef}
+            src={mascotPointing}
+            alt=""
+            aria-hidden="true"
+            className="absolute h-[480px] object-contain mascot-glow"
+            style={{ opacity: 0, willChange: "transform, opacity" }}
           />
         </div>
+
         {/* Mobile mascot */}
-        <div className="flex lg:hidden justify-center pointer-events-none -mt-4 mb-2">
+        <div className="order-1 lg:hidden flex justify-center pointer-events-none -mt-2 mb-2">
           <img
             src={mascotWelcome}
             alt=""
             aria-hidden="true"
-            className="h-[140px] object-contain mascot-glow mascot-float"
+            className="h-[150px] object-contain mascot-glow mascot-float"
+            loading="eager"
+            decoding="async"
           />
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-muted-foreground/50">
-        <ChevronDown size={20} className="animate-bounce" />
+      {/* Vertical kinetic scroll cue */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-muted-foreground/70"
+      >
+        <div className="text-eyebrow uppercase tracking-[0.3em] [writing-mode:vertical-rl] [text-orientation:mixed] rotate-180">
+          גלילה
+        </div>
+        <div className="relative h-12 w-px bg-muted-foreground/30 overflow-hidden">
+          <span className="scroll-cue-dot absolute top-0 left-1/2 -translate-x-1/2 w-1 h-3 rounded-full bg-accent" />
+        </div>
       </div>
     </section>
   );
