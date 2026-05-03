@@ -54,6 +54,38 @@
     --sidebar-accent-foreground: 215 26% 23%;
     --sidebar-border: 214 32% 91%;
     --sidebar-ring: 24 80% 52%;
+
+    /* Editorial depth tokens — used for cinematic dark sections */
+    --ink: 217 50% 8%;
+    --ink-foreground: 36 33% 95%;
+    --cream-warm: 36 38% 94%;
+    --cream-cool: 33 22% 93%;
+
+    /* Accent variants */
+    --accent-deep: 24 90% 42%;
+    --accent-soft: 24 80% 52% / 0.12;
+    --accent-glow: 24 80% 60%;
+
+    /* Surface alpha scale (for glass / overlays) */
+    --surface-1: 0 0% 100% / 0.5;
+    --surface-2: 0 0% 100% / 0.7;
+    --surface-3: 0 0% 100% / 0.85;
+    --surface-4: 0 0% 100% / 0.95;
+
+    /* Section vertical rhythm */
+    --space-section-sm: 3rem;
+    --space-section-md: 5rem;
+    --space-section-lg: 7rem;
+    --space-section-xl: 10rem;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --space-section-sm: 4rem;
+      --space-section-md: 7rem;
+      --space-section-lg: 10rem;
+      --space-section-xl: 14rem;
+    }
   }
 }
 
@@ -238,7 +270,7 @@
 
   .solution-bg {
     background: linear-gradient(135deg, hsl(24 80% 52% / 0.04) 0%, hsl(24 80% 52% / 0.06) 100%);
-    border-right: 3px solid hsl(24 80% 52% / 0.3);
+    border-inline-start: 3px solid hsl(24 80% 52% / 0.3);
   }
 
   /* Pricing glow */

@@ -9,49 +9,64 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1,
-    });
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-    lenisRef.current = lenis;
+    let lenis: Lenis | null = null;
+    let tickerCallback: ((time: number) => void) | null = null;
 
-    // Sync Lenis with GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
+    if (!reduceMotion) {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1,
+      });
+      lenisRef.current = lenis;
 
-    // Store the ticker callback so we can remove it later
-    const tickerCallback = (time: number) => {
-      lenis.raf(time * 1000);
-    };
+      lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add(tickerCallback);
-    gsap.ticker.lagSmoothing(0);
+      tickerCallback = (time: number) => {
+        lenis!.raf(time * 1000);
+      };
+      gsap.ticker.add(tickerCallback);
+      gsap.ticker.lagSmoothing(0);
+    }
 
-    // Support anchor clicks with smooth scroll
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest("a[href^='#']");
-      if (anchor) {
-        const href = anchor.getAttribute("href");
-        if (href && href !== "#") {
-          const el = document.querySelector(href);
-          if (el) {
-            e.preventDefault();
-            lenis.scrollTo(el as HTMLElement, { offset: -80 });
-          }
-        }
+      if (!anchor) return;
+      const href = anchor.getAttribute("href");
+      if (!href || href === "#") return;
+      const el = document.querySelector(href);
+      if (!el) return;
+      e.preventDefault();
+      if (lenis) {
+        lenis.scrollTo(el as HTMLElement, { offset: -80 });
+      } else {
+        const rect = (el as HTMLElement).getBoundingClientRect();
+        window.scrollTo({ top: window.scrollY + rect.top - 80, behavior: "auto" });
       }
     };
-
     document.addEventListener("click", handleAnchorClick);
 
+    const refreshOnReady = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refreshOnReady);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(refreshOnReady).catch(() => {});
+    }
+    const refreshTimeout = window.setTimeout(refreshOnReady, 1500);
+
     return () => {
-      gsap.ticker.remove(tickerCallback);
+      window.clearTimeout(refreshTimeout);
+      window.removeEventListener("load", refreshOnReady);
       document.removeEventListener("click", handleAnchorClick);
-      lenis.destroy();
+      if (tickerCallback) gsap.ticker.remove(tickerCallback);
+      lenis?.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
