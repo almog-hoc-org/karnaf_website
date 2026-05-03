@@ -1,8 +1,5 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface GsapRevealOptions {
   y?: number;
@@ -14,6 +11,19 @@ interface GsapRevealOptions {
   once?: boolean;
   start?: string;
 }
+
+const SAFETY_TIMEOUT_MS = 2500;
+
+const rootMarginFromStart = (start: string): string => {
+  const match = start.match(/top\s+(\d+)%/);
+  if (!match) return "0px 0px -15% 0px";
+  const pct = Math.max(0, Math.min(100, 100 - parseInt(match[1], 10)));
+  return `0px 0px -${pct}% 0px`;
+};
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function useGsapReveal<T extends HTMLElement>(
   options: GsapRevealOptions = {}
@@ -34,34 +44,66 @@ export function useGsapReveal<T extends HTMLElement>(
     const el = ref.current;
     if (!el) return;
 
-    // Respect prefers-reduced-motion
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.set(el, { opacity: 1 });
+    const targets = stagger ? Array.from(el.children) : el;
+
+    if (prefersReducedMotion()) {
+      gsap.set(targets, { opacity: 1, clearProps: "transform" });
       return;
     }
 
-    const targets = stagger ? el.children : el;
-
     gsap.set(targets, { opacity, y, x });
 
-    const tween = gsap.to(targets, {
-      opacity: 1,
-      y: 0,
-      x: 0,
-      duration,
-      delay,
-      stagger: stagger || undefined,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: el,
-        start,
-        once,
-      },
-    });
+    let played = false;
+    const play = () => {
+      if (played) return;
+      played = true;
+      gsap.to(targets, {
+        opacity: 1,
+        y: 0,
+        x: 0,
+        duration,
+        delay,
+        stagger: stagger || undefined,
+        ease: "power3.out",
+      });
+    };
+
+    const observer =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  play();
+                  if (once) observer?.disconnect();
+                  break;
+                }
+              }
+            },
+            { rootMargin: rootMarginFromStart(start), threshold: 0.01 }
+          )
+        : null;
+
+    observer?.observe(el);
+
+    const safety = window.setTimeout(() => {
+      if (!played) {
+        gsap.to(targets, {
+          opacity: 1,
+          y: 0,
+          x: 0,
+          duration: 0.4,
+          stagger: stagger || undefined,
+          ease: "power2.out",
+        });
+        played = true;
+        observer?.disconnect();
+      }
+    }, SAFETY_TIMEOUT_MS);
 
     return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
+      window.clearTimeout(safety);
+      observer?.disconnect();
     };
   }, [y, x, opacity, duration, delay, stagger, once, start]);
 
@@ -78,14 +120,14 @@ export function useGsapSplitReveal<T extends HTMLElement>(
     const el = ref.current;
     if (!el) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const originalText = el.textContent || "";
+
+    if (prefersReducedMotion()) {
       gsap.set(el, { opacity: 1 });
       return;
     }
 
-    // Wrap each character in a span
-    const text = el.textContent || "";
-    el.innerHTML = text
+    el.innerHTML = originalText
       .split("")
       .map((char) =>
         char === " "
@@ -96,24 +138,56 @@ export function useGsapSplitReveal<T extends HTMLElement>(
 
     const chars = el.querySelectorAll("span");
 
-    const tween = gsap.to(chars, {
-      opacity: 1,
-      y: 0,
-      duration,
-      stagger,
-      delay,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: el,
-        start,
-        once: true,
-      },
-    });
+    let played = false;
+    const play = () => {
+      if (played) return;
+      played = true;
+      gsap.to(chars, {
+        opacity: 1,
+        y: 0,
+        duration,
+        stagger,
+        delay,
+        ease: "power3.out",
+      });
+    };
+
+    const observer =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  play();
+                  observer?.disconnect();
+                  break;
+                }
+              }
+            },
+            { rootMargin: rootMarginFromStart(start), threshold: 0.01 }
+          )
+        : null;
+
+    observer?.observe(el);
+
+    const safety = window.setTimeout(() => {
+      if (!played) {
+        gsap.to(chars, {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          stagger,
+          ease: "power2.out",
+        });
+        played = true;
+        observer?.disconnect();
+      }
+    }, SAFETY_TIMEOUT_MS);
 
     return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
-      el.textContent = text;
+      window.clearTimeout(safety);
+      observer?.disconnect();
+      el.textContent = originalText;
     };
   }, [duration, stagger, delay, start]);
 

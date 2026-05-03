@@ -10,7 +10,7 @@ const stats = [
 
 const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(value);
   const [isCounting, setIsCounting] = useState(false);
   const hasAnimated = useRef(false);
 
@@ -18,34 +18,46 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
     const element = ref.current;
     if (!element) return;
 
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduceMotion) {
+      setCount(value);
+      hasAnimated.current = true;
+      return;
+    }
+
+    const runCountUp = () => {
+      if (hasAnimated.current) return;
+      hasAnimated.current = true;
+      setCount(0);
+      setIsCounting(true);
+      const duration = 1600;
+      const startTime = performance.now();
+
+      const tick = (now: number) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - (1 - progress) * (1 - progress);
+        setCount(Math.round(eased * value));
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          setCount(value);
+          setIsCounting(false);
+        }
+      };
+      requestAnimationFrame(tick);
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-          setIsCounting(true);
-          const duration = 2000;
-          const startTime = performance.now();
-
-          const animate = (currentTime: number) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - (1 - progress) * (1 - progress);
-            const current = Math.round(eased * value);
-            setCount(current);
-            if (progress < 1) {
-              requestAnimationFrame(animate);
-            } else {
-              setIsCounting(false);
-            }
-          };
-
-          requestAnimationFrame(animate);
-        }
+        if (entry.isIntersecting) runCountUp();
       },
       { threshold: 0.3 }
     );
-
     observer.observe(element);
+
     return () => observer.disconnect();
   }, [value]);
 
