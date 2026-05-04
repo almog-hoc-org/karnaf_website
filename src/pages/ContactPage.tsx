@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { faqData } from "@/data/faq";
 import { WHATSAPP_NUMBER, PHONE_NUMBER, EMAIL } from "@/lib/constants";
 import { Reveal } from "@/components/v2/Reveal";
+import heroCity from "@/assets/hero-city.jpg";
 
 const ContactPage = () => {
   return (
@@ -21,6 +22,7 @@ const ContactPage = () => {
         title="צרו"
         highlight="קשר"
         subtitle="נשמח לשמוע מכם ולעזור לכם בדרך לדירה."
+        backgroundImage={heroCity}
       />
 
       {/* Quick contact cards */}

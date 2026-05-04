@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
@@ -32,6 +33,7 @@ import BigCTA from "@/components/BigCTA";
 import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
 import { MortgageCalculator } from "@/components/v2/MortgageCalculator";
+import { StampDutyCalculator } from "@/components/v2/StampDutyCalculator";
 import { TransactionLifecycle } from "@/components/v2/TransactionLifecycle";
 import heroCity from "@/assets/hero-city.jpg";
 
@@ -111,6 +113,54 @@ const totalLessons = curriculum.reduce(
 
 const scrollToPricing = () =>
   document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
+
+type CalcTab = "mortgage" | "stamp";
+
+const CalcTabs = () => {
+  const [tab, setTab] = useState<CalcTab>("mortgage");
+  return (
+    <div className="space-y-6">
+      <div
+        role="tablist"
+        aria-label="בחר מחשבון"
+        className="inline-flex items-center gap-1 p-1 rounded-full"
+        style={{
+          backgroundColor: "hsl(36 33% 95% / 0.06)",
+          border: "1px solid hsl(36 33% 95% / 0.10)",
+        }}
+      >
+        {[
+          { key: "mortgage" as const, label: "משכנתא" },
+          { key: "stamp" as const, label: "מס רכישה" },
+        ].map((t) => {
+          const active = tab === t.key;
+          return (
+            <button
+              key={t.key}
+              role="tab"
+              aria-selected={active}
+              onClick={() => setTab(t.key)}
+              className="px-6 py-2.5 text-sm font-bold rounded-full transition-colors"
+              style={{
+                backgroundColor: active ? "hsl(var(--accent))" : "transparent",
+                color: active
+                  ? "hsl(var(--accent-foreground))"
+                  : "hsl(36 33% 95% / 0.7)",
+              }}
+            >
+              {t.label}
+            </button>
+          );
+        })}
+      </div>
+      {tab === "mortgage" ? (
+        <MortgageCalculator description="זה מסך אחד. בקורס מחכים לכם 7 מחשבונים נוספים — מס רכישה, מס שבח, פוטנציאל השבחה, ROI שנתי ועוד." />
+      ) : (
+        <StampDutyCalculator />
+      )}
+    </div>
+  );
+};
 
 const CoursePage = () => {
   return (
@@ -278,9 +328,7 @@ const CoursePage = () => {
             </p>
           </Reveal>
           <Reveal delay={0.14}>
-            <MortgageCalculator
-              description="זה מסך אחד. בקורס מחכים לכם 7 מחשבונים נוספים — מס רכישה, מס שבח, פוטנציאל השבחה, ROI שנתי ועוד."
-            />
+            <CalcTabs />
           </Reveal>
           {!isPlaceholderVideo && (
             <Reveal delay={0.22}>

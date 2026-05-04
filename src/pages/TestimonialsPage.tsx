@@ -7,6 +7,7 @@ import { testimonials } from "@/data/testimonials";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import BigCTA from "@/components/BigCTA";
 import { Reveal } from "@/components/v2/Reveal";
+import heroCity from "@/assets/hero-city.jpg";
 
 const TestimonialsPage = () => {
   const courseTestimonials = testimonials.filter((t) => t.service === "course");
@@ -26,6 +27,7 @@ const TestimonialsPage = () => {
         title="סיפורי"
         highlight="הצלחה"
         subtitle="מאות ישראלים כבר רכשו דירה בצורה חכמה עם קרנף. הנה חלק מהסיפורים שלהם."
+        backgroundImage={heroCity}
       />
 
       {/* Stats strip */}

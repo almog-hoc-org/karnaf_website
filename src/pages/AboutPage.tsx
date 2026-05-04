@@ -4,6 +4,7 @@ import { team } from "@/data/team";
 import StatsCounter from "@/components/StatsCounter";
 import BigCTA from "@/components/BigCTA";
 import { Reveal } from "@/components/v2/Reveal";
+import heroCity from "@/assets/hero-city.jpg";
 
 const timeline = [
   { year: "2016", title: "קצינים בקבע", description: "איתמר ואלמוג משרתים כקצינים בצה\"ל ומתחילים להתעניין בעולם הנדל\"ן." },
@@ -31,6 +32,7 @@ const AboutPage = () => {
         title="סיפורו של"
         highlight="הקרנף"
         subtitle="2 קצינים צעירים בקבע מחליטים להפוך את התשוקה שלהם לניתוח, נתונים ומספרים ולהקים חברה שעוזרת לאנשים לרכוש דירה בישראל בביטחון מלא."
+        backgroundImage={heroCity}
       />
 
       {/* Why Karnaf */}
