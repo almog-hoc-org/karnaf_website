@@ -31,6 +31,8 @@ import { WHATSAPP_NUMBER } from "@/lib/constants";
 import BigCTA from "@/components/BigCTA";
 import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
+import { MortgageCalculator } from "@/components/v2/MortgageCalculator";
+import { TransactionLifecycle } from "@/components/v2/TransactionLifecycle";
 import heroCity from "@/assets/hero-city.jpg";
 
 const courseTestimonials = testimonials;
@@ -258,41 +260,37 @@ const CoursePage = () => {
         </div>
       </section>
 
-      {/* 4. Trailer */}
-      <section className="py-section-lg bg-card">
-        <div className="container mx-auto px-6 max-w-4xl">
+      {/* 4. Trailer + Live calculator */}
+      <SectionDark size="lg" glow="bottom">
+        <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg font-black text-white mb-4 leading-[0.98] tracking-tight text-center">
               ראו <span className="text-accent">בעצמכם</span>
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
-            <p className="text-body-lg text-muted-foreground mb-12 leading-relaxed text-center">
-              3 דקות שמסבירות בדיוק מה תקבלו ואיך זה עובד.
+            <p
+              className="text-body-lg mb-12 leading-relaxed text-center max-w-2xl mx-auto"
+              style={{ color: "hsl(36 33% 95% / 0.72)" }}
+            >
+              דוגמה חיה לאחד הכלים בתוכנית — מחשבון משכנתא. הזיזו את ה-sliders
+              והרגישו איך כל פרמטר משפיע על העסקה.
             </p>
           </Reveal>
           <Reveal delay={0.14}>
-            <div className="rounded-2xl overflow-hidden border border-border shadow-depth-3">
-              {isPlaceholderVideo ? (
-                <div className="flex flex-col items-center justify-center py-20 bg-background">
-                  <p className="text-2xl font-bold text-foreground mb-4">
-                    הטריילר בדרך
-                  </p>
-                  <Button
-                    variant="outline"
-                    onClick={scrollToPricing}
-                    className="border-accent/40 text-accent hover:bg-accent hover:text-accent-foreground rounded-full px-7 py-5"
-                  >
-                    בינתיים — גלו את התוכנית
-                  </Button>
-                </div>
-              ) : (
-                <VideoPlayer url={VIDEO_URL} title="טריילר — הדרך לדירה" />
-              )}
-            </div>
+            <MortgageCalculator
+              description="זה מסך אחד. בקורס מחכים לכם 7 מחשבונים נוספים — מס רכישה, מס שבח, פוטנציאל השבחה, ROI שנתי ועוד."
+            />
           </Reveal>
+          {!isPlaceholderVideo && (
+            <Reveal delay={0.22}>
+              <div className="mt-14 rounded-2xl overflow-hidden border border-white/10 shadow-depth-3">
+                <VideoPlayer url={VIDEO_URL} title="טריילר — הדרך לדירה" />
+              </div>
+            </Reveal>
+          )}
         </div>
-      </section>
+      </SectionDark>
 
       {/* 5. Program cards */}
       <SectionDark size="lg" glow="top-end">
@@ -370,6 +368,26 @@ const CoursePage = () => {
             </Reveal>
             <Reveal delay={0.08}>
               <CurriculumAccordion />
+            </Reveal>
+          </div>
+
+          {/* Transaction lifecycle visualization */}
+          <div className="mt-20 lg:mt-28 max-w-5xl mx-auto">
+            <Reveal>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 text-center leading-tight">
+                ששה שלבים <span className="text-accent">מהשיחה הראשונה ועד החתימה</span>
+              </h3>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p
+                className="text-base mb-12 text-center max-w-2xl mx-auto leading-relaxed"
+                style={{ color: "hsl(36 33% 95% / 0.65)" }}
+              >
+                בכל שלב — כלי, חומר וליווי שמותאמים בדיוק לאן שאתם בדרך.
+              </p>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <TransactionLifecycle />
             </Reveal>
           </div>
         </div>

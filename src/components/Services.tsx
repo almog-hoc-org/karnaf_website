@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
+import { TiltCard } from "@/components/v2/TiltCard";
 
 const cards = [
   {
@@ -58,8 +59,9 @@ const Services = () => {
         <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl">
           {cards.map((card, i) => (
             <Reveal key={card.title} delay={i * 0.12}>
+              <TiltCard max={4} className="h-full">
               <article
-                className="h-full p-6 lg:p-8 rounded-2xl flex flex-col group transition-all duration-300 hover:-translate-y-1"
+                className="h-full p-6 lg:p-8 rounded-2xl flex flex-col group transition-all duration-300"
                 style={{
                   backgroundColor: "hsl(36 33% 95% / 0.04)",
                   border: "1px solid hsl(36 33% 95% / 0.12)",
@@ -91,6 +93,7 @@ const Services = () => {
                   ))}
                 </ul>
               </article>
+              </TiltCard>
             </Reveal>
           ))}
         </div>

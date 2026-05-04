@@ -1,6 +1,7 @@
 import { Instagram, Facebook, Youtube, Music } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import { Reveal } from "@/components/v2/Reveal";
+import { TiltCard } from "@/components/v2/TiltCard";
 
 const communityLinks = [
   { icon: Instagram, href: "https://www.instagram.com/karnaf_nadlan/", label: "Instagram" },
@@ -55,33 +56,35 @@ const Advantages = () => {
         <div className="grid md:grid-cols-3 gap-10 lg:gap-14">
           {advantages.map((item, i) => (
             <Reveal key={item.num} delay={i * 0.12}>
-              <article className="border-t border-primary pt-6 h-full flex flex-col">
-                <div className="font-mono text-display-md font-black text-accent leading-none mb-5">
-                  {item.num}
-                </div>
-                <h3 className="text-2xl font-bold text-primary mb-3 leading-snug">
-                  {item.title}
-                </h3>
-                <p className="text-body text-muted-foreground leading-[1.85] mb-6">
-                  {item.description}
-                </p>
-                {item.extra === "community" && (
-                  <div className="flex items-center gap-3 mt-auto">
-                    {communityLinks.map((link) => (
-                      <a
-                        key={link.label}
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-9 h-9 rounded-full border border-primary/20 flex items-center justify-center text-primary/70 hover:text-accent hover:border-accent/50 hover:bg-accent/5 transition-all duration-200"
-                        aria-label={link.label}
-                      >
-                        <link.icon size={18} />
-                      </a>
-                    ))}
+              <TiltCard max={4} className="h-full">
+                <article className="border-t border-primary pt-6 h-full flex flex-col">
+                  <div className="font-mono text-display-md font-black text-accent leading-none mb-5">
+                    {item.num}
                   </div>
-                )}
-              </article>
+                  <h3 className="text-2xl font-bold text-primary mb-3 leading-snug">
+                    {item.title}
+                  </h3>
+                  <p className="text-body text-muted-foreground leading-[1.85] mb-6">
+                    {item.description}
+                  </p>
+                  {item.extra === "community" && (
+                    <div className="flex items-center gap-3 mt-auto">
+                      {communityLinks.map((link) => (
+                        <a
+                          key={link.label}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-9 h-9 rounded-full border border-primary/20 flex items-center justify-center text-primary/70 hover:text-accent hover:border-accent/50 hover:bg-accent/5 transition-all duration-200"
+                          aria-label={link.label}
+                        >
+                          <link.icon size={18} />
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </article>
+              </TiltCard>
             </Reveal>
           ))}
         </div>

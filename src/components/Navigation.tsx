@@ -40,7 +40,12 @@ const Navigation = () => {
     return location.pathname.startsWith(to);
   };
 
-  const isDarkHeroPage = location.pathname === "/course";
+  // Routes whose hero starts on a cinematic dark background.
+  // When the user has not scrolled yet on these, the nav text is light.
+  const darkHeroPrefixes = ["/course", "/preview/v2"];
+  const isDarkHeroPage =
+    location.pathname === "/" ||
+    darkHeroPrefixes.some((p) => location.pathname.startsWith(p));
   const useLightText = isDarkHeroPage && !isScrolled;
 
   return (
@@ -48,21 +53,22 @@ const Navigation = () => {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "py-3 border-b border-white/10 shadow-depth-1"
-            : "py-6"
+            ? "py-3 shadow-depth-2"
+            : "py-5"
         }`}
         style={{
           backgroundColor: isScrolled
-            ? "hsl(var(--background) / 0.6)"
+            ? "hsl(var(--background) / 0.85)"
             : isDarkHeroPage
-              ? "transparent"
-              : "hsl(var(--background) / 0.2)",
-          backdropFilter: isScrolled
-            ? "blur(20px) saturate(1.8)"
-            : "blur(4px)",
-          WebkitBackdropFilter: isScrolled
-            ? "blur(20px) saturate(1.8)"
-            : "blur(4px)",
+              ? "hsl(217 50% 8% / 0.30)"
+              : "hsl(var(--background) / 0.75)",
+          borderBottom: isScrolled
+            ? "1px solid hsl(var(--border))"
+            : isDarkHeroPage
+              ? "1px solid hsl(36 33% 95% / 0.10)"
+              : "1px solid hsl(var(--border) / 0.4)",
+          backdropFilter: "blur(16px) saturate(1.6)",
+          WebkitBackdropFilter: "blur(16px) saturate(1.6)",
         }}
       >
         <div className="container mx-auto px-6 flex items-center justify-between">

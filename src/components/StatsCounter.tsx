@@ -1,10 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/v2/Reveal";
+import { Sparkline } from "@/components/v2/Sparkline";
 
 const stats = [
-  { value: 375, suffix: "+", label: "לקוחות מרוצים" },
-  { value: 50,  suffix: "+", label: "שיעורים בקורס" },
-  { value: 8,   suffix: "+", label: "שנות מחקר" },
+  {
+    value: 375,
+    suffix: "+",
+    label: "לקוחות מרוצים",
+    trend: [40, 70, 105, 145, 180, 220, 265, 300, 340, 375],
+  },
+  {
+    value: 50,
+    suffix: "+",
+    label: "שיעורים בקורס",
+    trend: [12, 18, 22, 28, 32, 38, 42, 46, 48, 50],
+  },
+  {
+    value: 8,
+    suffix: "+",
+    label: "שנות מחקר",
+    trend: [1, 2, 3, 4, 5, 6, 7, 8, 8, 8],
+  },
 ];
 
 const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
@@ -104,7 +120,11 @@ const StatsCounter = () => {
 
                 <Counter value={stat.value} suffix={stat.suffix} />
 
-                <div className="mt-4 md:mt-5 flex flex-col items-center gap-2">
+                <div className="mt-4 hidden md:flex justify-center">
+                  <Sparkline values={stat.trend} width={120} height={28} />
+                </div>
+
+                <div className="mt-4 md:mt-3 flex flex-col items-center gap-2">
                   <span
                     aria-hidden
                     className="block w-8 h-px bg-accent/60 group-hover:w-14 transition-[width] duration-500"
