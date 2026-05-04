@@ -8,6 +8,7 @@ import FooterBar from "@/components/FooterBar";
 import WhatsAppFAB from "@/components/WhatsAppFAB";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import SmoothScroll from "@/components/SmoothScroll";
+import { StickyCTA } from "@/components/v2/StickyCTA";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -86,6 +87,11 @@ const SharedLayout = () => {
         <FooterBar />
         <WhatsAppFAB />
         <AccessibilityWidget />
+        <StickyCTA
+          label="30 דקות · ייעוץ ראשוני · ללא התחייבות"
+          ctaLabel="בואו נדבר"
+          ctaHref="/contact"
+        />
       </div>
     </SmoothScroll>
   );

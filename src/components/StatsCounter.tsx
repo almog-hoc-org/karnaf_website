@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useGsapReveal } from "@/hooks/use-gsap-reveal";
+import { Reveal } from "@/components/v2/Reveal";
 
 const stats = [
   { value: 375, suffix: "+", label: "לקוחות מרוצים" },
@@ -73,11 +73,8 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
 };
 
 const StatsCounter = () => {
-  const sectionRef = useGsapReveal<HTMLDivElement>({ y: 30, stagger: 0.18 });
-
   return (
-    <section className="relative py-section-md overflow-hidden">
-      {/* Subtle accent backdrop blob */}
+    <section className="relative py-section-md bg-background overflow-hidden">
       <div
         className="absolute inset-0 -z-10 opacity-60 pointer-events-none"
         style={{
@@ -88,46 +85,36 @@ const StatsCounter = () => {
       />
 
       <div className="container mx-auto px-5 md:px-6">
-        <div className="text-center mb-10 md:mb-14">
-          <div className="text-eyebrow uppercase text-accent inline-flex items-center gap-3 mb-3">
-            <span className="w-8 h-px bg-accent" />
-            <span>הנתונים מאחורי השם</span>
-            <span className="w-8 h-px bg-accent" />
-          </div>
-          <h2 className="text-display-md md:text-display-lg font-black text-foreground">
+        <Reveal>
+          <h2 className="text-display-md md:text-display-lg font-black text-center text-foreground mb-10 md:mb-16 leading-[1] tracking-tight">
             <span className="text-accent">מספרים</span> ולא תחושות
           </h2>
-        </div>
+        </Reveal>
 
-        <div
-          ref={sectionRef}
-          className="grid grid-cols-3 gap-4 md:gap-12 max-w-5xl mx-auto items-start"
-        >
+        <div className="grid grid-cols-3 gap-4 md:gap-12 max-w-5xl mx-auto items-start">
           {stats.map((stat, i) => (
-            <div
-              key={stat.label}
-              className="relative text-center group"
-            >
-              {/* Vertical separator (between cells, hidden first) */}
-              {i > 0 && (
-                <span
-                  aria-hidden
-                  className="hidden md:block absolute -right-6 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-border to-transparent"
-                />
-              )}
+            <Reveal key={stat.label} delay={i * 0.12}>
+              <div className="relative text-center group">
+                {i > 0 && (
+                  <span
+                    aria-hidden
+                    className="hidden md:block absolute -right-6 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-border to-transparent"
+                  />
+                )}
 
-              <Counter value={stat.value} suffix={stat.suffix} />
+                <Counter value={stat.value} suffix={stat.suffix} />
 
-              <div className="mt-4 md:mt-5 flex flex-col items-center gap-2">
-                <span
-                  aria-hidden
-                  className="block w-8 h-px bg-accent/60 group-hover:w-14 transition-[width] duration-500"
-                />
-                <p className="text-label md:text-body uppercase tracking-[0.18em] text-muted-foreground">
-                  {stat.label}
-                </p>
+                <div className="mt-4 md:mt-5 flex flex-col items-center gap-2">
+                  <span
+                    aria-hidden
+                    className="block w-8 h-px bg-accent/60 group-hover:w-14 transition-[width] duration-500"
+                  />
+                  <p className="text-label md:text-body uppercase tracking-[0.18em] text-muted-foreground">
+                    {stat.label}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
