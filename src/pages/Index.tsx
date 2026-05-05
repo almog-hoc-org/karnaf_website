@@ -11,6 +11,7 @@ import CommunitySection from "@/components/CommunitySection";
 import Footer from "@/components/Footer";
 import WelcomePopup from "@/components/WelcomePopup";
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
+import { CourseStrip } from "@/components/v2/CourseStrip";
 
 const Index = () => {
   return (
@@ -25,6 +26,7 @@ const Index = () => {
       <WelcomePopup />
       <div id="top">
         <Hero />
+        <CourseStrip />
         <ContactStrip />
         <StatsCounter />
         <Advantages />

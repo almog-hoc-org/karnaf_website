@@ -259,169 +259,7 @@ const CoursePage = () => {
           </div>
         </div>
       </section>
-
-      {/* 4. Trailer + Live calculator */}
-      <SectionDark size="lg" glow="bottom">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-white mb-4 leading-[0.98] tracking-tight text-center">
-              ראו <span className="text-accent">בעצמכם</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p
-              className="text-body-lg mb-12 leading-relaxed text-center max-w-2xl mx-auto"
-              style={{ color: "hsl(36 33% 95% / 0.72)" }}
-            >
-              דוגמה חיה לאחד הכלים בתוכנית — מחשבון משכנתא. הזיזו את ה-sliders
-              והרגישו איך כל פרמטר משפיע על העסקה.
-            </p>
-          </Reveal>
-          <Reveal delay={0.14}>
-            <RoiCalculator />
-          </Reveal>
-          {!isPlaceholderVideo && (
-            <Reveal delay={0.22}>
-              <div className="mt-14 rounded-2xl overflow-hidden border border-white/10 shadow-depth-3">
-                <VideoPlayer url={VIDEO_URL} title="טריילר — הדרך לדירה" />
-              </div>
-            </Reveal>
-          )}
-        </div>
-      </SectionDark>
-
-      {/* 5. Program cards */}
-      <SectionDark size="lg" glow="top-end">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-white mb-12 lg:mb-16 leading-[0.98] tracking-tight">
-              מה <span className="text-accent">בתוכנית?</span>
-            </h2>
-          </Reveal>
-
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-            {programCards.map((card, i) => (
-              <Reveal key={card.title} delay={i * 0.12}>
-                <article
-                  className="relative h-full p-6 lg:p-8 rounded-2xl flex flex-col group transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    backgroundColor: "hsl(36 33% 95% / 0.04)",
-                    border: "1px solid hsl(36 33% 95% / 0.12)",
-                  }}
-                >
-                  {card.badge && (
-                    <div className="absolute -top-3 right-6 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full">
-                      {card.badge}
-                    </div>
-                  )}
-                  <div className="font-mono text-display-md font-black text-accent leading-none mb-5">
-                    {card.num}
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 leading-snug">
-                    {card.title}
-                  </h3>
-                  <p
-                    className="text-sm leading-relaxed mb-6"
-                    style={{ color: "hsl(36 33% 95% / 0.72)" }}
-                  >
-                    {card.description}
-                  </p>
-                  <ul
-                    className="space-y-3 flex-1 pt-5 border-t"
-                    style={{ borderColor: "hsl(36 33% 95% / 0.10)" }}
-                  >
-                    {card.features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-start gap-3 text-sm"
-                        style={{ color: "hsl(36 33% 95% / 0.85)" }}
-                      >
-                        <Check size={16} className="text-accent mt-0.5 shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-
-          {/* Curriculum */}
-          <div className="max-w-3xl mx-auto mt-16 lg:mt-24">
-            <Reveal>
-              <div
-                className="flex items-center justify-center gap-6 mb-8 text-eyebrow uppercase tracking-[0.18em]"
-                style={{ color: "hsl(36 33% 95% / 0.7)" }}
-              >
-                <span>
-                  <strong className="text-accent text-base font-mono tabular-nums">{totalModules}</strong>{" "}
-                  מודולים
-                </span>
-                <span style={{ color: "hsl(36 33% 95% / 0.3)" }}>·</span>
-                <span>
-                  <strong className="text-accent text-base font-mono tabular-nums">{totalLessons}</strong>{" "}
-                  שיעורים
-                </span>
-              </div>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <CurriculumAccordion />
-            </Reveal>
-          </div>
-
-          {/* Transaction lifecycle visualization */}
-          <div className="mt-20 lg:mt-28 max-w-5xl mx-auto">
-            <Reveal>
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 text-center leading-tight">
-                ששה שלבים <span className="text-accent">מהשיחה הראשונה ועד החתימה</span>
-              </h3>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <p
-                className="text-base mb-12 text-center max-w-2xl mx-auto leading-relaxed"
-                style={{ color: "hsl(36 33% 95% / 0.65)" }}
-              >
-                בכל שלב — כלי, חומר וליווי שמותאמים בדיוק לאן שאתם בדרך.
-              </p>
-            </Reveal>
-            <Reveal delay={0.14}>
-              <TransactionLifecycle />
-            </Reveal>
-          </div>
-        </div>
-      </SectionDark>
-
-      {/* 6. Fit Quiz */}
-      <section className="py-section-lg bg-background">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight text-center">
-              האם התוכנית <span className="text-accent">מתאימה לי?</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p className="text-body-lg text-muted-foreground mb-10 lg:mb-14 leading-relaxed text-center max-w-2xl mx-auto">
-              ענו על מספר שאלות קצרות וגלו עד כמה התוכנית מתאימה בדיוק בשבילכם.
-            </p>
-          </Reveal>
-          <Reveal delay={0.14}>
-            <FitQuiz />
-          </Reveal>
-          <Reveal delay={0.22}>
-            <div className="text-center mt-10">
-              <Button
-                variant="outline"
-                onClick={scrollToPricing}
-                className="border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground rounded-full px-7 py-5 font-bold"
-              >
-                צפו בתוכנית המלאה
-              </Button>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 7. Pricing */}
+      {/* 4. Pricing */}
       <section id="pricing" className="py-section-lg bg-card">
         <div className="container mx-auto px-6 max-w-3xl">
           {/* Compare */}
@@ -546,6 +384,167 @@ const CoursePage = () => {
                   ))}
                 </div>
               </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 5. Trailer + Live calculator */}
+      <SectionDark size="lg" glow="bottom">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-white mb-4 leading-[0.98] tracking-tight text-center">
+              ראו <span className="text-accent">בעצמכם</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p
+              className="text-body-lg mb-12 leading-relaxed text-center max-w-2xl mx-auto"
+              style={{ color: "hsl(36 33% 95% / 0.72)" }}
+            >
+              דוגמה חיה לאחד הכלים בתוכנית — מחשבון משכנתא. הזיזו את ה-sliders
+              והרגישו איך כל פרמטר משפיע על העסקה.
+            </p>
+          </Reveal>
+          <Reveal delay={0.14}>
+            <RoiCalculator />
+          </Reveal>
+          {!isPlaceholderVideo && (
+            <Reveal delay={0.22}>
+              <div className="mt-14 rounded-2xl overflow-hidden border border-white/10 shadow-depth-3">
+                <VideoPlayer url={VIDEO_URL} title="טריילר — הדרך לדירה" />
+              </div>
+            </Reveal>
+          )}
+        </div>
+      </SectionDark>
+
+      {/* 6. Program cards */}
+      <SectionDark size="lg" glow="top-end">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-white mb-12 lg:mb-16 leading-[0.98] tracking-tight">
+              מה <span className="text-accent">בתוכנית?</span>
+            </h2>
+          </Reveal>
+
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+            {programCards.map((card, i) => (
+              <Reveal key={card.title} delay={i * 0.12}>
+                <article
+                  className="relative h-full p-6 lg:p-8 rounded-2xl flex flex-col group transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    backgroundColor: "hsl(36 33% 95% / 0.04)",
+                    border: "1px solid hsl(36 33% 95% / 0.12)",
+                  }}
+                >
+                  {card.badge && (
+                    <div className="absolute -top-3 right-6 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full">
+                      {card.badge}
+                    </div>
+                  )}
+                  <div className="font-mono text-display-md font-black text-accent leading-none mb-5">
+                    {card.num}
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 leading-snug">
+                    {card.title}
+                  </h3>
+                  <p
+                    className="text-sm leading-relaxed mb-6"
+                    style={{ color: "hsl(36 33% 95% / 0.72)" }}
+                  >
+                    {card.description}
+                  </p>
+                  <ul
+                    className="space-y-3 flex-1 pt-5 border-t"
+                    style={{ borderColor: "hsl(36 33% 95% / 0.10)" }}
+                  >
+                    {card.features.map((feature) => (
+                      <li
+                        key={feature}
+                        className="flex items-start gap-3 text-sm"
+                        style={{ color: "hsl(36 33% 95% / 0.85)" }}
+                      >
+                        <Check size={16} className="text-accent mt-0.5 shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* Curriculum */}
+          <div className="max-w-3xl mx-auto mt-16 lg:mt-24">
+            <Reveal>
+              <div
+                className="flex items-center justify-center gap-6 mb-8 text-eyebrow uppercase tracking-[0.18em]"
+                style={{ color: "hsl(36 33% 95% / 0.7)" }}
+              >
+                <span>
+                  <strong className="text-accent text-base font-mono tabular-nums">{totalModules}</strong>{" "}
+                  מודולים
+                </span>
+                <span style={{ color: "hsl(36 33% 95% / 0.3)" }}>·</span>
+                <span>
+                  <strong className="text-accent text-base font-mono tabular-nums">{totalLessons}</strong>{" "}
+                  שיעורים
+                </span>
+              </div>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <CurriculumAccordion />
+            </Reveal>
+          </div>
+
+          {/* Transaction lifecycle visualization */}
+          <div className="mt-20 lg:mt-28 max-w-5xl mx-auto">
+            <Reveal>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 text-center leading-tight">
+                ששה שלבים <span className="text-accent">מהשיחה הראשונה ועד החתימה</span>
+              </h3>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p
+                className="text-base mb-12 text-center max-w-2xl mx-auto leading-relaxed"
+                style={{ color: "hsl(36 33% 95% / 0.65)" }}
+              >
+                בכל שלב — כלי, חומר וליווי שמותאמים בדיוק לאן שאתם בדרך.
+              </p>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <TransactionLifecycle />
+            </Reveal>
+          </div>
+        </div>
+      </SectionDark>
+
+      {/* 7. Fit Quiz */}
+      <section className="py-section-lg bg-background">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight text-center">
+              האם התוכנית <span className="text-accent">מתאימה לי?</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="text-body-lg text-muted-foreground mb-10 lg:mb-14 leading-relaxed text-center max-w-2xl mx-auto">
+              ענו על מספר שאלות קצרות וגלו עד כמה התוכנית מתאימה בדיוק בשבילכם.
+            </p>
+          </Reveal>
+          <Reveal delay={0.14}>
+            <FitQuiz />
+          </Reveal>
+          <Reveal delay={0.22}>
+            <div className="text-center mt-10">
+              <Button
+                variant="outline"
+                onClick={scrollToPricing}
+                className="border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground rounded-full px-7 py-5 font-bold"
+              >
+                צפו בתוכנית המלאה
+              </Button>
             </div>
           </Reveal>
         </div>

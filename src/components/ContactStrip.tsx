@@ -56,7 +56,7 @@ const ContactStrip = () => {
   };
 
   return (
-    <section className="relative -mt-16 md:-mt-24 z-20">
+    <section className="relative py-section-sm bg-background z-10">
       <div className="container mx-auto px-5 md:px-6">
         <Reveal>
           <div className="bg-card rounded-2xl shadow-depth-3 border border-border/40 p-6 md:p-10">
