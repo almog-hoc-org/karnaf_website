@@ -190,7 +190,7 @@ const CoursePage = () => {
         style={{ backgroundColor: "hsl(217 50% 8%)" }}
       >
         <div className="absolute inset-0">
-          <img src={heroCity} alt="" className="w-full h-full object-cover" loading="eager" decoding="async" fetchPriority="high" />
+          <img src={heroCity} alt="" className="w-full h-full object-cover" loading="eager" decoding="async" {...{ fetchpriority: "high" }} />
         </div>
         <div
           className="absolute inset-0 pointer-events-none"
