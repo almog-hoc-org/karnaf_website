@@ -19,6 +19,22 @@ const PageLoadingSkeleton = () => (
   </div>
 );
 
+/** Briefly sweeps a navy curtain across the screen on route change. */
+const RouteCurtain = ({ pathname }: { pathname: string }) => (
+  <motion.div
+    key={pathname}
+    aria-hidden
+    className="fixed inset-0 z-[55] pointer-events-none"
+    initial={{ scaleX: 1, transformOrigin: "left center" }}
+    animate={{ scaleX: 0, transformOrigin: "left center" }}
+    transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1] }}
+    style={{
+      background:
+        "linear-gradient(to left, hsl(217 50% 6%) 0%, hsl(217 50% 8%) 60%, hsl(24 80% 52% / 0.4) 100%)",
+    }}
+  />
+);
+
 const ScrollProgress = () => {
   const barRef = useRef<HTMLDivElement>(null);
 
@@ -70,13 +86,21 @@ const SharedLayout = () => {
           <motion.main
             id="main-content"
             key={location.pathname}
-            initial={reduceMotion ? false : { opacity: 0, y: 20, scale: 0.99 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, y: 24, filter: "blur(8px)" }
+            }
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={
+              reduceMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: -16, filter: "blur(8px)" }
+            }
             transition={
               reduceMotion
                 ? { duration: 0.15 }
-                : { duration: 0.35, ease: [0.16, 1, 0.3, 1] }
+                : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
             }
           >
             <Suspense fallback={<PageLoadingSkeleton />}>
@@ -84,6 +108,9 @@ const SharedLayout = () => {
             </Suspense>
           </motion.main>
         </AnimatePresence>
+
+        {/* Curtain mask — sweeps across the screen during route changes */}
+        {!reduceMotion && <RouteCurtain pathname={location.pathname} />}
         <FooterBar />
         <WhatsAppFAB />
         <AccessibilityWidget />
