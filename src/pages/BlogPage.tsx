@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { Play, FileText, Wrench, ArrowLeft, Clock } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
 import { articles } from "@/data/articles";
 import { Reveal } from "@/components/v2/Reveal";
+import SEOHead, {
+  organizationSchema,
+  breadcrumbSchema,
+} from "@/components/SEOHead";
 
 import type { LucideIcon } from "lucide-react";
 
@@ -34,14 +37,36 @@ const BlogPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>ידע ותובנות | קרנף נדל"ן</title>
-        <meta
-          name="description"
-          content="מאמרים, סרטונים וכלים על נדל&quot;ן — מדריכי רכישה, טיפים למשא ומתן, ניתוחי שוק ועוד."
-        />
-        <link rel="canonical" href="https://www.karnafnadlan.com/blog" />
-      </Helmet>
+      <SEOHead
+        title="ידע ותובנות נדל״ן — מדריכים, סרטונים וכלים | קרנף נדל״ן"
+        description="מאמרים על רכישת דירה, משכנתא, מיסוי, התחדשות עירונית. מדריכים מעשיים מבוססי 8+ שנות מחקר ו-375+ עסקאות מלוות."
+        path="/blog"
+        keywords="בלוג נדל״ן, מדריך רכישת דירה, משכנתא בישראל, מס רכישה, תמ״א 38, השקעות נדל״ן"
+        jsonLd={[
+          organizationSchema,
+          breadcrumbSchema([
+            { name: "דף הבית", url: "/" },
+            { name: "ידע ותובנות", url: "/blog" },
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            "@id": "https://www.karnafnadlan.com/blog#blog",
+            url: "https://www.karnafnadlan.com/blog",
+            name: "ידע ותובנות — קרנף נדל״ן",
+            description:
+              "מאמרים, סרטונים וכלים על רכישת דירה, משכנתא ומיסוי בישראל.",
+            inLanguage: "he-IL",
+            publisher: { "@id": "https://www.karnafnadlan.com/#organization" },
+            blogPost: articles.map((a) => ({
+              "@type": "BlogPosting",
+              headline: a.title,
+              datePublished: a.date,
+              url: `https://www.karnafnadlan.com/blog/${a.slug}`,
+            })),
+          },
+        ]}
+      />
 
       <PageHero
         tag="ידע ותובנות"

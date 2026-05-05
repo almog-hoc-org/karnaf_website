@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { MessageCircle, Phone, Mail } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
@@ -6,16 +5,32 @@ import Footer from "@/components/Footer";
 import { faqData } from "@/data/faq";
 import { WHATSAPP_NUMBER, PHONE_NUMBER, EMAIL } from "@/lib/constants";
 import { Reveal } from "@/components/v2/Reveal";
+import SEOHead, {
+  organizationSchema,
+  localBusinessSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+} from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
 
 const ContactPage = () => {
   return (
     <>
-      <Helmet>
-        <title>צור קשר | קרנף נדל"ן</title>
-        <meta name="description" content="צרו קשר עם קרנף נדל&quot;ן — WhatsApp, טלפון, אימייל. נשמח לענות על כל שאלה." />
-        <link rel="canonical" href="https://www.karnafnadlan.com/contact" />
-      </Helmet>
+      <SEOHead
+        title="צור קשר עם קרנף נדל״ן | WhatsApp, טלפון, אימייל"
+        description="WhatsApp 055-996-6175, טלפון, אימייל karnaf.yazamut@gmail.com. שעות פעילות א'-ה' 9:00-20:00, ו' 9:00-14:00. תשובה תוך שעה ביום עסקים."
+        path="/contact"
+        keywords="קרנף נדל״ן צור קשר, ליווי רכישת דירה, ייעוץ נדל״ן בישראל"
+        jsonLd={[
+          organizationSchema,
+          localBusinessSchema,
+          breadcrumbSchema([
+            { name: "דף הבית", url: "/" },
+            { name: "צור קשר", url: "/contact" },
+          ]),
+          faqPageSchema(faqData.contact),
+        ]}
+      />
 
       <PageHero
         tag="צור קשר"

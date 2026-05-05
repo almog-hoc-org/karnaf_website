@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero from "@/layouts/PageHero";
@@ -7,6 +6,12 @@ import { testimonials } from "@/data/testimonials";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import BigCTA from "@/components/BigCTA";
 import { Reveal } from "@/components/v2/Reveal";
+import SEOHead, {
+  organizationSchema,
+  breadcrumbSchema,
+  reviewSchema,
+  aggregateRatingSchema,
+} from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
 
 const TestimonialsPage = () => {
@@ -16,11 +21,34 @@ const TestimonialsPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>סיפורי הצלחה | קרנף נדל"ן</title>
-        <meta name="description" content="קראו עדויות של לקוחות שרכשו דירות בליווי קרנף נדל&quot;ן — בוגרי התוכנית משתפים את הסיפור שלהם." />
-        <link rel="canonical" href="https://www.karnafnadlan.com/testimonials" />
-      </Helmet>
+      <SEOHead
+        title="סיפורי הצלחה — לקוחות שרכשו דירה בליווי קרנף נדל״ן | עדויות"
+        description="עדויות של בוגרי תוכנית הדרך לדירה ולקוחות ליווי. 5 כוכבים ממאות רוכשי דירה. חיסכון של עשרות אלפי שקלים בעסקה."
+        path="/testimonials"
+        keywords="עדויות נדל״ן, סיפורי הצלחה, רוכשי דירה ראשונה, ביקורות קורס נדל״ן"
+        jsonLd={[
+          organizationSchema,
+          breadcrumbSchema([
+            { name: "דף הבית", url: "/" },
+            { name: "סיפורי הצלחה", url: "/testimonials" },
+          ]),
+          aggregateRatingSchema({
+            ratingValue: "4.9",
+            reviewCount: String(testimonials.length),
+            itemName: "הדרך לדירה — תוכנית הליווי הדיגיטלית",
+            itemUrl: "https://www.karnafnadlan.com/course",
+          }),
+          ...testimonials.map((t) =>
+            reviewSchema({
+              itemName: "הדרך לדירה — תוכנית הליווי הדיגיטלית",
+              itemUrl: "https://www.karnafnadlan.com/course",
+              reviewerName: t.name,
+              reviewBody: t.quote,
+              rating: t.rating,
+            })
+          ),
+        ]}
+      />
 
       <PageHero
         tag="סיפורי הצלחה"

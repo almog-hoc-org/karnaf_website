@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import SEOHead, {
+  courseSchema,
+  organizationSchema,
+  serviceSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+} from "@/components/SEOHead";
 import {
   GraduationCap,
   CheckCircle,
@@ -115,14 +121,22 @@ const scrollToPricing = () =>
 const CoursePage = () => {
   return (
     <>
-      <Helmet>
-        <title>הדרך לדירה — קורס נדל"ן דיגיטלי | קרנף נדל"ן</title>
-        <meta
-          name="description"
-          content="קורס נדל&quot;ן דיגיטלי מקיף לרוכשי דירות ראשונות ומשקיעים — 50+ שיעורים, מחשבונים, כלים וליווי צמוד של אנליסט נדל&quot;ן."
-        />
-        <link rel="canonical" href="https://www.karnafnadlan.com/course" />
-      </Helmet>
+      <SEOHead
+        title="הדרך לדירה — תוכנית הליווי הדיגיטלית לרכישת דירה ראשונה | קרנף נדל״ן"
+        description="50+ שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון), אנליסט נדל״ן צמוד בוואטסאפ. גישה מלאה ל-12 חודשים. 5,490 ₪."
+        path="/course"
+        keywords="קורס נדל״ן, הדרך לדירה, ליווי רוכשי דירה, דירה ראשונה, מחשבון משכנתא, מס רכישה, השקעה בנדל״ן"
+        jsonLd={[
+          organizationSchema,
+          courseSchema,
+          serviceSchema,
+          breadcrumbSchema([
+            { name: "דף הבית", url: "/" },
+            { name: "הדרך לדירה", url: "/course" },
+          ]),
+          faqPageSchema(faqData.course),
+        ]}
+      />
 
       {/* 1. Cinematic Hero */}
       <section

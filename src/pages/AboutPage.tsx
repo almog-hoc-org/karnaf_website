@@ -1,9 +1,9 @@
-import { Helmet } from "react-helmet-async";
 import PageHero from "@/layouts/PageHero";
 import { team } from "@/data/team";
 import StatsCounter from "@/components/StatsCounter";
 import BigCTA from "@/components/BigCTA";
 import { Reveal } from "@/components/v2/Reveal";
+import SEOHead, { organizationSchema, breadcrumbSchema } from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
 
 const timeline = [
@@ -21,11 +21,19 @@ const timeline = [
 const AboutPage = () => {
   return (
     <>
-      <Helmet>
-        <title>אודות קרנף נדל"ן | הסיפור שלנו</title>
-        <meta name="description" content="הכירו את קרנף נדל&quot;ן — הצוות, הסיפור, הניסיון. מעל 350 לקוחות ותלמידים ו-8+ שנות ניסיון בליווי השקעות נדל&quot;ן." />
-        <link rel="canonical" href="https://www.karnafnadlan.com/about" />
-      </Helmet>
+      <SEOHead
+        title="סיפורו של הקרנף — איתמר ואלמוג, מייסדי קרנף נדל״ן | אודות"
+        description="הכירו את הצוות שמאחורי קרנף נדל״ן: 8+ שנות מחקר, 375+ עסקאות מלוות, סיפור על שני קצינים שהפכו טעות-יקרה לשיטה לרכישת דירה."
+        path="/about"
+        keywords="קרנף נדל״ן, איתמר נחליאל, אלמוג חכמה, מייסדים, סיפור, ליווי נדל״ן בישראל"
+        jsonLd={[
+          organizationSchema,
+          breadcrumbSchema([
+            { name: "דף הבית", url: "/" },
+            { name: "אודות", url: "/about" },
+          ]),
+        ]}
+      />
 
       <PageHero
         tag="אודות"
