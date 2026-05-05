@@ -34,6 +34,9 @@ import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
 import { MortgageCalculator } from "@/components/v2/MortgageCalculator";
 import { StampDutyCalculator } from "@/components/v2/StampDutyCalculator";
+import { CapitalGainsCalculator } from "@/components/v2/CapitalGainsCalculator";
+import { RoiCalculator } from "@/components/v2/RoiCalculator";
+import { AreaCompare } from "@/components/v2/AreaCompare";
 import { TransactionLifecycle } from "@/components/v2/TransactionLifecycle";
 import heroCity from "@/assets/hero-city.jpg";
 
@@ -114,7 +117,15 @@ const totalLessons = curriculum.reduce(
 const scrollToPricing = () =>
   document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
 
-type CalcTab = "mortgage" | "stamp";
+type CalcTab = "mortgage" | "stamp" | "shevach" | "roi" | "areas";
+
+const CALC_TABS: { key: CalcTab; label: string }[] = [
+  { key: "mortgage", label: "משכנתא" },
+  { key: "stamp",    label: "מס רכישה" },
+  { key: "shevach",  label: "מס שבח" },
+  { key: "roi",      label: "תשואה" },
+  { key: "areas",    label: "השוואת אזורים" },
+];
 
 const CalcTabs = () => {
   const [tab, setTab] = useState<CalcTab>("mortgage");
@@ -123,16 +134,13 @@ const CalcTabs = () => {
       <div
         role="tablist"
         aria-label="בחר מחשבון"
-        className="inline-flex items-center gap-1 p-1 rounded-full"
+        className="inline-flex flex-wrap items-center gap-1 p-1 rounded-full"
         style={{
           backgroundColor: "hsl(36 33% 95% / 0.06)",
           border: "1px solid hsl(36 33% 95% / 0.10)",
         }}
       >
-        {[
-          { key: "mortgage" as const, label: "משכנתא" },
-          { key: "stamp" as const, label: "מס רכישה" },
-        ].map((t) => {
+        {CALC_TABS.map((t) => {
           const active = tab === t.key;
           return (
             <button
@@ -140,7 +148,7 @@ const CalcTabs = () => {
               role="tab"
               aria-selected={active}
               onClick={() => setTab(t.key)}
-              className="px-6 py-2.5 text-sm font-bold rounded-full transition-colors"
+              className="px-5 py-2.5 text-sm font-bold rounded-full transition-colors"
               style={{
                 backgroundColor: active ? "hsl(var(--accent))" : "transparent",
                 color: active
@@ -153,11 +161,13 @@ const CalcTabs = () => {
           );
         })}
       </div>
-      {tab === "mortgage" ? (
-        <MortgageCalculator description="זה מסך אחד. בקורס מחכים לכם 7 מחשבונים נוספים — מס רכישה, מס שבח, פוטנציאל השבחה, ROI שנתי ועוד." />
-      ) : (
-        <StampDutyCalculator />
+      {tab === "mortgage" && (
+        <MortgageCalculator description="זה מסך אחד מתוך פורטל הכלים בתוכנית — מס רכישה, מס שבח, ROI שנתי, השוואת אזורים ועוד." />
       )}
+      {tab === "stamp" && <StampDutyCalculator />}
+      {tab === "shevach" && <CapitalGainsCalculator />}
+      {tab === "roi" && <RoiCalculator />}
+      {tab === "areas" && <AreaCompare />}
     </div>
   );
 };
