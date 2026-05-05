@@ -11,7 +11,6 @@ import CommunitySection from "@/components/CommunitySection";
 import Footer from "@/components/Footer";
 import WelcomePopup from "@/components/WelcomePopup";
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
-import { CaseStudyPinned } from "@/components/v2/CaseStudyPinned";
 
 const Index = () => {
   return (
@@ -32,7 +31,6 @@ const Index = () => {
         <Services />
         <WebinarSection />
         <Properties />
-        <CaseStudyPinned />
         <About />
         <BigCTA />
         <CommunitySection />

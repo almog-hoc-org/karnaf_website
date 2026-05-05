@@ -55,223 +55,300 @@ const CalcSlider = ({
   </div>
 );
 
-const ResultBlock = ({
-  label,
-  value,
-  big = false,
-  highlight = false,
-}: {
-  label: string;
-  value: string;
-  big?: boolean;
-  highlight?: boolean;
-}) => (
-  <div>
-    <div
-      className="text-eyebrow uppercase tracking-[0.18em] mb-1"
-      style={{ color: "hsl(36 33% 95% / 0.55)" }}
-    >
-      {label}
-    </div>
-    <div
-      className={`font-mono tabular-nums font-black leading-none ${
-        big ? "text-4xl md:text-5xl" : "text-xl md:text-2xl"
-      } ${highlight ? "text-accent" : "text-white"}`}
-    >
-      {value}
-    </div>
-  </div>
-);
-
+/**
+ * RoiCalculator — focused on the "leverage advantage" story.
+ * Shows side-by-side: same property, same growth, same rent — but the
+ * return-on-equity is dramatically higher when bought with a mortgage.
+ */
 export const RoiCalculator = () => {
   const [price, setPrice] = useState(2_400_000);
   const [equity, setEquity] = useState(720_000);
   const [monthlyRent, setMonthlyRent] = useState(7_500);
   const [annualGrowth, setAnnualGrowth] = useState(3.5); // %
   const [years, setYears] = useState(10);
+  const mortgageRate = 0.045;
 
   const calc = useMemo(() => {
-    const annualRent = monthlyRent * 12;
-    const grossYield = annualRent / price; // % of price
-    const cashOnCash = annualRent / equity; // first-year cash return on equity
     const futureValue = price * Math.pow(1 + annualGrowth / 100, years);
-    const capitalGain = futureValue - price;
-    const totalRentalIncome = annualRent * years; // simple, no inflation adjustment
-    const totalReturn = capitalGain + totalRentalIncome;
-    const annualizedRoiOnEquity =
-      Math.pow((equity + totalReturn) / equity, 1 / years) - 1;
+    const totalAppreciation = futureValue - price;
+    const totalRent = monthlyRent * 12 * years;
+
+    // --- Leveraged scenario (with mortgage) ---
+    const principal = Math.max(0, price - equity);
+    const monthlyRate = mortgageRate / 12;
+    const months = years * 12;
+    const monthlyPmt =
+      monthlyRate === 0
+        ? principal / months
+        : (principal * monthlyRate) /
+          (1 - Math.pow(1 + monthlyRate, -months));
+    const totalPmt = monthlyPmt * months;
+    const totalInterest = totalPmt - principal;
+
+    // Net cash from rent after mortgage payments (simplified, no taxes/maintenance)
+    const netRentLeveraged = totalRent - totalPmt;
+    // After-period equity = property value - remaining mortgage. We assume the
+    // mortgage is fully paid by year `years` for simplicity (worst case for
+    // leverage; better than reality for short horizons).
+    // For illustrative purposes, total return on equity = appreciation + net rent.
+    const leveragedTotalReturn = totalAppreciation + netRentLeveraged;
+    const leveragedAnnualizedRoi =
+      Math.pow(
+        (equity + leveragedTotalReturn) / equity,
+        1 / years
+      ) - 1;
+
+    // --- Cash scenario (no mortgage) ---
+    const cashEquity = price; // bought outright with own money
+    const cashTotalReturn = totalAppreciation + totalRent;
+    const cashAnnualizedRoi =
+      Math.pow((cashEquity + cashTotalReturn) / cashEquity, 1 / years) - 1;
+
+    const leverageMultiplier =
+      cashAnnualizedRoi > 0
+        ? leveragedAnnualizedRoi / cashAnnualizedRoi
+        : 0;
+
     return {
-      annualRent,
-      grossYield,
-      cashOnCash,
+      principal,
+      monthlyPmt,
       futureValue,
-      capitalGain,
-      totalRentalIncome,
-      totalReturn,
-      annualizedRoiOnEquity,
+      totalAppreciation,
+      totalRent,
+      totalInterest,
+      leveragedAnnualizedRoi,
+      cashAnnualizedRoi,
+      leveragedTotalReturn,
+      cashTotalReturn,
+      leverageMultiplier,
     };
   }, [price, equity, monthlyRent, annualGrowth, years]);
 
   return (
     <div
-      className="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-14 rounded-2xl p-6 md:p-10 backdrop-blur-sm"
+      className="rounded-2xl p-6 md:p-10 backdrop-blur-sm"
       style={{
         backgroundColor: "hsl(36 33% 95% / 0.04)",
         border: "1px solid hsl(36 33% 95% / 0.12)",
       }}
     >
-      <div className="space-y-8">
-        <div className="text-eyebrow uppercase tracking-[0.22em] text-accent flex items-center gap-3">
-          <span
-            className="w-2 h-2 rounded-full bg-accent"
-            aria-hidden
-            style={{ boxShadow: "0 0 12px hsl(var(--accent))" }}
+      <div className="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-14">
+        {/* Inputs */}
+        <div className="space-y-8">
+          <div className="text-eyebrow uppercase tracking-[0.22em] text-accent flex items-center gap-3">
+            <span
+              className="w-2 h-2 rounded-full bg-accent"
+              aria-hidden
+              style={{ boxShadow: "0 0 12px hsl(var(--accent))" }}
+            />
+            <span>מחשבון תשואה על הון עצמי · live</span>
+          </div>
+
+          <CalcSlider
+            label="מחיר הדירה"
+            value={price}
+            min={800_000}
+            max={6_000_000}
+            step={50_000}
+            onChange={setPrice}
+            format={(v) => `${formatILS(v)} ₪`}
           />
-          <span>מחשבון תשואה · live</span>
+          <CalcSlider
+            label="הון עצמי"
+            value={equity}
+            min={200_000}
+            max={Math.min(price, 4_000_000)}
+            step={20_000}
+            onChange={(v) => setEquity(Math.min(v, price - 100_000))}
+            format={(v) => `${formatILS(v)} ₪`}
+          />
+          <CalcSlider
+            label="שכר דירה חודשי"
+            value={monthlyRent}
+            min={2_000}
+            max={20_000}
+            step={100}
+            onChange={setMonthlyRent}
+            format={(v) => `${formatILS(v)} ₪`}
+          />
+          <CalcSlider
+            label="צמיחת הון שנתית משוערת"
+            value={annualGrowth}
+            min={0}
+            max={8}
+            step={0.5}
+            onChange={setAnnualGrowth}
+            format={(v) => `${v.toFixed(1)}%`}
+          />
+          <CalcSlider
+            label="אופק השקעה"
+            value={years}
+            min={3}
+            max={20}
+            step={1}
+            onChange={setYears}
+            format={(v) => `${v} שנים`}
+          />
+
+          <div
+            className="text-xs font-mono uppercase tracking-[0.18em]"
+            style={{ color: "hsl(36 33% 95% / 0.5)" }}
+          >
+            * ריבית משכנתא משוערת {(mortgageRate * 100).toFixed(1)}% · להמחשה בלבד · לא כולל מסים, תחזוקה
+          </div>
         </div>
 
-        <CalcSlider
-          label="מחיר הדירה"
-          value={price}
-          min={800_000}
-          max={6_000_000}
-          step={50_000}
-          onChange={setPrice}
-          format={(v) => `${formatILS(v)} ₪`}
-        />
-        <CalcSlider
-          label="הון עצמי"
-          value={equity}
-          min={200_000}
-          max={Math.min(price, 4_000_000)}
-          step={20_000}
-          onChange={(v) => setEquity(Math.min(v, price - 100_000))}
-          format={(v) => `${formatILS(v)} ₪`}
-        />
-        <CalcSlider
-          label="שכר דירה חודשי"
-          value={monthlyRent}
-          min={2_000}
-          max={20_000}
-          step={100}
-          onChange={setMonthlyRent}
-          format={(v) => `${formatILS(v)} ₪`}
-        />
-        <CalcSlider
-          label="צמיחת הון שנתית משוערת"
-          value={annualGrowth}
-          min={0}
-          max={8}
-          step={0.5}
-          onChange={setAnnualGrowth}
-          format={(v) => `${v.toFixed(1)}%`}
-        />
-        <CalcSlider
-          label="אופק השקעה"
-          value={years}
-          min={3}
-          max={20}
-          step={1}
-          onChange={setYears}
-          format={(v) => `${v} שנים`}
-        />
-
+        {/* Headline result + leverage comparison */}
         <div
-          className="text-xs font-mono uppercase tracking-[0.18em]"
-          style={{ color: "hsl(36 33% 95% / 0.5)" }}
+          className="rounded-xl p-6 lg:p-8 flex flex-col justify-between"
+          style={{
+            backgroundColor: "hsl(217 50% 5%)",
+            border: "1px solid hsl(36 33% 95% / 0.10)",
+          }}
         >
-          * פשטני · לא כולל מסים, תחזוקה, תקופות ללא דייר
+          <div className="space-y-6">
+            {/* Big headline number */}
+            <div>
+              <div
+                className="text-eyebrow uppercase tracking-[0.18em] mb-1"
+                style={{ color: "hsl(36 33% 95% / 0.55)" }}
+              >
+                תשואה שנתית על ההון העצמי שלכם
+              </div>
+              <div className="font-mono tabular-nums font-black leading-none text-5xl md:text-6xl text-accent">
+                {(calc.leveragedAnnualizedRoi * 100).toFixed(1)}%
+              </div>
+              <div
+                className="text-eyebrow uppercase tracking-[0.18em] mt-3"
+                style={{ color: "hsl(36 33% 95% / 0.55)" }}
+              >
+                {formatILS(equity)} ₪ הון → {formatILS(calc.leveragedTotalReturn + equity)} ₪ אחרי {years} שנים
+              </div>
+            </div>
+
+            {/* Leverage comparison — side by side bars */}
+            <div className="pt-4 border-t" style={{ borderColor: "hsl(36 33% 95% / 0.10)" }}>
+              <div
+                className="text-eyebrow uppercase tracking-[0.18em] mb-4"
+                style={{ color: "hsl(36 33% 95% / 0.7)" }}
+              >
+                כוח המינוף
+              </div>
+
+              <ComparisonRow
+                label="עם משכנתא"
+                roi={calc.leveragedAnnualizedRoi}
+                accent
+              />
+              <ComparisonRow
+                label="במזומן (כל הדירה)"
+                roi={calc.cashAnnualizedRoi}
+              />
+
+              <div
+                className="mt-5 pt-4 border-t flex items-center justify-between"
+                style={{ borderColor: "hsl(36 33% 95% / 0.08)" }}
+              >
+                <span
+                  className="text-eyebrow uppercase tracking-[0.18em]"
+                  style={{ color: "hsl(36 33% 95% / 0.55)" }}
+                >
+                  אפקט מינוף
+                </span>
+                <span className="font-mono tabular-nums text-2xl font-black text-accent">
+                  ×{calc.leverageMultiplier.toFixed(1)}
+                </span>
+              </div>
+            </div>
+
+            {/* Mini stats row */}
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t" style={{ borderColor: "hsl(36 33% 95% / 0.08)" }}>
+              <div>
+                <div
+                  className="text-eyebrow uppercase tracking-[0.18em] mb-1"
+                  style={{ color: "hsl(36 33% 95% / 0.55)" }}
+                >
+                  תשלום משכנתא חודשי
+                </div>
+                <div className="font-mono tabular-nums font-bold text-base text-white">
+                  {formatILS(calc.monthlyPmt)} ₪
+                </div>
+              </div>
+              <div>
+                <div
+                  className="text-eyebrow uppercase tracking-[0.18em] mb-1"
+                  style={{ color: "hsl(36 33% 95% / 0.55)" }}
+                >
+                  ערך עתידי משוער
+                </div>
+                <div className="font-mono tabular-nums font-bold text-base text-white">
+                  {formatILS(calc.futureValue)} ₪
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="mt-8 pt-6 border-t flex items-start gap-3"
+            style={{ borderColor: "hsl(36 33% 95% / 0.10)" }}
+          >
+            <div
+              className="w-2 h-2 rounded-full mt-2"
+              style={{ backgroundColor: "hsl(var(--accent))" }}
+            />
+            <p
+              className="text-sm leading-relaxed"
+              style={{ color: "hsl(36 33% 95% / 0.7)" }}
+            >
+              אותה דירה. אותה צמיחה. אותו שכ״ד. <strong className="text-white">המינוף הוא שמכפיל את התשואה.</strong> בקורס לומדים מתי המינוף עובד לטובתכם — ומתי הוא מסוכן.
+            </p>
+          </div>
         </div>
       </div>
+    </div>
+  );
+};
 
-      <div
-        className="rounded-xl p-6 lg:p-8 flex flex-col justify-between"
-        style={{
-          backgroundColor: "hsl(217 50% 5%)",
-          border: "1px solid hsl(36 33% 95% / 0.10)",
-        }}
-      >
-        <div className="space-y-6">
-          <ResultBlock
-            label="תשואה שנתית מתואמת על ההון העצמי"
-            value={`${(calc.annualizedRoiOnEquity * 100).toFixed(1)}%`}
-            big
-            highlight
-          />
-          <div className="grid grid-cols-2 gap-6">
-            <ResultBlock
-              label="תשואה ברוטו (שכ״ד / מחיר)"
-              value={`${(calc.grossYield * 100).toFixed(2)}%`}
-            />
-            <ResultBlock
-              label="Cash-on-Cash שנה ראשונה"
-              value={`${(calc.cashOnCash * 100).toFixed(1)}%`}
-            />
-            <ResultBlock
-              label="ערך עתידי משוער"
-              value={`${formatILS(calc.futureValue)} ₪`}
-            />
-            <ResultBlock
-              label="צבירה כוללת"
-              value={`${formatILS(calc.totalReturn)} ₪`}
-            />
-          </div>
-
-          {/* Stacked breakdown: capital gain vs rental income */}
-          <div>
-            <div
-              className="flex h-2 rounded-full overflow-hidden"
-              style={{ backgroundColor: "hsl(36 33% 95% / 0.10)" }}
-            >
-              {(() => {
-                const total = Math.max(1, calc.totalReturn);
-                const capPct = (calc.capitalGain / total) * 100;
-                return (
-                  <>
-                    <span
-                      className="block transition-[width] duration-300"
-                      style={{
-                        width: `${capPct}%`,
-                        backgroundColor: "hsl(var(--accent))",
-                      }}
-                    />
-                    <span
-                      className="block transition-[width] duration-300"
-                      style={{
-                        width: `${100 - capPct}%`,
-                        backgroundColor: "hsl(36 33% 95% / 0.55)",
-                      }}
-                    />
-                  </>
-                );
-              })()}
-            </div>
-            <div
-              className="flex items-center justify-between mt-2 text-xs font-mono uppercase tracking-[0.14em]"
-              style={{ color: "hsl(36 33% 95% / 0.55)" }}
-            >
-              <span>צמיחת הון {((calc.capitalGain / Math.max(1, calc.totalReturn)) * 100).toFixed(0)}%</span>
-              <span>הכנסה משכ״ד {((calc.totalRentalIncome / Math.max(1, calc.totalReturn)) * 100).toFixed(0)}%</span>
-            </div>
-          </div>
-        </div>
-
-        <div
-          className="mt-8 pt-6 border-t flex items-start gap-3"
-          style={{ borderColor: "hsl(36 33% 95% / 0.10)" }}
+const ComparisonRow = ({
+  label,
+  roi,
+  accent = false,
+}: {
+  label: string;
+  roi: number;
+  accent?: boolean;
+}) => {
+  // Cap visualization at 30% to keep the bar readable
+  const widthPct = Math.min(100, Math.max(0, (roi / 0.3) * 100));
+  return (
+    <div className="mb-3 last:mb-0">
+      <div className="flex items-baseline justify-between mb-1.5">
+        <span
+          className="text-sm"
+          style={{ color: accent ? "hsl(36 33% 95%)" : "hsl(36 33% 95% / 0.65)" }}
         >
-          <div
-            className="w-2 h-2 rounded-full mt-2"
-            style={{ backgroundColor: "hsl(var(--accent))" }}
-          />
-          <p
-            className="text-sm leading-relaxed"
-            style={{ color: "hsl(36 33% 95% / 0.7)" }}
-          >
-            כל פרמטר משפיע על התמונה הכוללת. בקורס לומדים איך להעריך כל אחד
-            מהם בנפרד — לפני שלוחצים על &quot;לרכוש&quot;.
-          </p>
-        </div>
+          {label}
+        </span>
+        <span
+          className="font-mono tabular-nums text-base font-bold"
+          style={{ color: accent ? "hsl(var(--accent))" : "hsl(36 33% 95% / 0.85)" }}
+        >
+          {(roi * 100).toFixed(1)}%
+        </span>
+      </div>
+      <div
+        className="h-2 rounded-full overflow-hidden"
+        style={{ backgroundColor: "hsl(36 33% 95% / 0.08)" }}
+      >
+        <div
+          className="h-full transition-[width] duration-500"
+          style={{
+            width: `${widthPct}%`,
+            background: accent
+              ? "linear-gradient(to left, hsl(var(--accent)), hsl(24 90% 42%))"
+              : "hsl(36 33% 95% / 0.45)",
+          }}
+        />
       </div>
     </div>
   );
