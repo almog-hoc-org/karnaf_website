@@ -67,73 +67,91 @@ const CalcSlider = ({
 
 /**
  * RoiCalculator — for first-time / next-home buyers (not investors).
- * The headline message is: your return is calculated on the EQUITY you
- * actually invest, not on the full apartment price. That's why a mortgage
- * compounds your money harder — same property, much smaller out-of-pocket.
+ *
+ * Math model (simplified, primary-residence framing):
+ *   • Mortgage is a standard 25-year amortization at `mortgageRate`.
+ *   • After `years` of payments, we compute the remaining balance and
+ *     therefore the buyer's *home equity*  =  home value − balance owed.
+ *   • Annualised ROI on equity =  (final equity / initial equity)^(1/years) − 1
+ *   • This intentionally treats monthly payments as roughly neutral
+ *     (you'd otherwise pay rent), which is the right frame for someone
+ *     who lives in the apartment they buy. The disclaimer states this.
+ *   • Cash scenario = no mortgage, no leverage — pure value appreciation.
  */
 export const RoiCalculator = () => {
   const [price, setPrice] = useState(2_400_000);
   const [equity, setEquity] = useState(720_000);
-  const [monthlyRent, setMonthlyRent] = useState(7_500);
-  const [annualGrowth, setAnnualGrowth] = useState(3.5); // %
+  const [annualGrowth, setAnnualGrowth] = useState(3.5);
   const [years, setYears] = useState(10);
   const mortgageRate = 0.045;
+  const mortgageTermYears = 25;
 
   const calc = useMemo(() => {
     const futureValue = price * Math.pow(1 + annualGrowth / 100, years);
     const totalAppreciation = futureValue - price;
-    const totalRent = monthlyRent * 12 * years;
 
-    // Leveraged scenario (with mortgage)
     const principal = Math.max(0, price - equity);
     const monthlyRate = mortgageRate / 12;
-    const months = years * 12;
+    const totalMonths = mortgageTermYears * 12;
+    const elapsedMonths = Math.min(years * 12, totalMonths);
+
     const monthlyPmt =
-      monthlyRate === 0
-        ? principal / months
+      principal === 0
+        ? 0
+        : monthlyRate === 0
+        ? principal / totalMonths
         : (principal * monthlyRate) /
-          (1 - Math.pow(1 + monthlyRate, -months));
-    const totalPmt = monthlyPmt * months;
-    const totalInterest = totalPmt - principal;
+          (1 - Math.pow(1 + monthlyRate, -totalMonths));
 
-    // Net rent after mortgage payments (simplified)
-    const netRentLeveraged = totalRent - totalPmt;
-    const leveragedTotalReturn = totalAppreciation + netRentLeveraged;
+    // Remaining mortgage balance after `elapsedMonths` of payments
+    let remainingBalance = 0;
+    if (principal > 0) {
+      if (elapsedMonths >= totalMonths) {
+        remainingBalance = 0;
+      } else {
+        const denominator = Math.pow(1 + monthlyRate, totalMonths) - 1;
+        const numerator =
+          Math.pow(1 + monthlyRate, totalMonths) -
+          Math.pow(1 + monthlyRate, elapsedMonths);
+        remainingBalance = principal * (numerator / denominator);
+      }
+    }
+
+    const finalEquityValue = Math.max(0, futureValue - remainingBalance);
+
+    // Leveraged ROI on the buyer's actual cash in
     const leveragedAnnualizedRoi =
-      Math.pow(
-        (equity + leveragedTotalReturn) / equity,
-        1 / years
-      ) - 1;
+      equity > 0
+        ? Math.pow(finalEquityValue / equity, 1 / years) - 1
+        : 0;
 
-    // Cash scenario (no mortgage — full price out of pocket)
-    const cashEquity = price;
-    const cashTotalReturn = totalAppreciation + totalRent;
-    const cashAnnualizedRoi =
-      Math.pow((cashEquity + cashTotalReturn) / cashEquity, 1 / years) - 1;
+    // Cash scenario: no mortgage, full price tied up; ROI just tracks growth
+    const cashAnnualizedRoi = Math.pow(futureValue / price, 1 / years) - 1;
 
     const leverageMultiplier =
       cashAnnualizedRoi > 0
         ? leveragedAnnualizedRoi / cashAnnualizedRoi
         : 0;
     const controlMultiplier = equity > 0 ? price / equity : 0;
-    const finalEquityValue = equity + leveragedTotalReturn;
+
+    const totalPaymentsHorizon = monthlyPmt * elapsedMonths;
+    const principalRepaid = principal - remainingBalance;
+    const totalInterestPaid = totalPaymentsHorizon - principalRepaid;
 
     return {
       principal,
       monthlyPmt,
       futureValue,
       totalAppreciation,
-      totalRent,
-      totalInterest,
       leveragedAnnualizedRoi,
       cashAnnualizedRoi,
-      leveragedTotalReturn,
-      cashTotalReturn,
       leverageMultiplier,
       controlMultiplier,
       finalEquityValue,
+      remainingBalance,
+      totalInterestPaid,
     };
-  }, [price, equity, monthlyRent, annualGrowth, years]);
+  }, [price, equity, annualGrowth, years]);
 
   return (
     <div
@@ -183,16 +201,6 @@ export const RoiCalculator = () => {
             format={(v) => `${formatILS(v)} ₪`}
           />
           <CalcSlider
-            label="שכ״ד חודשי באזור"
-            hint="(להמחשה — אם הייתם משכירים)"
-            value={monthlyRent}
-            min={2_000}
-            max={20_000}
-            step={100}
-            onChange={setMonthlyRent}
-            format={(v) => `${formatILS(v)} ₪`}
-          />
-          <CalcSlider
             label="צמיחת ערך שנתית משוערת"
             value={annualGrowth}
             min={0}
@@ -212,10 +220,13 @@ export const RoiCalculator = () => {
           />
 
           <div
-            className="text-xs font-mono uppercase tracking-[0.18em]"
+            className="text-xs leading-relaxed"
             style={{ color: "hsl(36 33% 95% / 0.5)" }}
           >
-            * ריבית משכנתא משוערת {(mortgageRate * 100).toFixed(1)}% · להמחשה בלבד · לא כולל מסים, תחזוקה
+            * משכנתא {mortgageTermYears} שנה בריבית משוערת של{" "}
+            {(mortgageRate * 100).toFixed(1)}%. תשלום חודשי מחושב כתחליף לשכ״ד —
+            כלומר, מי שגר בדירה היה ממילא משלם שכ״ד דומה. לא כולל מסים, תחזוקה
+            ושיפוצים. להמחשה בלבד.
           </div>
         </div>
 
