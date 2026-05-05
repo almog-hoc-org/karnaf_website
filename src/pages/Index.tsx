@@ -9,7 +9,6 @@ import WebinarSection from "@/components/WebinarSection";
 import BigCTA from "@/components/BigCTA";
 import CommunitySection from "@/components/CommunitySection";
 import Footer from "@/components/Footer";
-import WelcomePopup from "@/components/WelcomePopup";
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
 import { CourseStrip } from "@/components/v2/CourseStrip";
 
@@ -23,8 +22,7 @@ const Index = () => {
         keywords="רכישת דירה ראשונה, קורס נדל״ן, השקעות נדל״ן, ליווי רוכשי דירות, סדנה דיגיטלית נדל״ן, ייעוץ נדל״ן, ניתוח עסקאות, קרנף נדל״ן, קניית דירה, משכנתא"
         jsonLd={[organizationSchema, websiteSchema]}
       />
-      <WelcomePopup />
-      <div id="top">
+      <div id="top" className="relative">
         <Hero />
         <CourseStrip />
         <ContactStrip />

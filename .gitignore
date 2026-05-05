@@ -28,3 +28,7 @@ dist-ssr
 *.png
 !src/**/*.png
 !public/**/*.png
+
+# Claude Code session lock
+.claude/scheduled_tasks.lock
+.claude/

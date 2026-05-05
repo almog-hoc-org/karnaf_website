@@ -103,7 +103,7 @@ const Navigation = () => {
           <div className="hidden lg:block">
             <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
               <Button
-                className="btn-polygon bg-accent text-accent-foreground font-bold gap-2 px-8 py-2.5"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-8 py-2.5"
               >
                 <MessageCircle size={16} />
                 בואו נדבר
@@ -164,7 +164,7 @@ const Navigation = () => {
                 className="pt-4"
               >
                 <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
-                  <Button className="btn-polygon bg-accent text-accent-foreground font-bold gap-2 px-10 py-3 text-lg">
+                  <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-10 py-3 text-lg">
                     <MessageCircle size={18} />
                     בואו נדבר
                   </Button>

@@ -143,10 +143,10 @@
   }
 
   /* Button press feedback — global */
-  button, a[role="button"], .btn-polygon {
+  button, a[role="button"] {
     transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease, box-shadow 0.3s ease;
   }
-  button:active, a[role="button"]:active, .btn-polygon:active {
+  button:active, a[role="button"]:active {
     transform: scale(0.97);
   }
 
@@ -276,23 +276,6 @@
     background-image: linear-gradient(135deg, hsl(24 80% 52%), hsl(24 80% 42%), hsl(24 80% 58%));
   }
 
-  /* Glassmorphism card */
-  .glass-card {
-    @apply bg-card/80 backdrop-blur-xl border border-border/50;
-    box-shadow: var(--shadow-md);
-  }
-
-  /* Clip-path polygon button */
-  .btn-polygon {
-    clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
-    @apply relative overflow-hidden;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .btn-polygon:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 8px 32px hsl(var(--accent) / 0.3);
-  }
-
   /* Form focus */
   .input-focus-glow:focus {
     @apply ring-2 ring-primary ring-offset-2;
@@ -367,11 +350,6 @@
     @apply absolute bottom-0 left-1/2 -translate-x-1/2 h-px;
     width: min(80%, 600px);
     background: linear-gradient(to right, transparent, hsl(var(--primary) / 0.15), transparent);
-  }
-
-  /* Course page hero */
-  .course-hero-bg {
-    background: linear-gradient(135deg, hsl(217 42% 10%) 0%, hsl(217 40% 14%) 50%, hsl(217 35% 18%) 100%);
   }
 
   /* Problem/solution backgrounds */
