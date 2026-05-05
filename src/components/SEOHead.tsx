@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 
 const SITE_URL = "https://www.karnafnadlan.com";
 const SITE_NAME = "קרנף נדל\"ן";
@@ -30,7 +30,7 @@ const SEOHead = ({
   const jsonLdArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 
   return (
-    <Helmet>
+    <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
@@ -58,7 +58,7 @@ const SEOHead = ({
           {JSON.stringify(ld)}
         </script>
       ))}
-    </Helmet>
+    </Head>
   );
 };
 

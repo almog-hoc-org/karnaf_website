@@ -21,5 +21,23 @@ export default defineConfig(() => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    // vite-react-ssg ships its own React. Without dedupe Vite loads two
+    // copies of `react` and hook calls fail at runtime.
+    dedupe: ["react", "react-dom", "react-router-dom"],
+  },
+  optimizeDeps: {
+    include: ["react", "react-dom", "react-router-dom"],
+  },
+  /**
+   * vite-react-ssg renders routes through Node's ESM loader. A few
+   * dependencies in this stack ship as CommonJS — list them so SSR
+   * bundles them inline instead of attempting native ESM resolution.
+   */
+  ssr: {
+    noExternal: ["react-helmet-async"],
+  },
+  ssgOptions: {
+    formatting: "minify",
+    crittersOptions: false,
   },
 }));

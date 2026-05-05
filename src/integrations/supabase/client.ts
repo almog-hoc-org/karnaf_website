@@ -8,9 +8,26 @@ const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
+/**
+ * `localStorage` does not exist during static-site rendering on Node.
+ * Pass an in-memory shim during SSR so the module can be evaluated;
+ * the real `localStorage` will be used in the browser at runtime.
+ */
+const memoryStorage = (() => {
+  const store = new Map<string, string>();
+  return {
+    getItem: (k: string) => store.get(k) ?? null,
+    setItem: (k: string, v: string) => void store.set(k, v),
+    removeItem: (k: string) => void store.delete(k),
+  };
+})();
+
+const isBrowser =
+  typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
-    storage: localStorage,
+    storage: isBrowser ? window.localStorage : memoryStorage,
     persistSession: true,
     autoRefreshToken: true,
   }

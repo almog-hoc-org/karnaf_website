@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowRight } from "lucide-react";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
@@ -8,10 +8,10 @@ import { Reveal } from "@/components/v2/Reveal";
 const NotFound = () => {
   return (
     <>
-      <Helmet>
+      <Head>
         <meta name="robots" content="noindex, nofollow" />
         <title>404 — העמוד לא נמצא | קרנף נדל"ן</title>
-      </Helmet>
+      </Head>
 
       <div className="min-h-[85svh] flex items-center justify-center relative overflow-hidden bg-background">
         <div
