@@ -189,13 +189,13 @@ const Hero = () => {
         </motion.div>
       </motion.div>
 
-      {/* Mobile mascot — stack below */}
-      <div className="absolute bottom-0 right-2 lg:hidden pointer-events-none opacity-80">
+      {/* Mobile mascot — small floating accent at top-right, well clear of the trust strip */}
+      <div className="absolute top-20 right-3 lg:hidden pointer-events-none opacity-75">
         <img
           src={mascotWelcome}
           alt=""
           aria-hidden
-          className="h-[180px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
+          className="h-[96px] object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.4)]"
           loading="eager"
           decoding="async"
         />

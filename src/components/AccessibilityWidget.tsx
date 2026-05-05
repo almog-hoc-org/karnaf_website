@@ -132,7 +132,8 @@ const AccessibilityWidget = () => {
         transition={{ delay: 2.2, type: "spring", stiffness: 200 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        className="fixed left-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 transition-[bottom,colors] duration-500 ease-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        style={{ bottom: 'calc(1.5rem + var(--sticky-cta-h, 0px))' }}
         aria-label="פתח תפריט נגישות"
         title="נגישות"
       >

@@ -56,17 +56,22 @@ export const TransactionLifecycle = ({ progress }: TransactionLifecycleProps) =>
 
   return (
     <div className="relative">
-      {/* track */}
-      <div className="absolute right-0 left-0 top-7 h-px" style={{ background: "hsl(36 33% 95% / 0.18)" }} />
+      {/* Horizontal track — only meaningful in single-row md+ layout */}
       <div
-        className="absolute right-0 top-7 h-px transition-[width] duration-700 ease-out"
+        className="hidden md:block absolute right-0 left-0 top-7 h-px"
+        style={{ background: "hsl(36 33% 95% / 0.18)" }}
+        aria-hidden
+      />
+      <div
+        className="hidden md:block absolute right-0 top-7 h-px transition-[width] duration-700 ease-out"
         style={{
           width: `${fillPct}%`,
           background: "hsl(var(--accent))",
         }}
+        aria-hidden
       />
 
-      <ol ref={ref} className="grid grid-cols-3 md:grid-cols-6 gap-6 relative">
+      <ol ref={ref} className="grid grid-cols-3 md:grid-cols-6 gap-x-4 gap-y-10 md:gap-y-0 md:gap-6 relative">
         {STEPS.map((s, i) => {
           const done = i < filled;
           return (

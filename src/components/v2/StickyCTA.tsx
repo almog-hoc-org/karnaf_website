@@ -21,12 +21,29 @@ export const StickyCTA = ({
   const smooth = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
   const [visible, setVisible] = useState(false);
   const location = useLocation();
+  const hidden = hideOn.some((p) => location.pathname.startsWith(p));
 
   useEffect(() => {
     return scrollYProgress.on("change", (v) => setVisible(v > 0.3 && v < 0.95));
   }, [scrollYProgress]);
 
-  if (hideOn.some((p) => location.pathname.startsWith(p))) return null;
+  /**
+   * Publish a CSS variable while the sticky bar is visible, so floating
+   * widgets (WhatsApp FAB, accessibility button) can lift themselves
+   * above it instead of hiding behind it.
+   */
+  useEffect(() => {
+    const showing = visible && !hidden;
+    document.documentElement.style.setProperty(
+      "--sticky-cta-h",
+      showing ? "72px" : "0px"
+    );
+    return () => {
+      document.documentElement.style.setProperty("--sticky-cta-h", "0px");
+    };
+  }, [visible, hidden]);
+
+  if (hidden) return null;
 
   return (
     <motion.div
