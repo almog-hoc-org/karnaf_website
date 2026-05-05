@@ -7,6 +7,7 @@ const formatILS = (n: number) =>
 
 interface SliderProps {
   label: string;
+  hint?: string;
   value: number;
   min: number;
   max: number;
@@ -17,6 +18,7 @@ interface SliderProps {
 
 const CalcSlider = ({
   label,
+  hint,
   value,
   min,
   max,
@@ -25,14 +27,22 @@ const CalcSlider = ({
   format,
 }: SliderProps) => (
   <div>
-    <div className="flex items-baseline justify-between mb-3">
+    <div className="flex items-baseline justify-between mb-3 gap-3">
       <span
         className="text-eyebrow uppercase tracking-[0.18em]"
         style={{ color: "hsl(36 33% 95% / 0.7)" }}
       >
         {label}
+        {hint && (
+          <span
+            className="ms-2 normal-case tracking-normal text-xs"
+            style={{ color: "hsl(36 33% 95% / 0.4)" }}
+          >
+            {hint}
+          </span>
+        )}
       </span>
-      <span className="font-mono tabular-nums text-lg font-bold text-accent">
+      <span className="font-mono tabular-nums text-lg font-bold text-accent whitespace-nowrap">
         {format(value)}
       </span>
     </div>
@@ -56,9 +66,10 @@ const CalcSlider = ({
 );
 
 /**
- * RoiCalculator — focused on the "leverage advantage" story.
- * Shows side-by-side: same property, same growth, same rent — but the
- * return-on-equity is dramatically higher when bought with a mortgage.
+ * RoiCalculator — for first-time / next-home buyers (not investors).
+ * The headline message is: your return is calculated on the EQUITY you
+ * actually invest, not on the full apartment price. That's why a mortgage
+ * compounds your money harder — same property, much smaller out-of-pocket.
  */
 export const RoiCalculator = () => {
   const [price, setPrice] = useState(2_400_000);
@@ -73,7 +84,7 @@ export const RoiCalculator = () => {
     const totalAppreciation = futureValue - price;
     const totalRent = monthlyRent * 12 * years;
 
-    // --- Leveraged scenario (with mortgage) ---
+    // Leveraged scenario (with mortgage)
     const principal = Math.max(0, price - equity);
     const monthlyRate = mortgageRate / 12;
     const months = years * 12;
@@ -85,12 +96,8 @@ export const RoiCalculator = () => {
     const totalPmt = monthlyPmt * months;
     const totalInterest = totalPmt - principal;
 
-    // Net cash from rent after mortgage payments (simplified, no taxes/maintenance)
+    // Net rent after mortgage payments (simplified)
     const netRentLeveraged = totalRent - totalPmt;
-    // After-period equity = property value - remaining mortgage. We assume the
-    // mortgage is fully paid by year `years` for simplicity (worst case for
-    // leverage; better than reality for short horizons).
-    // For illustrative purposes, total return on equity = appreciation + net rent.
     const leveragedTotalReturn = totalAppreciation + netRentLeveraged;
     const leveragedAnnualizedRoi =
       Math.pow(
@@ -98,8 +105,8 @@ export const RoiCalculator = () => {
         1 / years
       ) - 1;
 
-    // --- Cash scenario (no mortgage) ---
-    const cashEquity = price; // bought outright with own money
+    // Cash scenario (no mortgage — full price out of pocket)
+    const cashEquity = price;
     const cashTotalReturn = totalAppreciation + totalRent;
     const cashAnnualizedRoi =
       Math.pow((cashEquity + cashTotalReturn) / cashEquity, 1 / years) - 1;
@@ -108,6 +115,8 @@ export const RoiCalculator = () => {
       cashAnnualizedRoi > 0
         ? leveragedAnnualizedRoi / cashAnnualizedRoi
         : 0;
+    const controlMultiplier = equity > 0 ? price / equity : 0;
+    const finalEquityValue = equity + leveragedTotalReturn;
 
     return {
       principal,
@@ -121,6 +130,8 @@ export const RoiCalculator = () => {
       leveragedTotalReturn,
       cashTotalReturn,
       leverageMultiplier,
+      controlMultiplier,
+      finalEquityValue,
     };
   }, [price, equity, monthlyRent, annualGrowth, years]);
 
@@ -132,18 +143,27 @@ export const RoiCalculator = () => {
         border: "1px solid hsl(36 33% 95% / 0.12)",
       }}
     >
+      {/* Top tagline — anchors the audience and the math frame */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8 pb-6 border-b" style={{ borderColor: "hsl(36 33% 95% / 0.10)" }}>
+        <div className="text-eyebrow uppercase tracking-[0.22em] text-accent flex items-center gap-3">
+          <span
+            className="w-2 h-2 rounded-full bg-accent"
+            aria-hidden
+            style={{ boxShadow: "0 0 12px hsl(var(--accent))" }}
+          />
+          <span>מה ההון העצמי שלכם יעשה · live</span>
+        </div>
+        <p
+          className="text-sm leading-relaxed max-w-md"
+          style={{ color: "hsl(36 33% 95% / 0.7)" }}
+        >
+          התשואה כאן מחושבת <strong className="text-white">על ההון העצמי שלכם</strong> — לא על כל מחיר הדירה. זה הסוד של רכישה במשכנתא.
+        </p>
+      </div>
+
       <div className="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-14">
         {/* Inputs */}
         <div className="space-y-8">
-          <div className="text-eyebrow uppercase tracking-[0.22em] text-accent flex items-center gap-3">
-            <span
-              className="w-2 h-2 rounded-full bg-accent"
-              aria-hidden
-              style={{ boxShadow: "0 0 12px hsl(var(--accent))" }}
-            />
-            <span>מחשבון תשואה על הון עצמי · live</span>
-          </div>
-
           <CalcSlider
             label="מחיר הדירה"
             value={price}
@@ -163,7 +183,8 @@ export const RoiCalculator = () => {
             format={(v) => `${formatILS(v)} ₪`}
           />
           <CalcSlider
-            label="שכר דירה חודשי"
+            label="שכ״ד חודשי באזור"
+            hint="(להמחשה — אם הייתם משכירים)"
             value={monthlyRent}
             min={2_000}
             max={20_000}
@@ -172,7 +193,7 @@ export const RoiCalculator = () => {
             format={(v) => `${formatILS(v)} ₪`}
           />
           <CalcSlider
-            label="צמיחת הון שנתית משוערת"
+            label="צמיחת ערך שנתית משוערת"
             value={annualGrowth}
             min={0}
             max={8}
@@ -181,7 +202,7 @@ export const RoiCalculator = () => {
             format={(v) => `${v.toFixed(1)}%`}
           />
           <CalcSlider
-            label="אופק השקעה"
+            label="אופק זמן"
             value={years}
             min={3}
             max={20}
@@ -198,7 +219,7 @@ export const RoiCalculator = () => {
           </div>
         </div>
 
-        {/* Headline result + leverage comparison */}
+        {/* Result panel */}
         <div
           className="rounded-xl p-6 lg:p-8 flex flex-col justify-between"
           style={{
@@ -210,38 +231,77 @@ export const RoiCalculator = () => {
             {/* Big headline number */}
             <div>
               <div
-                className="text-eyebrow uppercase tracking-[0.18em] mb-1"
+                className="text-eyebrow uppercase tracking-[0.18em] mb-2"
                 style={{ color: "hsl(36 33% 95% / 0.55)" }}
               >
-                תשואה שנתית על ההון העצמי שלכם
+                תשואה שנתית על <span className="text-accent">ההון העצמי שלכם</span>
               </div>
               <div className="font-mono tabular-nums font-black leading-none text-5xl md:text-6xl text-accent">
                 {(calc.leveragedAnnualizedRoi * 100).toFixed(1)}%
               </div>
               <div
-                className="text-eyebrow uppercase tracking-[0.18em] mt-3"
-                style={{ color: "hsl(36 33% 95% / 0.55)" }}
+                className="text-sm mt-3 leading-relaxed"
+                style={{ color: "hsl(36 33% 95% / 0.65)" }}
               >
-                {formatILS(equity)} ₪ הון → {formatILS(calc.leveragedTotalReturn + equity)} ₪ אחרי {years} שנים
+                <span className="font-mono tabular-nums text-white font-bold">
+                  {formatILS(equity)} ₪
+                </span>
+                {" → "}
+                <span className="font-mono tabular-nums text-white font-bold">
+                  {formatILS(calc.finalEquityValue)} ₪
+                </span>
+                {" "}אחרי {years} שנים
               </div>
             </div>
 
-            {/* Leverage comparison — side by side bars */}
+            {/* Control multiplier — the "your equity controls a much bigger asset" insight */}
+            <div
+              className="rounded-lg p-4 flex items-center justify-between gap-4"
+              style={{
+                backgroundColor: "hsl(36 33% 95% / 0.05)",
+                border: "1px solid hsl(36 33% 95% / 0.10)",
+              }}
+            >
+              <div>
+                <div
+                  className="text-eyebrow uppercase tracking-[0.18em] mb-1"
+                  style={{ color: "hsl(36 33% 95% / 0.55)" }}
+                >
+                  ההון שלכם שולט על
+                </div>
+                <div className="font-mono tabular-nums font-bold text-base text-white">
+                  דירה של {formatILS(price)} ₪
+                </div>
+              </div>
+              <div className="text-end">
+                <div
+                  className="text-eyebrow uppercase tracking-[0.18em] mb-1"
+                  style={{ color: "hsl(36 33% 95% / 0.55)" }}
+                >
+                  כוח שליטה
+                </div>
+                <div className="font-mono tabular-nums text-2xl font-black text-accent leading-none">
+                  ×{calc.controlMultiplier.toFixed(1)}
+                </div>
+              </div>
+            </div>
+
+            {/* Comparison — equity-leverage vs cash-buyer */}
             <div className="pt-4 border-t" style={{ borderColor: "hsl(36 33% 95% / 0.10)" }}>
               <div
                 className="text-eyebrow uppercase tracking-[0.18em] mb-4"
                 style={{ color: "hsl(36 33% 95% / 0.7)" }}
               >
-                כוח המינוף
+                ההון שלכם עבד יותר חזק
               </div>
 
               <ComparisonRow
-                label="עם משכנתא"
+                label="עם משכנתא — תשואה על ההון שלכם"
                 roi={calc.leveragedAnnualizedRoi}
                 accent
               />
               <ComparisonRow
-                label="במזומן (כל הדירה)"
+                label="אילו הייתם משלמים את כל הדירה במזומן"
                 roi={calc.cashAnnualizedRoi}
               />
 
@@ -253,7 +313,7 @@ export const RoiCalculator = () => {
                   className="text-eyebrow uppercase tracking-[0.18em]"
                   style={{ color: "hsl(36 33% 95% / 0.55)" }}
                 >
-                  אפקט מינוף
+                  הפרש לטובת המשכנתא
                 </span>
                 <span className="font-mono tabular-nums text-2xl font-black text-accent">
                   ×{calc.leverageMultiplier.toFixed(1)}
@@ -279,7 +339,7 @@ export const RoiCalculator = () => {
                   className="text-eyebrow uppercase tracking-[0.18em] mb-1"
                   style={{ color: "hsl(36 33% 95% / 0.55)" }}
                 >
-                  ערך עתידי משוער
+                  ערך הדירה אחרי {years} שנים
                 </div>
                 <div className="font-mono tabular-nums font-bold text-base text-white">
                   {formatILS(calc.futureValue)} ₪
@@ -300,7 +360,7 @@ export const RoiCalculator = () => {
               className="text-sm leading-relaxed"
               style={{ color: "hsl(36 33% 95% / 0.7)" }}
             >
-              אותה דירה. אותה צמיחה. אותו שכ״ד. <strong className="text-white">המינוף הוא שמכפיל את התשואה.</strong> בקורס לומדים מתי המינוף עובד לטובתכם — ומתי הוא מסוכן.
+              אותה דירה. אותה צמיחה. <strong className="text-white">המינוף הוא שמכפיל את התשואה על הכסף שלכם.</strong> בקורס לומדים מתי המינוף עובד לטובתכם — ומתי הוא מסוכן.
             </p>
           </div>
         </div>
@@ -322,7 +382,7 @@ const ComparisonRow = ({
   const widthPct = Math.min(100, Math.max(0, (roi / 0.3) * 100));
   return (
     <div className="mb-3 last:mb-0">
-      <div className="flex items-baseline justify-between mb-1.5">
+      <div className="flex items-baseline justify-between mb-1.5 gap-3">
         <span
           className="text-sm"
           style={{ color: accent ? "hsl(36 33% 95%)" : "hsl(36 33% 95% / 0.65)" }}
@@ -330,7 +390,7 @@ const ComparisonRow = ({
           {label}
         </span>
         <span
-          className="font-mono tabular-nums text-base font-bold"
+          className="font-mono tabular-nums text-base font-bold whitespace-nowrap"
           style={{ color: accent ? "hsl(var(--accent))" : "hsl(36 33% 95% / 0.85)" }}
         >
           {(roi * 100).toFixed(1)}%

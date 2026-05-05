@@ -402,8 +402,8 @@ const CoursePage = () => {
               className="text-body-lg mb-12 leading-relaxed text-center max-w-2xl mx-auto"
               style={{ color: "hsl(36 33% 95% / 0.72)" }}
             >
-              דוגמה חיה לאחד הכלים בתוכנית — מחשבון משכנתא. הזיזו את ה-sliders
-              והרגישו איך כל פרמטר משפיע על העסקה.
+              דוגמה חיה לאחד הכלים בתוכנית — מחשבון תשואה על ההון העצמי שלכם.
+              הזיזו את ה-sliders ותראו כמה הכסף שלכם באמת עובד בעסקה.
             </p>
           </Reveal>
           <Reveal delay={0.14}>
