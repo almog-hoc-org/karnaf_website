@@ -49,7 +49,7 @@ const ContactPage = () => {
                 href: `https://wa.me/${WHATSAPP_NUMBER}`,
                 ext: true,
                 icon: MessageCircle,
-                color: "#25D366",
+                color: "hsl(var(--whatsapp))",
                 label: "WhatsApp",
                 meta: "תשובה תוך דקות",
               },

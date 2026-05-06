@@ -25,9 +25,9 @@ const TestimonialVideoCard = ({ testimonial, index = 0 }: TestimonialVideoCardPr
       >
         <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-bl-full" />
 
-        <div className="flex items-center gap-1 mb-4">
+        <div className="flex items-center gap-1 mb-4" role="img" aria-label={`דירוג ${testimonial.rating} מתוך 5`}>
           {Array.from({ length: testimonial.rating }).map((_, i) => (
-            <Star key={i} size={14} className="fill-primary text-primary" />
+            <Star key={i} size={14} aria-hidden="true" className="fill-primary text-primary" />
           ))}
         </div>
 

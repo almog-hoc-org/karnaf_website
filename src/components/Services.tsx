@@ -51,7 +51,7 @@ const Services = () => {
         <div className="max-w-3xl mb-10 lg:mb-14">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black leading-[0.98] tracking-tight text-white">
-              הדרך לדירה — <span className="text-accent">מה בתוכנית?</span>
+              הדרך לדירה: <span className="text-accent">מה בתוכנית?</span>
             </h2>
           </Reveal>
         </div>

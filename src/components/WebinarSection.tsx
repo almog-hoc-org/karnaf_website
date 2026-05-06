@@ -35,8 +35,7 @@ const WebinarSection = () => {
 
       setIsSubmitted(true);
       toast({ title: "נרשמתם בהצלחה!", description: "נשלח לכם פרטים בקרוב." });
-    } catch (err) {
-      console.error("Webinar submit error:", err);
+    } catch {
       toast({ title: "שגיאה בשליחה", description: "נסו שוב או צרו קשר בוואטסאפ.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
@@ -88,6 +87,7 @@ const WebinarSection = () => {
                 <Input
                   autoComplete="name"
                   placeholder="שם מלא"
+                  aria-label="שם מלא"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -97,6 +97,7 @@ const WebinarSection = () => {
                   type="email"
                   autoComplete="email"
                   placeholder="אימייל"
+                  aria-label="כתובת אימייל"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="bg-white/95 border-white/10 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-full px-6"
@@ -106,6 +107,7 @@ const WebinarSection = () => {
                   autoComplete="tel"
                   inputMode="tel"
                   placeholder="טלפון"
+                  aria-label="מספר טלפון"
                   dir="ltr"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}

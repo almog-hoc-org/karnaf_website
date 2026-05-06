@@ -159,7 +159,7 @@ const Hero = () => {
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 1.15 }}
-          className="mt-14 lg:mt-20 pt-8 border-t border-white/15 grid grid-cols-3 gap-4 max-w-2xl"
+          className="mt-14 lg:mt-20 pt-8 border-t border-white/15 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 max-w-2xl"
           style={{ color: "hsl(36 33% 95% / 0.7)" }}
         >
           <div>

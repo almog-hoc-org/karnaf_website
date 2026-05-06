@@ -33,8 +33,7 @@ const Footer = () => {
 
       setIsSubmitted(true);
       toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });
-    } catch (err) {
-      console.error("Lead submit error:", err);
+    } catch {
       toast({ title: "שגיאה בשליחה", description: "נסו שוב או צרו קשר בוואטסאפ.", variant: "destructive" });
     }
 
@@ -82,6 +81,8 @@ const Footer = () => {
                 <Input
                   autoComplete="name"
                   placeholder="שם מלא"
+                  aria-label="שם מלא"
+                  required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="bg-card border-border h-14 px-5 rounded-full text-right"
@@ -91,13 +92,15 @@ const Footer = () => {
                   autoComplete="tel"
                   inputMode="tel"
                   placeholder="טלפון"
+                  aria-label="מספר טלפון"
+                  required
                   dir="ltr"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="bg-card border-border h-14 px-5 rounded-full text-right"
                 />
                 <Select value={service} onValueChange={setService}>
-                  <SelectTrigger className="bg-card border-border h-14 px-5 rounded-full">
+                  <SelectTrigger aria-label="במה אני מעוניין" className="bg-card border-border h-14 px-5 rounded-full">
                     <SelectValue placeholder="אני מעוניין ב..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -118,7 +121,7 @@ const Footer = () => {
 
           <Reveal delay={0.15}>
             <div>
-              <h3 className="text-2xl font-bold text-foreground mb-6">דרכי יצירת קשר</h3>
+              <h3 className="text-display-sm md:text-display-md font-black text-foreground mb-6 leading-[0.98] tracking-tight">דרכי יצירת קשר</h3>
 
               <div className="space-y-3 mb-10">
                 <a
@@ -127,8 +130,8 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 p-4 bg-card rounded-2xl border border-border hover:border-accent/40 transition-all duration-200 group"
                 >
-                  <div className="w-11 h-11 rounded-full bg-[#25D366]/10 flex items-center justify-center">
-                    <MessageCircle size={20} className="text-[#25D366]" />
+                  <div className="w-11 h-11 rounded-full bg-[hsl(var(--whatsapp)/0.1)] flex items-center justify-center">
+                    <MessageCircle size={20} className="text-[hsl(var(--whatsapp))]" />
                   </div>
                   <div>
                     <p className="text-foreground font-bold leading-tight group-hover:text-accent transition-colors">

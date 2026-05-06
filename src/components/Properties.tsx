@@ -30,11 +30,12 @@ const testimonials = [
 ];
 
 const StarRating = ({ rating }: { rating: number }) => (
-  <div className="flex gap-1">
+  <div className="flex gap-1" role="img" aria-label={`דירוג ${rating} מתוך 5`}>
     {Array.from({ length: 5 }).map((_, i) => (
       <Star
         key={i}
         size={16}
+        aria-hidden="true"
         className={i < rating ? "fill-accent text-accent" : "text-muted-foreground/30"}
       />
     ))}

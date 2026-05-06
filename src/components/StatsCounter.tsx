@@ -79,8 +79,8 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   return (
     <div
       ref={ref}
-      className="text-display-xl font-black tabular-nums text-transparent bg-clip-text bg-gradient-to-b from-foreground to-foreground/55 leading-[0.9] transition-transform duration-500"
-      style={{ transform: isCounting ? "scaleY(1.04)" : "scaleY(1)", transformOrigin: "bottom" }}
+      className="text-display-xl font-black tabular-nums text-foreground leading-[0.9] transition-opacity duration-300"
+      style={{ opacity: isCounting ? 0.85 : 1 }}
     >
       {count.toLocaleString("he-IL")}
       <span className="text-accent">{suffix}</span>
@@ -107,7 +107,7 @@ const StatsCounter = () => {
           </h2>
         </Reveal>
 
-        <div className="grid grid-cols-3 gap-4 md:gap-12 max-w-5xl mx-auto items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto items-start">
           {stats.map((stat, i) => (
             <Reveal key={stat.label} delay={i * 0.12}>
               <div className="relative text-center group">
