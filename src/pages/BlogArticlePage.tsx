@@ -53,8 +53,8 @@ const BlogArticlePage = () => {
       {/* Header */}
       <section className="pt-32 md:pt-40 pb-12 bg-background">
         <div className="container mx-auto px-6 max-w-3xl">
-          <Link to="/blog">
-            <Button variant="ghost" size="sm" className="text-muted-foreground mb-8 gap-2 hover:text-accent">
+          <Link to="/blog" className="inline-block">
+            <Button variant="ghost" className="text-muted-foreground mb-8 gap-2 hover:text-accent">
               <ArrowRight size={16} />
               חזרה לבלוג
             </Button>

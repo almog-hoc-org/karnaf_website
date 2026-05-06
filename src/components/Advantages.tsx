@@ -75,7 +75,7 @@ const Advantages = () => {
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-9 h-9 rounded-full border border-primary/20 flex items-center justify-center text-primary/70 hover:text-accent hover:border-accent/50 hover:bg-accent/5 transition-all duration-200"
+                          className="w-11 h-11 rounded-full border border-primary/20 flex items-center justify-center text-primary/70 hover:text-accent hover:border-accent/50 hover:bg-accent/5 transition-all duration-200"
                           aria-label={link.label}
                         >
                           <link.icon size={18} />

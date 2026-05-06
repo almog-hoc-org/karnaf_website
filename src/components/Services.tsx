@@ -100,7 +100,7 @@ const Services = () => {
 
         <Reveal delay={0.4}>
           <div className="mt-14 lg:mt-20 text-center">
-            <Link to="/course">
+            <Link to="/course" className="inline-block">
               <Button
                 size="lg"
                 className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.35)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.55)] transition-all"

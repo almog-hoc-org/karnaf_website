@@ -27,6 +27,7 @@ const BigCTA = () => {
             href={`https://wa.me/${WHATSAPP_NUMBER}`}
             target="_blank"
             rel="noopener noreferrer"
+            className="inline-block"
           >
             <Button
               size="lg"

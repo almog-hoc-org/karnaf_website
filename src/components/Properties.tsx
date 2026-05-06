@@ -91,7 +91,7 @@ const Properties = () => {
 
         <Reveal delay={0.4}>
           <div className="text-center mt-12 lg:mt-16">
-            <Link to="/testimonials">
+            <Link to="/testimonials" className="inline-block">
               <Button
                 variant="outline"
                 className="border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground font-bold gap-2 rounded-full px-8 py-5"

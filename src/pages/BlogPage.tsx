@@ -134,7 +134,7 @@ const BlogPage = () => {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-bold transition-colors ${
+                  className={`flex items-center gap-1.5 px-5 py-2.5 min-h-[44px] rounded-full text-sm font-bold transition-colors ${
                     active
                       ? "bg-primary text-primary-foreground"
                       : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-primary/40"

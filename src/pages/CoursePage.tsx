@@ -363,6 +363,7 @@ const CoursePage = () => {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="inline-block w-full sm:w-auto"
                 >
                   <Button
                     size="lg"
@@ -380,7 +381,7 @@ const CoursePage = () => {
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline"
+                    className="inline-flex items-center text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-3 px-1 -my-3 min-h-[44px]"
                   >
                     יש שאלות? דברו איתנו בוואטסאפ ←
                   </a>
@@ -581,7 +582,7 @@ const CoursePage = () => {
           </div>
           <Reveal delay={0.4}>
             <div className="text-center mt-10">
-              <Link to="/testimonials">
+              <Link to="/testimonials" className="inline-block">
                 <Button
                   variant="outline"
                   className="border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground gap-2 rounded-full px-7 py-5 font-bold"
