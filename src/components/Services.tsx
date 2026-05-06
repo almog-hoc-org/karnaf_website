@@ -1,13 +1,16 @@
-import { BookOpen, Calculator, Headphones, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useGsapReveal } from "@/hooks/use-gsap-reveal";
+import { Reveal } from "@/components/v2/Reveal";
+import { SectionDark } from "@/components/v2/Section";
+import { TiltCard } from "@/components/v2/TiltCard";
 
 const cards = [
   {
-    icon: BookOpen,
+    num: "01",
     title: "עיקרי התוכנית",
-    description: "שיעורים דיגיטליים מובנים צעד אחר צעד — מיסודות השוק ועד חתימת חוזה. לומדים בקצב שלכם עם תוכן בלעדי ומדויק.",
+    description:
+      "שיעורים דיגיטליים מובנים צעד אחר צעד — מיסודות השוק ועד חתימת חוזה. לומדים בקצב שלכם עם תוכן בלעדי ומדויק.",
     features: [
       "תיאוריה מקצועית ויסודות נדל״ן",
       "התחדשות עירונית ואסטרטגיות השקעה",
@@ -16,9 +19,10 @@ const cards = [
     ],
   },
   {
-    icon: Calculator,
+    num: "02",
     title: "מחשבונים וכלים",
-    description: "פורטל כלים מתקדם שיעזור לכם לנתח כל עסקה בצורה מדויקת ומבוססת נתונים.",
+    description:
+      "פורטל כלים מתקדם שיעזור לכם לנתח כל עסקה בצורה מדויקת ומבוססת נתונים.",
     features: [
       "מחשבון עסקת נדל״ן ומיסוי",
       "מחשבון משכנתא וכדאיות",
@@ -27,9 +31,10 @@ const cards = [
     ],
   },
   {
-    icon: Headphones,
+    num: "03",
     title: "ליווי מקצועי",
-    description: "ליווי צמוד בוואטסאפ של אנליסט נדל״ן שעונה על שאלות, מכוון ועוזר לכם בכל שלב בדרך.",
+    description:
+      "ליווי צמוד בוואטסאפ של אנליסט נדל״ן שעונה על שאלות, מכוון ועוזר לכם בכל שלב בדרך.",
     features: [
       "ליווי צמוד של אנליסט בוואטסאפ",
       "מענה לשאלות בזמן אמת",
@@ -40,61 +45,74 @@ const cards = [
 ];
 
 const Services = () => {
-  const headerRef = useGsapReveal<HTMLHeadingElement>({ y: 30 });
-  const cardsRef = useGsapReveal<HTMLDivElement>({ y: 40, stagger: 0.15 });
-  const ctaRef = useGsapReveal<HTMLDivElement>({ y: 20, delay: 0.3 });
-
   return (
-    <section id="services" className="py-16 md:py-24 bg-secondary relative overflow-hidden">
-      <div className="container mx-auto px-5 md:px-6 relative z-10">
-        <h2
-          ref={headerRef}
-          className="text-display text-display-md text-center text-foreground mb-12"
-        >
-          הדרך לדירה — <span className="text-gradient">מה בתוכנית?</span>
-        </h2>
+    <SectionDark id="services" size="lg" glow="top-end">
+      <div className="container mx-auto px-5 md:px-6">
+        <div className="max-w-3xl mb-12 lg:mb-20">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black leading-[0.98] tracking-tight text-white">
+              הדרך לדירה — <span className="text-accent">מה בתוכנית?</span>
+            </h2>
+          </Reveal>
+        </div>
 
-        <div ref={cardsRef} className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {cards.map((card) => (
-            <div
-              key={card.title}
-              className="bg-card shadow-depth-2 border border-border/30 rounded-2xl p-8 group flex flex-col transition-all duration-300 hover:shadow-depth-4 hover:-translate-y-2 hover:border-accent/20"
-            >
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary text-primary-foreground mb-6">
-                <card.icon size={28} />
-              </div>
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl">
+          {cards.map((card, i) => (
+            <Reveal key={card.title} delay={i * 0.12}>
+              <TiltCard max={4} className="h-full">
+              <article
+                className="h-full p-6 lg:p-8 rounded-2xl flex flex-col group transition-all duration-300"
+                style={{
+                  backgroundColor: "hsl(36 33% 95% / 0.04)",
+                  border: "1px solid hsl(36 33% 95% / 0.12)",
+                }}
+              >
+                <div className="font-mono text-display-md font-black text-accent leading-none mb-5">
+                  {card.num}
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-3 leading-snug">
+                  {card.title}
+                </h3>
+                <p
+                  className="text-sm leading-relaxed mb-6"
+                  style={{ color: "hsl(36 33% 95% / 0.72)" }}
+                >
+                  {card.description}
+                </p>
 
-              <h3 className="text-heading text-xl md:text-2xl text-foreground mb-2">
-                {card.title}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed mb-6 text-sm">
-                {card.description}
-              </p>
-
-              <ul className="space-y-3 flex-1">
-                {card.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-start gap-3 text-sm text-muted-foreground"
-                  >
-                    <Check size={16} className="text-accent mt-0.5 shrink-0" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                <ul className="space-y-3 flex-1 mb-2 pt-5 border-t" style={{ borderColor: "hsl(36 33% 95% / 0.10)" }}>
+                  {card.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className="flex items-start gap-3 text-sm"
+                      style={{ color: "hsl(36 33% 95% / 0.85)" }}
+                    >
+                      <Check size={16} className="text-accent mt-0.5 shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+              </TiltCard>
+            </Reveal>
           ))}
         </div>
 
-        <div ref={ctaRef} className="text-center mt-12">
-          <Link to="/course">
-            <Button className="btn-polygon bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg px-10 py-6">
-              לפרטים נוספים על התוכנית
-            </Button>
-          </Link>
-        </div>
+        <Reveal delay={0.4}>
+          <div className="mt-14 lg:mt-20 text-center">
+            <Link to="/course">
+              <Button
+                size="lg"
+                className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.35)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.55)] transition-all"
+              >
+                לפרטים נוספים על התוכנית
+                <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
+              </Button>
+            </Link>
+          </div>
+        </Reveal>
       </div>
-    </section>
+    </SectionDark>
   );
 };
 

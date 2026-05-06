@@ -1,29 +1,31 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
-import { useGsapReveal } from "@/hooks/use-gsap-reveal";
+import SEOHead, {
+  courseSchema,
+  organizationSchema,
+  serviceSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+} from "@/components/SEOHead";
 import {
- GraduationCap,
- CheckCircle,
- XCircle,
- MessageCircle,
- Star,
-
- Users,
- BookOpen,
- Calculator,
- Headphones,
- Check,
- Shield,
+  GraduationCap,
+  CheckCircle,
+  XCircle,
+  Star,
+  Users,
+  BookOpen,
+  Calculator,
+  Headphones,
+  Check,
+  Shield,
+  ArrowLeft,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
- Accordion,
- AccordionContent,
- AccordionItem,
- AccordionTrigger,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion";
-import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
 import VideoPlayer from "@/components/rich-media/VideoPlayer";
 import FitQuiz from "@/components/rich-media/FitQuiz";
 import CurriculumAccordion from "@/components/rich-media/CurriculumAccordion";
@@ -33,67 +35,75 @@ import { faqData } from "@/data/faq";
 import { curriculum } from "@/data/curriculum";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import BigCTA from "@/components/BigCTA";
+import { Reveal } from "@/components/v2/Reveal";
+import { SectionDark } from "@/components/v2/Section";
+import { RoiCalculator } from "@/components/v2/RoiCalculator";
+import { TransactionLifecycle } from "@/components/v2/TransactionLifecycle";
+import heroCity from "@/assets/hero-city.jpg";
 
 const courseTestimonials = testimonials;
 
 const highlights = [
- { icon: BookOpen, value: "50+", label: "שיעורים" },
- { icon: Users, value: "300+", label: "בוגרים" },
- { icon: Calculator, value: "6+", label: "כלים ומחשבונים מתקדמים" },
+  { icon: BookOpen, value: "50+", label: "שיעורים" },
+  { icon: Users, value: "300+", label: "בוגרים" },
+  { icon: Calculator, value: "6+", label: "כלים מתקדמים" },
 ];
 
 const problems = [
- "משלמים עשרות אלפי שקלים מעל למחיר השוק",
- "חותמים על חוזה בלי להבין מה כתוב",
- "לוקחים משכנתא שלא מתאימה להם",
- "מפספסים הזדמנויות כי לא יודעים לזהות אותן",
+  "משלמים עשרות אלפי שקלים מעל למחיר השוק",
+  "חותמים על חוזה בלי להבין מה כתוב",
+  "לוקחים משכנתא שלא מתאימה להם",
+  "מפספסים הזדמנויות כי לא יודעים לזהות אותן",
 ];
 
 const solutions = [
- "מבינים כל שלב בתהליך לפני שמתחילים",
- "יודעים לנתח עסקה ולזהות הזדמנות אמיתית",
- "נכנסים למשא ומתן עם כלים וביטחון",
- "מגובים בליווי צמוד של אנליסט נדל״ן",
+  "מבינים כל שלב בתהליך לפני שמתחילים",
+  "יודעים לנתח עסקה ולזהות הזדמנות אמיתית",
+  "נכנסים למשא ומתן עם כלים וביטחון",
+  "מגובים בליווי צמוד של אנליסט נדל״ן",
 ];
 
 const programCards = [
- {
- icon: BookOpen,
- title: "עיקרי התוכנית",
- description:
- "שיעורים דיגיטליים מובנים צעד אחר צעד — מיסודות השוק ועד חתימת חוזה. לומדים בקצב שלכם עם תוכן בלעדי ומדויק.",
- features: [
- "תיאוריה מקצועית ויסודות נדל״ן",
- "התחדשות עירונית ואסטרטגיות השקעה",
- "משא ומתן וטכניקות מתקדמות",
- "דוגמאות לעסקאות אמיתיות",
- ],
- },
- {
- icon: Calculator,
- title: "מחשבונים וכלים",
- description:
- "פורטל כלים מתקדם שיעזור לכם לנתח כל עסקה בצורה מדויקת ומבוססת נתונים.",
- features: [
- "מחשבון עסקת נדל״ן ומיסוי",
- "מחשבון משכנתא וכדאיות",
- "צ׳קליסט ביקור בנכס",
- "אנליסט AI למענה על שאלות",
- ],
- badge: "הלב של התוכנית",
- },
- {
- icon: Headphones,
- title: "ליווי מקצועי",
- description:
- "ליווי צמוד בוואטסאפ של אנליסט נדל״ן שעונה על שאלות, מכוון ועוזר לכם בכל שלב בדרך.",
- features: [
- "ליווי צמוד של אנליסט בוואטסאפ",
- "מענה לשאלות בזמן אמת",
- "גישה לקהילת תלמידים",
- "הרחבות מקצועיות ועדכונים",
- ],
- },
+  {
+    num: "01",
+    icon: BookOpen,
+    title: "עיקרי התוכנית",
+    description:
+      "שיעורים דיגיטליים מובנים צעד אחר צעד — מיסודות השוק ועד חתימת חוזה. לומדים בקצב שלכם עם תוכן בלעדי ומדויק.",
+    features: [
+      "תיאוריה מקצועית ויסודות נדל״ן",
+      "התחדשות עירונית ואסטרטגיות השקעה",
+      "משא ומתן וטכניקות מתקדמות",
+      "דוגמאות לעסקאות אמיתיות",
+    ],
+  },
+  {
+    num: "02",
+    icon: Calculator,
+    title: "מחשבונים וכלים",
+    description:
+      "פורטל כלים מתקדם שיעזור לכם לנתח כל עסקה בצורה מדויקת ומבוססת נתונים.",
+    features: [
+      "מחשבון עסקת נדל״ן ומיסוי",
+      "מחשבון משכנתא וכדאיות",
+      "צ׳קליסט ביקור בנכס",
+      "אנליסט AI למענה על שאלות",
+    ],
+    badge: "הלב של התוכנית",
+  },
+  {
+    num: "03",
+    icon: Headphones,
+    title: "ליווי מקצועי",
+    description:
+      "ליווי צמוד בוואטסאפ של אנליסט נדל״ן שעונה על שאלות, מכוון ועוזר לכם בכל שלב בדרך.",
+    features: [
+      "ליווי צמוד של אנליסט בוואטסאפ",
+      "מענה לשאלות בזמן אמת",
+      "גישה לקהילת תלמידים",
+      "הרחבות מקצועיות ועדכונים",
+    ],
+  },
 ];
 
 const VIDEO_URL = "";
@@ -101,453 +111,522 @@ const isPlaceholderVideo = !VIDEO_URL || VIDEO_URL.includes("dQw4w9WgXcQ");
 
 const totalModules = curriculum.length;
 const totalLessons = curriculum.reduce(
- (sum, mod) => sum + mod.lessons.length,
- 0
+  (sum, mod) => sum + mod.lessons.length,
+  0
 );
 
+const scrollToPricing = () =>
+  document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
 
 const CoursePage = () => {
- return (
- <>
- <Helmet>
- <title>הדרך לדירה — קורס נדל"ן דיגיטלי | קרנף נדל"ן</title>
- <meta
- name="description"
- content="קורס נדל&quot;ן דיגיטלי מקיף לרוכשי דירות ראשונות ומשקיעים — 50+ שיעורים, מחשבונים, כלים וליווי צמוד של אנליסט נדל&quot;ן."
- />
- <link rel="canonical" href="https://www.karnafnadlan.com/course" />
- </Helmet>
+  return (
+    <>
+      <SEOHead
+        title="הדרך לדירה — תוכנית הליווי הדיגיטלית לרכישת דירה ראשונה | קרנף נדל״ן"
+        description="50+ שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון), אנליסט נדל״ן צמוד בוואטסאפ. גישה מלאה ל-12 חודשים. 5,490 ₪."
+        path="/course"
+        keywords="קורס נדל״ן, הדרך לדירה, ליווי רוכשי דירה, דירה ראשונה, מחשבון משכנתא, מס רכישה, השקעה בנדל״ן"
+        jsonLd={[
+          organizationSchema,
+          courseSchema,
+          serviceSchema,
+          breadcrumbSchema([
+            { name: "דף הבית", url: "/" },
+            { name: "הדרך לדירה", url: "/course" },
+          ]),
+          faqPageSchema(faqData.course),
+        ]}
+      />
 
- {/* Section 1: Course Hero */}
- <section className="relative min-h-[85vh] flex items-center overflow-hidden course-hero-bg grain-texture">
- {/* Mesh gradient overlay */}
- <div className="absolute inset-0 opacity-50" />
+      {/* 1. Cinematic Hero */}
+      <section
+        className="relative min-h-[70svh] flex items-end overflow-hidden"
+        style={{ backgroundColor: "hsl(217 50% 8%)" }}
+      >
+        <div className="absolute inset-0">
+          <img src={heroCity} alt="" className="w-full h-full object-cover" loading="eager" decoding="async" {...{ fetchpriority: "high" }} />
+        </div>
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden
+          style={{
+            background:
+              "linear-gradient(180deg, hsl(217 50% 8% / 0.65) 0%, hsl(217 50% 8% / 0.35) 35%, hsl(217 50% 8% / 0.92) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden
+          style={{
+            background:
+              "radial-gradient(70% 80% at 70% 30%, hsl(24 80% 52% / 0.18) 0%, transparent 70%)",
+          }}
+        />
+        <div className="absolute inset-0 grain-texture pointer-events-none" />
 
- {/* Floating decorative elements */}
- <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
- <div
- className="absolute bottom-1/4 right-10 w-48 h-48 bg-primary/5 rounded-full blur-3xl pointer-events-none"
- style={{ animationDelay: "3s" }}
- />
+        <div className="relative z-10 container mx-auto px-5 md:px-6 pt-32 pb-20 lg:pt-40 lg:pb-28">
+          <div className="max-w-4xl">
+            <Reveal>
+              <p
+                className="text-body-lg lg:text-xl mb-6 max-w-2xl"
+                style={{ color: "hsl(36 33% 95% / 0.7)" }}
+              >
+                רוב הישראלים קונים את הנכס היקר בחייהם — בלי שום הכנה.
+              </p>
+            </Reveal>
 
- <div className="relative z-10 container mx-auto px-5 md:px-6 text-center">
- {/* Provocative line */}
- <p
- className="text-lg md:text-xl text-white/70 mb-6 max-w-2xl mx-auto"
- >
- רוב הישראלים קונים את הנכס היקר בחייהם — בלי שום הכנה.
- </p>
+            <Reveal delay={0.08}>
+              <h1 className="text-display-lg md:text-display-xl font-black text-white mb-6 leading-[0.95] tracking-tight">
+                הדרך <span className="text-accent">לדירה</span>
+              </h1>
+            </Reveal>
 
- {/* Main title */}
- <h1
- className="text-display text-display-lg text-white mb-6"
- >
- הדרך{" "}
- <span className="text-gradient">לדירה</span>
- </h1>
+            <Reveal delay={0.16}>
+              <p
+                className="text-display-sm md:text-display-md font-bold leading-snug max-w-3xl mb-8"
+                style={{ color: "hsl(36 33% 95% / 0.85)" }}
+              >
+                תוכנית הליווי המקצועית שמלמדת אתכם לקנות דירה חכם — מא׳ ועד ת׳.
+              </p>
+            </Reveal>
 
- {/* Subtitle */}
- <p
- className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-6"
- >
- תוכנית הליווי המקצועית שמלמדת אתכם לקנות דירה חכם — מא׳ ועד ת׳.
- </p>
+            <Reveal delay={0.24}>
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm">
+                50+ שיעורים · 6+ כלים מתקדמים · ליווי צמוד
+              </div>
+            </Reveal>
 
- {/* Badge */}
- <div
- className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm"
- >
- 50+ שיעורים · 6+ כלים מתקדמים · ליווי צמוד
- </div>
+            <Reveal delay={0.32}>
+              <Button
+                size="lg"
+                onClick={scrollToPricing}
+                className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.45)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.65)] transition-all"
+              >
+                גלו את התוכנית
+                <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
+              </Button>
+            </Reveal>
+          </div>
+        </div>
+      </section>
 
- {/* CTA */}
- <div
- >
- <Button
- size="lg"
- onClick={() =>
- document
- .getElementById("pricing")
- ?.scrollIntoView({ behavior: "smooth" })
- }
- className="btn-polygon bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg px-10 py-7 shadow-glow-accent"
- >
- גלו את התוכנית
- </Button>
- </div>
- </div>
- </section>
+      {/* 2. Trust bar */}
+      <section className="py-10 bg-card border-y border-border">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
+            {highlights.map((h, i) => (
+              <Reveal key={h.label} delay={i * 0.08}>
+                <div className="text-center">
+                  <p className="text-display-md font-black text-foreground tabular-nums leading-none mb-2">
+                    {h.value}
+                  </p>
+                  <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
+                    {h.label}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
- {/* Section 2: Trust Bar */}
- <section className="py-10 bg-card border-y border-border">
- <div className="container mx-auto px-6">
- <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
- {highlights.map((h, i) => (
- <div key={h.label}
- className="text-center"
- >
- <h.icon size={24} className="text-accent mx-auto mb-2" />
- <p className="text-2xl font-bold text-foreground">{h.value}</p>
- <p className="text-sm text-muted-foreground">{h.label}</p>
- </div>
- ))}
- </div>
- </div>
- </section>
+      {/* 3. Problem vs Solution */}
+      <section className="py-section-lg bg-background">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
+              בלי הכנה? <span className="text-accent">זה עולה ביוקר.</span>
+            </h2>
+          </Reveal>
 
- {/* Section 3: Problem -> Solution */}
- <section className="py-20">
- <div className="container mx-auto px-6 max-w-5xl">
- <AnimatedSectionHeader
- title="בלי הכנה?"
- highlight="זה עולה ביוקר."
- />
- <div className="grid md:grid-cols-2 gap-8 mt-12">
- {/* Problems */}
- <motion.div
- initial={{ opacity: 0, x: 40 }}
- whileInView={{ opacity: 1, x: 0 }}
- viewport={{ once: true, margin: "-50px" }}
- transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
- className="space-y-4 rounded-2xl p-6 bg-red-500/5 border border-red-500/10"
- >
- <h3 className="text-lg font-bold text-foreground mb-4">
- בלי התוכנית
- </h3>
- {problems.map((problem, i) => (
- <motion.div key={i}
- initial={{ opacity: 0, x: 20 }}
- whileInView={{ opacity: 1, x: 0 }}
- viewport={{ once: true }}
- transition={{ duration: 0.4, delay: 0.1 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
- className="flex items-start gap-3"
- >
- <XCircle
- size={18}
- className="text-red-500 mt-0.5 flex-shrink-0"
- />
- <span className="text-sm text-muted-foreground">
- {problem}
- </span>
- </motion.div>
- ))}
- </motion.div>
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+            <Reveal>
+              <div className="rounded-2xl p-6 md:p-8 bg-destructive/5 border border-destructive/15 h-full">
+                <h3 className="text-xl font-bold text-foreground mb-5">
+                  בלי התוכנית
+                </h3>
+                <ul className="space-y-3">
+                  {problems.map((p) => (
+                    <li key={p} className="flex items-start gap-3">
+                      <XCircle size={18} className="text-destructive mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground leading-relaxed">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <div className="rounded-2xl p-6 md:p-8 bg-accent/5 border border-accent/30 shadow-depth-2 h-full">
+                <h3 className="text-xl font-bold text-foreground mb-5">
+                  עם התוכנית
+                </h3>
+                <ul className="space-y-3">
+                  {solutions.map((s) => (
+                    <li key={s} className="flex items-start gap-3">
+                      <CheckCircle size={18} className="text-accent mt-0.5 flex-shrink-0" />
+                      <span className="text-foreground leading-relaxed">{s}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+      {/* 4. Pricing */}
+      <section id="pricing" className="py-section-lg bg-card">
+        <div className="container mx-auto px-6 max-w-3xl">
+          {/* Compare */}
+          <Reveal>
+            <div className="grid md:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto text-right">
+              <div className="rounded-2xl p-5 bg-destructive/5 border border-destructive/15">
+                <h4 className="font-bold text-foreground mb-3 text-center">בלי הקורס</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  {[
+                    "משלמים יותר על הדירה",
+                    "משכנתא לא מותאמת",
+                    "מפספסים עסקאות",
+                    "לומדים מטעויות יקרות",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <XCircle size={14} className="text-destructive flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-2xl p-5 bg-accent/5 border border-accent/30 shadow-depth-1">
+                <h4 className="font-bold text-foreground mb-3 text-center">עם הקורס</h4>
+                <ul className="space-y-2 text-sm text-foreground">
+                  {[
+                    "חוסכים עשרות אלפי ₪",
+                    "תמהיל משכנתא אופטימלי",
+                    "מזהים עסקאות לפני כולם",
+                    "ליווי מקצועי בכל שלב",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <CheckCircle size={14} className="text-accent flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </Reveal>
 
- {/* Solutions */}
- <motion.div
- initial={{ opacity: 0, x: -40 }}
- whileInView={{ opacity: 1, x: 0 }}
- viewport={{ once: true, margin: "-50px" }}
- transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
- className="space-y-4 rounded-2xl p-6 bg-accent/5 border border-accent/10 scale-[1.02] shadow-lg"
- >
- <h3 className="text-lg font-bold text-foreground mb-4">
- עם התוכנית
- </h3>
- {solutions.map((solution, i) => (
- <motion.div key={i}
- initial={{ opacity: 0, x: -20 }}
- whileInView={{ opacity: 1, x: 0 }}
- viewport={{ once: true }}
- transition={{ duration: 0.4, delay: 0.3 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
- className="flex items-start gap-3"
- >
- <CheckCircle
- size={18}
- className="text-accent mt-0.5 flex-shrink-0"
- />
- <span className="text-sm text-foreground">{solution}</span>
- </motion.div>
- ))}
- </motion.div>
- </div>
- </div>
- </section>
+          <Reveal delay={0.1}>
+            <div className="bg-background border border-border rounded-3xl p-8 md:p-12 relative overflow-hidden max-w-2xl mx-auto shadow-depth-3">
+              <div
+                className="absolute top-0 right-0 w-40 h-40 pointer-events-none -z-0"
+                aria-hidden
+                style={{
+                  background:
+                    "radial-gradient(50% 50% at 100% 0%, hsl(24 80% 52% / 0.15) 0%, transparent 70%)",
+                }}
+              />
+              <div className="absolute top-0 inset-x-0 h-1 bg-accent" />
+              <div className="text-center relative z-10">
+                <GraduationCap size={36} className="text-accent mx-auto mb-4" />
+                <h3 className="text-display-sm md:text-display-md font-black text-foreground mb-2">
+                  הצטרפו לתוכנית
+                </h3>
+                <p className="text-muted-foreground mb-8">
+                  הצטרפו ל-300+ בוגרים שכבר רכשו דירה בצורה חכמה.
+                </p>
 
- {/* Section 4: Video Trailer */}
- <section className="py-20 bg-secondary/30">
- <div className="container mx-auto px-6 max-w-4xl">
- <AnimatedSectionHeader
- title="ראו"
- highlight="בעצמכם"
- subtitle="3 דקות שמסבירות בדיוק מה תקבלו ואיך זה עובד."
- />
- <div className="rounded-2xl overflow-hidden border border-accent/20 shadow-2xl">
- {isPlaceholderVideo ? (
- <div className="flex flex-col items-center justify-center py-20 bg-card">
- <p className="text-2xl font-bold text-foreground mb-4">
- הטריילר בדרך
- </p>
- <Button
- variant="outline"
- onClick={() =>
- document
- .getElementById("pricing")
- ?.scrollIntoView({ behavior: "smooth" })
- }
- className="border-accent/30 text-accent hover:bg-accent/10"
- >
- בינתיים — גלו את התוכנית
- </Button>
- </div>
- ) : (
- <VideoPlayer
- url={VIDEO_URL}
- title="טריילר — הדרך לדירה"
- />
- )}
- </div>
- </div>
- </section>
+                <div className="text-display-md md:text-display-lg font-black text-accent mb-10 tabular-nums">
+                  {new Intl.NumberFormat("he-IL", {
+                    style: "currency",
+                    currency: "ILS",
+                    maximumFractionDigits: 0,
+                  }).format(5490)}
+                </div>
 
- {/* Section 5: "מה בתוכנית?" — 3 Feature Cards */}
- <section className="py-20">
- <div className="container mx-auto px-6 max-w-6xl">
- <AnimatedSectionHeader title="מה בתוכנית?" highlight="" />
+                <div className="text-right max-w-sm mx-auto space-y-3 mb-10">
+                  {[
+                    "50+ שיעורים דיגיטליים",
+                    "6+ כלים ומחשבונים מתקדמים",
+                    "ליווי צמוד של אנליסט בוואטסאפ",
+                    "גישה מלאה ל-12 חודשים",
+                    "קהילת בוגרים פעילה",
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-3">
+                      <CheckCircle size={18} className="text-accent flex-shrink-0" />
+                      <span className="text-foreground">{item}</span>
+                    </div>
+                  ))}
+                </div>
 
- <div className="grid md:grid-cols-3 gap-8 mt-12">
- {programCards.map((card, i) => (
- <div key={card.title} className="relative bg-card shadow-depth-2 border border-border/30 rounded-2xl p-8 group flex flex-col transition-all duration-500"
- >
- {card.badge && (
- <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full">
- {card.badge}
- </div>
- )}
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                    "היי! אני רוצה לרכוש את תוכנית הדרך לדירה"
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    size="lg"
+                    className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 w-full sm:w-auto gap-3 mb-4 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.45)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.65)] transition-all"
+                  >
+                    לרכישה מאובטחת
+                    <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
+                  </Button>
+                </a>
 
- <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-accent/10 text-accent mb-6 group-hover:bg-accent/20 transition-colors"
- >
- <card.icon size={28} />
- </div>
+                <div>
+                  <a
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                      "היי! אני מעוניין/ת בתוכנית הדרך לדירה"
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline"
+                  >
+                    יש שאלות? דברו איתנו בוואטסאפ ←
+                  </a>
+                </div>
 
- <h3 className="text-heading text-xl md:text-2xl text-foreground mb-2">
- {card.title}
- </h3>
- <p className="text-muted-foreground leading-relaxed mb-6 text-sm">
- {card.description}
- </p>
+                <div className="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-border flex-wrap">
+                  {["תשלום מאובטח", "גישה מיידית", "ליווי צמוד"].map((badge) => (
+                    <span
+                      key={badge}
+                      className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground flex items-center gap-2"
+                    >
+                      <Shield size={12} className="text-accent" />
+                      {badge}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
- <ul className="space-y-3 flex-1">
- {card.features.map((feature, fi) => (
- <li key={feature}
- className="flex items-start gap-3 text-sm text-muted-foreground"
- >
- <Check
- size={16}
- className="text-accent mt-0.5 shrink-0"
- />
- <span>{feature}</span>
- </li>
- ))}
- </ul>
- </div>
- ))}
- </div>
+      {/* 5. Trailer + Live calculator */}
+      <SectionDark size="lg" glow="bottom">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-white mb-4 leading-[0.98] tracking-tight text-center">
+              ראו <span className="text-accent">בעצמכם</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p
+              className="text-body-lg mb-12 leading-relaxed text-center max-w-2xl mx-auto"
+              style={{ color: "hsl(36 33% 95% / 0.72)" }}
+            >
+              דוגמה חיה לאחד הכלים בתוכנית — מחשבון תשואה על ההון העצמי שלכם.
+              הזיזו את ה-sliders ותראו כמה הכסף שלכם באמת עובד בעסקה.
+            </p>
+          </Reveal>
+          <Reveal delay={0.14}>
+            <RoiCalculator />
+          </Reveal>
+          {!isPlaceholderVideo && (
+            <Reveal delay={0.22}>
+              <div className="mt-14 rounded-2xl overflow-hidden border border-white/10 shadow-depth-3">
+                <VideoPlayer url={VIDEO_URL} title="טריילר — הדרך לדירה" />
+              </div>
+            </Reveal>
+          )}
+        </div>
+      </SectionDark>
 
- {/* Curriculum with summary bar */}
- <div className="max-w-3xl mx-auto mt-16">
- <div className="flex items-center justify-center gap-6 mb-6">
- <span className="text-sm text-muted-foreground">
- <strong className="text-foreground">{totalModules}</strong>{" "}
- מודולים
- </span>
- <span className="text-border">·</span>
- <span className="text-sm text-muted-foreground">
- <strong className="text-foreground">{totalLessons}</strong>{" "}
- שיעורים
- </span>
- </div>
- <CurriculumAccordion />
- </div>
- </div>
- </section>
+      {/* 6. Program cards */}
+      <SectionDark size="lg" glow="top-end">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-white mb-12 lg:mb-16 leading-[0.98] tracking-tight">
+              מה <span className="text-accent">בתוכנית?</span>
+            </h2>
+          </Reveal>
 
- {/* Section 6: Fit Quiz */}
- <section className="py-20 bg-secondary/30 relative">
- <div className="absolute inset-0 rounded-none border-t border-b border-accent/10" />
- <div className="container mx-auto px-6 max-w-4xl relative z-10">
- <AnimatedSectionHeader
- title="האם התוכנית"
- highlight="מתאימה לי?"
- subtitle="ענו על מספר שאלות קצרות וגלו עד כמה התוכנית מתאימה בדיוק בשבילכם."
- />
- <FitQuiz />
- <div className="text-center mt-8">
- <Button
- variant="outline"
- onClick={() =>
- document
- .getElementById("pricing")
- ?.scrollIntoView({ behavior: "smooth" })
- }
- className="border-accent/30 text-accent hover:bg-accent/10"
- >
- צפו בתוכנית המלאה
- </Button>
- </div>
- </div>
- </section>
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+            {programCards.map((card, i) => (
+              <Reveal key={card.title} delay={i * 0.12}>
+                <article
+                  className="relative h-full p-6 lg:p-8 rounded-2xl flex flex-col group transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    backgroundColor: "hsl(36 33% 95% / 0.04)",
+                    border: "1px solid hsl(36 33% 95% / 0.12)",
+                  }}
+                >
+                  {card.badge && (
+                    <div className="absolute -top-3 right-6 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full">
+                      {card.badge}
+                    </div>
+                  )}
+                  <div className="font-mono text-display-md font-black text-accent leading-none mb-5">
+                    {card.num}
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 leading-snug">
+                    {card.title}
+                  </h3>
+                  <p
+                    className="text-sm leading-relaxed mb-6"
+                    style={{ color: "hsl(36 33% 95% / 0.72)" }}
+                  >
+                    {card.description}
+                  </p>
+                  <ul
+                    className="space-y-3 flex-1 pt-5 border-t"
+                    style={{ borderColor: "hsl(36 33% 95% / 0.10)" }}
+                  >
+                    {card.features.map((feature) => (
+                      <li
+                        key={feature}
+                        className="flex items-start gap-3 text-sm"
+                        style={{ color: "hsl(36 33% 95% / 0.85)" }}
+                      >
+                        <Check size={16} className="text-accent mt-0.5 shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              </Reveal>
+            ))}
+          </div>
 
- {/* Section 7: Pricing Card */}
- <section id="pricing" className="py-20 bg-secondary/30">
- <div className="container mx-auto px-6 text-center max-w-3xl">
+          {/* Curriculum */}
+          <div className="max-w-3xl mx-auto mt-16 lg:mt-24">
+            <Reveal>
+              <div
+                className="flex items-center justify-center gap-6 mb-8 text-eyebrow uppercase tracking-[0.18em]"
+                style={{ color: "hsl(36 33% 95% / 0.7)" }}
+              >
+                <span>
+                  <strong className="text-accent text-base font-mono tabular-nums">{totalModules}</strong>{" "}
+                  מודולים
+                </span>
+                <span style={{ color: "hsl(36 33% 95% / 0.3)" }}>·</span>
+                <span>
+                  <strong className="text-accent text-base font-mono tabular-nums">{totalLessons}</strong>{" "}
+                  שיעורים
+                </span>
+              </div>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <CurriculumAccordion />
+            </Reveal>
+          </div>
 
- {/* Comparison: without vs with */}
- <div className="grid md:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto text-right">
- <div className="rounded-2xl p-5 bg-red-500/5 border border-red-500/10">
- <h4 className="font-bold text-foreground mb-3 text-center">בלי הקורס</h4>
- <ul className="space-y-2 text-sm text-muted-foreground">
- {["משלמים יותר על הדירה", "משכנתא לא מותאמת", "מפספסים עסקאות", "לומדים מטעויות יקרות"].map((item, i) => (
- <li key={i} className="flex items-center gap-2"><XCircle size={14} className="text-red-500 flex-shrink-0" />{item}</li>
- ))}
- </ul>
- </div>
- <div className="rounded-2xl p-5 bg-accent/5 border border-accent/20 shadow-md">
- <h4 className="font-bold text-foreground mb-3 text-center">עם הקורס</h4>
- <ul className="space-y-2 text-sm text-foreground">
- {["חוסכים עשרות אלפי ₪", "תמהיל משכנתא אופטימלי", "מזהים עסקאות לפני כולם", "ליווי מקצועי בכל שלב"].map((item, i) => (
- <li key={i} className="flex items-center gap-2"><CheckCircle size={14} className="text-accent flex-shrink-0" />{item}</li>
- ))}
- </ul>
- </div>
- </div>
+          {/* Transaction lifecycle visualization */}
+          <div className="mt-20 lg:mt-28 max-w-5xl mx-auto">
+            <Reveal>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 text-center leading-tight">
+                ששה שלבים <span className="text-accent">מהשיחה הראשונה ועד החתימה</span>
+              </h3>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p
+                className="text-base mb-12 text-center max-w-2xl mx-auto leading-relaxed"
+                style={{ color: "hsl(36 33% 95% / 0.65)" }}
+              >
+                בכל שלב — כלי, חומר וליווי שמותאמים בדיוק לאן שאתם בדרך.
+              </p>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <TransactionLifecycle />
+            </Reveal>
+          </div>
+        </div>
+      </SectionDark>
 
- <div
- className="shadow-depth-4 bg-card border-t-4 border-accent rounded-3xl p-8 md:p-12 relative overflow-hidden max-w-2xl mx-auto"
- >
- {/* Decorative gradient corner */}
- <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full" />
+      {/* 7. Fit Quiz */}
+      <section className="py-section-lg bg-background">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight text-center">
+              האם התוכנית <span className="text-accent">מתאימה לי?</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="text-body-lg text-muted-foreground mb-10 lg:mb-14 leading-relaxed text-center max-w-2xl mx-auto">
+              ענו על מספר שאלות קצרות וגלו עד כמה התוכנית מתאימה בדיוק בשבילכם.
+            </p>
+          </Reveal>
+          <Reveal delay={0.14}>
+            <FitQuiz />
+          </Reveal>
+          <Reveal delay={0.22}>
+            <div className="text-center mt-10">
+              <Button
+                variant="outline"
+                onClick={scrollToPricing}
+                className="border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground rounded-full px-7 py-5 font-bold"
+              >
+                צפו בתוכנית המלאה
+              </Button>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
- <GraduationCap size={40} className="text-accent mx-auto mb-4" />
- <h3 className="text-3xl md:text-4xl font-black text-foreground mb-2">
- הצטרפו לתוכנית
- </h3>
- <p className="text-muted-foreground mb-6">
- הצטרפו ל-300+ בוגרים שכבר רכשו דירה בצורה חכמה.
- </p>
+      {/* 8. Testimonials */}
+      <section className="py-section-lg bg-background">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 leading-[0.98] tracking-tight text-center">
+              מה הבוגרים <span className="text-accent">אומרים?</span>
+            </h2>
+          </Reveal>
+          <div className="grid md:grid-cols-2 gap-6">
+            {courseTestimonials.map((t, i) => (
+              <Reveal key={t.name} delay={i * 0.06}>
+                <TestimonialVideoCard testimonial={t} index={i} />
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.4}>
+            <div className="text-center mt-10">
+              <Link to="/testimonials">
+                <Button
+                  variant="outline"
+                  className="border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground gap-2 rounded-full px-7 py-5 font-bold"
+                >
+                  כל סיפורי ההצלחה
+                  <ArrowLeft size={16} />
+                </Button>
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
- {/* Price */}
- <div className="text-display-md text-accent mb-8 tabular-nums">
- {new Intl.NumberFormat("he-IL", { style: "currency", currency: "ILS", maximumFractionDigits: 0 }).format(5490)}
- </div>
+      {/* 9. FAQ */}
+      <section className="py-section-lg bg-card">
+        <div className="container mx-auto px-6 max-w-3xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 leading-[0.98] tracking-tight text-center">
+              שאלות <span className="text-accent">נפוצות</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <Accordion type="single" collapsible className="space-y-3">
+              {faqData.course.map((item, i) => (
+                <AccordionItem
+                  key={i}
+                  value={`faq-${i}`}
+                  className="border border-border rounded-xl px-5 bg-background"
+                >
+                  <AccordionTrigger className="text-base font-bold text-foreground hover:no-underline hover:text-accent">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base text-muted-foreground leading-relaxed">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </Reveal>
+        </div>
+      </section>
 
- {/* Value list */}
- <div className="text-right max-w-sm mx-auto space-y-3 mb-8">
- {[
- "50+ שיעורים דיגיטליים",
- "6+ כלים ומחשבונים מתקדמים",
- "ליווי צמוד של אנליסט בוואטסאפ",
- "גישה מלאה ל-12 חודשים",
- "קהילת בוגרים פעילה",
- ].map((item, i) => (
- <div key={i}
- className="flex items-center gap-3"
- >
- <CheckCircle
- size={18}
- className="text-accent flex-shrink-0"
- />
- <span className="text-sm text-foreground">{item}</span>
- </div>
- ))}
- </div>
-
- {/* Primary CTA */}
- <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("היי! אני רוצה לרכוש את תוכנית הדרך לדירה")}`} target="_blank" rel="noopener noreferrer">
- <Button
- size="lg"
- className="btn-polygon bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg px-10 py-7 w-full sm:w-auto gap-3 mb-4 shadow-glow-accent"
- >
- לרכישה מאובטחת
- </Button>
- </a>
-
- {/* Secondary */}
- <div>
- <a
- href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("היי! אני מעוניין/ת בתוכנית הדרך לדירה")}`}
- target="_blank"
- rel="noopener noreferrer"
- className="text-sm text-muted-foreground hover:text-accent transition-colors"
- >
- יש שאלות? דברו איתנו בוואטסאפ &larr;
- </a>
- </div>
-
- {/* Trust badges */}
- <div className="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-border">
- {["תשלום מאובטח", "גישה מיידית", "ליווי צמוד"].map((badge) => (
- <span
- key={badge}
- className="text-xs text-muted-foreground flex items-center gap-1.5"
- >
- <Shield size={12} className="text-accent" />
- {badge}
- </span>
- ))}
- </div>
-
- </div>
- </div>
- </section>
-
- {/* Section 8: Testimonials */}
- <section className="py-20">
- <div className="container mx-auto px-6 max-w-5xl">
- <AnimatedSectionHeader
- title="מה הבוגרים"
- highlight="אומרים?"
- />
- <div className="grid md:grid-cols-2 gap-6">
- {courseTestimonials.map((t, i) => (
- <TestimonialVideoCard
- key={t.name}
- testimonial={t}
- index={i}
- />
- ))}
- </div>
- <div className="text-center mt-8">
- <Link to="/testimonials">
- <Button
- variant="outline"
- className="border-accent/30 text-accent hover:bg-accent/10 gap-2"
- >
- כל סיפורי ההצלחה
- <Star size={16} />
- </Button>
- </Link>
- </div>
- </div>
- </section>
-
- {/* Section 9: FAQ */}
- <section className="py-20 bg-secondary/20">
- <div className="container mx-auto px-6 max-w-3xl">
- <AnimatedSectionHeader title="שאלות" highlight="נפוצות" />
- <Accordion type="single" collapsible className="space-y-2">
- {faqData.course.map((item, i) => (
- <AccordionItem
- key={i}
- value={`faq-${i}`}
- className="border border-border rounded-xl px-4 bg-card"
- >
- <AccordionTrigger className="text-sm font-bold text-foreground hover:no-underline hover:text-accent">
- {item.question}
- </AccordionTrigger>
- <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
- {item.answer}
- </AccordionContent>
- </AccordionItem>
- ))}
- </Accordion>
- </div>
- </section>
-
- {/* Section 10: Final BigCTA */}
- <BigCTA />
- </>
- );
+      <BigCTA />
+    </>
+  );
 };
 
 export default CoursePage;

@@ -1,13 +1,14 @@
 import { lazy } from "react";
+import { Outlet } from "react-router-dom";
+import type { RouteRecord } from "vite-react-ssg";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
 import SharedLayout from "@/layouts/SharedLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
+import { articles } from "@/data/articles";
 
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 const CoursePage = lazy(() => import("./pages/CoursePage"));
@@ -20,32 +21,81 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
-const App = () => (
+/**
+ * RootProviders wraps the entire route tree with the global providers.
+ * vite-react-ssg renders the routes data array, so providers move from
+ * JSX-around-Routes to the root layout of the route tree. <Head> from
+ * vite-react-ssg manages document-head tags (no HelmetProvider needed).
+ */
+const RootProviders = () => (
   <ErrorBoundary>
-  <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route element={<SharedLayout />}>
-              <Route path="/" element={<Index />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/course" element={<CoursePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/testimonials" element={<TestimonialsPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/blog/:slug" element={<BlogArticlePage />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <Outlet />
       </TooltipProvider>
     </QueryClientProvider>
-  </HelmetProvider>
   </ErrorBoundary>
 );
 
-export default App;
+export const routes: RouteRecord[] = [
+  {
+    element: <RootProviders />,
+    children: [
+      {
+        element: <SharedLayout />,
+        children: [
+          {
+            index: true,
+            element: <Index />,
+            entry: "src/pages/Index.tsx",
+          },
+          {
+            path: "services",
+            element: <ServicesPage />,
+            entry: "src/pages/ServicesPage.tsx",
+          },
+          {
+            path: "course",
+            element: <CoursePage />,
+            entry: "src/pages/CoursePage.tsx",
+          },
+          {
+            path: "about",
+            element: <AboutPage />,
+            entry: "src/pages/AboutPage.tsx",
+          },
+          {
+            path: "testimonials",
+            element: <TestimonialsPage />,
+            entry: "src/pages/TestimonialsPage.tsx",
+          },
+          {
+            path: "contact",
+            element: <ContactPage />,
+            entry: "src/pages/ContactPage.tsx",
+          },
+          {
+            path: "blog",
+            element: <BlogPage />,
+            entry: "src/pages/BlogPage.tsx",
+          },
+          {
+            path: "blog/:slug",
+            element: <BlogArticlePage />,
+            entry: "src/pages/BlogArticlePage.tsx",
+            getStaticPaths: () => articles.map((a) => `blog/${a.slug}`),
+          },
+          {
+            path: "*",
+            element: <NotFound />,
+            entry: "src/pages/NotFound.tsx",
+          },
+        ],
+      },
+    ],
+  },
+];
+
+export default routes;

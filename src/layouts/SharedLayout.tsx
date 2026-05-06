@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navigation from "@/components/Navigation";
@@ -8,6 +8,7 @@ import FooterBar from "@/components/FooterBar";
 import WhatsAppFAB from "@/components/WhatsAppFAB";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import SmoothScroll from "@/components/SmoothScroll";
+import { StickyCTA } from "@/components/v2/StickyCTA";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,6 +17,22 @@ const PageLoadingSkeleton = () => (
   <div className="min-h-screen flex items-center justify-center">
     <div className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
   </div>
+);
+
+/** Briefly sweeps a navy curtain across the screen on route change. */
+const RouteCurtain = ({ pathname }: { pathname: string }) => (
+  <motion.div
+    key={pathname}
+    aria-hidden
+    className="fixed inset-0 z-[55] pointer-events-none"
+    initial={{ scaleX: 1, transformOrigin: "left center" }}
+    animate={{ scaleX: 0, transformOrigin: "left center" }}
+    transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1] }}
+    style={{
+      background:
+        "linear-gradient(to left, hsl(217 50% 6%) 0%, hsl(217 50% 8%) 60%, hsl(24 80% 52% / 0.4) 100%)",
+    }}
+  />
 );
 
 const ScrollProgress = () => {
@@ -42,7 +59,7 @@ const ScrollProgress = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] h-[3px] pointer-events-none">
+    <div className="fixed top-0 inset-x-0 z-[60] h-[3px] pointer-events-none">
       <div
         ref={barRef}
         className="h-full bg-gradient-to-l from-accent via-accent to-accent/60 origin-right"
@@ -55,6 +72,7 @@ const ScrollProgress = () => {
 const SharedLayout = () => {
   const location = useLocation();
   useScrollToTop();
+  const reduceMotion = useReducedMotion();
 
   return (
     <SmoothScroll key={location.pathname}>
@@ -68,19 +86,39 @@ const SharedLayout = () => {
           <motion.main
             id="main-content"
             key={location.pathname}
-            initial={{ opacity: 0, y: 20, scale: 0.99 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, y: 24, filter: "blur(8px)" }
+            }
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={
+              reduceMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: -16, filter: "blur(8px)" }
+            }
+            transition={
+              reduceMotion
+                ? { duration: 0.15 }
+                : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+            }
           >
             <Suspense fallback={<PageLoadingSkeleton />}>
               <Outlet />
             </Suspense>
           </motion.main>
         </AnimatePresence>
+
+        {/* Curtain mask — sweeps across the screen during route changes */}
+        {!reduceMotion && <RouteCurtain pathname={location.pathname} />}
         <FooterBar />
         <WhatsAppFAB />
         <AccessibilityWidget />
+        <StickyCTA
+          label="30 דקות · ייעוץ ראשוני · ללא התחייבות"
+          ctaLabel="בואו נדבר"
+          ctaHref="/contact"
+        />
       </div>
     </SmoothScroll>
   );

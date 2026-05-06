@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useInView } from "react-intersection-observer";
-import RP from "react-player";
-const ReactPlayer = RP as any;
+
+/**
+ * react-player drags in HLS.js (~520kB) and dash.js (~990kB).
+ * Lazy-load it so those bundles only ship to pages that actually
+ * render a video — and only after the player scrolls into view.
+ */
+const ReactPlayer = lazy(() =>
+  import("react-player").then((mod) => ({
+    default: mod.default as unknown as React.ComponentType<Record<string, unknown>>,
+  }))
+);
 
 interface VideoPlayerProps {
   url: string;
@@ -15,7 +24,7 @@ interface VideoPlayerProps {
 
 const VideoPlayer = ({ url, title, thumbnail, ratio = 16 / 9 }: VideoPlayerProps) => {
   const [playing, setPlaying] = useState(false);
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1, rootMargin: "200px" });
 
   return (
     <motion.div
@@ -28,8 +37,7 @@ const VideoPlayer = ({ url, title, thumbnail, ratio = 16 / 9 }: VideoPlayerProps
     >
       <AspectRatio ratio={ratio}>
         {inView ? (
-          <>
-            
+          <Suspense fallback={<div className="w-full h-full bg-card animate-pulse" />}>
             <ReactPlayer
               url={url}
               playing={playing}
@@ -50,6 +58,7 @@ const VideoPlayer = ({ url, title, thumbnail, ratio = 16 / 9 }: VideoPlayerProps
               <button
                 onClick={() => setPlaying(true)}
                 className="absolute inset-0 z-10 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors cursor-pointer"
+                aria-label={title ? `הפעל וידאו: ${title}` : "הפעל וידאו"}
               >
                 <motion.div
                   whileHover={{ scale: 1.1 }}
@@ -60,7 +69,7 @@ const VideoPlayer = ({ url, title, thumbnail, ratio = 16 / 9 }: VideoPlayerProps
                 </motion.div>
               </button>
             )}
-          </>
+          </Suspense>
         ) : (
           <div className="w-full h-full bg-card animate-pulse" />
         )}

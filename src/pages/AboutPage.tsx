@@ -1,14 +1,10 @@
-import { Helmet } from "react-helmet-async";
-import { MessageCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import PageHero from "@/layouts/PageHero";
-import AnimatedSectionHeader from "@/components/rich-media/AnimatedSectionHeader";
-
-
 import { team } from "@/data/team";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
 import StatsCounter from "@/components/StatsCounter";
 import BigCTA from "@/components/BigCTA";
+import { Reveal } from "@/components/v2/Reveal";
+import SEOHead, { organizationSchema, breadcrumbSchema } from "@/components/SEOHead";
+import heroCity from "@/assets/hero-city.jpg";
 
 const timeline = [
   { year: "2016", title: "קצינים בקבע", description: "איתמר ואלמוג משרתים כקצינים בצה\"ל ומתחילים להתעניין בעולם הנדל\"ן." },
@@ -22,53 +18,66 @@ const timeline = [
   { year: "2026", title: "הקהילה גדלה", description: "עשרות אלפי עוקבים ברשתות, מעל ל-350 לקוחות ותלמידים." },
 ];
 
-
 const AboutPage = () => {
   return (
     <>
-      <Helmet>
-        <title>אודות קרנף נדל"ן | הסיפור שלנו</title>
-        <meta name="description" content="הכירו את קרנף נדל&quot;ן — הצוות, הסיפור, הניסיון. מעל 350 לקוחות ותלמידים ו-8+ שנות ניסיון בליווי השקעות נדל&quot;ן." />
-        <link rel="canonical" href="https://www.karnafnadlan.com/about" />
-      </Helmet>
+      <SEOHead
+        title="סיפורו של הקרנף — איתמר ואלמוג, מייסדי קרנף נדל״ן | אודות"
+        description="הכירו את הצוות שמאחורי קרנף נדל״ן: 8+ שנות מחקר, 375+ עסקאות מלוות, סיפור על שני קצינים שהפכו טעות-יקרה לשיטה לרכישת דירה."
+        path="/about"
+        keywords="קרנף נדל״ן, איתמר נחליאל, אלמוג חכמה, מייסדים, סיפור, ליווי נדל״ן בישראל"
+        jsonLd={[
+          organizationSchema,
+          breadcrumbSchema([
+            { name: "דף הבית", url: "/" },
+            { name: "אודות", url: "/about" },
+          ]),
+        ]}
+      />
 
       <PageHero
+        tag="אודות"
         title="סיפורו של"
         highlight="הקרנף"
         subtitle="2 קצינים צעירים בקבע מחליטים להפוך את התשוקה שלהם לניתוח, נתונים ומספרים ולהקים חברה שעוזרת לאנשים לרכוש דירה בישראל בביטחון מלא."
+        backgroundImage={heroCity}
       />
 
-      {/* Why Karnaf - moved to top */}
-      <section className="py-20">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div >
-              <h2 className="text-display text-3xl md:text-4xl text-foreground mb-6">
-                למה <span className="text-gradient">קרנף?</span>
-              </h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>
-                  הקרנף הוא חיה שנראית מאיימת מבחוץ, אבל בפנים — מגנה על העדר שלה בכל מחיר.
-                  בדיוק ככה אנחנו עובדים: דואגים לאינטרסים שלכם, מגינים עליכם, ודואגים שתגיעו לעסקה הטובה ביותר.
-                </p>
-                <p>
-                  התחלנו מתוך תסכול. ראינו חברים ובני משפחה קונים דירות בלי ידע, משלמים יותר מדי, ומפספסים הזדמנויות.
-                  החלטנו שזה חייב להשתנות.
-                </p>
-                <p>
-                  היום, אחרי מעל 350 לקוחות ותלמידים, אנחנו ממשיכים באותה משימה: לתת לכל ישראלי את הכלים והידע לקנות דירה בצורה חכמה.
-                </p>
-              </div>
+      {/* Why Karnaf */}
+      <section className="py-section-lg bg-background">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div>
+              <Reveal>
+                <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-6 leading-[0.98] tracking-tight">
+                  למה <span className="text-accent">קרנף?</span>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <div className="space-y-4 text-body-lg text-muted-foreground leading-[1.85]">
+                  <p>
+                    הקרנף הוא חיה שנראית מאיימת מבחוץ, אבל בפנים — מגנה על העדר שלה בכל מחיר.
+                    בדיוק ככה אנחנו עובדים: דואגים לאינטרסים שלכם, מגינים עליכם, ודואגים שתגיעו לעסקה הטובה ביותר.
+                  </p>
+                  <p>
+                    התחלנו מתוך תסכול. ראינו חברים ובני משפחה קונים דירות בלי ידע, משלמים יותר מדי, ומפספסים הזדמנויות.
+                    החלטנו שזה חייב להשתנות.
+                  </p>
+                  <p>
+                    היום, אחרי מעל 350 לקוחות ותלמידים, אנחנו ממשיכים באותה משימה: לתת לכל ישראלי את הכלים והידע לקנות דירה בצורה חכמה.
+                  </p>
+                </div>
+              </Reveal>
             </div>
 
-            <div >
-              <div className="rounded-2xl overflow-hidden border border-primary/20 shadow-lg">
-                <div className="flex flex-col items-center justify-center py-16 bg-card">
+            <Reveal delay={0.2}>
+              <div className="rounded-2xl overflow-hidden border border-border shadow-depth-2">
+                <div className="flex flex-col items-center justify-center py-20 bg-card">
                   <p className="text-lg font-bold text-foreground mb-2">הסרטון בדרך</p>
                   <p className="text-sm text-muted-foreground">בקרוב כאן</p>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -76,73 +85,78 @@ const AboutPage = () => {
       <StatsCounter />
 
       {/* Timeline */}
-      <section className="py-20 bg-secondary/30">
-        <div className="container mx-auto px-6 max-w-3xl">
-          <AnimatedSectionHeader
-            title="ציר"
-            highlight="הזמן"
-          />
-          <div className="relative">
-            <div className="absolute right-[19px] top-0 bottom-0 w-0.5 bg-primary/20" />
+      <section className="py-section-lg bg-background">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
+              ציר <span className="text-accent">הזמן</span>
+            </h2>
+          </Reveal>
+
+          <div className="relative max-w-2xl mx-auto">
+            <div className="absolute right-[19px] top-2 bottom-2 w-px bg-primary/15" />
             {timeline.map((item, i) => (
-              <div
-                key={item.year} className="flex gap-6 mb-8 last:mb-0"
-              >
-                <div className="relative flex-shrink-0">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center text-primary font-bold text-xs">
-                    {item.year.slice(2)}
+              <Reveal key={item.year} delay={i * 0.04} y={20}>
+                <div className="flex gap-6 mb-8 last:mb-0">
+                  <div className="relative flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-card border border-primary flex items-center justify-center text-primary font-bold text-xs tabular-nums">
+                      {item.year.slice(2)}
+                    </div>
+                  </div>
+                  <div className="pb-2 pt-1">
+                    <p className="text-eyebrow uppercase tracking-[0.18em] text-accent mb-1 tabular-nums">
+                      {item.year}
+                    </p>
+                    <h4 className="text-foreground font-bold text-lg mb-1">{item.title}</h4>
+                    <p className="text-muted-foreground leading-relaxed">{item.description}</p>
                   </div>
                 </div>
-                <div className="pb-2">
-                  <p className="text-xs text-primary font-bold mb-1">{item.year}</p>
-                  <h4 className="text-foreground font-bold mb-1">{item.title}</h4>
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Team */}
-      <section className="py-20">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <AnimatedSectionHeader
-            title="הצוות"
-            highlight="שלנו"
-          />
+      <section className="py-section-lg bg-background">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
+              הצוות <span className="text-accent">שלנו</span>
+            </h2>
+          </Reveal>
+
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             {team.map((member, i) => (
-              <div
-                key={member.name} className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all group"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  {member.image ? (
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-primary font-bold text-6xl">{member.name.charAt(0)}</span>
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
-                </div>
+              <Reveal key={member.name} delay={i * 0.1}>
+                <article className="bg-card border border-border rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-depth-3">
+                  <div className="relative h-64 overflow-hidden">
+                    {member.image ? (
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-primary/10 flex items-center justify-center">
+                        <span className="text-primary font-bold text-6xl">{member.name.charAt(0)}</span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+                  </div>
 
-                <div className="p-6 -mt-8 relative">
-                  <h4 className="text-foreground font-bold text-xl">{member.name}</h4>
-                  <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{member.bio}</p>
-                </div>
-              </div>
+                  <div className="p-6 -mt-8 relative">
+                    <h4 className="text-foreground font-bold text-xl">{member.name}</h4>
+                    <p className="text-accent text-sm font-bold mb-3">{member.role}</p>
+                    <p className="text-muted-foreground leading-relaxed">{member.bio}</p>
+                  </div>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
-
 
       <BigCTA />
     </>

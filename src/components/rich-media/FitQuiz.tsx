@@ -175,7 +175,7 @@ const FitQuiz = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button className="btn-polygon bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2">
+                <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-7 py-5">
                   <MessageCircle size={18} />
                   בואו נדבר
                 </Button>

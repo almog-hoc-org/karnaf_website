@@ -40,7 +40,12 @@ const Navigation = () => {
     return location.pathname.startsWith(to);
   };
 
-  const isDarkHeroPage = location.pathname === "/course";
+  // Routes whose hero starts on a cinematic dark background.
+  // When the user has not scrolled yet on these, the nav text is light.
+  const darkHeroPrefixes = ["/course", "/preview/v2"];
+  const isDarkHeroPage =
+    location.pathname === "/" ||
+    darkHeroPrefixes.some((p) => location.pathname.startsWith(p));
   const useLightText = isDarkHeroPage && !isScrolled;
 
   return (
@@ -48,21 +53,22 @@ const Navigation = () => {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "py-3 border-b border-white/10 shadow-depth-1"
-            : "py-6"
+            ? "py-3 shadow-depth-2"
+            : "py-5"
         }`}
         style={{
           backgroundColor: isScrolled
-            ? "hsl(var(--background) / 0.6)"
+            ? "hsl(var(--background) / 0.85)"
             : isDarkHeroPage
-              ? "transparent"
-              : "hsl(var(--background) / 0.2)",
-          backdropFilter: isScrolled
-            ? "blur(20px) saturate(1.8)"
-            : "blur(4px)",
-          WebkitBackdropFilter: isScrolled
-            ? "blur(20px) saturate(1.8)"
-            : "blur(4px)",
+              ? "hsl(217 50% 8% / 0.30)"
+              : "hsl(var(--background) / 0.75)",
+          borderBottom: isScrolled
+            ? "1px solid hsl(var(--border))"
+            : isDarkHeroPage
+              ? "1px solid hsl(36 33% 95% / 0.10)"
+              : "1px solid hsl(var(--border) / 0.4)",
+          backdropFilter: "blur(16px) saturate(1.6)",
+          WebkitBackdropFilter: "blur(16px) saturate(1.6)",
         }}
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
@@ -97,7 +103,7 @@ const Navigation = () => {
           <div className="hidden lg:block">
             <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
               <Button
-                className="btn-polygon bg-accent text-accent-foreground font-bold gap-2 px-8 py-2.5"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-8 py-2.5"
               >
                 <MessageCircle size={16} />
                 בואו נדבר
@@ -158,7 +164,7 @@ const Navigation = () => {
                 className="pt-4"
               >
                 <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
-                  <Button className="btn-polygon bg-accent text-accent-foreground font-bold gap-2 px-10 py-3 text-lg">
+                  <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-10 py-3 text-lg">
                     <MessageCircle size={18} />
                     בואו נדבר
                   </Button>

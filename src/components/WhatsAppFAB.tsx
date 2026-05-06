@@ -12,8 +12,11 @@ const WhatsAppFAB = () => (
     transition={{ delay: 2, type: "spring", stiffness: 200 }}
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.95 }}
-    className="fixed z-50 flex items-center gap-2 bg-[#25D366] hover:bg-[#1da851] text-white font-bold px-5 py-3 rounded-full shadow-lg transition-colors duration-300"
-    style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))', right: 'max(1.5rem, env(safe-area-inset-right, 0px))' }}
+    className="fixed z-50 flex items-center gap-2 bg-[#25D366] hover:bg-[#1da851] text-white font-bold px-5 py-3 rounded-full shadow-lg transition-[bottom,right] duration-500 ease-out"
+    style={{
+      bottom: 'calc(max(1.5rem, env(safe-area-inset-bottom, 0px)) + var(--sticky-cta-h, 0px))',
+      right: 'max(1.5rem, env(safe-area-inset-right, 0px))',
+    }}
     aria-label="שלחו הודעה בוואטסאפ"
   >
     <img src={mascotIcon} alt="" className="w-6 h-6 rounded-full object-cover" />

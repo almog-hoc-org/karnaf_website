@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 
 const PremiumPage = () => (
   <>
-    <Helmet>
+    <Head>
       <meta name="robots" content="noindex, nofollow" />
-    </Helmet>
+    </Head>
     <Navigate to="/course" replace />
   </>
 );

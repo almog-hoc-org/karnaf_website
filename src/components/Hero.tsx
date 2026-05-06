@@ -1,174 +1,220 @@
-import { useLayoutEffect, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "./ui/split-text";
-import heroImage from "@/assets/hero-city.jpg";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import heroCity from "@/assets/hero-city.jpg";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
-import { ChevronDown } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const subheadingRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
-  const mascotRef = useRef<HTMLImageElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  // GSAP parallax — single ScrollTrigger timeline
-  useEffect(() => {
-    if (!bgRef.current || !sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      tl.to(bgRef.current, { yPercent: 30, scale: 1.15, ease: "none" }, 0);
-
-      if (contentRef.current) {
-        tl.to(contentRef.current, { opacity: 0, y: -50, ease: "none" }, 0);
-      }
-
-      if (mascotRef.current) {
-        tl.to(mascotRef.current, { yPercent: -15, ease: "none" }, 0);
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  // GSAP entrance animations
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const chars = headingRef.current?.querySelectorAll('.char');
-
-      if (chars && chars.length > 0) {
-        gsap.from(chars, {
-          opacity: 0,
-          y: 80,
-          rotationX: -90,
-          stagger: 0.015,
-          ease: 'back.out(1.5)',
-          duration: 0.7,
-          delay: 0.3,
-          transformOrigin: '0% 50% -50'
-        });
-      }
-
-      if (subheadingRef.current) {
-        gsap.from(subheadingRef.current, {
-          opacity: 0,
-          y: 40,
-          filter: 'blur(10px)',
-          duration: 0.9,
-          delay: 0.8,
-          ease: 'power3.out'
-        });
-      }
-
-      if (ctaRef.current) {
-        gsap.from(ctaRef.current.children, {
-          opacity: 0,
-          y: 30,
-          stagger: 0.15,
-          duration: 0.6,
-          delay: 1.2,
-          ease: 'power2.out'
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.18]);
+  const fade = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  const mascotY = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Parallax Background — GSAP driven */}
-      <div ref={bgRef} className="absolute inset-0 -z-20" style={{ willChange: "transform" }}>
+    <section
+      ref={ref}
+      className="relative min-h-[100svh] flex items-end overflow-hidden"
+      style={{ backgroundColor: "hsl(217 50% 8%)" }}
+    >
+      {/* Cinematic photo background — parallax */}
+      <motion.div
+        className="absolute inset-0"
+        style={reduce ? undefined : { y: bgY, scale: bgScale }}
+        aria-hidden="true"
+      >
         <img
-          src={heroImage}
-          alt="קו רקיע עירוני מודרני"
-          className="w-full h-[120%] object-cover -mt-[10%]"
+          src={heroCity}
+          alt=""
+          className="w-full h-full object-cover"
+          loading="eager"
+          decoding="async"
+          {...{ fetchpriority: "high" }}
+        />
+      </motion.div>
+
+      {/* Layered cinematic gradient */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden
+        style={{
+          background:
+            "linear-gradient(180deg, hsl(217 50% 8% / 0.55) 0%, hsl(217 50% 8% / 0.25) 35%, hsl(217 50% 8% / 0.85) 100%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden
+        style={{
+          background:
+            "radial-gradient(70% 80% at 70% 30%, hsl(24 80% 52% / 0.18) 0%, transparent 70%)",
+        }}
+      />
+      <div className="absolute inset-0 grain-texture pointer-events-none" />
+
+      {/* Content */}
+      <motion.div
+        className="relative z-10 container mx-auto px-6 pb-20 lg:pb-28 pt-32"
+        style={reduce ? undefined : { opacity: fade }}
+      >
+        <div className="grid lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-10 lg:gap-16 items-end">
+          {/* Text */}
+          <div>
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-eyebrow uppercase tracking-[0.32em] mb-6 flex items-center gap-3"
+              style={{ color: "hsl(36 33% 95% / 0.7)" }}
+            >
+              <span className="block w-10 h-px bg-accent" aria-hidden />
+              <span>ליווי נדל״ן מבוסס נתונים</span>
+            </motion.div>
+
+            <motion.h1
+              initial={reduce ? false : { opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="text-display-lg md:text-display-xl font-black text-white leading-[0.95] tracking-tight mb-6"
+            >
+              הדירה הבאה שלכם{" "}
+              <span className="text-accent">מתחילה כאן</span>.
+            </motion.h1>
+
+            <motion.p
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.55 }}
+              className="text-display-sm md:text-display-md font-bold leading-snug max-w-[20ch] mb-5"
+              style={{ color: "hsl(var(--accent))" }}
+            >
+              לקנות דירה חכם ולהימנע מטעויות יקרות
+            </motion.p>
+
+            <motion.p
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.7 }}
+              className="text-body-lg leading-relaxed max-w-[52ch] mb-10"
+              style={{ color: "hsl(36 33% 95% / 0.78)" }}
+            >
+              מלווים אתכם בשיטה מבוססת נתונים — מהצעד הראשון ועד חתימת החוזה.
+              בלי לסמוך על אינטואיציה, בלי טעויות יקרות.
+            </motion.p>
+
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.95 }}
+              className="flex flex-wrap items-center gap-6"
+            >
+              <Link to="/course">
+                <Button
+                  size="lg"
+                  className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all"
+                >
+                  גלו איך קונים דירה חכם
+                  <span
+                    aria-hidden
+                    className="inline-block transition-transform group-hover:-translate-x-1"
+                  >
+                    ←
+                  </span>
+                </Button>
+              </Link>
+              <Link
+                to="/about"
+                className="text-base font-semibold hover:text-accent transition-colors underline-offset-4 hover:underline"
+                style={{ color: "hsl(36 33% 95% / 0.85)" }}
+              >
+                סיפורו של קרנף
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Mascot — kept on desktop, smaller and integrated */}
+          <motion.div
+            className="hidden lg:flex items-end justify-center pointer-events-none"
+            style={reduce ? undefined : { y: mascotY }}
+            aria-hidden
+          >
+            <img
+              src={mascotWelcome}
+              alt=""
+              className="h-[420px] xl:h-[480px] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
+              loading="eager"
+              decoding="async"
+            />
+          </motion.div>
+        </div>
+
+        {/* Trust meta strip */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 1.15 }}
+          className="mt-14 lg:mt-20 pt-8 border-t border-white/15 grid grid-cols-3 gap-4 max-w-2xl"
+          style={{ color: "hsl(36 33% 95% / 0.7)" }}
+        >
+          <div>
+            <div className="text-display-md font-black text-white tabular-nums leading-none mb-1">
+              375+
+            </div>
+            <div className="text-eyebrow uppercase tracking-[0.18em]">
+              לקוחות מרוצים
+            </div>
+          </div>
+          <div>
+            <div className="text-display-md font-black text-white tabular-nums leading-none mb-1">
+              50+
+            </div>
+            <div className="text-eyebrow uppercase tracking-[0.18em]">
+              שיעורים בקורס
+            </div>
+          </div>
+          <div>
+            <div className="text-display-md font-black text-white tabular-nums leading-none mb-1">
+              8+
+            </div>
+            <div className="text-eyebrow uppercase tracking-[0.18em]">
+              שנות מחקר
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Mobile mascot — small floating accent at top-right, well clear of the trust strip */}
+      <div className="absolute top-20 right-3 lg:hidden pointer-events-none opacity-75">
+        <img
+          src={mascotWelcome}
+          alt=""
+          aria-hidden
+          className="h-[96px] object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.4)]"
+          loading="eager"
+          decoding="async"
         />
       </div>
 
-      {/* Clean gradient overlay — stronger on text side for readability */}
-      <div className="absolute inset-0 bg-gradient-to-l from-background via-background/95 to-background/50 -z-10" />
-
-      {/* Content */}
-      <div
-        ref={contentRef}
-        className="relative z-10 container mx-auto px-6 py-32 grid lg:grid-cols-2 gap-12 items-center"
+      {/* Scroll cue */}
+      <motion.div
+        initial={reduce ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 0.6 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-eyebrow uppercase tracking-[0.32em] flex flex-col items-center gap-2"
+        style={{ color: "hsl(36 33% 95% / 0.5)" }}
+        aria-hidden
       >
-        {/* Text Side (Right in RTL) */}
-        <div>
-          <h1
-            ref={headingRef}
-            className="text-display text-display-lg text-foreground mb-4"
-          >
-            <SplitText text="הדירה הבאה שלכם מתחילה כאן" />
-          </h1>
-
-          <p
-            ref={subheadingRef}
-            className="text-display-md text-accent mb-6"
-          >
-            לקנות דירה חכם ולהימנע מטעויות יקרות
-          </p>
-
-          <p className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed mb-8">
-            מלווים אתכם בשיטה מבוססת נתונים — מהצעד הראשון ועד חתימת החוזה. בלי לסמוך על אינטואיציה, בלי טעויות יקרות.
-          </p>
-
-          <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 md:gap-4">
-            <Link to="/course" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                className="w-full btn-polygon bg-accent text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 shadow-glow-accent"
-              >
-                גלו איך קונים דירה חכם
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        {/* Mascot — GSAP parallax */}
-        <div className="hidden lg:flex items-center justify-center pointer-events-none">
-          <img
-            ref={mascotRef}
-            src={mascotWelcome}
-            alt="קרנף נדל״ן — מנופף שלום"
-            className="h-[480px] object-contain mascot-glow mascot-float"
-            style={{
-              willChange: "transform",
-            }}
-          />
-        </div>
-        {/* Mobile mascot */}
-        <div className="flex lg:hidden justify-center pointer-events-none -mt-4 mb-2">
-          <img
-            src={mascotWelcome}
-            alt=""
-            aria-hidden="true"
-            className="h-[140px] object-contain mascot-glow mascot-float"
-          />
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-muted-foreground/50">
-        <ChevronDown size={20} className="animate-bounce" />
-      </div>
+        <span>גלילה</span>
+        <span className="block w-px h-10 bg-white/30 overflow-hidden relative">
+          <span className="absolute inset-x-0 top-0 h-3 bg-accent scroll-cue-dot" />
+        </span>
+      </motion.div>
     </section>
   );
 };

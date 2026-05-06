@@ -54,6 +54,38 @@
     --sidebar-accent-foreground: 215 26% 23%;
     --sidebar-border: 214 32% 91%;
     --sidebar-ring: 24 80% 52%;
+
+    /* Editorial depth tokens — used for cinematic dark sections */
+    --ink: 217 50% 8%;
+    --ink-foreground: 36 33% 95%;
+    --cream-warm: 36 38% 94%;
+    --cream-cool: 33 22% 93%;
+
+    /* Accent variants */
+    --accent-deep: 24 90% 42%;
+    --accent-soft: 24 80% 52% / 0.12;
+    --accent-glow: 24 80% 60%;
+
+    /* Surface alpha scale (for glass / overlays) */
+    --surface-1: 0 0% 100% / 0.5;
+    --surface-2: 0 0% 100% / 0.7;
+    --surface-3: 0 0% 100% / 0.85;
+    --surface-4: 0 0% 100% / 0.95;
+
+    /* Section vertical rhythm */
+    --space-section-sm: 3rem;
+    --space-section-md: 5rem;
+    --space-section-lg: 7rem;
+    --space-section-xl: 10rem;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --space-section-sm: 4rem;
+      --space-section-md: 7rem;
+      --space-section-lg: 10rem;
+      --space-section-xl: 14rem;
+    }
   }
 }
 
@@ -111,16 +143,127 @@
   }
 
   /* Button press feedback — global */
-  button, a[role="button"], .btn-polygon {
+  button, a[role="button"] {
     transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease, box-shadow 0.3s ease;
   }
-  button:active, a[role="button"]:active, .btn-polygon:active {
+  button:active, a[role="button"]:active {
     transform: scale(0.97);
   }
 
   /* Typography utilities */
   .text-display {
     @apply tracking-tight;
+  }
+
+  /* Animated SVG underline accent (squiggle drawn under highlighted word) */
+  @keyframes squiggle-draw {
+    from { stroke-dashoffset: 240; }
+    to { stroke-dashoffset: 0; }
+  }
+  .squiggle-path {
+    stroke-dasharray: 240;
+    stroke-dashoffset: 240;
+    animation: squiggle-draw 1.4s 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .squiggle-path {
+      stroke-dashoffset: 0;
+      animation: none;
+    }
+  }
+
+  /* Animated mesh-gradient hero background — drifting blobs of brand color */
+  .hero-mesh-bg {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(at 18% 22%, hsl(var(--accent) / 0.32) 0%, transparent 45%),
+      radial-gradient(at 82% 16%, hsl(var(--primary) / 0.40) 0%, transparent 55%),
+      radial-gradient(at 28% 78%, hsl(var(--accent) / 0.22) 0%, transparent 50%),
+      radial-gradient(at 78% 82%, hsl(var(--primary) / 0.28) 0%, transparent 55%);
+    animation: mesh-drift 22s ease-in-out infinite alternate;
+  }
+  @keyframes mesh-drift {
+    0%   { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; }
+    50%  { background-position: 30% 12%, 75% 28%, 22% 68%, 70% 92%; }
+    100% { background-position: 8% 18%, 90% 8%, 8% 80%, 92% 78%; }
+  }
+
+  /* Pulsing radial halo behind mascot */
+  @keyframes halo-pulse {
+    0%, 100% { transform: scale(1);   opacity: 0.55; }
+    50%      { transform: scale(1.12); opacity: 0.85; }
+  }
+  .mascot-halo {
+    background: radial-gradient(circle at 50% 50%,
+      hsl(var(--accent) / 0.55) 0%,
+      hsl(var(--accent) / 0.25) 28%,
+      hsl(var(--accent) / 0) 65%);
+    animation: halo-pulse 5.5s ease-in-out infinite;
+    filter: blur(8px);
+  }
+
+  /* Floating ambient particle */
+  @keyframes particle-float {
+    0%   { transform: translate3d(0, 0, 0); opacity: 0.0; }
+    20%  { opacity: 0.9; }
+    80%  { opacity: 0.9; }
+    100% { transform: translate3d(var(--p-x, 60px), var(--p-y, -120px), 0); opacity: 0; }
+  }
+  .particle {
+    animation: particle-float var(--p-dur, 9s) ease-out infinite;
+    animation-delay: var(--p-delay, 0s);
+  }
+
+  /* Marquee strip */
+  @keyframes marquee-rtl {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(50%, 0, 0); }
+  }
+  .marquee-track {
+    animation: marquee-rtl 28s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-mesh-bg,
+    .mascot-halo,
+    .particle,
+    .marquee-track {
+      animation: none !important;
+    }
+    .mascot-halo { opacity: 0.55; }
+  }
+
+  /* Vertical kinetic scroll cue — used at hero bottom in place of chevron */
+  @keyframes scroll-cue-dot {
+    0%   { transform: translateY(-100%); opacity: 0; }
+    20%  { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { transform: translateY(220%); opacity: 0; }
+  }
+  .scroll-cue-dot {
+    animation: scroll-cue-dot 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  /* Word-mask reveal — each word's span sits in an overflow-hidden parent */
+  .word-mask {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: baseline;
+  }
+  .word-mask > .word {
+    display: inline-block;
+    transform: translate3d(0, 110%, 0);
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .word-mask.is-revealed {
+    overflow: visible;
+  }
+  .word-mask.is-revealed > .word {
+    transform: translate3d(0, 0, 0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .word-mask { overflow: visible; }
+    .word-mask > .word { transform: none !important; transition: none !important; }
   }
 
   .text-heading {
@@ -131,23 +274,6 @@
   .text-gradient {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(24 80% 52%), hsl(24 80% 42%), hsl(24 80% 58%));
-  }
-
-  /* Glassmorphism card */
-  .glass-card {
-    @apply bg-card/80 backdrop-blur-xl border border-border/50;
-    box-shadow: var(--shadow-md);
-  }
-
-  /* Clip-path polygon button */
-  .btn-polygon {
-    clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
-    @apply relative overflow-hidden;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .btn-polygon:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 8px 32px hsl(var(--accent) / 0.3);
   }
 
   /* Form focus */
@@ -226,11 +352,6 @@
     background: linear-gradient(to right, transparent, hsl(var(--primary) / 0.15), transparent);
   }
 
-  /* Course page hero */
-  .course-hero-bg {
-    background: linear-gradient(135deg, hsl(217 42% 10%) 0%, hsl(217 40% 14%) 50%, hsl(217 35% 18%) 100%);
-  }
-
   /* Problem/solution backgrounds */
   .problem-bg {
     background: linear-gradient(135deg, hsl(220 15% 95%) 0%, hsl(220 10% 92%) 100%);
@@ -238,7 +359,7 @@
 
   .solution-bg {
     background: linear-gradient(135deg, hsl(24 80% 52% / 0.04) 0%, hsl(24 80% 52% / 0.06) 100%);
-    border-right: 3px solid hsl(24 80% 52% / 0.3);
+    border-inline-start: 3px solid hsl(24 80% 52% / 0.3);
   }
 
   /* Pricing glow */

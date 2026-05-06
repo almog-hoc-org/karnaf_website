@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useGsapReveal } from "@/hooks/use-gsap-reveal";
+import { SectionDark } from "@/components/v2/Section";
+import { Reveal } from "@/components/v2/Reveal";
 
 const WebinarSection = () => {
   const [name, setName] = useState("");
@@ -14,7 +15,6 @@ const WebinarSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
-  const contentRef = useGsapReveal<HTMLDivElement>({ y: 30, stagger: 0.12 });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,74 +51,87 @@ const WebinarSection = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-primary relative overflow-hidden grain-texture">
-      <div className="container mx-auto px-5 md:px-6 relative z-10">
-        <div ref={contentRef} className="max-w-2xl mx-auto text-center">
-          <h2 className="text-display text-display-md text-primary-foreground mb-4">
-            השיעור שהיה חוסך לכם{" "}
-            <span className="text-accent">שנים של טעויות</span>
-          </h2>
+    <SectionDark size="lg" glow="bottom">
+      <div className="container mx-auto px-5 md:px-6">
+        <div className="max-w-2xl mx-auto text-center">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-white mb-5 leading-[0.98] tracking-tight">
+              השיעור שהיה חוסך לכם{" "}
+              <span className="text-accent">שנים של טעויות</span>
+            </h2>
+          </Reveal>
 
-          <p className="text-primary-foreground/70 text-lg mb-10">
-            הירשמו לוובינר הבא שלנו — בחינם, ובלי התחייבות.
-          </p>
-
-          {isSubmitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center justify-center gap-3 py-8"
+          <Reveal delay={0.1}>
+            <p
+              className="text-body-lg mb-10 leading-relaxed"
+              style={{ color: "hsl(36 33% 95% / 0.72)" }}
             >
-              <CheckCircle className="w-10 h-10 text-accent" />
-              <div className="text-right">
-                <p className="text-primary-foreground font-bold text-lg">נרשמתם בהצלחה!</p>
-                <p className="text-primary-foreground/60 text-sm">נשלח לכם פרטים בקרוב</p>
-              </div>
-            </motion.div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
-              <Input
-                autoComplete="name" placeholder="שם מלא"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="bg-white border-white/20 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-xl"
-              />
-              <Input
-                type="email"
-                autoComplete="email" placeholder="אימייל"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-white border-white/20 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-xl"
-              />
-              <Input
-                type="tel"
-                autoComplete="tel" inputMode="tel" placeholder="טלפון"
-                dir="ltr"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-                className="bg-white border-white/20 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-xl"
-              />
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full btn-polygon bg-accent hover:bg-accent/90 text-accent-foreground font-bold h-14 text-lg gap-2"
+              הירשמו לוובינר הבא שלנו — בחינם, ובלי התחייבות.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.18}>
+            {isSubmitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex items-center justify-center gap-3 py-8"
               >
-                {isSubmitting ? (
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : (
-                  <>
-                    <Send size={16} />
-                    הירשמו עכשיו — בחינם
-                  </>
-                )}
-              </Button>
-            </form>
-          )}
+                <CheckCircle className="w-10 h-10 text-accent" />
+                <div className="text-right">
+                  <p className="text-white font-bold text-lg">נרשמתם בהצלחה!</p>
+                  <p className="text-white/60 text-sm">נשלח לכם פרטים בקרוב</p>
+                </div>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
+                <Input
+                  autoComplete="name"
+                  placeholder="שם מלא"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="bg-white/95 border-white/10 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-full px-6"
+                />
+                <Input
+                  type="email"
+                  autoComplete="email"
+                  placeholder="אימייל"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-white/95 border-white/10 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-full px-6"
+                />
+                <Input
+                  type="tel"
+                  autoComplete="tel"
+                  inputMode="tel"
+                  placeholder="טלפון"
+                  dir="ltr"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                  className="bg-white/95 border-white/10 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-full px-6"
+                />
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold h-14 text-lg gap-2 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.45)]"
+                >
+                  {isSubmitting ? (
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <Send size={16} />
+                      הירשמו עכשיו — בחינם
+                    </>
+                  )}
+                </Button>
+              </form>
+            )}
+          </Reveal>
         </div>
       </div>
-    </section>
+    </SectionDark>
   );
 };
 
