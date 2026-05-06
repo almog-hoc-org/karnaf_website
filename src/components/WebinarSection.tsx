@@ -51,7 +51,7 @@ const WebinarSection = () => {
   };
 
   return (
-    <SectionDark size="lg" glow="bottom">
+    <SectionDark size="md" glow="bottom">
       <div className="container mx-auto px-5 md:px-6">
         <div className="max-w-2xl mx-auto text-center">
           <Reveal>

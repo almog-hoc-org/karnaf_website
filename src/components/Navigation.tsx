@@ -113,14 +113,16 @@ const Navigation = () => {
 
           {/* Hamburger — animated 3 lines */}
           <button
-            className={`lg:hidden relative w-8 h-6 flex flex-col justify-between transition-colors ${useLightText ? "text-white" : "text-foreground"}`}
+            className={`lg:hidden relative -m-3 p-3 flex items-center justify-center transition-colors ${useLightText ? "text-white" : "text-foreground"}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
             aria-expanded={isMenuOpen}
           >
-            <span className={`block w-full h-0.5 bg-current transition-all duration-300 origin-right ${isMenuOpen ? "rotate-[-45deg] translate-y-[1px]" : ""}`} />
-            <span className={`block w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? "opacity-0 scale-x-0" : ""}`} />
-            <span className={`block w-full h-0.5 bg-current transition-all duration-300 origin-right ${isMenuOpen ? "rotate-[45deg] -translate-y-[1px]" : ""}`} />
+            <span className="relative w-8 h-6 flex flex-col justify-between">
+              <span className={`block w-full h-0.5 bg-current transition-all duration-300 origin-right ${isMenuOpen ? "rotate-[-45deg] translate-y-[1px]" : ""}`} />
+              <span className={`block w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? "opacity-0 scale-x-0" : ""}`} />
+              <span className={`block w-full h-0.5 bg-current transition-all duration-300 origin-right ${isMenuOpen ? "rotate-[45deg] -translate-y-[1px]" : ""}`} />
+            </span>
           </button>
         </div>
       </nav>

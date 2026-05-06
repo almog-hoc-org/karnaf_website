@@ -85,7 +85,7 @@ const AboutPage = () => {
       <StatsCounter />
 
       {/* Timeline */}
-      <section className="py-section-lg bg-background">
+      <section className="py-section-md bg-background">
         <div className="container mx-auto px-6 max-w-4xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">

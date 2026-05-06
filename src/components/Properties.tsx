@@ -48,7 +48,7 @@ const Properties = () => {
       className="relative py-section-lg bg-background overflow-hidden"
     >
       <div className="container mx-auto px-5 md:px-6">
-        <div className="max-w-3xl mb-12 lg:mb-16">
+        <div className="max-w-3xl mb-10 lg:mb-14">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight">
               הלקוחות שלנו <span className="text-accent">מספרים</span>
