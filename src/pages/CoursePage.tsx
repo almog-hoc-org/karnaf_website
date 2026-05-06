@@ -211,7 +211,7 @@ const CoursePage = () => {
       </section>
 
       {/* 2. Trust bar */}
-      <section className="py-10 bg-card border-y border-border">
+      <section className="py-section-sm bg-card border-y border-border">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
             {highlights.map((h, i) => (

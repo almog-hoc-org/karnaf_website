@@ -48,7 +48,7 @@ const Services = () => {
   return (
     <SectionDark id="services" size="lg" glow="top-end">
       <div className="container mx-auto px-5 md:px-6">
-        <div className="max-w-3xl mb-12 lg:mb-20">
+        <div className="max-w-3xl mb-10 lg:mb-14">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black leading-[0.98] tracking-tight text-white">
               הדרך לדירה — <span className="text-accent">מה בתוכנית?</span>
