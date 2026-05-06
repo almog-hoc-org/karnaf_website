@@ -52,13 +52,13 @@ const NotFound = () => {
 
           <Reveal delay={0.28}>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/">
+              <Link to="/" className="inline-block">
                 <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-8 py-5 shadow-[0_0_60px_hsl(var(--accent)/0.35)]">
                   <Home size={18} />
                   חזרה לדף הבית
                 </Button>
               </Link>
-              <Link to="/contact">
+              <Link to="/contact" className="inline-block">
                 <Button
                   variant="outline"
                   className="border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground font-bold gap-2 rounded-full px-8 py-5"

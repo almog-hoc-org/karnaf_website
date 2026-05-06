@@ -66,7 +66,7 @@ const About = () => {
             </Reveal>
 
             <Reveal delay={0.28}>
-              <Link to="/about">
+              <Link to="/about" className="inline-block">
                 <Button
                   variant="outline"
                   className="border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground font-bold gap-2 rounded-full px-7 py-5"

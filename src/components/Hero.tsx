@@ -114,7 +114,7 @@ const Hero = () => {
               transition={{ duration: 0.7, delay: 0.95 }}
               className="flex flex-wrap items-center gap-6"
             >
-              <Link to="/course">
+              <Link to="/course" className="inline-block">
                 <Button
                   size="lg"
                   className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all"
@@ -130,7 +130,7 @@ const Hero = () => {
               </Link>
               <Link
                 to="/about"
-                className="text-base font-semibold hover:text-accent transition-colors underline-offset-4 hover:underline"
+                className="inline-flex items-center text-base font-semibold hover:text-accent transition-colors underline-offset-4 hover:underline px-3 py-3 -mx-3 -my-3 min-h-[44px]"
                 style={{ color: "hsl(36 33% 95% / 0.85)" }}
               >
                 סיפורו של קרנף
@@ -159,7 +159,7 @@ const Hero = () => {
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 1.15 }}
-          className="mt-14 lg:mt-20 pt-8 border-t border-white/15 grid grid-cols-3 gap-4 max-w-2xl"
+          className="mt-14 lg:mt-20 pt-8 border-t border-white/15 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 max-w-2xl"
           style={{ color: "hsl(36 33% 95% / 0.7)" }}
         >
           <div>

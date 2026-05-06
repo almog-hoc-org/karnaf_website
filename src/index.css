@@ -66,6 +66,10 @@
     --accent-soft: 24 80% 52% / 0.12;
     --accent-glow: 24 80% 60%;
 
+    /* Brand fixed colors (3rd-party marks, must match exact spec) */
+    --whatsapp: 142 70% 49%;
+    --whatsapp-deep: 142 75% 39%;
+
     /* Surface alpha scale (for glass / overlays) */
     --surface-1: 0 0% 100% / 0.5;
     --surface-2: 0 0% 100% / 0.7;
@@ -180,7 +184,7 @@
       radial-gradient(at 82% 16%, hsl(var(--primary) / 0.40) 0%, transparent 55%),
       radial-gradient(at 28% 78%, hsl(var(--accent) / 0.22) 0%, transparent 50%),
       radial-gradient(at 78% 82%, hsl(var(--primary) / 0.28) 0%, transparent 55%);
-    animation: mesh-drift 22s ease-in-out infinite alternate;
+    animation: mesh-drift 75s ease-in-out infinite alternate;
   }
   @keyframes mesh-drift {
     0%   { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; }
@@ -188,17 +192,12 @@
     100% { background-position: 8% 18%, 90% 8%, 8% 80%, 92% 78%; }
   }
 
-  /* Pulsing radial halo behind mascot */
-  @keyframes halo-pulse {
-    0%, 100% { transform: scale(1);   opacity: 0.55; }
-    50%      { transform: scale(1.12); opacity: 0.85; }
-  }
+  /* Static radial halo behind mascot — animation removed per anti-pattern audit */
   .mascot-halo {
     background: radial-gradient(circle at 50% 50%,
-      hsl(var(--accent) / 0.55) 0%,
-      hsl(var(--accent) / 0.25) 28%,
+      hsl(var(--accent) / 0.5) 0%,
+      hsl(var(--accent) / 0.22) 28%,
       hsl(var(--accent) / 0) 65%);
-    animation: halo-pulse 5.5s ease-in-out infinite;
     filter: blur(8px);
   }
 
@@ -225,12 +224,10 @@
 
   @media (prefers-reduced-motion: reduce) {
     .hero-mesh-bg,
-    .mascot-halo,
     .particle,
     .marquee-track {
       animation: none !important;
     }
-    .mascot-halo { opacity: 0.55; }
   }
 
   /* Vertical kinetic scroll cue — used at hero bottom in place of chevron */
@@ -270,16 +267,38 @@
     @apply font-bold leading-tight;
   }
 
-  /* Gradient text */
-  .text-gradient {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(24 80% 52%), hsl(24 80% 42%), hsl(24 80% 58%));
-  }
-
   /* Form focus */
   .input-focus-glow:focus {
     @apply ring-2 ring-primary ring-offset-2;
     box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+  }
+
+  /* Range slider thumb — mobile-friendly hit area (≥44px hit, 22px visual) */
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 9999px;
+    background: hsl(var(--accent));
+    border: 2px solid hsl(36 33% 95%);
+    box-shadow: 0 2px 8px hsl(var(--accent) / 0.4);
+    cursor: pointer;
+    margin-top: -9px;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 9999px;
+    background: hsl(var(--accent));
+    border: 2px solid hsl(36 33% 95%);
+    box-shadow: 0 2px 8px hsl(var(--accent) / 0.4);
+    cursor: pointer;
+  }
+  input[type="range"] {
+    /* Expand vertical hit-area via padding without changing track visual */
+    padding-block: 12px;
+    margin-block: -12px;
   }
 
   /* Error shake */

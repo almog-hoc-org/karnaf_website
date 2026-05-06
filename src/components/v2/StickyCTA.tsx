@@ -94,8 +94,8 @@ export const StickyCTA = ({
             >
               WhatsApp
             </a>
-            <Link to={ctaHref}>
-              <button className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-bold text-sm md:text-base px-5 md:px-7 py-2.5 md:py-3 rounded-full hover:bg-accent/90 transition-colors">
+            <Link to={ctaHref} className="inline-block">
+              <button className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-bold text-sm md:text-base px-5 md:px-7 min-h-[44px] py-2.5 md:py-3 rounded-full hover:bg-accent/90 transition-colors">
                 {ctaLabel}
                 <span aria-hidden>←</span>
               </button>

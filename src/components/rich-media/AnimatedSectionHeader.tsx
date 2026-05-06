@@ -36,7 +36,7 @@ const AnimatedSectionHeader = ({
         className="text-display text-2xl md:text-5xl lg:text-6xl text-foreground mb-2 md:mb-3"
       >
         {title}{" "}
-        {highlight && <span className="text-gradient">{highlight}</span>}
+        {highlight && <span className="text-accent">{highlight}</span>}
       </motion.h2>
 
       {subtitle && (

@@ -4,14 +4,37 @@ const FooterBar = () => (
   <footer className="py-8 border-t border-border">
     <div className="container mx-auto px-6">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <Link to="/" className="font-black text-primary text-xl tracking-tight hover:opacity-80 transition-opacity">
+        <Link
+          to="/"
+          className="inline-flex items-center font-black text-primary text-xl tracking-tight hover:opacity-80 transition-opacity min-h-[44px] px-2 -mx-2"
+        >
           קרנף נדל״ן
         </Link>
-        <nav className="flex items-center gap-6 text-sm text-muted-foreground">
-          <Link to="/course" className="hover:text-primary transition-colors">הדרך לדירה</Link>
-          <Link to="/about" className="hover:text-primary transition-colors">אודות</Link>
-          <Link to="/testimonials" className="hover:text-primary transition-colors">סיפורי הצלחה</Link>
-          <Link to="/contact" className="hover:text-primary transition-colors">צור קשר</Link>
+        <nav className="flex items-center gap-1 sm:gap-2 text-sm text-muted-foreground flex-wrap justify-center">
+          <Link
+            to="/course"
+            className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
+          >
+            הדרך לדירה
+          </Link>
+          <Link
+            to="/about"
+            className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
+          >
+            אודות
+          </Link>
+          <Link
+            to="/testimonials"
+            className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
+          >
+            סיפורי הצלחה
+          </Link>
+          <Link
+            to="/contact"
+            className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
+          >
+            צור קשר
+          </Link>
         </nav>
         <div className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} קרנף נדל"ן. כל הזכויות שמורות.

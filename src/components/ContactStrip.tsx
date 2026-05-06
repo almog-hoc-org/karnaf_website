@@ -38,8 +38,7 @@ const ContactStrip = () => {
 
       setIsSubmitted(true);
       toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });
-    } catch (err) {
-      console.error("Lead submit error:", err);
+    } catch {
       toast({ title: "שגיאה בשליחה", description: "נסו שוב או צרו קשר בוואטסאפ.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);

@@ -155,10 +155,10 @@ export const RoiCalculator = () => {
 
   return (
     <div
-      className="rounded-2xl p-6 md:p-10 backdrop-blur-sm"
+      className="rounded-2xl p-6 md:p-10"
       style={{
-        backgroundColor: "hsl(36 33% 95% / 0.04)",
-        border: "1px solid hsl(36 33% 95% / 0.12)",
+        backgroundColor: "hsl(36 33% 95% / 0.06)",
+        border: "1px solid hsl(36 33% 95% / 0.14)",
       }}
     >
       {/* Top tagline — anchors the audience and the math frame */}

@@ -30,11 +30,12 @@ const testimonials = [
 ];
 
 const StarRating = ({ rating }: { rating: number }) => (
-  <div className="flex gap-1">
+  <div className="flex gap-1" role="img" aria-label={`דירוג ${rating} מתוך 5`}>
     {Array.from({ length: 5 }).map((_, i) => (
       <Star
         key={i}
         size={16}
+        aria-hidden="true"
         className={i < rating ? "fill-accent text-accent" : "text-muted-foreground/30"}
       />
     ))}
@@ -90,7 +91,7 @@ const Properties = () => {
 
         <Reveal delay={0.4}>
           <div className="text-center mt-12 lg:mt-16">
-            <Link to="/testimonials">
+            <Link to="/testimonials" className="inline-block">
               <Button
                 variant="outline"
                 className="border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground font-bold gap-2 rounded-full px-8 py-5"
