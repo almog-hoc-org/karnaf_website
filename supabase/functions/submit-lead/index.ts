@@ -12,8 +12,19 @@ const MAX_PHONE = 20;
 const MAX_EMAIL = 254;
 const MAX_SOURCE = 50;
 const MAX_MESSAGE = 1000;
-const ALLOWED_SERVICES = ["derech", "webinar", "waitlist"];
-const ALLOWED_SOURCES = ["contact-strip", "footer", "website", "services-page", "course-page", "course-waitlist"];
+const MAX_STAGE = 100;
+const MAX_EQUITY = 100;
+const ALLOWED_SERVICES = ["derech", "webinar", "waitlist", "fit-call"];
+const ALLOWED_SOURCES = [
+  "contact-strip",
+  "footer",
+  "website",
+  "services-page",
+  "course-page",
+  "course-waitlist",
+  "fit-call-strip",
+  "fit-call-section",
+];
 const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const PHONE_REGEX = /^[\d\s\-+()]{7,20}$/;
 
@@ -66,6 +77,8 @@ Deno.serve(async (req) => {
     const service = sanitizeString(body.service, 30);
     const source = sanitizeString(body.source, MAX_SOURCE);
     const message = sanitizeString(body.message, MAX_MESSAGE);
+    const stage = sanitizeString(body.stage, MAX_STAGE);
+    const equity = sanitizeString(body.equity, MAX_EQUITY);
 
     if (!name || !phone) {
       return new Response(
@@ -90,6 +103,42 @@ Deno.serve(async (req) => {
 
     const validatedService = service && ALLOWED_SERVICES.includes(service) ? service : null;
     const validatedSource = source && ALLOWED_SOURCES.includes(source) ? source : "website";
+
+    const crmPayload = {
+      full_name: name,
+      phone,
+      email: email || null,
+      source: mapWebsiteSourceToCrm(validatedSource, validatedService),
+      source_detail: validatedSource,
+      campaign_name: "karnaf_website",
+      service: validatedService,
+      stage: stage || null,
+      equity: equity || null,
+      message: message || null,
+      website_payload: {
+        name,
+        phone,
+        email: email || null,
+        service: validatedService,
+        original_service: service || null,
+        source: validatedSource,
+        original_source: source || null,
+        stage: stage || null,
+        equity: equity || null,
+        message: message || null,
+      },
+    };
+
+    // Forward every accepted website lead into the CRM intake pipeline.
+    // This is intentionally server-side so the CRM webhook secret never reaches the browser.
+    const crmForward = await forwardLeadToCrm(crmPayload);
+    if (!crmForward.ok) {
+      console.error("CRM intake forward failed:", crmForward.reason);
+      return new Response(
+        JSON.stringify({ error: "לא הצלחנו לקלוט את הליד במערכת ה-CRM. נסו שוב או צרו קשר בוואטסאפ." }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     // 1. Save lead to database
     const { error: dbError } = await supabase.from("leads").insert({
@@ -196,7 +245,7 @@ Deno.serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ success: true }),
+      JSON.stringify({ success: true, crmForwarded: crmForward.ok }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {
@@ -207,6 +256,65 @@ Deno.serve(async (req) => {
     );
   }
 });
+
+function mapWebsiteSourceToCrm(source: string, service: string | null): string {
+  if (source.includes("webinar") || service === "webinar") return "webinar";
+  if (source === "course-waitlist" || service === "waitlist") return "lead_magnet";
+  return "responder_form";
+}
+
+async function forwardLeadToCrm(payload: Record<string, unknown>): Promise<{ ok: boolean; reason?: string }> {
+  const url = Deno.env.get("CRM_LEADS_INTAKE_URL");
+  const secret = Deno.env.get("CRM_INTAKE_WEBHOOK_SECRET");
+
+  if (!url || !secret) {
+    return { ok: false, reason: "missing_crm_intake_env" };
+  }
+
+  try {
+    const body = JSON.stringify(payload);
+    const signature = await hmacSha256Hex(secret, body);
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-karnaf-signature": `sha256=${signature}`,
+        "idempotency-key": await sha256Hex(body),
+      },
+      body,
+    });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      return { ok: false, reason: `crm_intake_${res.status}:${text.slice(0, 200)}` };
+    }
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, reason: String(err) };
+  }
+}
+
+async function hmacSha256Hex(secret: string, body: string): Promise<string> {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const signature = await crypto.subtle.sign("HMAC", key, enc.encode(body));
+  return bytesToHex(new Uint8Array(signature));
+}
+
+async function sha256Hex(body: string): Promise<string> {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(body));
+  return bytesToHex(new Uint8Array(digest));
+}
+
+function bytesToHex(bytes: Uint8Array): string {
+  return Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
 
 // Helper: base64url encode
 function base64url(input: string | Uint8Array): string {
