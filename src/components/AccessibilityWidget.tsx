@@ -107,7 +107,9 @@ const AccessibilityWidget = () => {
     applySettings(settings);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    } catch {}
+    } catch {
+      // Ignore storage failures in private/blocked browsing contexts.
+    }
   }, [settings, applySettings]);
 
   const update = (key: keyof AccessibilitySettings, value: boolean | number) => {

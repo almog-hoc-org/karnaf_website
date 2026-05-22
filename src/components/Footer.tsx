@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MessageCircle, Send, CheckCircle, Phone, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { WHATSAPP_NUMBER, socialLinks, TIKTOK_URL } from "@/lib/constants";
-import { supabase } from "@/integrations/supabase/client";
+import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { Reveal } from "@/components/v2/Reveal";
 
 const Footer = () => {
@@ -25,11 +25,7 @@ const Footer = () => {
     }
 
     try {
-      const { error } = await supabase.functions.invoke("submit-lead", {
-        body: { name, phone, service, source: "footer" },
-      });
-
-      if (error) throw error;
+      await submitWebsiteLead({ name, phone, service, source: "footer" });
 
       setIsSubmitted(true);
       toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });

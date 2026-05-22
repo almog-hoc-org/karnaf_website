@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { Reveal } from "@/components/v2/Reveal";
 
 const ContactStrip = () => {
@@ -30,11 +30,7 @@ const ContactStrip = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.functions.invoke("submit-lead", {
-        body: { name, phone, email, service, message, source: "contact-strip" },
-      });
-
-      if (error) throw error;
+      await submitWebsiteLead({ name, phone, email, service, message, source: "contact-strip" });
 
       setIsSubmitted(true);
       toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });

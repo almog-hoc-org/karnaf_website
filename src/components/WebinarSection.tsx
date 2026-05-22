@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { SectionDark } from "@/components/v2/Section";
 import { Reveal } from "@/components/v2/Reveal";
 
@@ -27,11 +27,7 @@ const WebinarSection = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.functions.invoke("submit-lead", {
-        body: { name, phone, email, service: "webinar", source: "webinar-section" },
-      });
-
-      if (error) throw error;
+      await submitWebsiteLead({ name, phone, email, service: "webinar", source: "webinar-section" });
 
       setIsSubmitted(true);
       toast({ title: "נרשמתם בהצלחה!", description: "נשלח לכם פרטים בקרוב." });
