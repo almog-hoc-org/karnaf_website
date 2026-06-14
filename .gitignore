@@ -32,3 +32,4 @@ dist-ssr
 # Claude Code session lock
 .claude/scheduled_tasks.lock
 .claude/
+.vercel
