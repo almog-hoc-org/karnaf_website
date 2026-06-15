@@ -30,7 +30,7 @@ const ContactStrip = () => {
     setIsSubmitting(true);
 
     try {
-      await submitWebsiteLead({ name, phone, email, service, message, source: "contact-strip" });
+      await submitWebsiteLead({ name, phone, email, service, message, source: "website" });
 
       setIsSubmitted(true);
       toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });

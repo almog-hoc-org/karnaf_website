@@ -25,7 +25,7 @@ const Footer = () => {
     }
 
     try {
-      await submitWebsiteLead({ name, phone, service, source: "footer" });
+      await submitWebsiteLead({ name, phone, service, source: "website" });
 
       setIsSubmitted(true);
       toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });
