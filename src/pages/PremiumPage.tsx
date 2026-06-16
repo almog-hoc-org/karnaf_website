@@ -10,7 +10,9 @@ import {
   MessageCircle,
   Send,
   CheckCircle,
-  Star,
+  Users,
+  LineChart,
+  Scale,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +23,6 @@ import { Reveal } from "@/components/v2/Reveal";
 import { useToast } from "@/hooks/use-toast";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
-import { testimonials } from "@/data/testimonials";
 import SEOHead, {
   organizationSchema,
   serviceSchema,
@@ -81,7 +82,31 @@ const included = [
   "ליווי צמוד מהצעד הראשון ועד חתימת החוזה",
 ];
 
-const premiumTestimonials = testimonials.filter((t) => t.service === "premium").slice(0, 4);
+/* What makes 1:1 premium investor guidance different — honest brand
+   positioning, not customer quotes. Real investor testimonials will be
+   added here once provided. */
+const differentiators = [
+  {
+    icon: Users,
+    title: "אחד על אחד, לא קבוצה",
+    body: "אנליסט אישי שמכיר אתכם, את התקציב שלכם ואת כל עסקה שאתם שוקלים — לא מענה גנרי לכולם.",
+  },
+  {
+    icon: LineChart,
+    title: "נתונים, לא תחושות",
+    body: "כל המלצה מגובה בניתוח פיננסי מסודר — תשואה, סיכון ופוטנציאל. מספרים מחליטים, לא רגש.",
+  },
+  {
+    icon: KeyRound,
+    title: "עד החתימה, לא עד ההרשמה",
+    body: "אנחנו לצידכם בכל שלב — מהאסטרטגיה, דרך המו״מ, ועד הרגע שאתם חותמים על הנכס.",
+  },
+  {
+    icon: Scale,
+    title: "אינטרס אחד — שלכם",
+    body: "אנחנו יושבים לצידכם בשולחן, לא מולכם. המטרה היחידה שלנו היא שתסגרו את העסקה הנכונה.",
+  },
+];
 
 const InvestorForm = () => {
   const [name, setName] = useState("");
@@ -194,19 +219,6 @@ const InvestorForm = () => {
     </form>
   );
 };
-
-const StarRow = ({ rating }: { rating: number }) => (
-  <div className="flex gap-1" role="img" aria-label={`דירוג ${rating} מתוך 5`}>
-    {Array.from({ length: 5 }).map((_, i) => (
-      <Star
-        key={i}
-        size={16}
-        aria-hidden
-        className={i < rating ? "fill-accent text-accent" : "text-muted-foreground/30"}
-      />
-    ))}
-  </div>
-);
 
 const PremiumPage = () => {
   return (
@@ -331,36 +343,28 @@ const PremiumPage = () => {
         </div>
       </section>
 
-      {/* Social proof */}
+      {/* The Karnaf standard — what makes premium 1:1 guidance different */}
       <section className="py-section-lg bg-secondary/40">
         <div className="container mx-auto px-5 md:px-6 max-w-5xl">
           <Reveal>
+            <p className="text-eyebrow uppercase tracking-[0.28em] text-accent mb-4 text-center">
+              הסטנדרט של קרנף
+            </p>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-10 lg:mb-14 text-center">
-              משקיעים שכבר <span className="text-accent">בדרך</span>
+              למה ליווי פרימיום <span className="text-accent">עובד</span>
             </h2>
           </Reveal>
           <div className="grid md:grid-cols-2 gap-6">
-            {premiumTestimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.08}>
+            {differentiators.map((d, i) => (
+              <Reveal key={d.title} delay={i * 0.08}>
                 <article className="h-full flex flex-col bg-card rounded-2xl shadow-depth-2 border border-border/40 p-6 lg:p-8">
-                  <StarRow rating={t.rating} />
-                  <p className="text-foreground/90 leading-[1.85] mt-5 mb-6 flex-1">"{t.quote}"</p>
-                  <div className="pt-5 border-t border-border flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center text-accent font-bold">
-                        {t.name.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="text-foreground font-bold leading-tight">{t.name}</p>
-                        <p className="text-eyebrow uppercase tracking-[0.16em] text-muted-foreground mt-1">
-                          {t.role}
-                        </p>
-                      </div>
-                    </div>
-                    {t.metric && (
-                      <span className="text-xs font-bold text-accent text-left shrink-0">{t.metric}</span>
-                    )}
-                  </div>
+                  <span className="inline-flex w-12 h-12 rounded-full bg-accent/10 border border-accent/20 items-center justify-center text-accent mb-5">
+                    <d.icon size={22} />
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 leading-snug">
+                    {d.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-[1.85]">{d.body}</p>
                 </article>
               </Reveal>
             ))}
