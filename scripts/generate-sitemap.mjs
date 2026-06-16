@@ -37,6 +37,7 @@ function readArticles() {
 const STATIC_ROUTES = [
   { loc: "/",             priority: "1.0", changefreq: "weekly"  },
   { loc: "/course",       priority: "0.9", changefreq: "weekly"  },
+  { loc: "/premium",      priority: "0.9", changefreq: "weekly"  },
   { loc: "/about",        priority: "0.7", changefreq: "monthly" },
   { loc: "/testimonials", priority: "0.8", changefreq: "weekly"  },
   { loc: "/contact",      priority: "0.6", changefreq: "monthly" },

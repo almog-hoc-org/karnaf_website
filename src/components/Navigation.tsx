@@ -9,6 +9,7 @@ import karnafLogo from "@/assets/mascot/karnaf-logo.png";
 const navItems = [
   { label: "דף הבית", to: "/" },
   { label: "הדרך לדירה", to: "/course" },
+  { label: "ליווי משקיעים", to: "/premium" },
   { label: "סיפורו של קרנף", to: "/about" },
   { label: "סיפורי הצלחה", to: "/testimonials" },
   { label: "צור קשר", to: "/contact" },
