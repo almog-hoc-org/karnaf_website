@@ -29,6 +29,7 @@ import SEOHead, {
   breadcrumbSchema,
 } from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
+import foundersImg from "@/assets/program/founders.png";
 
 /* CRM classification for this funnel — change here if the CRM expects
    a different value for investor-guidance leads. */
@@ -388,6 +389,50 @@ const PremiumPage = () => {
               ))}
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Founders' note — authentic, first-person, eye-level */}
+      <section className="py-section-lg bg-background">
+        <div className="container mx-auto px-5 md:px-6 max-w-5xl">
+          <div className="grid md:grid-cols-[auto_1fr] gap-8 md:gap-14 items-center">
+            <Reveal className="flex justify-center md:justify-start">
+              <div className="w-52 md:w-56 aspect-square rounded-3xl bg-secondary/60 border border-border overflow-hidden flex items-end justify-center shadow-depth-2 shrink-0">
+                <img
+                  src={foundersImg}
+                  alt="איתמר נחליאל ואלמוג חכמה — מייסדי קרנף נדל״ן"
+                  className="w-[88%] object-contain"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="text-eyebrow uppercase tracking-[0.28em] text-accent mb-5">
+                למה אנחנו עושים את זה
+              </p>
+              <div className="space-y-4 text-body-lg text-foreground/85 leading-[1.9]">
+                <p>
+                  ראינו יותר מדי אנשים טובים נכנסים לעסקה הכי גדולה בחיים שלהם —
+                  לבד. סומכים על מתווך שמייצג את המוכר, על תחושת בטן, על ייעוץ
+                  כללי מהאינטרנט. ומשלמים על זה ביוקר.
+                </p>
+                <p>
+                  בשביל זה בנינו את ליווי המשקיעים: שיהיה לכם אנליסט אחד, אישי,
+                  שמכיר אתכם ואת המספרים שלכם — ושנמצא איתכם מהשיחה הראשונה ועד
+                  שאתם חותמים. בלי למכור לכם עסקה, בלי לחץ. רק להביא אתכם להחלטה
+                  הנכונה, בעיניים פקוחות.
+                </p>
+                <p className="text-foreground font-semibold">
+                  זה לא שירות לכולם, וזה בסדר. אבל אם אתם רוצים מישהו מקצועי
+                  שבאמת בצד שלכם — אנחנו כאן.
+                </p>
+              </div>
+              <p className="mt-6 text-foreground font-bold text-lg">
+                — איתמר ואלמוג, קרנף נדל״ן
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
