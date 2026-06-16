@@ -17,6 +17,7 @@ const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogArticlePage = lazy(() => import("./pages/BlogArticlePage"));
+const ProgramPage = lazy(() => import("./pages/ProgramPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -43,6 +44,13 @@ export const routes: RouteRecord[] = [
   {
     element: <RootProviders />,
     children: [
+      {
+        // Standalone hidden landing page — no site nav/footer, noindex,
+        // excluded from sitemap. Reachable only via direct link (/program).
+        path: "program",
+        element: <ProgramPage />,
+        entry: "src/pages/ProgramPage.tsx",
+      },
       {
         element: <SharedLayout />,
         children: [
