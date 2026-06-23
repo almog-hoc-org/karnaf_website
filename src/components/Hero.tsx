@@ -117,9 +117,9 @@ const Hero = () => {
               <Link to="/course" className="inline-block">
                 <Button
                   size="lg"
-                  className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all"
+                  className="group inline-flex items-center gap-3 bg-white hover:bg-white/90 text-accent font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all"
                 >
-                  גלו איך קונים דירה חכם
+                  פרטים על התוכנית שלנו
                   <span
                     aria-hidden
                     className="inline-block transition-transform group-hover:-translate-x-1"
