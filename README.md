@@ -13,12 +13,12 @@
 ## Development
 
 ```bash
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 ## Build
 
 ```bash
-npm run build
+bun run build
 ```
