@@ -286,6 +286,7 @@ const CourseLandingPage = () => {
         title="הדרך לדירה ראשונה — תכנית הליווי של קרנף נדל״ן"
         description="תכנית ליווי מקיפה לרוכשי דירה ראשונה: 50+ שיעורים, פורטל מחשבונים וליווי אישי של אנליסט נדל״ן אנושי. לומדים, מחשבים, מתייעצים."
         path="/derech-ladira"
+        image="https://karnafpreviewredesign.vercel.app/derech-og.jpg"
         noindex
       />
 
