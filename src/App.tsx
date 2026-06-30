@@ -19,6 +19,7 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogArticlePage = lazy(() => import("./pages/BlogArticlePage"));
 const ProgramPage = lazy(() => import("./pages/ProgramPage"));
+const CourseLandingPage = lazy(() => import("./pages/CourseLandingPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -51,6 +52,13 @@ export const routes: RouteRecord[] = [
         path: "program",
         element: <ProgramPage />,
         entry: "src/pages/ProgramPage.tsx",
+      },
+      {
+        // Standalone hidden landing page — cute/friendly course landing,
+        // no site nav/footer, noindex. Reachable via direct link (/derech-ladira).
+        path: "derech-ladira",
+        element: <CourseLandingPage />,
+        entry: "src/pages/CourseLandingPage.tsx",
       },
       {
         element: <SharedLayout />,

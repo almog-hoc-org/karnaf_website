@@ -8,26 +8,26 @@
   :root {
     /* Core palette: 3 colors — Navy, Cream, Amber */
     --background: 36 33% 95%;
-    --foreground: 215 26% 23%;
+    --foreground: 210 28% 24%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 26% 23%;
+    --card-foreground: 210 28% 24%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 26% 23%;
+    --popover-foreground: 210 28% 24%;
 
     /* Primary: Deep Navy */
-    --primary: 217 42% 15%;
+    --primary: 208 44% 21%;
     --primary-foreground: 36 33% 95%;
 
     --secondary: 33 30% 92%;
-    --secondary-foreground: 215 26% 23%;
+    --secondary-foreground: 210 28% 24%;
 
     --muted: 214 32% 95%;
     --muted-foreground: 214 15% 53%;
 
     /* Accent: Rich Amber */
-    --accent: 24 80% 52%;
+    --accent: 20 80% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -35,40 +35,40 @@
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 24 80% 52%;
+    --ring: 20 80% 55%;
 
     --radius: 0.75rem;
 
     /* Layered shadow system */
-    --shadow-color: 217 42% 15%;
+    --shadow-color: 208 44% 21%;
     --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.04), 0 2px 4px hsl(var(--shadow-color) / 0.04);
     --shadow-md: 0 4px 8px hsl(var(--shadow-color) / 0.06), 0 8px 16px hsl(var(--shadow-color) / 0.06);
     --shadow-lg: 0 8px 16px hsl(var(--shadow-color) / 0.08), 0 16px 32px hsl(var(--shadow-color) / 0.08), 0 32px 64px hsl(var(--shadow-color) / 0.06);
     --shadow-xl: 0 16px 32px hsl(var(--shadow-color) / 0.1), 0 32px 64px hsl(var(--shadow-color) / 0.1), 0 64px 128px hsl(var(--shadow-color) / 0.08);
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 215 26% 23%;
-    --sidebar-primary: 217 42% 15%;
+    --sidebar-foreground: 210 28% 24%;
+    --sidebar-primary: 208 44% 21%;
     --sidebar-primary-foreground: 36 33% 95%;
     --sidebar-accent: 33 30% 92%;
-    --sidebar-accent-foreground: 215 26% 23%;
+    --sidebar-accent-foreground: 210 28% 24%;
     --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 24 80% 52%;
+    --sidebar-ring: 20 80% 55%;
 
     /* Editorial depth tokens — used for cinematic dark sections */
-    --ink: 217 50% 8%;
+    --ink: 25 26% 23%;
     --ink-foreground: 36 33% 95%;
     --cream-warm: 36 38% 94%;
     --cream-cool: 33 22% 93%;
 
     /* Accent variants */
-    --accent-deep: 24 90% 42%;
-    --accent-soft: 24 80% 52% / 0.12;
-    --accent-glow: 24 80% 60%;
+    --accent-deep: 20 85% 45%;
+    --accent-soft: 20 80% 55% / 0.12;
+    --accent-glow: 20 82% 62%;
 
     /* Brand fixed colors (3rd-party marks, must match exact spec) */
-    --whatsapp: 142 70% 49%;
-    --whatsapp-deep: 142 75% 39%;
+    --whatsapp: 150 46% 45%;
+    --whatsapp-deep: 150 50% 37%;
 
     /* Surface alpha scale (for glass / overlays) */
     --surface-1: 0 0% 100% / 0.5;
@@ -107,6 +107,9 @@
     font-family: 'Rubik', sans-serif;
     touch-action: manipulation;
     -webkit-tap-highlight-color: hsl(var(--accent) / 0.15);
+    background-image: radial-gradient(hsl(30 35% 45% / 0.05) 1px, transparent 1px);
+    background-size: 15px 15px;
+    background-attachment: fixed;
   }
 
   /* Global focus-visible ring */
@@ -323,7 +326,7 @@
 
   /* Mascot utilities */
   .mascot-glow {
-    filter: drop-shadow(0 16px 40px hsl(217 42% 15% / 0.2));
+    filter: drop-shadow(0 16px 40px hsl(208 44% 21% / 0.2));
   }
 
   .mascot-float {
@@ -377,8 +380,8 @@
   }
 
   .solution-bg {
-    background: linear-gradient(135deg, hsl(24 80% 52% / 0.04) 0%, hsl(24 80% 52% / 0.06) 100%);
-    border-inline-start: 3px solid hsl(24 80% 52% / 0.3);
+    background: linear-gradient(135deg, hsl(20 80% 55% / 0.04) 0%, hsl(20 80% 55% / 0.06) 100%);
+    border-inline-start: 3px solid hsl(20 80% 55% / 0.3);
   }
 
   /* Pricing glow */
@@ -445,7 +448,7 @@
 
   body.a11y-highlight-links a,
   body.a11y-highlight-links button {
-    outline: 2px solid hsl(24 80% 52%) !important;
+    outline: 2px solid hsl(20 80% 55%) !important;
     outline-offset: 2px;
     text-decoration: underline !important;
   }
@@ -506,6 +509,20 @@
   .program-scope .text-display-lg { font-size: clamp(2rem, 3.6vw, 3.375rem); line-height: 1.12; }
   .program-scope .text-display-xl { font-size: clamp(2.625rem, 6vw, 5.5rem); line-height: 1.05; }
 
+  /* derech-ladira landing — cute rounded brand font (Rubik) for headings.
+     Scoped to .derech-page so /program (Suez One) is unaffected. */
+  .derech-page h1,
+  .derech-page h2,
+  .derech-page h3,
+  .derech-page .text-display-sm,
+  .derech-page .text-display-md,
+  .derech-page .text-display-lg,
+  .derech-page .text-display-xl {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
   /* Button-in-button trailing icon (RTL-aware) */
   .btn-nested-icon {
     display: inline-flex;
@@ -527,8 +544,8 @@
   .bezel-outer-light {
     padding: 0.375rem;
     border-radius: 1.5rem;
-    background: hsl(217 42% 15% / 0.04);
-    border: 1px solid hsl(217 42% 15% / 0.07);
+    background: hsl(208 44% 21% / 0.04);
+    border: 1px solid hsl(208 44% 21% / 0.07);
   }
   .bezel-inner {
     border-radius: calc(1.5rem - 0.375rem);
@@ -563,6 +580,12 @@
   .blueprint-corners:hover::after {
     width: 22px;
     height: 22px;
+  }
+
+  /* Redesign: panel card */
+  .karnaf-panel {
+    border-radius: 2rem;
+    box-shadow: 0 18px 44px hsl(var(--shadow-color) / 0.13);
   }
 
   /* Animated link underline */
