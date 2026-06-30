@@ -7,7 +7,6 @@ import {
   Check,
   ShieldCheck,
   Instagram,
-  Rocket,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
@@ -24,6 +23,7 @@ import supportPhone from "@/assets/derech/support-phone.png";
 import pillarConsult from "@/assets/derech/pillar-consult.png";
 import pillarCalc from "@/assets/derech/pillar-calc.png";
 import pillarLearn from "@/assets/derech/pillar-learn.png";
+import syllabusRhino from "@/assets/derech/syllabus-rhino.png";
 
 /* ────────────────────────────────────────────────────────────
    תשלום — מוכן לחיבור.
@@ -39,6 +39,7 @@ const PAGE_CREAM = "hsl(37 41% 90%)";
 const TINT_WARM = "hsl(41 47% 89%)";
 const TINT_BLUE = "hsl(208 40% 89%)";
 const TINT_CREAM = "hsl(40 44% 92%)";
+const TINT_TEAL = "hsl(172 44% 86%)";
 
 const WA_BUY = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   "היי! אני רוצה להצטרף לתכנית הדרך לדירה"
@@ -122,24 +123,21 @@ const syllabus = [
 
 const tintStyles: Record<
   string,
-  { head: string; panel: string; chip: string; sub: string }
+  { head: string; chip: string; sub: string }
 > = {
   theory: {
     head: "bg-[hsl(36_80%_62%)] text-[hsl(28_55%_20%)]",
-    panel: "bg-[hsl(36_72%_95%)]",
-    chip: "bg-white text-[hsl(28_50%_28%)] border-[hsl(36_55%_76%)]",
+    chip: "bg-[hsl(36_82%_85%)] text-[hsl(28_52%_26%)]",
     sub: "text-[hsl(28_55%_22%)]/75",
   },
   practice: {
     head: "bg-[hsl(12_70%_60%)] text-white",
-    panel: "bg-[hsl(13_72%_95%)]",
-    chip: "bg-white text-[hsl(10_52%_32%)] border-[hsl(13_60%_78%)]",
+    chip: "bg-[hsl(12_78%_89%)] text-[hsl(10_52%_30%)]",
     sub: "text-white/85",
   },
   bonus: {
     head: "bg-[hsl(212_46%_52%)] text-white",
-    panel: "bg-[hsl(210_55%_95%)]",
-    chip: "bg-white text-[hsl(214_42%_32%)] border-[hsl(210_45%_78%)]",
+    chip: "bg-[hsl(210_58%_88%)] text-[hsl(214_45%_30%)]",
     sub: "text-white/85",
   },
 };
@@ -169,13 +167,27 @@ const Reveal = ({
 };
 
 /* כותרת סקשן — אייקון בעיגול + טקסט דו-גוני */
+const iconToneClass: Record<string, string> = {
+  accent: "bg-accent/15 text-accent",
+  blue: "bg-[hsl(208_50%_80%)] text-[hsl(208_65%_32%)]",
+  navy: "bg-primary/12 text-primary",
+  mustard: "bg-[hsl(43_80%_85%)] text-[hsl(38_72%_42%)]",
+  teal: "bg-[hsl(172_45%_78%)] text-[hsl(174_60%_28%)]",
+};
+
 const SectionHeading = ({
   icon: Icon,
   align = "center",
+  iconTone = "accent",
+  size = "md",
+  glow = false,
   children,
 }: {
   icon?: LucideIcon;
   align?: "center" | "start";
+  iconTone?: "accent" | "blue" | "navy" | "mustard" | "teal";
+  size?: "md" | "lg";
+  glow?: boolean;
   children: React.ReactNode;
 }) => (
   <div
@@ -184,19 +196,25 @@ const SectionHeading = ({
     }`}
   >
     {Icon && (
-      <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/15 text-accent shadow-[inset_0_1px_1px_rgba(255,255,255,0.5)]">
+      <span
+        className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.5)] ${iconToneClass[iconTone]}`}
+      >
         <Icon size={24} strokeWidth={1.9} />
       </span>
     )}
-    <h2 className="text-display-md md:text-display-lg leading-tight text-primary">
+    <h2
+      className={`leading-tight text-primary ${
+        size === "lg"
+          ? "text-display-lg md:text-display-xl"
+          : "text-display-md md:text-display-lg"
+      }`}
+      style={glow ? { textShadow: "0 4px 14px rgba(35,45,65,0.22)" } : undefined}
+    >
       {children}
     </h2>
   </div>
 );
 
-const Sky = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[hsl(202_72%_44%)]">{children}</span>
-);
 const Orange = ({ children }: { children: React.ReactNode }) => (
   <span className="text-accent">{children}</span>
 );
@@ -225,7 +243,7 @@ const PageCurtain = () => {
 const ArcTitle = () => (
   <svg
     viewBox="0 -48 600 240"
-    className="mx-auto w-[97%] max-w-[64rem]"
+    className="mx-auto w-full max-w-[60rem]"
     role="img"
     aria-label="הדרך לדירה ראשונה"
   >
@@ -335,7 +353,7 @@ const CourseLandingPage = () => {
         />
 
         <div className="relative z-10 w-full -translate-y-10 md:-translate-y-16">
-          <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-5 py-24 text-center md:px-6">
+          <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-24 text-center md:px-6">
             {/* כותרת בקשת — הדבר המרכזי */}
             <div className="mt-6 w-full md:mt-10">
               <ArcTitle />
@@ -380,7 +398,7 @@ const CourseLandingPage = () => {
               className="karnaf-panel px-6 py-12 text-center md:px-12 md:py-16"
               style={{ backgroundColor: TINT_WARM }}
             >
-              <SectionHeading>
+              <SectionHeading size="lg" glow>
                 תוכנית הדגל <Orange>שלנו</Orange>
               </SectionHeading>
               <p className="text-body-lg mx-auto mt-6 max-w-[54ch] leading-[1.9] text-foreground/75">
@@ -408,7 +426,11 @@ const CourseLandingPage = () => {
             <div className="grid gap-5 md:grid-cols-3 lg:gap-7">
               {pillars.map((p, i) => (
                 <Reveal key={p.title} delay={i * 0.1}>
-                  <article className="bezel-outer-light h-full">
+                  <motion.article
+                    className="bezel-outer-light h-full"
+                    whileHover={reduce ? undefined : { y: [0, -8, 0] }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                  >
                     <div className="bezel-inner blueprint-corners flex h-full flex-col items-center bg-card p-7 text-center lg:p-8">
                       <div className="mb-5 flex h-40 items-end justify-center">
                         <img
@@ -430,7 +452,7 @@ const CourseLandingPage = () => {
                       </p>
                       <p className="leading-[1.8] text-foreground/70">{p.body}</p>
                     </div>
-                  </article>
+                  </motion.article>
                 </Reveal>
               ))}
             </div>
@@ -442,9 +464,18 @@ const CourseLandingPage = () => {
       <section className="pb-section-md md:pb-section-lg">
         <div className="container mx-auto max-w-5xl px-5 md:px-6">
           <div
-            className="karnaf-panel px-6 py-12 md:px-12 md:py-16"
+            className="karnaf-panel relative px-6 py-12 md:px-12 md:py-16"
             style={{ backgroundColor: TINT_CREAM }}
           >
+            {/* קרנף נשען על הגבול הימני, מחוץ לפאנל */}
+            <img
+              src={syllabusRhino}
+              alt=""
+              aria-hidden
+              className="pointer-events-none absolute bottom-0 left-full z-0 hidden w-52 -translate-x-10 object-contain xl:block xl:w-60"
+              loading="lazy"
+              decoding="async"
+            />
             <Reveal className="mb-10 text-center md:mb-12">
               <SectionHeading icon={GraduationCap}>
                 הקורס — <Orange>הסילבוס המלא</Orange>
@@ -455,38 +486,36 @@ const CourseLandingPage = () => {
               </p>
             </Reveal>
 
-            <div className="space-y-5">
+            <div className="relative z-10 space-y-8">
               {syllabus.map((group, gi) => {
                 const t = tintStyles[group.tint];
                 return (
                   <Reveal key={group.key} delay={gi * 0.08}>
-                    <div className="overflow-hidden rounded-2xl shadow-[0_16px_40px_-26px_rgba(20,30,60,0.5)]">
-                      {/* שורת כותרת רחבה */}
-                      <div
-                        className={`flex items-center justify-between gap-3 px-6 py-4 ${t.head}`}
-                      >
-                        <h3 className="text-xl font-black leading-none md:text-2xl">
-                          {group.label}
-                        </h3>
-                        {group.sub && (
-                          <span
-                            className={`rounded-full bg-white/25 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] ${t.sub}`}
-                          >
-                            {group.sub}
-                          </span>
-                        )}
-                      </div>
-                      {/* שיעורים מתחת */}
-                      <div className={`flex flex-wrap gap-2.5 p-5 md:p-6 ${t.panel}`}>
-                        {group.items.map((item) => (
-                          <span
-                            key={item}
-                            className={`inline-flex items-center rounded-lg border px-4 py-2 text-sm font-medium shadow-[0_2px_6px_-3px_rgba(20,30,60,0.25)] ${t.chip}`}
-                          >
-                            {item}
-                          </span>
-                        ))}
-                      </div>
+                    {/* מלבן כותרת עצמאי, ממורכז */}
+                    <div
+                      className={`flex items-center justify-center gap-3 rounded-xl px-6 py-3.5 shadow-[0_10px_28px_-18px_rgba(20,30,60,0.5)] ${t.head}`}
+                    >
+                      <h3 className="text-xl font-black leading-none md:text-2xl">
+                        {group.label}
+                      </h3>
+                      {group.sub && (
+                        <span
+                          className={`rounded-full bg-white/25 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] ${t.sub}`}
+                        >
+                          {group.sub}
+                        </span>
+                      )}
+                    </div>
+                    {/* מלבני שיעורים נפרדים — ממלאים את רוחב השורה */}
+                    <div className="mt-3 flex flex-wrap gap-3">
+                      {group.items.map((item) => (
+                        <span
+                          key={item}
+                          className={`inline-flex flex-1 items-center justify-center rounded-xl px-4 py-3 text-center text-base font-semibold shadow-[0_2px_8px_-4px_rgba(20,30,60,0.3)] min-w-[150px] ${t.chip}`}
+                        >
+                          {item}
+                        </span>
+                      ))}
                     </div>
                   </Reveal>
                 );
@@ -516,7 +545,7 @@ const CourseLandingPage = () => {
               </Reveal>
               {/* טקסט — משמאל */}
               <Reveal delay={0.12}>
-                <SectionHeading icon={Calculator} align="start">
+                <SectionHeading icon={Calculator} iconTone="blue">
                   פורטל <Orange>המחשבונים</Orange>
                 </SectionHeading>
                 <p className="text-body-lg mb-6 mt-6 leading-[1.85] text-foreground/75">
@@ -550,14 +579,23 @@ const CourseLandingPage = () => {
       <section className="pb-section-md md:pb-section-lg">
         <div className="container mx-auto max-w-6xl px-5 md:px-6">
           <div
-            className="karnaf-panel px-6 py-12 md:px-12 md:py-16"
-            style={{ backgroundColor: TINT_WARM }}
+            className="karnaf-panel relative overflow-hidden px-6 py-12 md:px-12 md:py-16"
+            style={{ backgroundColor: TINT_TEAL }}
           >
-            <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            {/* תמונה צמודה לפינה השמאלית-תחתונה (דסקטופ) */}
+            <img
+              src={supportPhone}
+              alt=""
+              aria-hidden
+              className="pointer-events-none absolute bottom-0 left-0 z-0 hidden w-80 object-contain lg:block xl:w-96"
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="relative z-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
               {/* טקסט — מימין (DOM ראשון ב-RTL) */}
               <Reveal>
-                <SectionHeading icon={MessageCircle} align="start">
-                  ליווי אישי <Sky>אנושי</Sky>
+                <SectionHeading icon={MessageCircle} iconTone="teal">
+                  ליווי אישי <Orange>אנושי</Orange>
                 </SectionHeading>
                 <p className="text-body-lg mb-5 mt-6 leading-[1.85] text-foreground/75">
                   לא צ׳אטבוט — אדם. ליווי אישי לאורך כל הדרך, עם מענה לשאלות,
@@ -569,12 +607,12 @@ const CourseLandingPage = () => {
                   שלכם לכל דבר.
                 </p>
               </Reveal>
-              {/* תמונה — משמאל (חיתוך שקוף, פינות מעוגלות) */}
-              <Reveal delay={0.12} className="flex justify-center">
+              {/* תמונה — מובייל בלבד */}
+              <Reveal delay={0.12} className="flex justify-center lg:hidden">
                 <img
                   src={supportPhone}
                   alt="ליווי אישי בוואטסאפ עם אנליסט נדל״ן"
-                  className="w-64 rounded-[1.5rem] object-contain drop-shadow-[0_24px_48px_rgba(20,30,60,0.28)] md:w-80"
+                  className="w-64 object-contain drop-shadow-[0_24px_48px_rgba(20,30,60,0.28)] md:w-80"
                   loading="lazy"
                   decoding="async"
                 />
@@ -588,7 +626,7 @@ const CourseLandingPage = () => {
       <section id="pricing" className="pb-section-md md:pb-section-lg">
         <div className="container mx-auto max-w-2xl px-5 md:px-6">
           <Reveal className="mb-8 text-center">
-            <SectionHeading>
+            <SectionHeading size="lg" glow>
               איך <Orange>מצטרפים?</Orange>
             </SectionHeading>
             <p className="text-body-lg mt-5 text-foreground/70">
@@ -653,7 +691,7 @@ const CourseLandingPage = () => {
       </section>
 
       {/* ===================== רוצים לשמוע עוד? (שמיים full-bleed) ===================== */}
-      <section className="py-section-lg relative overflow-hidden bg-[#0A1230]">
+      <section className="py-section-md relative overflow-hidden bg-[#0A1230]">
         <div
           className="absolute inset-0 opacity-50"
           style={{
@@ -665,14 +703,9 @@ const CourseLandingPage = () => {
         <div className="grain-texture pointer-events-none absolute inset-0" />
         <div className="container relative mx-auto max-w-3xl px-5 text-center md:px-6">
           <Reveal>
-            <div className="mb-4 flex flex-col items-center gap-4">
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/20 text-accent">
-                <Rocket size={24} strokeWidth={1.9} />
-              </span>
-              <h2 className="text-display-md md:text-display-xl leading-tight text-white">
-                רוצים לשמוע <span className="text-accent">עוד?</span>
-              </h2>
-            </div>
+            <h2 className="text-display-md md:text-display-xl mb-4 leading-tight text-white">
+              רוצים לשמוע <span className="text-accent">עוד?</span>
+            </h2>
             <p className="text-body-lg mx-auto mb-10 max-w-[44ch] leading-relaxed text-white/80">
               דברו עם נציג אנושי לכל שאלה שיש לכם על התכנית.
             </p>
