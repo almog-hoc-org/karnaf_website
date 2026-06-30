@@ -39,7 +39,7 @@ const PAGE_CREAM = "hsl(37 41% 90%)";
 const TINT_WARM = "hsl(41 47% 89%)";
 const TINT_BLUE = "hsl(208 40% 89%)";
 const TINT_CREAM = "hsl(40 44% 92%)";
-const TINT_TEAL = "hsl(172 44% 86%)";
+const TINT_TEAL = "hsl(150 44% 86%)";
 
 const WA_BUY = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   "היי! אני רוצה להצטרף לתכנית הדרך לדירה"
@@ -82,42 +82,50 @@ const pillars = [
   },
 ];
 
-/* הסילבוס — גרסת הפולדר (צ'יפים קצרים) */
-const syllabus = [
+/* הסילבוס — לפי "סילבוס הקורס מעודכן" (נושאים גדולים בחלק המעשי = מלבנים על כל השורה) */
+type SyllabusItem = string | { label: string; wide: boolean };
+const syllabus: {
+  key: string;
+  label: string;
+  sub?: string;
+  tint: string;
+  items: SyllabusItem[];
+}[] = [
   {
     key: "theory",
-    label: "תיאוריה",
+    label: "נדל״ן: היסודות",
     tint: "theory",
     items: [
-      "למה נדל״ן?",
-      "תשואה הונית ופירותית",
-      "סוגי עסקאות",
-      "משך ההשקעה",
-      "התחדשות עירונית",
+      "היתרונות של רכישת נדל״ן בישראל",
+      "איך להגדיר משך השקעה",
+      "סוגי העסקאות",
+      "השפה של הרווח: מושגי חובה",
+      "מבינים התחדשות עירונית",
     ],
   },
   {
     key: "practice",
-    label: "פרקטיקה",
+    label: "החלק המעשי",
     tint: "practice",
     items: [
-      "אנשי מקצוע",
-      "Case Study",
-      "תכנון פיננסי",
-      "מו״מ — בסיס ועקרונות",
-      "מו״מ — טכניקות מרכזיות",
-      "מו״מ — פרקטיקה",
-      "מו״מ — גורמי מעטפת",
-      "יורדים לשטח",
-      "עשרת הדיברות",
+      "הדגמת איתור וניתוח עסקה אמיתית",
+      "יורדים לשטח — כל מה שצריך לדעת",
+      "תכנון פיננסי חכם של עסקת נדל״ן",
+      { label: "מאסטר קלאס משא ומתן: כל השיטות והטיפים", wide: true },
+      { label: "נבחרת מנצחת: אנשי המקצוע ואיך לנהל אותם בחכמה", wide: true },
+      { label: "עשרת הדיברות: עשה ואל תעשה בעסקת נדל״ן", wide: true },
     ],
   },
   {
     key: "bonus",
-    label: "מיני קורסים",
-    sub: "בונוס",
+    label: "כספת הידע — מיני קורסים",
     tint: "bonus",
-    items: ["מיסוי נדל״ן", "משכנתא ומימון", "פינוי בינוי", "קרקעות לאנשי מילואים"],
+    items: [
+      "מיסוי נדל״ן — רק מה שצריך לדעת",
+      "פינוי בינוי: ניתוח מהיר ויעיל",
+      "יסודות המשכנתא: כך תנצחו את הבנק",
+      "קרקעות ומכרזים לאנשי מילואים (ולא רק!)",
+    ],
   },
 ];
 
@@ -172,7 +180,7 @@ const iconToneClass: Record<string, string> = {
   blue: "bg-[hsl(208_50%_80%)] text-[hsl(208_65%_32%)]",
   navy: "bg-primary/12 text-primary",
   mustard: "bg-[hsl(43_80%_85%)] text-[hsl(38_72%_42%)]",
-  teal: "bg-[hsl(172_45%_78%)] text-[hsl(174_60%_28%)]",
+  teal: "bg-[hsl(150_44%_78%)] text-[hsl(152_56%_24%)]",
 };
 
 const SectionHeading = ({
@@ -506,16 +514,22 @@ const CourseLandingPage = () => {
                         </span>
                       )}
                     </div>
-                    {/* מלבני שיעורים נפרדים — ממלאים את רוחב השורה */}
+                    {/* מלבני שיעורים נפרדים — ממלאים את רוחב השורה; נושאים גדולים = שורה מלאה */}
                     <div className="mt-3 flex flex-wrap gap-3">
-                      {group.items.map((item) => (
-                        <span
-                          key={item}
-                          className={`inline-flex flex-1 items-center justify-center rounded-xl px-4 py-3 text-center text-base font-semibold shadow-[0_2px_8px_-4px_rgba(20,30,60,0.3)] min-w-[150px] ${t.chip}`}
-                        >
-                          {item}
-                        </span>
-                      ))}
+                      {group.items.map((it) => {
+                        const label = typeof it === "string" ? it : it.label;
+                        const wide = typeof it === "object" && it.wide;
+                        return (
+                          <span
+                            key={label}
+                            className={`inline-flex items-center justify-center rounded-xl px-4 py-3 text-center text-base font-semibold shadow-[0_2px_8px_-4px_rgba(20,30,60,0.3)] ${
+                              wide ? "w-full basis-full" : "min-w-[150px] flex-1"
+                            } ${t.chip}`}
+                          >
+                            {label}
+                          </span>
+                        );
+                      })}
                     </div>
                   </Reveal>
                 );
@@ -529,12 +543,52 @@ const CourseLandingPage = () => {
       <section className="pb-section-md md:pb-section-lg">
         <div className="container mx-auto max-w-6xl px-5 md:px-6">
           <div
-            className="karnaf-panel px-6 py-12 md:px-12 md:py-16"
+            className="karnaf-panel relative overflow-hidden px-6 py-12 md:px-12 md:py-16"
             style={{ backgroundColor: TINT_BLUE }}
           >
-            <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              {/* תמונה — מימין (DOM ראשון ב-RTL) */}
+            {/* תמונה צמודה לפינה הימנית-תחתונה, מגיעה עד מרכז הפאנל (דסקטופ) */}
+            <img
+              src={portalCouch}
+              alt=""
+              aria-hidden
+              className="pointer-events-none absolute bottom-0 right-0 z-0 hidden rounded-tl-[2rem] object-cover lg:block lg:w-1/2"
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="relative z-10">
+              {/* כותרת ואייקון — ממורכזים אופקית */}
               <Reveal>
+                <SectionHeading icon={Calculator} iconTone="blue">
+                  פורטל <Orange>המחשבונים</Orange>
+                </SectionHeading>
+              </Reveal>
+              {/* טקסט — בחצי השמאלי, ממורכז ומיושר לגובה ראש התמונה */}
+              <Reveal delay={0.12} className="lg:pr-[50%] lg:pt-20">
+                <div className="lg:mx-auto lg:max-w-sm lg:text-center">
+                  <p className="text-body-lg mt-6 leading-[1.85] text-foreground/75 lg:mt-0">
+                    פורטל מחשבונים וכלי עזר מתקדמים שיעזרו לכם לקבל החלטות נדל״ן
+                    חכמות — המבוססות על נתונים, ולא על תחושות בטן. כל המחשבונים,
+                    כלי ההשוואה והבדיקות שאתם צריכים, במקום אחד.
+                  </p>
+                  <ul className="mx-auto mt-5 w-fit space-y-3 text-right">
+                    {[
+                      "מחשבון עסקת נדל״ן ומיסוי",
+                      "מחשבון משכנתא וכדאיות",
+                      "צ׳קליסט ביקור בנכס",
+                      "כלי השוואה בין עסקאות",
+                    ].map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-foreground">
+                        <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+                          <Check size={15} strokeWidth={2.4} />
+                        </span>
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+              {/* תמונה — מובייל בלבד */}
+              <Reveal delay={0.2} className="mt-8 lg:hidden">
                 <img
                   src={portalCouch}
                   alt="זוג בוחן את פורטל המחשבונים של קרנף נדל״ן"
@@ -542,33 +596,6 @@ const CourseLandingPage = () => {
                   loading="lazy"
                   decoding="async"
                 />
-              </Reveal>
-              {/* טקסט — משמאל */}
-              <Reveal delay={0.12}>
-                <SectionHeading icon={Calculator} iconTone="blue">
-                  פורטל <Orange>המחשבונים</Orange>
-                </SectionHeading>
-                <p className="text-body-lg mb-6 mt-6 leading-[1.85] text-foreground/75">
-                  החלטות חכמות, מבוססות נתונים. פורטל מחשבונים וכלי עזר מתקדמים
-                  שיעזרו לכם לקבל החלטות נדל״ן חכמות — המבוססות על נתונים, ולא
-                  על תחושות בטן. כל המחשבונים, כלי ההשוואה והבדיקות שאתם צריכים,
-                  במקום אחד.
-                </p>
-                <ul className="space-y-3">
-                  {[
-                    "מחשבון עסקת נדל״ן ומיסוי",
-                    "מחשבון משכנתא וכדאיות",
-                    "צ׳קליסט ביקור בנכס",
-                    "כלי השוואה בין עסקאות",
-                  ].map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-foreground">
-                      <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
-                        <Check size={15} strokeWidth={2.4} />
-                      </span>
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
               </Reveal>
             </div>
           </div>
@@ -591,24 +618,26 @@ const CourseLandingPage = () => {
               loading="lazy"
               decoding="async"
             />
-            <div className="relative z-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              {/* טקסט — מימין (DOM ראשון ב-RTL) */}
-              <Reveal>
-                <SectionHeading icon={MessageCircle} iconTone="teal">
-                  ליווי אישי <Orange>אנושי</Orange>
-                </SectionHeading>
-                <p className="text-body-lg mb-5 mt-6 leading-[1.85] text-foreground/75">
-                  לא צ׳אטבוט — אדם. ליווי אישי לאורך כל הדרך, עם מענה לשאלות,
-                  התלבטויות ודילמות שעולות במהלך תהליך רכישת הדירה. לא תשובות
-                  גנריות — אנליסט נדל״ן אנושי שמכיר אתכם ואת העסקה שלכם.
-                </p>
-                <p className="text-lg font-semibold leading-relaxed text-primary">
-                  מתלבטים? שואלים. בוחנים עסקה? מתייעצים. אנחנו הכתובת המקצועית
-                  שלכם לכל דבר.
-                </p>
+            <div className="relative z-10">
+              {/* טקסט — ממורכז במרחב שמימין לתמונה */}
+              <Reveal className="lg:pl-[34%] xl:pl-[40%]">
+                <div className="lg:mx-auto lg:max-w-lg lg:text-center">
+                  <SectionHeading icon={MessageCircle} iconTone="teal">
+                    ליווי אישי <Orange>אנושי</Orange>
+                  </SectionHeading>
+                  <p className="text-body-lg mb-5 mt-6 leading-[1.85] text-foreground/75">
+                    לא צ׳אטבוט — אדם. ליווי אישי לאורך כל הדרך, עם מענה לשאלות,
+                    התלבטויות ודילמות שעולות במהלך תהליך רכישת הדירה. לא תשובות
+                    גנריות — אנליסט נדל״ן אנושי שמכיר אתכם ואת העסקה שלכם.
+                  </p>
+                  <p className="text-lg font-semibold leading-relaxed text-primary">
+                    מתלבטים? שואלים. בוחנים עסקה? מתייעצים. אנחנו הכתובת המקצועית
+                    שלכם לכל דבר.
+                  </p>
+                </div>
               </Reveal>
               {/* תמונה — מובייל בלבד */}
-              <Reveal delay={0.12} className="flex justify-center lg:hidden">
+              <Reveal delay={0.12} className="mt-8 flex justify-center lg:hidden">
                 <img
                   src={supportPhone}
                   alt="ליווי אישי בוואטסאפ עם אנליסט נדל״ן"
