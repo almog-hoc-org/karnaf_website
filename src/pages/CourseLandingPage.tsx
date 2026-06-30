@@ -24,6 +24,8 @@ import pillarConsult from "@/assets/derech/pillar-consult.png";
 import pillarCalc from "@/assets/derech/pillar-calc.png";
 import pillarLearn from "@/assets/derech/pillar-learn.png";
 import syllabusRhino from "@/assets/derech/syllabus-rhino.png";
+import dancingRhino from "@/assets/derech/dancing-rhino.png";
+import jumpingRhino from "@/assets/derech/jumping-rhino.png";
 
 /* ────────────────────────────────────────────────────────────
    תשלום — מוכן לחיבור.
@@ -337,7 +339,7 @@ const CourseLandingPage = () => {
           src={decoBalloon}
           alt=""
           aria-hidden
-          className="absolute bottom-[16%] -left-14 z-[6] hidden w-28 object-contain sm:block md:-left-20 md:w-40"
+          className="absolute bottom-[31%] -left-14 z-[6] hidden w-28 object-contain sm:block md:-left-20 md:w-40"
           animate={reduce ? undefined : { y: [0, 16, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -440,11 +442,11 @@ const CourseLandingPage = () => {
                     transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
                   >
                     <div className="bezel-inner blueprint-corners flex h-full flex-col items-center bg-card p-7 text-center lg:p-8">
-                      <div className="mb-5 flex h-40 items-end justify-center">
+                      <div className="mb-5 flex h-48 items-end justify-center">
                         <img
                           src={p.img}
                           alt={p.title}
-                          className="max-h-40 w-auto object-contain drop-shadow-[0_14px_24px_rgba(20,30,60,0.18)]"
+                          className="max-h-48 w-auto object-contain drop-shadow-[0_14px_24px_rgba(20,30,60,0.18)]"
                           loading="lazy"
                           decoding="async"
                         />
@@ -652,8 +654,29 @@ const CourseLandingPage = () => {
       </section>
 
       {/* ===================== הצטרפות / תשלום ===================== */}
-      <section id="pricing" className="pb-section-md md:pb-section-lg">
-        <div className="container mx-auto max-w-2xl px-5 md:px-6">
+      <section
+        id="pricing"
+        className="pb-section-md md:pb-section-lg relative overflow-hidden"
+      >
+        {/* קרנף רוקד — משמאל לפאנל */}
+        <img
+          src={dancingRhino}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute bottom-28 left-[8%] z-0 hidden w-36 object-contain lg:bottom-40 lg:block xl:w-44"
+          loading="lazy"
+          decoding="async"
+        />
+        {/* קרנפית קופצת — מימין לפאנל */}
+        <img
+          src={jumpingRhino}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute bottom-28 right-[10%] z-0 hidden w-32 object-contain lg:bottom-40 lg:block xl:w-40"
+          loading="lazy"
+          decoding="async"
+        />
+        <div className="container relative z-10 mx-auto max-w-2xl px-5 md:px-6">
           <Reveal className="mb-8 text-center">
             <SectionHeading size="lg" glow>
               איך <Orange>מצטרפים?</Orange>
