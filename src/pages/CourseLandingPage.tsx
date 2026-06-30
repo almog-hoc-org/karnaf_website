@@ -196,7 +196,7 @@ const SectionHeading = ({
   icon?: LucideIcon;
   align?: "center" | "start";
   iconTone?: "accent" | "blue" | "navy" | "mustard" | "teal";
-  size?: "md" | "lg";
+  size?: "md" | "lg" | "xl";
   glow?: boolean;
   children: React.ReactNode;
 }) => (
@@ -214,9 +214,11 @@ const SectionHeading = ({
     )}
     <h2
       className={`leading-tight text-primary ${
-        size === "lg"
-          ? "text-display-lg md:text-display-xl"
-          : "text-display-md md:text-display-lg"
+        size === "xl"
+          ? "text-[2.7rem] leading-[1.05] md:text-display-xl"
+          : size === "lg"
+            ? "text-display-lg md:text-display-xl"
+            : "text-display-md md:text-display-lg"
       }`}
       style={glow ? { textShadow: "0 4px 14px rgba(35,45,65,0.22)" } : undefined}
     >
@@ -249,29 +251,42 @@ const PageCurtain = () => {
   );
 };
 
-/* כותרת בקשת — טקסט מעוקל ב-SVG */
-const ArcTitle = () => (
-  <svg
-    viewBox="0 -48 600 240"
-    className="mx-auto w-full max-w-[60rem]"
-    role="img"
-    aria-label="הדרך לדירה ראשונה"
-  >
-    <defs>
-      <path id="arc-path" d="M 12 178 A 365 365 0 0 1 588 178" fill="none" />
-    </defs>
-    <text
-      style={{ fontFamily: "'Rubik', system-ui, sans-serif", fontWeight: 800 }}
-      fontSize="68"
-      letterSpacing="0.5"
+/* כותרת בקשת — textPath (ריווח טבעי, בלי חיתוך). כיווניות דטרמיניסטית: המחרוזת מוזנת הפוך
+   עם direction:ltr + unicode-bidi:bidi-override, כך שהסדר זהה ותקין בכל הדפדפנים (כולל מובייל). */
+const ArcTitle = () => {
+  const TITLE = "הדרך לדירה ראשונה";
+  const ACCENT_LEN = "ראשונה".length;
+  const rev = [...TITLE].reverse().join("");
+  const accentPart = rev.slice(0, ACCENT_LEN); // "ראשונה" (משמאל)
+  const whitePart = rev.slice(ACCENT_LEN); // " הדרך לדירה"
+  return (
+    <svg
+      viewBox="0 -48 600 240"
+      className="mx-auto w-full max-w-[60rem]"
+      role="img"
+      aria-label={TITLE}
     >
-      <textPath href="#arc-path" startOffset="50%" textAnchor="middle">
-        <tspan fill="#ffffff">הדרך לדירה </tspan>
-        <tspan fill="hsl(20 90% 58%)">ראשונה</tspan>
-      </textPath>
-    </text>
-  </svg>
-);
+      <defs>
+        <path id="arc-path" d="M 12 178 A 365 365 0 0 1 588 178" fill="none" />
+      </defs>
+      <text
+        fontSize="68"
+        letterSpacing="0.5"
+        style={{
+          fontFamily: "'Rubik', system-ui, sans-serif",
+          fontWeight: 800,
+          direction: "ltr",
+          unicodeBidi: "bidi-override",
+        }}
+      >
+        <textPath href="#arc-path" startOffset="50%" textAnchor="middle">
+          <tspan fill="hsl(20 90% 58%)">{accentPart}</tspan>
+          <tspan fill="#ffffff">{whitePart}</tspan>
+        </textPath>
+      </text>
+    </svg>
+  );
+};
 
 const CourseLandingPage = () => {
   const reduce = useReducedMotion();
@@ -359,7 +374,7 @@ const CourseLandingPage = () => {
           className="pointer-events-none absolute inset-x-0 bottom-0 z-[7] h-72"
           style={{
             background:
-              "linear-gradient(to bottom, hsl(37 41% 90% / 0) 0%, hsl(37 41% 90% / 0) 34%, hsl(37 41% 90% / 0.32) 60%, hsl(37 41% 90% / 0.72) 82%, hsl(37 41% 90%) 100%)",
+              "linear-gradient(to bottom, hsl(37 41% 90% / 0) 0%, hsl(37 41% 90% / 0) 47%, hsl(37 41% 90% / 0.3) 70%, hsl(37 41% 90% / 0.72) 87%, hsl(37 41% 90%) 100%)",
           }}
         />
 
@@ -609,15 +624,15 @@ const CourseLandingPage = () => {
       <section className="pb-section-md md:pb-section-lg">
         <div className="container mx-auto max-w-6xl px-5 md:px-6">
           <div
-            className="karnaf-panel relative overflow-hidden px-6 py-12 md:px-12 md:py-16"
+            className="karnaf-panel relative overflow-hidden px-6 py-12 pb-52 md:px-12 lg:py-16"
             style={{ backgroundColor: TINT_TEAL }}
           >
-            {/* תמונה צמודה לפינה השמאלית-תחתונה (דסקטופ) */}
+            {/* תמונה צמודה לפינה השמאלית-תחתונה (גם מובייל וגם דסקטופ) */}
             <img
               src={supportPhone}
               alt=""
               aria-hidden
-              className="pointer-events-none absolute bottom-0 left-0 z-0 hidden w-80 object-contain lg:block xl:w-96"
+              className="pointer-events-none absolute bottom-0 left-0 z-0 w-40 object-contain sm:w-52 lg:w-80 xl:w-96"
               loading="lazy"
               decoding="async"
             />
@@ -638,16 +653,6 @@ const CourseLandingPage = () => {
                     שלכם לכל דבר.
                   </p>
                 </div>
-              </Reveal>
-              {/* תמונה — מובייל בלבד */}
-              <Reveal delay={0.12} className="mt-8 flex justify-center lg:hidden">
-                <img
-                  src={supportPhone}
-                  alt="ליווי אישי בוואטסאפ עם אנליסט נדל״ן"
-                  className="w-64 object-contain drop-shadow-[0_24px_48px_rgba(20,30,60,0.28)] md:w-80"
-                  loading="lazy"
-                  decoding="async"
-                />
               </Reveal>
             </div>
           </div>
@@ -679,7 +684,7 @@ const CourseLandingPage = () => {
         />
         <div className="container relative z-10 mx-auto max-w-2xl px-5 md:px-6">
           <Reveal className="mb-8 text-center">
-            <SectionHeading size="lg" glow>
+            <SectionHeading size="xl" glow>
               איך <Orange>מצטרפים?</Orange>
             </SectionHeading>
             <p className="text-body-lg mt-5 text-foreground/70">
@@ -756,7 +761,7 @@ const CourseLandingPage = () => {
         <div className="grain-texture pointer-events-none absolute inset-0" />
         <div className="container relative mx-auto max-w-3xl px-5 text-center md:px-6">
           <Reveal>
-            <h2 className="text-display-md md:text-display-xl mb-4 leading-tight text-white">
+            <h2 className="mb-4 text-[2.5rem] leading-[1.05] text-white md:text-display-xl">
               רוצים לשמוע <span className="text-accent">עוד?</span>
             </h2>
             <p className="text-body-lg mx-auto mb-10 max-w-[44ch] leading-relaxed text-white/80">
@@ -769,7 +774,7 @@ const CourseLandingPage = () => {
                 href={WA_BUY}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-[hsl(var(--whatsapp))] px-7 py-4 text-lg font-bold text-white shadow-[0_14px_34px_-8px_hsl(var(--whatsapp)/0.6)] transition-all duration-300 hover:bg-[hsl(var(--whatsapp-deep))] active:scale-[0.98] sm:w-auto"
+                className="inline-flex min-h-[56px] w-60 items-center justify-center gap-3 rounded-full bg-[hsl(var(--whatsapp))] px-7 py-4 text-lg font-bold text-white shadow-[0_14px_34px_-8px_hsl(var(--whatsapp)/0.6)] transition-all duration-300 hover:bg-[hsl(var(--whatsapp-deep))] active:scale-[0.98] sm:w-auto"
               >
                 <WhatsAppIcon className="h-6 w-6" />
                 וואטסאפ
@@ -777,7 +782,7 @@ const CourseLandingPage = () => {
               {/* מייל — תכלת */}
               <a
                 href={`mailto:${EMAIL}`}
-                className="inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-[hsl(202_80%_56%)] px-7 py-4 text-lg font-bold text-white shadow-[0_14px_34px_-8px_hsl(202_80%_56%/0.6)] transition-all duration-300 hover:bg-[hsl(202_80%_50%)] active:scale-[0.98] sm:w-auto"
+                className="inline-flex min-h-[56px] w-60 items-center justify-center gap-3 rounded-full bg-[hsl(202_80%_56%)] px-7 py-4 text-lg font-bold text-white shadow-[0_14px_34px_-8px_hsl(202_80%_56%/0.6)] transition-all duration-300 hover:bg-[hsl(202_80%_50%)] active:scale-[0.98] sm:w-auto"
               >
                 <Mail size={20} strokeWidth={2} />
                 מייל
@@ -787,7 +792,7 @@ const CourseLandingPage = () => {
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full px-7 py-4 text-lg font-bold text-white shadow-[0_14px_34px_-10px_rgba(214,41,118,0.7)] transition-all duration-300 hover:opacity-90 active:scale-[0.98] sm:w-auto"
+                className="inline-flex min-h-[56px] w-60 items-center justify-center gap-3 rounded-full px-7 py-4 text-lg font-bold text-white shadow-[0_14px_34px_-10px_rgba(214,41,118,0.7)] transition-all duration-300 hover:opacity-90 active:scale-[0.98] sm:w-auto"
                 style={{
                   background:
                     "linear-gradient(45deg, #feda75 0%, #fa7e1e 28%, #d62976 58%, #962fbf 80%, #4f5bd5 100%)",
