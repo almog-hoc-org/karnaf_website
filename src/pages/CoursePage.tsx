@@ -123,7 +123,7 @@ const CoursePage = () => {
     <>
       <SEOHead
         title="הדרך לדירה — תוכנית הליווי הדיגיטלית לרכישת דירה ראשונה | קרנף נדל״ן"
-        description="50+ שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון), אנליסט נדל״ן צמוד בוואטסאפ. גישה מלאה ל-12 חודשים. 5,490 ₪."
+        description="50+ שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון), אנליסט נדל״ן צמוד בוואטסאפ. גישה מלאה ל-12 חודשים."
         path="/course"
         keywords="קורס נדל״ן, הדרך לדירה, ליווי רוכשי דירה, דירה ראשונה, מחשבון משכנתא, מס רכישה, השקעה בנדל״ן"
         jsonLd={[
@@ -334,14 +334,6 @@ const CoursePage = () => {
                   הצטרפו ל-300+ בוגרים שכבר רכשו דירה בצורה חכמה.
                 </p>
 
-                <div className="text-display-md md:text-display-lg font-black text-accent mb-10 tabular-nums">
-                  {new Intl.NumberFormat("he-IL", {
-                    style: "currency",
-                    currency: "ILS",
-                    maximumFractionDigits: 0,
-                  }).format(5490)}
-                </div>
-
                 <div className="text-right max-w-sm mx-auto space-y-3 mb-10">
                   {[
                     "50+ שיעורים דיגיטליים",
@@ -369,7 +361,7 @@ const CoursePage = () => {
                     size="lg"
                     className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 w-full sm:w-auto gap-3 mb-4 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.45)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.65)] transition-all"
                   >
-                    לרכישה מאובטחת
+                    להצטרפות ולפרטים
                     <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
                   </Button>
                 </a>

@@ -190,8 +190,6 @@ export const courseSchema = {
     name: "תוכנית הדרך לדירה — גישה מלאה ל-12 חודשים",
     category: "Online Course",
     availability: "https://schema.org/InStock",
-    price: "5490",
-    priceCurrency: "ILS",
     url: `${SITE_URL}/course`,
     validFrom: "2024-01-01",
     eligibleRegion: { "@type": "Country", name: "Israel" },
@@ -370,8 +368,6 @@ export const serviceSchema = {
           description:
             "50+ שיעורים, 6+ מחשבונים, אנליסט בוואטסאפ, גישה 12 חודשים.",
         },
-        price: "5490",
-        priceCurrency: "ILS",
       },
       {
         "@type": "Offer",

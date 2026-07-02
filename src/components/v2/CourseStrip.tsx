@@ -42,8 +42,7 @@ export const CourseStrip = () => {
               className="text-eyebrow uppercase tracking-[0.18em]"
               style={{ color: "hsl(36 33% 95% / 0.65)" }}
             >
-              <span className="text-accent font-mono tabular-nums font-bold">5,490 ₪</span>
-              {" · "}50+ שיעורים{" · "}גישה מיידית{" · "}ליווי צמוד
+              50+ שיעורים{" · "}גישה מיידית{" · "}ליווי צמוד
             </span>
           </div>
         </div>
