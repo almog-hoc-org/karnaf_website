@@ -1,3 +1,5 @@
+import { trackLead } from "@/lib/pixel";
+
 const CRM_WEBSITE_LEADS_URL = "https://svkzkpgccahwmyflobvn.functions.supabase.co/website-leads-intake";
 
 export interface WebsiteLeadPayload {
@@ -28,4 +30,10 @@ export async function submitWebsiteLead(payload: WebsiteLeadPayload): Promise<vo
     }
     throw new Error(errorMessage);
   }
+
+  // Report a successful lead to the Meta Pixel (Hebrew-labelled by form).
+  trackLead(payload.source, {
+    service: payload.service,
+    equity: payload.equity,
+  });
 }

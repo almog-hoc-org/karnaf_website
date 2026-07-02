@@ -22,7 +22,8 @@
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', '1659334891302781');
-      fbq('track', 'PageView');
+      // PageView is fired per route (with a Hebrew page name) from the app's
+      // PixelTracker, so it also counts navigations inside this SPA.
     </script>
     <!-- End Meta Pixel Code -->
   </head>

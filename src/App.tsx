@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SharedLayout from "@/layouts/SharedLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import PixelTracker from "@/components/PixelTracker";
 import Index from "./pages/Index";
 import { articles } from "@/data/articles";
 
@@ -35,6 +36,7 @@ const RootProviders = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <PixelTracker />
         <Outlet />
       </TooltipProvider>
     </QueryClientProvider>
