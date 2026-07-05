@@ -9,6 +9,7 @@ import WhatsAppFAB from "@/components/WhatsAppFAB";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import SmoothScroll from "@/components/SmoothScroll";
 import { StickyCTA } from "@/components/v2/StickyCTA";
+import WebinarPopup from "@/components/WebinarPopup";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -119,6 +120,7 @@ const SharedLayout = () => {
           ctaLabel="בואו נדבר"
           ctaHref="/contact"
         />
+        <WebinarPopup />
       </div>
     </SmoothScroll>
   );
