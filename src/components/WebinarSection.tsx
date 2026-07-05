@@ -32,7 +32,7 @@ const WebinarSection = () => {
           <Reveal delay={0.12}>
             <iframe
               ref={iframeRef}
-              src="/webinar-form.html"
+              src="/webinar-form"
               title="הרשמה לוובינר הקרוב"
               className="w-full max-w-md mx-auto block rounded-2xl bg-white/95"
               style={{ height, border: 0 }}
