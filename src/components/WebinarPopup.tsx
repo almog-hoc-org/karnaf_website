@@ -99,8 +99,8 @@ const WebinarPopup = () => {
               </span>
 
               <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight">
-                הדרך לדירה הראשונה —{" "}
-                <span className="text-accent">בלי לגשש באפלה</span>
+                ״הדרך לדירה״{" "}
+                <span className="text-accent">שיעור חינם ללא עלות</span>
               </h2>
 
               <p className="mt-3 text-body text-muted-foreground leading-relaxed">
