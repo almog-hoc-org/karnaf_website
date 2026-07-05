@@ -33,7 +33,7 @@ const CommunitySection = () => {
     <section className="relative py-section-md bg-background overflow-hidden">
       <div className="container mx-auto px-5 md:px-6">
         <Reveal>
-          <h2 className="text-display-md md:text-display-lg font-black text-center text-foreground mb-10 md:mb-14 leading-[1] tracking-tight">
+          <h2 className="text-display-md md:text-display-lg font-black text-center text-foreground mb-10 md:mb-16 leading-[1] tracking-tight">
             הצטרפו <span className="text-accent">לקהילה שלנו</span>
           </h2>
         </Reveal>

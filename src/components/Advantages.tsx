@@ -45,7 +45,7 @@ const Advantages = () => {
   return (
     <section className="relative py-section-lg bg-background overflow-hidden">
       <div className="container mx-auto px-5 md:px-6 relative">
-        <div className="max-w-3xl mb-12 lg:mb-20">
+        <div className="max-w-3xl mb-10 md:mb-16">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black leading-[0.98] tracking-tight text-foreground">
               למה <span className="text-accent">קרנף?</span>
