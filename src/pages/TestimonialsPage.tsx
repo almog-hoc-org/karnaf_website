@@ -87,7 +87,7 @@ const TestimonialsPage = () => {
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
-              מה הלקוחות <span className="text-accent">אומרים?</span>
+              מה הלקוחות אומרים?
             </h2>
           </Reveal>
           <div className="grid md:grid-cols-2 gap-6">
@@ -105,7 +105,7 @@ const TestimonialsPage = () => {
         <div className="container mx-auto px-6 text-center max-w-2xl">
           <Reveal>
             <h3 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight">
-              רוצים להיות הסיפור <span className="text-accent">הבא?</span>
+              רוצים להיות הסיפור הבא?
             </h3>
           </Reveal>
           <Reveal delay={0.08}>

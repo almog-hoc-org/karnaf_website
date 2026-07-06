@@ -6,12 +6,14 @@ import { MessageCircle } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import karnafLogo from "@/assets/mascot/karnaf-logo.png";
 
+/* One product in the primary nav (PRODUCT.md: "One product, sold once").
+   Premium coaching stays reachable from the footer. */
 const navItems = [
   { label: "דף הבית", to: "/" },
   { label: "הדרך לדירה", to: "/course" },
-  { label: "ליווי משקיעים", to: "/premium" },
-  { label: "סיפורו של קרנף", to: "/about" },
+  { label: "מי אנחנו", to: "/about" },
   { label: "סיפורי הצלחה", to: "/testimonials" },
+  { label: "בלוג", to: "/blog" },
   { label: "צור קשר", to: "/contact" },
 ];
 

@@ -1,6 +1,9 @@
 import { trackLead } from "@/lib/pixel";
+import { gaLead } from "@/lib/analytics";
 
-const CRM_WEBSITE_LEADS_URL = "https://svkzkpgccahwmyflobvn.functions.supabase.co/website-leads-intake";
+const CRM_WEBSITE_LEADS_URL: string =
+  import.meta.env.VITE_LEADS_INTAKE_URL ||
+  "https://svkzkpgccahwmyflobvn.functions.supabase.co/website-leads-intake";
 
 export interface WebsiteLeadPayload {
   name: string;
@@ -31,9 +34,10 @@ export async function submitWebsiteLead(payload: WebsiteLeadPayload): Promise<vo
     throw new Error(errorMessage);
   }
 
-  // Report a successful lead to the Meta Pixel (Hebrew-labelled by form).
+  // Report a successful lead to the Meta Pixel (Hebrew-labelled by form) + GA4.
   trackLead(payload.source, {
     service: payload.service,
     equity: payload.equity,
   });
+  gaLead(payload.source);
 }

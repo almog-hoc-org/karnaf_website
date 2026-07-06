@@ -30,10 +30,22 @@ const FooterBar = () => (
             סיפורי הצלחה
           </Link>
           <Link
+            to="/premium"
+            className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
+          >
+            ליווי משקיעים
+          </Link>
+          <Link
             to="/contact"
             className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
           >
             צור קשר
+          </Link>
+          <Link
+            to="/privacy"
+            className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
+          >
+            פרטיות
           </Link>
         </nav>
         <div className="text-sm text-muted-foreground">

@@ -33,7 +33,11 @@ export const StickyCTA = ({
    * above it instead of hiding behind it.
    */
   useEffect(() => {
-    const showing = visible && !hidden;
+    // The bar renders on md+ only, so don't reserve space for it on mobile.
+    const isDesktop =
+      typeof window !== "undefined" &&
+      window.matchMedia("(min-width: 768px)").matches;
+    const showing = visible && !hidden && isDesktop;
     document.documentElement.style.setProperty(
       "--sticky-cta-h",
       showing ? "72px" : "0px"
@@ -53,7 +57,7 @@ export const StickyCTA = ({
         opacity: visible ? 1 : 0,
       }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-x-0 bottom-0 z-40 pointer-events-none"
+      className="fixed inset-x-0 bottom-0 z-40 pointer-events-none hidden md:block"
       aria-hidden={!visible}
     >
       <div className="h-px bg-white/15">

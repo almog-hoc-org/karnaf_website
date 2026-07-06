@@ -4,7 +4,6 @@ import type { RouteRecord } from "vite-react-ssg";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SharedLayout from "@/layouts/SharedLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import PixelTracker from "@/components/PixelTracker";
@@ -18,11 +17,10 @@ const AboutPage = lazy(() => import("./pages/AboutPage"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const BlogPage = lazy(() => import("./pages/BlogPage"));
+const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 const BlogArticlePage = lazy(() => import("./pages/BlogArticlePage"));
 const ProgramPage = lazy(() => import("./pages/ProgramPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-
-const queryClient = new QueryClient();
 
 /**
  * RootProviders wraps the entire route tree with the global providers.
@@ -32,14 +30,12 @@ const queryClient = new QueryClient();
  */
 const RootProviders = () => (
   <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <PixelTracker />
-        <Outlet />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <PixelTracker />
+      <Outlet />
+    </TooltipProvider>
   </ErrorBoundary>
 );
 
@@ -96,6 +92,11 @@ export const routes: RouteRecord[] = [
             path: "blog",
             element: <BlogPage />,
             entry: "src/pages/BlogPage.tsx",
+          },
+          {
+            path: "privacy",
+            element: <PrivacyPage />,
+            entry: "src/pages/PrivacyPage.tsx",
           },
           {
             path: "blog/:slug",

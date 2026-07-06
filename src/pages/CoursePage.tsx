@@ -6,17 +6,15 @@ import SEOHead, {
   breadcrumbSchema,
   faqPageSchema,
 } from "@/components/SEOHead";
+import { Head } from "vite-react-ssg";
 import {
-  GraduationCap,
   CheckCircle,
   XCircle,
-  Star,
   Users,
   BookOpen,
   Calculator,
   Headphones,
   Check,
-  Shield,
   ArrowLeft,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -35,11 +33,14 @@ import { faqData } from "@/data/faq";
 import { curriculum } from "@/data/curriculum";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import BigCTA from "@/components/BigCTA";
+import PricingCard from "@/components/course/PricingCard";
+import CoursePriceBar from "@/components/course/CoursePriceBar";
 import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
 import { RoiCalculator } from "@/components/v2/RoiCalculator";
 import { TransactionLifecycle } from "@/components/v2/TransactionLifecycle";
 import heroCity from "@/assets/hero-city.jpg";
+import heroCityAvif from "@/assets/hero-city.avif";
 
 const courseTestimonials = testimonials;
 
@@ -138,13 +139,20 @@ const CoursePage = () => {
         ]}
       />
 
+      <Head>
+        <link rel="preload" as="image" href={heroCityAvif} type="image/avif" />
+      </Head>
+
       {/* 1. Cinematic Hero */}
       <section
         className="relative min-h-[70svh] flex items-end overflow-hidden"
         style={{ backgroundColor: "hsl(217 50% 8%)" }}
       >
         <div className="absolute inset-0">
-          <img src={heroCity} alt="" className="w-full h-full object-cover" loading="eager" decoding="async" {...{ fetchpriority: "high" }} />
+          <picture>
+            <source srcSet={heroCityAvif} type="image/avif" />
+            <img src={heroCity} alt="" className="w-full h-full object-cover" loading="eager" decoding="async" {...{ fetchpriority: "high" }} />
+          </picture>
         </div>
         <div
           className="absolute inset-0 pointer-events-none"
@@ -200,7 +208,7 @@ const CoursePage = () => {
               <Button
                 size="lg"
                 onClick={scrollToPricing}
-                className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.45)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.65)] transition-all"
+                className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all"
               >
                 גלו את התוכנית
                 <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
@@ -235,7 +243,7 @@ const CoursePage = () => {
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
-              בלי הכנה? <span className="text-accent">זה עולה ביוקר.</span>
+              בלי הכנה? זה עולה ביוקר.
             </h2>
           </Reveal>
 
@@ -273,135 +281,12 @@ const CoursePage = () => {
           </div>
         </div>
       </section>
-      {/* 4. Pricing */}
-      <section id="pricing" className="py-section-lg bg-card">
-        <div className="container mx-auto px-6 max-w-3xl">
-          {/* Compare */}
-          <Reveal>
-            <div className="grid md:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto text-right">
-              <div className="rounded-2xl p-5 bg-destructive/5 border border-destructive/15">
-                <h4 className="font-bold text-foreground mb-3 text-center">בלי הקורס</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  {[
-                    "משלמים יותר על הדירה",
-                    "משכנתא לא מותאמת",
-                    "מפספסים עסקאות",
-                    "לומדים מטעויות יקרות",
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <XCircle size={14} className="text-destructive flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-2xl p-5 bg-accent/5 border border-accent/30 shadow-depth-1">
-                <h4 className="font-bold text-foreground mb-3 text-center">עם הקורס</h4>
-                <ul className="space-y-2 text-sm text-foreground">
-                  {[
-                    "חוסכים עשרות אלפי ₪",
-                    "תמהיל משכנתא אופטימלי",
-                    "מזהים עסקאות לפני כולם",
-                    "ליווי מקצועי בכל שלב",
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <CheckCircle size={14} className="text-accent flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="bg-background border border-border rounded-3xl p-8 md:p-12 relative overflow-hidden max-w-2xl mx-auto shadow-depth-3">
-              <div
-                className="absolute top-0 right-0 w-40 h-40 pointer-events-none -z-0"
-                aria-hidden
-                style={{
-                  background:
-                    "radial-gradient(50% 50% at 100% 0%, hsl(24 80% 52% / 0.15) 0%, transparent 70%)",
-                }}
-              />
-              <div className="absolute top-0 inset-x-0 h-1 bg-accent" />
-              <div className="text-center relative z-10">
-                <GraduationCap size={36} className="text-accent mx-auto mb-4" />
-                <h3 className="text-display-sm md:text-display-md font-black text-foreground mb-2">
-                  הצטרפו לתוכנית
-                </h3>
-                <p className="text-muted-foreground mb-8">
-                  הצטרפו ל-300+ בוגרים שכבר רכשו דירה בצורה חכמה.
-                </p>
-
-                <div className="text-right max-w-sm mx-auto space-y-3 mb-10">
-                  {[
-                    "50+ שיעורים דיגיטליים",
-                    "6+ כלים ומחשבונים מתקדמים",
-                    "ליווי צמוד של אנליסט בוואטסאפ",
-                    "גישה מלאה ל-12 חודשים",
-                    "קהילת בוגרים פעילה",
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-3">
-                      <CheckCircle size={18} className="text-accent flex-shrink-0" />
-                      <span className="text-foreground">{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                    "היי! אני רוצה לרכוש את תוכנית הדרך לדירה"
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block w-full sm:w-auto"
-                >
-                  <Button
-                    size="lg"
-                    className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 w-full sm:w-auto gap-3 mb-4 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.45)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.65)] transition-all"
-                  >
-                    להצטרפות ולפרטים
-                    <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
-                  </Button>
-                </a>
-
-                <div>
-                  <a
-                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                      "היי! אני מעוניין/ת בתוכנית הדרך לדירה"
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-3 px-1 -my-3 min-h-[44px]"
-                  >
-                    יש שאלות? דברו איתנו בוואטסאפ ←
-                  </a>
-                </div>
-
-                <div className="flex items-center justify-center gap-6 mt-8 pt-6 border-t border-border flex-wrap">
-                  {["תשלום מאובטח", "גישה מיידית", "ליווי צמוד"].map((badge) => (
-                    <span
-                      key={badge}
-                      className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground flex items-center gap-2"
-                    >
-                      <Shield size={12} className="text-accent" />
-                      {badge}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 5. Trailer + Live calculator */}
+      {/* 4. Trailer + Live calculator */}
       <SectionDark size="lg" glow="bottom">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-white mb-4 leading-[0.98] tracking-tight text-center">
-              ראו <span className="text-accent">בעצמכם</span>
+              ראו בעצמכם
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
@@ -426,12 +311,12 @@ const CoursePage = () => {
         </div>
       </SectionDark>
 
-      {/* 6. Program cards */}
+      {/* 5. Program cards */}
       <SectionDark size="lg" glow="top-end">
         <div className="container mx-auto px-6 max-w-6xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-white mb-12 lg:mb-16 leading-[0.98] tracking-tight">
-              מה <span className="text-accent">בתוכנית?</span>
+              מה בתוכנית?
             </h2>
           </Reveal>
 
@@ -509,7 +394,7 @@ const CoursePage = () => {
           <div className="mt-20 lg:mt-28 max-w-5xl mx-auto">
             <Reveal>
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 text-center leading-tight">
-                ששה שלבים <span className="text-accent">מהשיחה הראשונה ועד החתימה</span>
+                ששה שלבים — מהשיחה הראשונה ועד החתימה
               </h3>
             </Reveal>
             <Reveal delay={0.08}>
@@ -527,12 +412,12 @@ const CoursePage = () => {
         </div>
       </SectionDark>
 
-      {/* 7. Fit Quiz */}
+      {/* 6. Fit Quiz */}
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-6 max-w-4xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight text-center">
-              האם התוכנית <span className="text-accent">מתאימה לי?</span>
+              האם התוכנית מתאימה לי?
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
@@ -557,12 +442,12 @@ const CoursePage = () => {
         </div>
       </section>
 
-      {/* 8. Testimonials */}
+      {/* 7. Testimonials */}
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 leading-[0.98] tracking-tight text-center">
-              מה הבוגרים <span className="text-accent">אומרים?</span>
+              מה הבוגרים אומרים?
             </h2>
           </Reveal>
           <div className="grid md:grid-cols-2 gap-6">
@@ -588,12 +473,59 @@ const CoursePage = () => {
         </div>
       </section>
 
+      {/* 8. Pricing — after the proof, before the FAQ */}
+      <section id="pricing" className="py-section-lg bg-card">
+        <div className="container mx-auto px-6 max-w-3xl">
+          {/* Compare */}
+          <Reveal>
+            <div className="grid md:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto text-right">
+              <div className="rounded-2xl p-5 bg-destructive/5 border border-destructive/15">
+                <h4 className="font-bold text-foreground mb-3 text-center">בלי הקורס</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  {[
+                    "משלמים יותר על הדירה",
+                    "משכנתא לא מותאמת",
+                    "מפספסים עסקאות",
+                    "לומדים מטעויות יקרות",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <XCircle size={14} className="text-destructive flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-2xl p-5 bg-accent/5 border border-accent/30 shadow-depth-1">
+                <h4 className="font-bold text-foreground mb-3 text-center">עם הקורס</h4>
+                <ul className="space-y-2 text-sm text-foreground">
+                  {[
+                    "חוסכים עשרות אלפי ₪",
+                    "תמהיל משכנתא אופטימלי",
+                    "מזהים עסקאות לפני כולם",
+                    "ליווי מקצועי בכל שלב",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <CheckCircle size={14} className="text-accent flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <PricingCard />
+          </Reveal>
+        </div>
+      </section>
+
       {/* 9. FAQ */}
       <section className="py-section-lg bg-card">
         <div className="container mx-auto px-6 max-w-3xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 leading-[0.98] tracking-tight text-center">
-              שאלות <span className="text-accent">נפוצות</span>
+              שאלות נפוצות
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
@@ -618,6 +550,7 @@ const CoursePage = () => {
       </section>
 
       <BigCTA />
+      <CoursePriceBar />
     </>
   );
 };

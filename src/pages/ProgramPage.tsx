@@ -1,3 +1,5 @@
+// Suez One is used only on this page — load it with this route's chunk.
+import "@fontsource/suez-one/hebrew.css";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   GraduationCap,

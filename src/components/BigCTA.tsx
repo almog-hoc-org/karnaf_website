@@ -10,8 +10,7 @@ const BigCTA = () => {
       <div className="container mx-auto px-5 md:px-6 text-center max-w-3xl">
         <Reveal>
           <h2 className="text-display-md md:text-display-xl font-black leading-[0.98] tracking-tight mb-6 text-white">
-            מוכנים לצעד הראשון?{" "}
-            <span className="text-accent">בואו נתחיל.</span>
+            מוכנים לצעד הראשון? בואו נתחיל.
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
@@ -31,7 +30,7 @@ const BigCTA = () => {
           >
             <Button
               size="lg"
-              className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.45)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.65)] transition-all"
+              className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all"
             >
               <MessageCircle size={20} />
               בואו נדבר — בלי התחייבות

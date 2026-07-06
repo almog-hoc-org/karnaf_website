@@ -1,8 +1,10 @@
 import { useRef } from "react";
+import { Head } from "vite-react-ssg";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import heroCity from "@/assets/hero-city.jpg";
+import heroCityAvif from "@/assets/hero-city.avif";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
 
 const Hero = () => {
@@ -23,20 +25,27 @@ const Hero = () => {
       className="relative min-h-[100svh] flex items-end overflow-hidden"
       style={{ backgroundColor: "hsl(217 50% 8%)" }}
     >
+      {/* Preload the LCP image — SSG writes this into the page <head> */}
+      <Head>
+        <link rel="preload" as="image" href={heroCityAvif} type="image/avif" />
+      </Head>
       {/* Cinematic photo background — parallax */}
       <motion.div
         className="absolute inset-0"
         style={reduce ? undefined : { y: bgY, scale: bgScale }}
         aria-hidden="true"
       >
-        <img
-          src={heroCity}
-          alt=""
-          className="w-full h-full object-cover"
-          loading="eager"
-          decoding="async"
-          {...{ fetchpriority: "high" }}
-        />
+        <picture>
+          <source srcSet={heroCityAvif} type="image/avif" />
+          <img
+            src={heroCity}
+            alt=""
+            className="w-full h-full object-cover"
+            loading="eager"
+            decoding="async"
+            {...{ fetchpriority: "high" }}
+          />
+        </picture>
       </motion.div>
 
       {/* Layered cinematic gradient */}
@@ -91,8 +100,8 @@ const Hero = () => {
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.55 }}
-              className="text-display-sm md:text-display-md font-bold leading-snug max-w-[20ch] mb-5"
-              style={{ color: "hsl(var(--accent))" }}
+              className="text-display-sm md:text-display-md font-bold leading-snug max-w-[24ch] mb-5"
+              style={{ color: "hsl(36 33% 95% / 0.92)" }}
             >
               לקנות דירה חכם ולהימנע מטעויות יקרות
             </motion.p>
@@ -133,7 +142,7 @@ const Hero = () => {
                 className="inline-flex items-center text-base font-semibold hover:text-accent transition-colors underline-offset-4 hover:underline px-3 py-3 -mx-3 -my-3 min-h-[44px]"
                 style={{ color: "hsl(36 33% 95% / 0.85)" }}
               >
-                סיפורו של קרנף
+                מי אנחנו
               </Link>
             </motion.div>
           </div>
@@ -188,18 +197,6 @@ const Hero = () => {
           </div>
         </motion.div>
       </motion.div>
-
-      {/* Mobile mascot — small floating accent at top-right, well clear of the trust strip */}
-      <div className="absolute top-20 right-3 lg:hidden pointer-events-none opacity-75">
-        <img
-          src={mascotWelcome}
-          alt=""
-          aria-hidden
-          className="h-[96px] object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.4)]"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
 
       {/* Scroll cue */}
       <motion.div

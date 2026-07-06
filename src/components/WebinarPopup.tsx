@@ -1,30 +1,77 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X, CalendarClock, ArrowLeft } from "lucide-react";
 import mascot from "@/assets/mascot/mascot-presenting.webp";
 
 const WEBINAR_URL = "https://webinar.karnafnadlan.com";
-const SESSION_KEY = "karnaf_webinar_popup_seen";
-const OPEN_DELAY_MS = 1400;
+const SEEN_KEY = "karnaf_webinar_popup_seen_at";
+const FREQUENCY_CAP_MS = 7 * 24 * 60 * 60 * 1000; // once per 7 days
+const SCROLL_TRIGGER = 0.5; // fire after half the page is read
+
+/** The popup only earns an interruption on discovery pages — never where the
+ * visitor is already converting (course/premium/contact/program). */
+const ALLOWED_PREFIXES = ["/blog"];
+const isAllowedPath = (pathname: string) =>
+  pathname === "/" || ALLOWED_PREFIXES.some((p) => pathname.startsWith(p));
+
+function seenRecently(): boolean {
+  try {
+    const at = Number(localStorage.getItem(SEEN_KEY) || 0);
+    return Date.now() - at < FREQUENCY_CAP_MS;
+  } catch {
+    return true; // storage unavailable — err on the quiet side
+  }
+}
 
 /**
- * Attention-grabbing promo popup steering visitors to the upcoming-webinar
- * landing page. Opens once per browser session, a moment after load, and is
- * dismissible. The CTA is a plain external <a>, so PixelTracker's global click
+ * Promo popup steering visitors to the upcoming-webinar landing page.
+ * Value-first triggering: opens only after the visitor scrolled half the
+ * page (or on exit intent), only on the homepage/blog, at most once every
+ * 7 days. The CTA is a plain external <a>, so PixelTracker's global click
  * listener classifies the click automatically.
  */
 const WebinarPopup = () => {
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if (sessionStorage.getItem(SESSION_KEY)) return;
-    const t = setTimeout(() => setOpen(true), OPEN_DELAY_MS);
-    return () => clearTimeout(t);
-  }, []);
+    if (!isAllowedPath(pathname) || seenRecently()) return;
+
+    let fired = false;
+    const fire = () => {
+      if (fired) return;
+      fired = true;
+      setOpen(true);
+      cleanup();
+    };
+
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const scrollable = doc.scrollHeight - window.innerHeight;
+      if (scrollable > 0 && window.scrollY / scrollable >= SCROLL_TRIGGER) fire();
+    };
+    // Exit intent (desktop): pointer leaves through the top of the viewport.
+    const onMouseOut = (e: MouseEvent) => {
+      if (!e.relatedTarget && e.clientY <= 0) fire();
+    };
+
+    const cleanup = () => {
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("mouseout", onMouseOut);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("mouseout", onMouseOut);
+    return cleanup;
+  }, [pathname]);
 
   const dismiss = () => {
-    sessionStorage.setItem(SESSION_KEY, "1");
+    try {
+      localStorage.setItem(SEEN_KEY, String(Date.now()));
+    } catch {
+      // storage unavailable — popup may reappear next visit, acceptable
+    }
     setOpen(false);
   };
 

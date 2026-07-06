@@ -1,17 +1,17 @@
 import Hero from "@/components/Hero";
-import ContactStrip from "@/components/ContactStrip";
-import StatsCounter from "@/components/StatsCounter";
 import Advantages from "@/components/Advantages";
-import Properties from "@/components/Properties";
-import Services from "@/components/Services";
+import ProofSection from "@/components/home/ProofSection";
 import About from "@/components/About";
-import WebinarSection from "@/components/WebinarSection";
 import BigCTA from "@/components/BigCTA";
-import CommunitySection from "@/components/CommunitySection";
 import Footer from "@/components/Footer";
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
 import { CourseStrip } from "@/components/v2/CourseStrip";
 
+/**
+ * Homepage — a single narrative with one ask (PRODUCT.md: "One product,
+ * sold once"): promise (Hero) → method (Advantages) → proof (real client
+ * outcomes) → product (CourseStrip) → people (About) → ask (BigCTA + form).
+ */
 const Index = () => {
   return (
     <>
@@ -24,16 +24,11 @@ const Index = () => {
       />
       <div id="top" className="relative">
         <Hero />
-        <CourseStrip />
-        <ContactStrip />
-        <StatsCounter />
         <Advantages />
-        <Services />
-        <WebinarSection />
-        <Properties />
+        <ProofSection />
+        <CourseStrip />
         <About />
         <BigCTA />
-        <CommunitySection />
         <Footer />
       </div>
     </>

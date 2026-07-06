@@ -50,7 +50,7 @@ const AboutPage = () => {
             <div>
               <Reveal>
                 <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-6 leading-[0.98] tracking-tight">
-                  למה <span className="text-accent">קרנף?</span>
+                  למה קרנף?
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
@@ -89,7 +89,7 @@ const AboutPage = () => {
         <div className="container mx-auto px-6 max-w-4xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
-              ציר <span className="text-accent">הזמן</span>
+              ציר הזמן
             </h2>
           </Reveal>
 
@@ -122,7 +122,7 @@ const AboutPage = () => {
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
-              הצוות <span className="text-accent">שלנו</span>
+              הצוות שלנו
             </h2>
           </Reveal>
 
