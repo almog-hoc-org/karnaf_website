@@ -28,6 +28,7 @@ export function pageNameFor(pathname: string): string {
   if (pathname === "/") return "דף הבית";
   if (pathname.startsWith("/course")) return "הדרך לדירה — הקורס";
   if (pathname.startsWith("/premium")) return "ליווי משקיעים פרימיום";
+  if (pathname.startsWith("/mortgage")) return "קרנף משכנתא — ייעוץ משכנתא";
   if (pathname.startsWith("/program")) return "הדרך לדירה — עמוד תוכנית";
   if (pathname.startsWith("/about")) return "אודות — סיפורו של קרנף";
   if (pathname.startsWith("/testimonials")) return "סיפורי הצלחה";
@@ -56,6 +57,7 @@ export function trackPageView(pathname: string): void {
 /** Which form was submitted — maps the technical source to a Hebrew label. */
 const FORM_LABELS: Record<string, { name: string; category: string }> = {
   "premium-investors": { name: "טופס ליווי משקיעים פרימיום", category: "ליווי משקיעים" },
+  mortgage: { name: "טופס קרנף משכנתא", category: "ייעוץ משכנתא" },
   website: { name: "טופס יצירת קשר באתר", category: "יצירת קשר" },
   "webinar-section": { name: "הרשמה לוובינר", category: "וובינר" },
   "contact-strip": { name: "טופס וובינר", category: "וובינר" },

@@ -8,9 +8,24 @@ import { useToast } from "@/hooks/use-toast";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { isValidIsraeliPhone, PHONE_ERROR_MESSAGE } from "@/lib/validation";
 
+export interface ServiceOption {
+  value: string;
+  label: string;
+}
+
+const DEFAULT_SERVICE_OPTIONS: ServiceOption[] = [
+  { value: "derech", label: 'תוכנית "הדרך לדירה"' },
+  { value: "webinar", label: "וובינר" },
+];
+
 interface ContactFormProps {
   /** Lead source label reported to the CRM + pixels (see FORM_LABELS in lib/pixel.ts). */
   source?: string;
+  /** Options for the "אני מעוניין ב..." select. Pass null to hide the select
+   * (e.g. on a service page where the interest is already known). */
+  serviceOptions?: ServiceOption[] | null;
+  /** Preselected service value reported with the lead when the select is hidden. */
+  fixedService?: string;
 }
 
 /**
@@ -18,7 +33,11 @@ interface ContactFormProps {
  * Validates Israeli phone numbers client-side and carries a honeypot
  * field to keep bot submissions out of the CRM.
  */
-const ContactForm = ({ source = "website" }: ContactFormProps) => {
+const ContactForm = ({
+  source = "website",
+  serviceOptions = DEFAULT_SERVICE_OPTIONS,
+  fixedService = "",
+}: ContactFormProps) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [service, setService] = useState("");
@@ -46,7 +65,12 @@ const ContactForm = ({ source = "website" }: ContactFormProps) => {
 
     setIsSubmitting(true);
     try {
-      await submitWebsiteLead({ name, phone, service, source });
+      await submitWebsiteLead({
+        name,
+        phone,
+        service: serviceOptions ? service : fixedService,
+        source,
+      });
       setIsSubmitted(true);
       toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });
       setTimeout(() => {
@@ -119,15 +143,20 @@ const ContactForm = ({ source = "website" }: ContactFormProps) => {
           />
         </label>
       </div>
-      <Select value={service} onValueChange={setService}>
-        <SelectTrigger aria-label="במה אני מעוניין" className="bg-card border-border h-14 px-5 rounded-full">
-          <SelectValue placeholder="אני מעוניין ב..." />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="derech">תוכנית "הדרך לדירה"</SelectItem>
-          <SelectItem value="webinar">וובינר</SelectItem>
-        </SelectContent>
-      </Select>
+      {serviceOptions && (
+        <Select value={service} onValueChange={setService}>
+          <SelectTrigger aria-label="במה אני מעוניין" className="bg-card border-border h-14 px-5 rounded-full">
+            <SelectValue placeholder="אני מעוניין ב..." />
+          </SelectTrigger>
+          <SelectContent>
+            {serviceOptions.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
       <Button
         type="submit"
         disabled={isSubmitting}

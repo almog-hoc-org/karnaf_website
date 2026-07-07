@@ -1,16 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, ChevronDown, GraduationCap, Users, Landmark } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/constants";
 import karnafLogo from "@/assets/mascot/karnaf-logo.png";
 
-/* One product in the primary nav (PRODUCT.md: "One product, sold once").
-   Premium coaching stays reachable from the footer. */
+/* All commercial offerings live under one "השירותים שלנו" mini-menu. */
+const serviceItems = [
+  {
+    label: "הדרך לדירה",
+    description: "תוכנית הליווי הדיגיטלית לרכישת דירה",
+    to: "/course",
+    icon: GraduationCap,
+  },
+  {
+    label: "ליווי משקיעים פרימיום",
+    description: "ליווי אישי 1:1 בעסקת הרכישה שלכם",
+    to: "/premium",
+    icon: Users,
+  },
+  {
+    label: "קרנף משכנתא",
+    description: "ייעוץ משכנתא מבוסס נתונים",
+    to: "/mortgage",
+    icon: Landmark,
+  },
+];
+
 const navItems = [
   { label: "דף הבית", to: "/" },
-  { label: "הדרך לדירה", to: "/course" },
   { label: "מי אנחנו", to: "/about" },
   { label: "סיפורי הצלחה", to: "/testimonials" },
   { label: "בלוג", to: "/blog" },
@@ -20,6 +39,9 @@ const navItems = [
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout>>();
   const location = useLocation();
 
   useEffect(() => {
@@ -30,6 +52,7 @@ const Navigation = () => {
 
   useEffect(() => {
     setIsMenuOpen(false);
+    setServicesOpen(false);
   }, [location.pathname]);
 
   // Lock body scroll when mobile menu is open
@@ -38,10 +61,34 @@ const Navigation = () => {
     return () => { document.body.style.overflow = ""; };
   }, [isMenuOpen]);
 
+  // Close the services dropdown on outside click / Escape
+  useEffect(() => {
+    if (!servicesOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (!servicesRef.current?.contains(e.target as Node)) setServicesOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setServicesOpen(false);
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [servicesOpen]);
+
+  const openServices = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setServicesOpen(true);
+  };
+  const scheduleCloseServices = () => {
+    closeTimer.current = setTimeout(() => setServicesOpen(false), 150);
+  };
+
   const isActive = (to: string) => {
     if (to === "/") return location.pathname === "/";
     return location.pathname.startsWith(to);
   };
+  const isServiceActive = serviceItems.some((s) => isActive(s.to));
 
   // Routes whose hero starts on a cinematic dark background.
   // When the user has not scrolled yet on these, the nav text is light.
@@ -50,6 +97,18 @@ const Navigation = () => {
     location.pathname === "/" ||
     darkHeroPrefixes.some((p) => location.pathname.startsWith(p));
   const useLightText = isDarkHeroPage && !isScrolled;
+
+  const desktopLinkClass = `relative text-sm font-medium transition-colors duration-300 py-1 ${
+    useLightText ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground"
+  }`;
+
+  const underline = (active: boolean) => (
+    <span
+      className={`absolute -bottom-1 left-0 right-0 h-0.5 rounded-full transition-all duration-300 ${
+        active ? "bg-accent scale-x-100" : "bg-transparent scale-x-0"
+      }`}
+    />
+  );
 
   return (
     <>
@@ -87,18 +146,76 @@ const Navigation = () => {
           </Link>
 
           <div className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                className={`relative text-sm font-medium transition-colors duration-300 py-1 ${useLightText ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}
+            <Link key="home" to="/" className={desktopLinkClass}>
+              דף הבית
+              {underline(isActive("/"))}
+            </Link>
+
+            {/* השירותים שלנו — mini-menu */}
+            <div
+              ref={servicesRef}
+              className="relative"
+              onMouseEnter={openServices}
+              onMouseLeave={scheduleCloseServices}
+            >
+              <button
+                type="button"
+                className={`${desktopLinkClass} inline-flex items-center gap-1`}
+                aria-expanded={servicesOpen}
+                aria-haspopup="true"
+                onClick={() => setServicesOpen((v) => !v)}
               >
-                {item.label}
-                <span
-                  className={`absolute -bottom-1 left-0 right-0 h-0.5 rounded-full transition-all duration-300 ${
-                    isActive(item.to) ? "bg-accent scale-x-100" : "bg-transparent scale-x-0"
-                  }`}
+                השירותים שלנו
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-300 ${servicesOpen ? "rotate-180" : ""}`}
+                  aria-hidden
                 />
+                {underline(isServiceActive)}
+              </button>
+
+              <AnimatePresence>
+                {servicesOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute top-full mt-3 w-80 rounded-2xl border border-border bg-card shadow-depth-3 p-2 text-right"
+                    style={{ insetInlineStart: "-1rem" }}
+                    role="menu"
+                  >
+                    {serviceItems.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        role="menuitem"
+                        className={`flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-secondary ${
+                          isActive(item.to) ? "bg-secondary/70" : ""
+                        }`}
+                      >
+                        <span className="mt-0.5 inline-flex w-9 h-9 rounded-full bg-accent/10 items-center justify-center text-accent flex-shrink-0">
+                          <item.icon size={17} aria-hidden />
+                        </span>
+                        <span>
+                          <span className="block font-bold text-foreground leading-tight">
+                            {item.label}
+                          </span>
+                          <span className="block text-sm text-muted-foreground mt-0.5">
+                            {item.description}
+                          </span>
+                        </span>
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {navItems.slice(1).map((item) => (
+              <Link key={item.label} to={item.to} className={desktopLinkClass}>
+                {item.label}
+                {underline(isActive(item.to))}
               </Link>
             ))}
           </div>
@@ -138,16 +255,59 @@ const Navigation = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 lg:hidden bg-background/98 backdrop-blur-xl flex flex-col justify-center items-center"
+            className="fixed inset-0 z-40 lg:hidden bg-background/95 backdrop-blur-xl flex flex-col justify-center items-center overflow-y-auto py-24"
           >
-            <div className="flex flex-col items-center gap-6">
-              {navItems.map((item, i) => (
+            <div className="flex flex-col items-center gap-5">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ delay: 0, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Link
+                  to="/"
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`block text-2xl font-bold transition-colors ${
+                    isActive("/") ? "text-accent" : "text-foreground hover:text-accent"
+                  }`}
+                >
+                  דף הבית
+                </Link>
+              </motion.div>
+
+              {/* Services group */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ delay: 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col items-center gap-3 py-2"
+              >
+                <span className="text-eyebrow uppercase tracking-[0.24em] text-muted-foreground">
+                  השירותים שלנו
+                </span>
+                {serviceItems.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block text-xl font-bold transition-colors ${
+                      isActive(item.to) ? "text-accent" : "text-foreground hover:text-accent"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+                <span className="block w-10 h-px bg-border mt-1" aria-hidden />
+              </motion.div>
+
+              {navItems.slice(1).map((item, i) => (
                 <motion.div
                   key={item.label}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  transition={{ delay: i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: 0.12 + i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <Link
                     to={item.to}
@@ -165,7 +325,7 @@ const Navigation = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                transition={{ delay: 0.35, duration: 0.4 }}
+                transition={{ delay: 0.45, duration: 0.4 }}
                 className="pt-4"
               >
                 <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
