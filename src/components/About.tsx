@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import teamPhoto from "@/assets/team/itamar-almog-about.png";
+import teamPhoto from "@/assets/team/itamar-almog-about.webp";
 import { Reveal } from "@/components/v2/Reveal";
 import { ClipImage } from "@/components/v2/ClipImage";
 
@@ -25,8 +25,7 @@ const About = () => {
           <div>
             <Reveal>
               <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-6">
-                הצוות שמלווה אתכם{" "}
-                <span className="text-accent">לדירה הנכונה</span>
+                הצוות שמלווה אתכם לדירה הנכונה
               </h2>
             </Reveal>
 

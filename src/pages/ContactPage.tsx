@@ -1,7 +1,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { MessageCircle, Phone, Mail } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
-import Footer from "@/components/Footer";
+import ContactForm from "@/components/ContactForm";
 import { faqData } from "@/data/faq";
 import { WHATSAPP_NUMBER, PHONE_NUMBER, EMAIL } from "@/lib/constants";
 import { Reveal } from "@/components/v2/Reveal";
@@ -103,7 +103,21 @@ const ContactPage = () => {
       </section>
 
       {/* Contact Form */}
-      <Footer />
+      <section className="py-section-md bg-card border-y border-border">
+        <div className="container mx-auto px-6 max-w-xl">
+          <Reveal>
+            <h2 className="text-display-sm md:text-display-md font-black text-foreground leading-[0.98] tracking-tight mb-3 text-center">
+              השאירו פרטים ונחזור אליכם
+            </h2>
+            <p className="text-muted-foreground mb-8 text-center">
+              תשובה תוך שעה ביום עסקים.
+            </p>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <ContactForm source="website" />
+          </Reveal>
+        </div>
+      </section>
 
       {/* FAQ */}
       <section className="py-section-lg bg-background">

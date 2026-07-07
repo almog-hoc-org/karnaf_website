@@ -89,12 +89,7 @@ const PageHero = ({
               }}
             >
               {title}
-              {highlight && (
-                <>
-                  {" "}
-                  <span className="text-accent">{highlight}</span>
-                </>
-              )}
+              {highlight && <> {highlight}</>}
             </h1>
           </Reveal>
 

@@ -24,7 +24,9 @@
     --secondary-foreground: 215 26% 23%;
 
     --muted: 214 32% 95%;
-    --muted-foreground: 214 15% 53%;
+    /* 215 16% 44% = 5.2:1 on white, 4.75:1 on cream — WCAG AA for body text
+       (the previous 53% lightness sat at 3.4-3.8:1 and failed audits) */
+    --muted-foreground: 215 16% 44%;
 
     /* Accent: Rich Amber */
     --accent: 24 80% 52%;
@@ -104,7 +106,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Rubik Variable', 'Rubik', sans-serif;
     touch-action: manipulation;
     -webkit-tap-highlight-color: hsl(var(--accent) / 0.15);
   }
@@ -135,15 +137,11 @@
     color: hsl(var(--primary-foreground));
   }
 
-  /* Lenis smooth scroll */
-  html.lenis, html.lenis body {
-    height: auto;
-  }
-  .lenis.lenis-smooth {
-    scroll-behavior: auto !important;
-  }
-  .lenis.lenis-smooth [data-lenis-prevent] {
-    overscroll-behavior: contain;
+  /* Native smooth scrolling (replaces the former Lenis runtime).
+     scroll-padding keeps anchor targets clear of the fixed nav. */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
   }
 
   /* Button press feedback — global */
@@ -497,7 +495,7 @@
   .program-scope .text-display-md,
   .program-scope .text-display-lg,
   .program-scope .text-display-xl {
-    font-family: 'Suez One', 'Rubik', Georgia, serif;
+    font-family: 'Suez One', 'Rubik Variable', 'Rubik', Georgia, serif;
     font-weight: 400;
     letter-spacing: 0;
   }

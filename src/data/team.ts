@@ -1,5 +1,5 @@
-import itamarPhoto from "@/assets/team/itamar.png";
-import almogPhoto from "@/assets/team/almog.png";
+import itamarPhoto from "@/assets/team/itamar.webp";
+import almogPhoto from "@/assets/team/almog.webp";
 
 export interface TeamMember {
   name: string;

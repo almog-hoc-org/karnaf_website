@@ -42,6 +42,7 @@ const STATIC_ROUTES = [
   { loc: "/testimonials", priority: "0.8", changefreq: "weekly"  },
   { loc: "/contact",      priority: "0.6", changefreq: "monthly" },
   { loc: "/blog",         priority: "0.7", changefreq: "weekly"  },
+  { loc: "/privacy",      priority: "0.3", changefreq: "yearly"  },
 ];
 
 function urlEntry(loc, lastmod, priority, changefreq) {

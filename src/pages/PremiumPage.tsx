@@ -249,7 +249,7 @@ const PremiumPage = () => {
         <div className="container mx-auto px-5 md:px-6 max-w-3xl text-center">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-6">
-              להשקיע לבד <span className="text-accent">זה יקר</span>
+              להשקיע לבד זה יקר
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
@@ -326,7 +326,7 @@ const PremiumPage = () => {
         <div className="container mx-auto px-5 md:px-6 max-w-5xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-10 lg:mb-14 text-center">
-              מה כולל <span className="text-accent">הליווי</span>
+              מה כולל הליווי
             </h2>
           </Reveal>
           <div className="grid sm:grid-cols-2 gap-x-10 gap-y-5 max-w-3xl mx-auto">
@@ -352,7 +352,7 @@ const PremiumPage = () => {
               הסטנדרט של קרנף
             </p>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-10 lg:mb-14 text-center">
-              למה ליווי פרימיום <span className="text-accent">עובד</span>
+              למה ליווי פרימיום עובד
             </h2>
           </Reveal>
           <div className="grid md:grid-cols-2 gap-6">

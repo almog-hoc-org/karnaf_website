@@ -1,0 +1,25 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "npx serve dist -l 43110 --no-clipboard",
+      "startServerReadyPattern": "Accepting connections",
+      "url": ["http://localhost:43110/", "http://localhost:43110/course"],
+      "numberOfRuns": 1,
+      "settings": {
+        "locale": "he",
+        "chromeFlags": "--no-sandbox --disable-dev-shm-usage"
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["warn", { "minScore": 0.8 }],
+        "categories:accessibility": ["error", { "minScore": 0.9 }],
+        "categories:best-practices": ["warn", { "minScore": 0.9 }],
+        "categories:seo": ["error", { "minScore": 0.95 }],
+        "total-byte-weight": ["warn", { "maxNumericValue": 2500000 }],
+        "unused-javascript": "off",
+        "uses-long-cache-ttl": "off"
+      }
+    }
+  }
+}

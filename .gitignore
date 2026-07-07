@@ -33,3 +33,4 @@ dist-ssr
 .claude/scheduled_tasks.lock
 .claude/
 .vercel
+.lighthouseci/

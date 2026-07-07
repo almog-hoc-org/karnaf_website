@@ -6,7 +6,9 @@ import {
   trackButton,
   trackSocial,
   trackScrollDepth,
+  pageNameFor,
 } from "@/lib/pixel";
+import { initAnalytics, gaPageView, gaContactClick } from "@/lib/analytics";
 
 /**
  * PixelTracker — mounted once above the whole route tree. It reports to the
@@ -29,9 +31,15 @@ const PixelTracker = () => {
   const location = useLocation();
   const scrollMarks = useRef<Set<number>>(new Set());
 
+  // Load GA4 / Clarity once (no-ops until their env IDs are configured).
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
   // Page view on every route change (+ reset scroll marks for the new page).
   useEffect(() => {
     trackPageView(location.pathname);
+    gaPageView(location.pathname, pageNameFor(location.pathname));
     scrollMarks.current = new Set();
     // Re-check scroll position for short pages that are already fully in view.
     requestAnimationFrame(() => window.dispatchEvent(new Event("scroll")));
@@ -51,9 +59,18 @@ const PixelTracker = () => {
         .trim()
         .slice(0, 60);
 
-      if (/wa\.me|whatsapp/i.test(href)) return trackContact("וואטסאפ", page);
-      if (href.startsWith("tel:")) return trackContact("טלפון", page);
-      if (href.startsWith("mailto:")) return trackContact("אימייל", page);
+      if (/wa\.me|whatsapp/i.test(href)) {
+        gaContactClick("whatsapp", page);
+        return trackContact("וואטסאפ", page);
+      }
+      if (href.startsWith("tel:")) {
+        gaContactClick("phone", page);
+        return trackContact("טלפון", page);
+      }
+      if (href.startsWith("mailto:")) {
+        gaContactClick("email", page);
+        return trackContact("אימייל", page);
+      }
 
       const network = socialNetworkFor(href);
       if (network) return trackSocial(network, page);

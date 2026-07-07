@@ -48,7 +48,7 @@ const Advantages = () => {
         <div className="max-w-3xl mb-10 md:mb-16">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black leading-[0.98] tracking-tight text-foreground">
-              למה <span className="text-accent">קרנף?</span>
+              למה קרנף?
             </h2>
           </Reveal>
         </div>

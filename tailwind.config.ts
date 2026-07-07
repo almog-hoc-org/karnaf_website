@@ -60,8 +60,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Rubik', 'system-ui', 'sans-serif'],
-        display: ['Rubik', 'system-ui', 'sans-serif'],
+        sans: ['Rubik Variable', 'Rubik', 'system-ui', 'sans-serif'],
+        display: ['Rubik Variable', 'Rubik', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'eyebrow': ['0.75rem', { lineHeight: '1.4', letterSpacing: '0.12em', fontWeight: '600' }],
