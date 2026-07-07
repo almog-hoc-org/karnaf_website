@@ -36,6 +36,12 @@ const FooterBar = () => (
             ליווי משקיעים
           </Link>
           <Link
+            to="/mortgage"
+            className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
+          >
+            קרנף משכנתא
+          </Link>
+          <Link
             to="/contact"
             className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
           >

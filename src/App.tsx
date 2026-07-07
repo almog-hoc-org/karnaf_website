@@ -13,6 +13,7 @@ import { articles } from "@/data/articles";
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 const CoursePage = lazy(() => import("./pages/CoursePage"));
 const PremiumPage = lazy(() => import("./pages/PremiumPage"));
+const MortgagePage = lazy(() => import("./pages/MortgagePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
@@ -72,6 +73,11 @@ export const routes: RouteRecord[] = [
             path: "premium",
             element: <PremiumPage />,
             entry: "src/pages/PremiumPage.tsx",
+          },
+          {
+            path: "mortgage",
+            element: <MortgagePage />,
+            entry: "src/pages/MortgagePage.tsx",
           },
           {
             path: "about",
