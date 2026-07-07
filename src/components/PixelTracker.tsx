@@ -9,6 +9,7 @@ import {
   pageNameFor,
 } from "@/lib/pixel";
 import { initAnalytics, gaPageView, gaContactClick } from "@/lib/analytics";
+import { captureLeadContext } from "@/lib/leadContext";
 
 /**
  * PixelTracker — mounted once above the whole route tree. It reports to the
@@ -31,9 +32,11 @@ const PixelTracker = () => {
   const location = useLocation();
   const scrollMarks = useRef<Set<number>>(new Set());
 
-  // Load GA4 / Clarity once (no-ops until their env IDs are configured).
+  // Load GA4 / Clarity once (no-ops until their env IDs are configured)
+  // and capture first-touch attribution (UTM/referrer) for lead reporting.
   useEffect(() => {
     initAnalytics();
+    captureLeadContext();
   }, []);
 
   // Page view on every route change (+ reset scroll marks for the new page).
