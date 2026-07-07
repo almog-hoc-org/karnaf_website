@@ -35,7 +35,10 @@ const CoursePriceBar = () => {
       animate={{ y: visible ? 0 : 88, opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className="fixed inset-x-0 bottom-0 z-40"
-      style={{ pointerEvents: visible ? "auto" : "none" }}
+      style={{
+        pointerEvents: visible ? "auto" : "none",
+        visibility: visible ? "visible" : "hidden",
+      }}
       aria-hidden={!visible}
     >
       <div

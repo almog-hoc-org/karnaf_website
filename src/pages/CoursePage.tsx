@@ -480,7 +480,7 @@ const CoursePage = () => {
           <Reveal>
             <div className="grid md:grid-cols-2 gap-4 mb-12 max-w-2xl mx-auto text-right">
               <div className="rounded-2xl p-5 bg-destructive/5 border border-destructive/15">
-                <h4 className="font-bold text-foreground mb-3 text-center">בלי הקורס</h4>
+                <h3 className="font-bold text-foreground mb-3 text-center">בלי הקורס</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {[
                     "משלמים יותר על הדירה",
@@ -496,7 +496,7 @@ const CoursePage = () => {
                 </ul>
               </div>
               <div className="rounded-2xl p-5 bg-accent/5 border border-accent/30 shadow-depth-1">
-                <h4 className="font-bold text-foreground mb-3 text-center">עם הקורס</h4>
+                <h3 className="font-bold text-foreground mb-3 text-center">עם הקורס</h3>
                 <ul className="space-y-2 text-sm text-foreground">
                   {[
                     "חוסכים עשרות אלפי ₪",

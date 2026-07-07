@@ -24,7 +24,9 @@
     --secondary-foreground: 215 26% 23%;
 
     --muted: 214 32% 95%;
-    --muted-foreground: 214 15% 53%;
+    /* 215 16% 44% = 5.2:1 on white, 4.75:1 on cream — WCAG AA for body text
+       (the previous 53% lightness sat at 3.4-3.8:1 and failed audits) */
+    --muted-foreground: 215 16% 44%;
 
     /* Accent: Rich Amber */
     --accent: 24 80% 52%;

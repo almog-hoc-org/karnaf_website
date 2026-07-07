@@ -58,6 +58,7 @@ export const StickyCTA = ({
       }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className="fixed inset-x-0 bottom-0 z-40 pointer-events-none hidden md:block"
+      style={{ visibility: visible ? "visible" : "hidden" }}
       aria-hidden={!visible}
     >
       <div className="h-px bg-white/15">

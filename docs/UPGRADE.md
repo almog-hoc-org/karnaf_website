@@ -56,3 +56,7 @@ follow-up steps that require business accounts or credentials.
    the site's actual data flows; have counsel confirm it.
 6. **Lead nurture automation** — Make.com scenario: lead intake → CRM →
    WhatsApp Business API follow-up sequence.
+7. **CTA text contrast (optional design call)** — white on amber is 3.1:1,
+   which passes WCAG AA only for large text. Flipping `--accent-foreground`
+   to the deep navy would pass AA everywhere (5.1:1) and is a one-token
+   change, but it visibly restyles every primary button — a brand decision.

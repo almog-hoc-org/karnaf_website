@@ -131,7 +131,7 @@ const PricingCard = () => {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-3 px-1 -my-3 min-h-[44px]"
+            className="mt-2 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-3 px-3 min-h-[44px]"
           >
             <MessageCircle size={14} />
             יש שאלות? דברו איתנו בוואטסאפ ←
