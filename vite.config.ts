@@ -28,14 +28,6 @@ export default defineConfig(() => ({
   optimizeDeps: {
     include: ["react", "react-dom", "react-router-dom"],
   },
-  /**
-   * vite-react-ssg renders routes through Node's ESM loader. A few
-   * dependencies in this stack ship as CommonJS — list them so SSR
-   * bundles them inline instead of attempting native ESM resolution.
-   */
-  ssr: {
-    noExternal: ["react-helmet-async"],
-  },
   ssgOptions: {
     formatting: "minify",
     crittersOptions: false,

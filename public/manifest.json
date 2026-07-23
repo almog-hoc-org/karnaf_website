@@ -1,7 +1,7 @@
 {
   "name": "קרנף נדל״ן",
   "short_name": "קרנף נדל״ן",
-  "description": "סטודיו ליווי לרכישת דירה ראשונה בישראל. תוכנית הליווי הדיגיטלית 'הדרך לדירה' + אנליסט נדל״ן צמוד.",
+  "description": "חברת ידע והשקעות נדל״ן: הקורס הדיגיטלי 'הדרך לדירה' לרכישת דירה חכמה, וליווי משקיעים פרימיום 1:1 עד חתימה על נכס.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -17,12 +17,6 @@
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
     }
   ]
 }

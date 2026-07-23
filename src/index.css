@@ -28,9 +28,12 @@
        (the previous 53% lightness sat at 3.4-3.8:1 and failed audits) */
     --muted-foreground: 215 16% 44%;
 
-    /* Accent: Rich Amber */
+    /* Accent: Rich Amber.
+       Foreground is deep navy, not white — white-on-amber sat at 3.1:1
+       (AA large-text only); navy ink reads at ~5.1:1 and passes AA for
+       all text sizes on every amber button. */
     --accent: 24 80% 52%;
-    --accent-foreground: 0 0% 100%;
+    --accent-foreground: 217 42% 15%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
