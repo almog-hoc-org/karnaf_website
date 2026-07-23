@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ChevronDown, GraduationCap, Users, Landmark } from "lucide-react";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { botLink } from "@/lib/whatsapp";
 import karnafLogo from "@/assets/mascot/karnaf-logo.png";
 
 /* All commercial offerings live under one "השירותים שלנו" mini-menu. */
@@ -221,7 +221,7 @@ const Navigation = () => {
           </div>
 
           <div className="hidden lg:block">
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
+            <a href={botLink("שאלה כללית")} target="_blank" rel="noopener noreferrer">
               <Button
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-8 py-2.5"
               >
@@ -328,7 +328,7 @@ const Navigation = () => {
                 transition={{ delay: 0.45, duration: 0.4 }}
                 className="pt-4"
               >
-                <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
+                <a href={botLink("שאלה כללית")} target="_blank" rel="noopener noreferrer">
                   <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-10 py-3 text-lg">
                     <MessageCircle size={18} />
                     בואו נדבר

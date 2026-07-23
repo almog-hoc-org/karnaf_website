@@ -14,9 +14,6 @@ export const WHATSAPP_BUSINESS_NUMBER = "972559966175";
 export const WHATSAPP_BOT_NUMBER: string =
   import.meta.env.VITE_WHATSAPP_BOT_NUMBER || "972559925725";
 
-/** @deprecated Being phased out — use botLink()/businessLink() from src/lib/whatsapp.ts. */
-export const WHATSAPP_NUMBER = WHATSAPP_BUSINESS_NUMBER;
-
 /* ── Course commerce ─────────────────────────────────────────────
  * Single product, single price (see PRODUCT.md: "One product, sold once").
  * The digital program is fully self-serve: purchase CTAs go straight to the

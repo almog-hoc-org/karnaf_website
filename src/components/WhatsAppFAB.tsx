@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { botLink } from "@/lib/whatsapp";
 import mascotIcon from "@/assets/mascot/mascot-thumbsup.webp";
 
 const WhatsAppFAB = () => (
   <motion.a
-    href={`https://wa.me/${WHATSAPP_NUMBER}`}
+    href={botLink("שאלה כללית")}
     target="_blank"
     rel="noopener noreferrer"
     initial={{ scale: 0 }}

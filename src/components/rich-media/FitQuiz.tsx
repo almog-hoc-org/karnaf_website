@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, MessageCircle } from "lucide-react";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { botLink } from "@/lib/whatsapp";
 
 interface Question {
   id: string;
@@ -171,7 +171,7 @@ const FitQuiz = () => {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                href={botLink("התוכנית הדיגיטלית — בדיקת התאמה")}
                 target="_blank"
                 rel="noopener noreferrer"
               >

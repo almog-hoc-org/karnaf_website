@@ -20,7 +20,7 @@ import PageHero from "@/layouts/PageHero";
 import ContactForm from "@/components/ContactForm";
 import { SectionDark } from "@/components/v2/Section";
 import { Reveal } from "@/components/v2/Reveal";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { botLink } from "@/lib/whatsapp";
 import SEOHead, {
   organizationSchema,
   breadcrumbSchema,
@@ -31,9 +31,7 @@ import heroCity from "@/assets/hero-city.jpg";
 /* CRM classification for this funnel. */
 const LEAD_SOURCE = "mortgage";
 
-const WA_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  "היי! אני מעוניין/ת בייעוץ משכנתא של קרנף"
-)}`;
+const WA_LINK = botLink("קרנף משכנתא");
 
 /* The advisory journey — diagnosis → signature */
 const journey = [
