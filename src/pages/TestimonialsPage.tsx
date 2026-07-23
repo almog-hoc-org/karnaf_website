@@ -35,12 +35,12 @@ const TestimonialsPage = () => {
           aggregateRatingSchema({
             ratingValue: "4.9",
             reviewCount: String(testimonials.length),
-            itemName: "הדרך לדירה — תוכנית הליווי הדיגיטלית",
+            itemName: "הדרך לדירה — הקורס הדיגיטלי לרכישת דירה",
             itemUrl: "https://www.karnafnadlan.com/course",
           }),
           ...testimonials.map((t) =>
             reviewSchema({
-              itemName: "הדרך לדירה — תוכנית הליווי הדיגיטלית",
+              itemName: "הדרך לדירה — הקורס הדיגיטלי לרכישת דירה",
               itemUrl: "https://www.karnafnadlan.com/course",
               reviewerName: t.name,
               reviewBody: t.quote,
