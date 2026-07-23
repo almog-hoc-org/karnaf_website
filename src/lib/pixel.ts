@@ -59,6 +59,7 @@ export function trackPageView(pathname: string): void {
 /** Which form was submitted — maps the technical source to a Hebrew label. */
 export const FORM_LABELS: Record<string, { name: string; category: string }> = {
   "premium-investors": { name: "טופס ליווי משקיעים פרימיום", category: "ליווי משקיעים" },
+  "research-waitlist": { name: "רשימת המתנה — מערכת המחקר", category: "מערכת המחקר" },
   mortgage: { name: "טופס קרנף משכנתא", category: "ייעוץ משכנתא" },
   website: { name: "טופס יצירת קשר באתר", category: "יצירת קשר" },
   "webinar-section": { name: "הרשמה לוובינר", category: "וובינר" },

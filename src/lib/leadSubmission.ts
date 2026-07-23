@@ -34,6 +34,9 @@ function productFor(payload: WebsiteLeadPayload): { product: string; productLabe
   if (payload.source === "premium-investors" || payload.service === "premium") {
     return { product: "premium", productLabel: "ליווי משקיעים פרימיום" };
   }
+  if (payload.source === "research-waitlist") {
+    return { product: "research", productLabel: "מערכת המחקר — רשימת המתנה" };
+  }
   if (payload.service === "webinar") {
     return { product: "course", productLabel: "וובינר (הדרך לדירה)" };
   }

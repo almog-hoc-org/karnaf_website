@@ -6,6 +6,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
+import { COURSE_PRICE } from "@/lib/constants";
 
 const Hero = () => {
   const reduce = useReducedMotion();
@@ -113,22 +114,22 @@ const Hero = () => {
               className="text-body-lg leading-relaxed max-w-[52ch] mb-10"
               style={{ color: "hsl(36 33% 95% / 0.78)" }}
             >
-              מלווים אתכם בשיטה מבוססת נתונים — מהצעד הראשון ועד חתימת החוזה.
-              בלי לסמוך על אינטואיציה, בלי טעויות יקרות.
+              שני מסלולים, מטרה אחת: הקורס הדיגיטלי המקיף בישראל שמלמד אתכם
+              לעשות את זה לבד — או ליווי אישי 1:1 עד שהמפתח בידיים שלכם.
             </motion.p>
 
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.95 }}
-              className="flex flex-wrap items-center gap-6"
+              className="flex flex-wrap items-center gap-4"
             >
               <Link to="/course" className="inline-block">
                 <Button
                   size="lg"
                   className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all"
                 >
-                  גלו איך קונים דירה חכם
+                  לקורס הדיגיטלי · ₪{COURSE_PRICE.toLocaleString("he-IL")}
                   <span
                     aria-hidden
                     className="inline-block transition-transform group-hover:-translate-x-1"
@@ -137,12 +138,14 @@ const Hero = () => {
                   </span>
                 </Button>
               </Link>
-              <Link
-                to="/about"
-                className="inline-flex items-center text-base font-semibold hover:text-accent transition-colors underline-offset-4 hover:underline px-3 py-3 -mx-3 -my-3 min-h-[44px]"
-                style={{ color: "hsl(36 33% 95% / 0.85)" }}
-              >
-                מי אנחנו
+              <Link to="/premium" className="inline-block">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="inline-flex items-center gap-3 border-white/40 bg-white/5 text-white hover:bg-white hover:text-primary font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all backdrop-blur-sm"
+                >
+                  ליווי משקיעים 1:1
+                </Button>
               </Link>
             </motion.div>
           </div>
