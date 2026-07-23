@@ -25,19 +25,12 @@ export const WHATSAPP_NUMBER = WHATSAPP_BUSINESS_NUMBER;
  * buildCheckoutUrl() (src/lib/checkout.ts) so utm/click-id attribution
  * carries through to the payment page.
  */
-export const COURSE_PRICE = 5490;
-export const COURSE_INSTALLMENTS = 12;
-export const COURSE_INSTALLMENT_AMOUNT = Math.round(COURSE_PRICE / COURSE_INSTALLMENTS); // ₪458
+export const COURSE_PRICE = 980;
+/** The previous list price — shown struck-through as the price anchor. */
+export const COURSE_PRICE_ORIGINAL = 5490;
 export const CHECKOUT_URL: string =
   import.meta.env.VITE_CHECKOUT_URL ||
   "https://my.schooler.biz/s/117502/KarnafNewProgram?tid=30291&utm_source=%D7%A7%D7%A8%D7%A0%D7%A326";
-
-export const WHATSAPP_PURCHASE_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  "היי! אני רוצה להצטרף לתוכנית הדרך לדירה"
-)}`;
-
-/** Where the main purchase CTA points: hosted checkout if configured, WhatsApp otherwise. */
-export const PURCHASE_URL = CHECKOUT_URL || WHATSAPP_PURCHASE_URL;
 
 export const socialLinks = [
   { icon: Instagram, href: "https://www.instagram.com/karnaf_nadlan/", label: "Instagram", hoverColor: "hover:bg-pink-500/20 hover:text-pink-600 hover:border-pink-500/50" },

@@ -1,4 +1,5 @@
 import { Head } from "vite-react-ssg";
+import { COURSE_PRICE } from "@/lib/constants";
 
 const SITE_URL = "https://www.karnafnadlan.com";
 const SITE_NAME = "קרנף נדל\"ן";
@@ -78,7 +79,7 @@ export const organizationSchema = {
   logo: `${SITE_URL}/favicon.png`,
   image: DEFAULT_IMAGE,
   description:
-    "סטודיו ליווי לרכישת דירה ראשונה בישראל. תוכנית הדרך לדירה + אנליסט נדל״ן צמוד בוואטסאפ.",
+    "חברת ידע והשקעות נדל״ן בישראל. הקורס הדיגיטלי המקיף \"הדרך לדירה\" לרכישה חכמה, וליווי משקיעים פרימיום 1:1 עד חתימה על נכס.",
   foundingDate: "2018",
   slogan: "מספרים, לא תחושות.",
   founders: [
@@ -137,7 +138,7 @@ export const websiteSchema = {
   inLanguage: "he-IL",
   publisher: { "@id": `${SITE_URL}/#organization` },
   description:
-    "ליווי, קורס דיגיטלי וכלי ניתוח לרוכשי דירות בישראל. מבוסס נתונים — לא תחושות.",
+    "קורס דיגיטלי לרכישת דירה, ליווי משקיעים 1:1 וכלי ניתוח לרוכשי דירות בישראל. מבוסס נתונים — לא תחושות.",
   potentialAction: {
     "@type": "SearchAction",
     target: {
@@ -152,9 +153,9 @@ export const courseSchema = {
   "@context": "https://schema.org",
   "@type": "Course",
   "@id": `${SITE_URL}/course#course`,
-  name: "הדרך לדירה — תוכנית הליווי הדיגיטלית",
+  name: "הדרך לדירה — הקורס הדיגיטלי לרכישת דירה",
   description:
-    "תוכנית הליווי הדיגיטלית לרכישת דירה ראשונה בישראל. 50+ שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון עצמי), אנליסט בוואטסאפ, וגישה ל-12 חודשים.",
+    "הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. 50+ שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון עצמי), אנליסט AI, וגישה ל-12 חודשים.",
   url: `${SITE_URL}/course`,
   provider: {
     "@type": "EducationalOrganization",
@@ -180,13 +181,13 @@ export const courseSchema = {
   offers: {
     "@type": "Offer",
     "@id": `${SITE_URL}/course#offer`,
-    name: "תוכנית הדרך לדירה — גישה מלאה ל-12 חודשים",
+    name: "הדרך לדירה — גישה מלאה ל-12 חודשים",
     category: "Online Course",
-    price: "5490",
+    price: String(COURSE_PRICE),
     priceCurrency: "ILS",
     availability: "https://schema.org/InStock",
     url: `${SITE_URL}/course`,
-    validFrom: "2024-01-01",
+    validFrom: "2026-07-01",
     eligibleRegion: { "@type": "Country", name: "Israel" },
   },
 };
@@ -357,20 +358,22 @@ export const serviceSchema = {
     itemListElement: [
       {
         "@type": "Offer",
+        price: String(COURSE_PRICE),
+        priceCurrency: "ILS",
         itemOffered: {
           "@type": "Service",
-          name: "תוכנית הדרך לדירה (דיגיטלית)",
+          name: "הדרך לדירה — הקורס הדיגיטלי (מסלול עצמאי)",
           description:
-            "50+ שיעורים, 6+ מחשבונים, אנליסט בוואטסאפ, גישה 12 חודשים.",
+            "50+ שיעורים, 6+ מחשבונים, אנליסט AI, גישה 12 חודשים.",
         },
       },
       {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "ליווי פרימיום",
+          name: "ליווי משקיעים פרימיום",
           description:
-            "ליווי 1-on-1 בעסקת רכישה ספציפית — ניתוח, משא ומתן, ובדיקות.",
+            "ליווי אישי 1:1 עד חתימה על נכס — אסטרטגיה, איתור עסקאות, בדיקת נאותות ומשא ומתן.",
         },
       },
     ],

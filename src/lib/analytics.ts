@@ -11,6 +11,8 @@
  * Every call is a no-op when the script didn't load (unset ID, ad-blocker).
  */
 
+import { COURSE_PRICE } from "@/lib/constants";
+
 const GA4_ID: string = import.meta.env.VITE_GA4_ID || "";
 const CLARITY_ID: string = import.meta.env.VITE_CLARITY_ID || "";
 
@@ -70,7 +72,7 @@ export function gaViewPricing(page: string): void {
 export function gaBeginCheckout(method: "checkout" | "whatsapp"): void {
   gtag("event", "begin_checkout", {
     currency: "ILS",
-    value: 5490,
+    value: COURSE_PRICE,
     payment_channel: method,
   });
 }

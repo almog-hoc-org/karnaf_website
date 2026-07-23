@@ -1,39 +1,47 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CheckCircle, GraduationCap, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   COURSE_PRICE,
-  COURSE_INSTALLMENTS,
-  COURSE_INSTALLMENT_AMOUNT,
+  COURSE_PRICE_ORIGINAL,
   CHECKOUT_URL,
-  PURCHASE_URL,
-  WHATSAPP_NUMBER,
 } from "@/lib/constants";
+import { buildCheckoutUrl } from "@/lib/checkout";
+import { botLink } from "@/lib/whatsapp";
 import { gaViewPricing, gaBeginCheckout } from "@/lib/analytics";
+import { trackInitiateCheckout } from "@/lib/pixel";
 
 const included = [
-  "50+ שיעורים דיגיטליים",
+  "50+ שיעורים דיגיטליים — גישה מיידית לכולם",
   "6+ כלים ומחשבונים מתקדמים",
-  "ליווי צמוד של אנליסט בוואטסאפ",
+  "אנליסט AI למענה על שאלות בתוך התוכנית",
   "גישה מלאה ל-12 חודשים",
   "קהילת בוגרים פעילה",
 ];
 
 const nextSteps = [
-  { num: "1", text: "מצטרפים ומקבלים גישה מיידית לכל התוכנית" },
-  { num: "2", text: "האנליסט שלכם יוצר קשר בוואטסאפ תוך יום עסקים" },
+  { num: "1", text: "רוכשים בתשלום מאובטח בדף הסליקה" },
+  { num: "2", text: "מקבלים גישה מיידית לכל השיעורים והכלים" },
   { num: "3", text: "מתחילים ללמוד ולנתח עסקאות — בקצב שלכם" },
 ];
 
 /**
- * The single pricing card for the one product (PRODUCT.md: one product,
- * one price — ₪5,490). The CTA points at the hosted checkout when
- * VITE_CHECKOUT_URL is configured and falls back to a WhatsApp purchase
- * message otherwise. Fires view_pricing once when scrolled into view.
+ * The single pricing card for the one product — the fully self-serve
+ * digital program. The CTA goes straight to the hosted Schooler checkout
+ * (buildCheckoutUrl carries utm/click-id attribution through). Fires
+ * view_pricing once when scrolled into view, and InitiateCheckout +
+ * begin_checkout on the purchase click.
  */
 const PricingCard = () => {
   const ref = useRef<HTMLDivElement>(null);
   const seen = useRef(false);
+  // SSG renders the plain checkout URL; the enriched one (utm/fbclid)
+  // replaces it client-side after hydration.
+  const [checkoutHref, setCheckoutHref] = useState(CHECKOUT_URL);
+
+  useEffect(() => {
+    setCheckoutHref(buildCheckoutUrl());
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
@@ -75,22 +83,24 @@ const PricingCard = () => {
           הצטרפו למאות בוגרים שכבר רכשו דירה בצורה חכמה.
         </p>
 
-        {/* Price — stated plainly. Nothing signals confidence like a clear price. */}
+        {/* Price — the old list price anchors the new self-serve price. */}
         <div className="mb-8">
-          <div className="flex items-baseline justify-center gap-2" dir="rtl">
+          <div className="flex items-baseline justify-center gap-3" dir="rtl">
             <span className="text-display-lg font-black text-foreground tabular-nums leading-none">
               ₪{COURSE_PRICE.toLocaleString("he-IL")}
             </span>
+            <span
+              className="text-xl md:text-2xl font-bold text-muted-foreground line-through tabular-nums"
+              aria-label={`במקום ₪${COURSE_PRICE_ORIGINAL.toLocaleString("he-IL")}`}
+            >
+              ₪{COURSE_PRICE_ORIGINAL.toLocaleString("he-IL")}
+            </span>
           </div>
           <p className="text-muted-foreground mt-3">
-            או עד {COURSE_INSTALLMENTS} תשלומים של{" "}
-            <span className="font-bold text-foreground tabular-nums">
-              ₪{COURSE_INSTALLMENT_AMOUNT}
-            </span>{" "}
-            לחודש
+            תשלום אחד · גישה מיידית · לגמרי בקצב שלכם
           </p>
           <p className="text-sm text-muted-foreground mt-1">
-            מחיר אחד. בלי מסלולים, בלי הפתעות.
+            המחיר החדש של המודל הדיגיטלי העצמאי — בלי מסלולים, בלי הפתעות.
           </p>
         </div>
 
@@ -104,17 +114,20 @@ const PricingCard = () => {
         </div>
 
         <a
-          href={PURCHASE_URL}
+          href={checkoutHref}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block w-full sm:w-auto"
-          onClick={() => gaBeginCheckout(CHECKOUT_URL ? "checkout" : "whatsapp")}
+          onClick={() => {
+            trackInitiateCheckout();
+            gaBeginCheckout("checkout");
+          }}
         >
           <Button
             size="lg"
             className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 w-full sm:w-auto gap-3 mb-4 rounded-full transition-all"
           >
-            הצטרפות לתוכנית
+            לרכישה מיידית — ₪{COURSE_PRICE.toLocaleString("he-IL")}
             <span
               aria-hidden
               className="inline-block transition-transform group-hover:-translate-x-1"
@@ -123,12 +136,13 @@ const PricingCard = () => {
             </span>
           </Button>
         </a>
+        <p className="text-xs text-muted-foreground mb-2">
+          תשלום מאובטח · מעבר לדף הסליקה של התוכנית
+        </p>
 
         <div>
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-              "היי! יש לי שאלה על תוכנית הדרך לדירה"
-            )}`}
+            href={botLink("התוכנית הדיגיטלית — שאלה לפני רכישה")}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-3 px-3 min-h-[44px]"
@@ -141,7 +155,7 @@ const PricingCard = () => {
         {/* What happens after you join — removes the fear of the unknown. */}
         <div className="mt-8 pt-6 border-t border-border text-right max-w-sm mx-auto">
           <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mb-4 text-center">
-            מה קורה אחרי ההצטרפות?
+            מה קורה אחרי הרכישה?
           </p>
           <ol className="space-y-3">
             {nextSteps.map((step) => (

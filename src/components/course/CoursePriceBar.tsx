@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { COURSE_PRICE, COURSE_INSTALLMENTS, COURSE_INSTALLMENT_AMOUNT } from "@/lib/constants";
+import { COURSE_PRICE, COURSE_PRICE_ORIGINAL } from "@/lib/constants";
 
 /**
  * Slim sticky purchase bar for the course page — appears after the visitor
@@ -57,17 +57,23 @@ const CoursePriceBar = () => {
               ₪{COURSE_PRICE.toLocaleString("he-IL")}
             </span>
             <span
+              className="text-sm line-through tabular-nums whitespace-nowrap"
+              style={{ color: "hsl(36 33% 95% / 0.45)" }}
+            >
+              ₪{COURSE_PRICE_ORIGINAL.toLocaleString("he-IL")}
+            </span>
+            <span
               className="text-sm truncate hidden sm:inline"
               style={{ color: "hsl(36 33% 95% / 0.65)" }}
             >
-              או עד {COURSE_INSTALLMENTS} תשלומים של ₪{COURSE_INSTALLMENT_AMOUNT}
+              גישה מיידית · תשלום מאובטח
             </span>
           </div>
           <a
             href="#pricing"
             className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-sm md:text-base px-6 py-2.5 rounded-full transition-colors whitespace-nowrap"
           >
-            הצטרפות לתוכנית
+            לרכישה מיידית
           </a>
         </div>
       </div>
