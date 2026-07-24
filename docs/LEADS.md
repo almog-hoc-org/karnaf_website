@@ -49,8 +49,13 @@ utm_medium, utm_campaign, utm_content, utm_term, message, stage, equity.
 ## Spreadsheets
 
 - משכנתא: `14Q29gU84mEJwOSLPQSCFYtmBAmKt_YnTBo0nuhgHWb0`
-- ליווי משקיעים: `1ZZfQApTdo-jiikknf60T_t19KItut7y6bzZCSR-jXzw`
+- ליווי משקיעים (משותף עם המלווה): `1KG3tw90wz0CmnhVI2qaLl7762IIKL7W5-6O0grn8pcg`
+  ⚠️ pending Make re-route — the scenario still points at the old sheet
+  `1ZZfQApTdo-jiikknf60T_t19KItut7y6bzZCSR-jXzw` until updated (see
+  docs/ARCHITECTURE-CRM-INTEGRATIONS.md §3).
 - הדרך לדירה: `1ZbSm_OVrSnh8_YZ760gVsB0yB4kt3xbCCfB390MZ8p0`
+- מערכת המחקר (`product=research`, waitlist): sheet + Make route TBD —
+  until routed, these leads reach the CRM only.
 
 These double as the partner-sharing surface — share a sheet, not CRM access.
 

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, MessageCircle } from "lucide-react";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { botLink } from "@/lib/whatsapp";
 
 interface Question {
   id: string;
@@ -34,13 +34,13 @@ const questions: Question[] = [
 ];
 
 const insights = [
-  "עם הכלים והליווי שלנו, תוכל לזהות עסקאות מתחת למחיר השוק ולסגור בביטחון.",
+  "עם הכלים והשיטה שלנו, תוכל לזהות עסקאות מתחת למחיר השוק ולסגור בביטחון.",
   "התוכנית בנויה בדיוק בשביל השלב שלך — מהיסודות ועד חתימת חוזה.",
   "הנתונים מראים שבוגרי התוכנית חוסכים בממוצע עשרות אלפי שקלים בעסקה.",
-  "המחשבונים והאנליסט האישי יהפכו את החיפוש שלך ממלחיץ לשיטתי ומדויק.",
+  "המחשבונים והאנליסט ה-AI יהפכו את החיפוש שלך ממלחיץ לשיטתי ומדויק.",
   "אתה בדיוק בנקודה שבה ידע ממוקד יכול לחסוך לך שנים של טעויות.",
   "הקורס ייתן לך את הביטחון לנהל משא ומתן מול מוכרים ויזמים כמקצוען.",
-  "עם ליווי צמוד של אנליסט, תקבל החלטות מבוססות נתונים — לא תחושות בטן.",
+  "עם כלים מבוססי נתונים, תקבל החלטות מבוססות מספרים — לא תחושות בטן.",
   "רוכשי דירה שנכנסים מוכנים חוסכים זמן, כסף ועצבים — התוכנית תכין אותך.",
   "הכלים המתקדמים שלנו יאפשרו לך לנתח כל עסקה בדקות ולדעת אם היא שווה.",
   "בין אם זו דירה ראשונה או השקעה — השיטה שלנו עובדת. 300+ בוגרים מוכיחים.",
@@ -171,7 +171,7 @@ const FitQuiz = () => {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                href={botLink("התוכנית הדיגיטלית — בדיקת התאמה")}
                 target="_blank"
                 rel="noopener noreferrer"
               >

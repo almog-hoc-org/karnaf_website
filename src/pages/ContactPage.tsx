@@ -3,7 +3,8 @@ import { MessageCircle, Phone, Mail } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
 import ContactForm from "@/components/ContactForm";
 import { faqData } from "@/data/faq";
-import { WHATSAPP_NUMBER, PHONE_NUMBER, EMAIL } from "@/lib/constants";
+import { PHONE_NUMBER, EMAIL } from "@/lib/constants";
+import { botLink } from "@/lib/whatsapp";
 import { Reveal } from "@/components/v2/Reveal";
 import SEOHead, {
   organizationSchema,
@@ -46,7 +47,7 @@ const ContactPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               {
-                href: `https://wa.me/${WHATSAPP_NUMBER}`,
+                href: botLink("יצירת קשר"),
                 ext: true,
                 icon: MessageCircle,
                 color: "hsl(var(--whatsapp))",

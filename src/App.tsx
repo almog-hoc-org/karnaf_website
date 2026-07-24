@@ -45,8 +45,8 @@ export const routes: RouteRecord[] = [
     element: <RootProviders />,
     children: [
       {
-        // Standalone hidden landing page — no site nav/footer, noindex,
-        // excluded from sitemap. Reachable only via direct link (/program).
+        // Legacy campaign URL — the old standalone LP was retired with the
+        // self-serve model; old links redirect to the canonical /course.
         path: "program",
         element: <ProgramPage />,
         entry: "src/pages/ProgramPage.tsx",

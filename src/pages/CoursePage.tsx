@@ -31,7 +31,6 @@ import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
 import { faqData } from "@/data/faq";
 import { curriculum } from "@/data/curriculum";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
 import BigCTA from "@/components/BigCTA";
 import PricingCard from "@/components/course/PricingCard";
 import CoursePriceBar from "@/components/course/CoursePriceBar";
@@ -61,7 +60,7 @@ const solutions = [
   "מבינים כל שלב בתהליך לפני שמתחילים",
   "יודעים לנתח עסקה ולזהות הזדמנות אמיתית",
   "נכנסים למשא ומתן עם כלים וביטחון",
-  "מגובים בליווי צמוד של אנליסט נדל״ן",
+  "מגובים בכלים, בנתונים ובאנליסט ה-AI של התוכנית",
 ];
 
 const programCards = [
@@ -95,14 +94,14 @@ const programCards = [
   {
     num: "03",
     icon: Headphones,
-    title: "ליווי מקצועי",
+    title: "קהילה ועדכונים",
     description:
-      "ליווי צמוד בוואטסאפ של אנליסט נדל״ן שעונה על שאלות, מכוון ועוזר לכם בכל שלב בדרך.",
+      "לומדים לבד — אבל לא נשארים לבד. אנליסט AI זמין לכל שאלה, וקהילת תלמידים ובוגרים פעילה סביבכם.",
     features: [
-      "ליווי צמוד של אנליסט בוואטסאפ",
-      "מענה לשאלות בזמן אמת",
-      "גישה לקהילת תלמידים",
-      "הרחבות מקצועיות ועדכונים",
+      "אנליסט AI למענה על שאלות בכל שעה",
+      "קהילת תלמידים ובוגרים פעילה",
+      "עדכוני תוכן והרחבות שוטפים",
+      "תבניות ומסמכים להורדה",
     ],
   },
 ];
@@ -123,10 +122,10 @@ const CoursePage = () => {
   return (
     <>
       <SEOHead
-        title="הדרך לדירה — תוכנית הליווי הדיגיטלית לרכישת דירה ראשונה | קרנף נדל״ן"
-        description="50+ שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון), אנליסט נדל״ן צמוד בוואטסאפ. גישה מלאה ל-12 חודשים."
+        title="הדרך לדירה — הקורס הדיגיטלי המקיף לרכישת דירה | קרנף נדל״ן"
+        description="הקורס הדיגיטלי המקיף בישראל לרכישת דירה: 50+ שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון) ואנליסט AI. ₪980, גישה מיידית ל-12 חודשים — לגמרי בקצב שלכם."
         path="/course"
-        keywords="קורס נדל״ן, הדרך לדירה, ליווי רוכשי דירה, דירה ראשונה, מחשבון משכנתא, מס רכישה, השקעה בנדל״ן"
+        keywords="קורס נדל״ן, קורס נדל״ן דיגיטלי, הדרך לדירה, דירה ראשונה, מחשבון משכנתא, מס רכישה, השקעה בנדל״ן"
         jsonLd={[
           organizationSchema,
           courseSchema,
@@ -194,13 +193,13 @@ const CoursePage = () => {
                 className="text-display-sm md:text-display-md font-bold leading-snug max-w-3xl mb-8"
                 style={{ color: "hsl(36 33% 95% / 0.85)" }}
               >
-                תוכנית הליווי המקצועית שמלמדת אתכם לקנות דירה חכם — מא׳ ועד ת׳.
+                הקורס הדיגיטלי המקיף בישראל לרכישת דירה חכמה — מא׳ ועד ת׳, בקצב שלכם.
               </p>
             </Reveal>
 
             <Reveal delay={0.24}>
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm">
-                50+ שיעורים · 6+ כלים מתקדמים · ליווי צמוד
+                50+ שיעורים · 6+ כלים מתקדמים · גישה מיידית
               </div>
             </Reveal>
 
@@ -402,7 +401,7 @@ const CoursePage = () => {
                 className="text-base mb-12 text-center max-w-2xl mx-auto leading-relaxed"
                 style={{ color: "hsl(36 33% 95% / 0.65)" }}
               >
-                בכל שלב — כלי, חומר וליווי שמותאמים בדיוק לאן שאתם בדרך.
+                בכל שלב — כלי, שיעור וחומר שמותאמים בדיוק לאן שאתם בדרך.
               </p>
             </Reveal>
             <Reveal delay={0.14}>
@@ -502,7 +501,7 @@ const CoursePage = () => {
                     "חוסכים עשרות אלפי ₪",
                     "תמהיל משכנתא אופטימלי",
                     "מזהים עסקאות לפני כולם",
-                    "ליווי מקצועי בכל שלב",
+                    "כלים ואנליסט AI בכל שלב",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-2">
                       <CheckCircle size={14} className="text-accent flex-shrink-0" />
@@ -519,6 +518,45 @@ const CoursePage = () => {
           </Reveal>
         </div>
       </section>
+
+      {/* 8b. Premium cross-sell — the self-serve course and the 1:1 service
+          define each other. Whoever needs a hand-held process belongs there. */}
+      <SectionDark size="sm" glow="bottom">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <Reveal>
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-right">
+              <div>
+                <p
+                  className="text-eyebrow uppercase tracking-[0.18em] mb-2"
+                  style={{ color: "hsl(36 33% 95% / 0.6)" }}
+                >
+                  מעדיפים שנעבור את הדרך יחד?
+                </p>
+                <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                  ליווי משקיעים פרימיום — 1:1, יד ביד עד המפתח.
+                </h3>
+                <p
+                  className="mt-2 text-base leading-relaxed"
+                  style={{ color: "hsl(36 33% 95% / 0.7)" }}
+                >
+                  הקורס מלמד אתכם לעשות את זה לבד. בליווי הפרימיום אנליסט אישי
+                  עושה את הדרך איתכם — מהאסטרטגיה ועד חתימת החוזה.
+                </p>
+              </div>
+              <Link to="/premium" className="shrink-0">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white/30 text-white hover:bg-white hover:text-primary rounded-full px-8 py-6 font-bold gap-2"
+                >
+                  לפרטים על הליווי
+                  <ArrowLeft size={16} />
+                </Button>
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </SectionDark>
 
       {/* 9. FAQ */}
       <section className="py-section-lg bg-card">

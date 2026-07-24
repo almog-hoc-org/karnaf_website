@@ -10,18 +10,19 @@
 
 OKLCH-equivalent (HSL with low chroma at extremes per impeccable laws):
 
+The source of truth is `src/index.css`. Key committed values:
+
 ```css
 :root {
   --background: 36 33% 95%;       /* tinted cream — chroma toward warm */
-  --foreground: 217 50% 12%;      /* deep navy ink */
-  --primary: 217 50% 8%;          /* near-black navy, but not #000 */
+  --foreground: 215 26% 23%;      /* navy ink */
+  --primary: 217 42% 15%;         /* deep navy, not #000 */
   --primary-foreground: 36 33% 95%;
   --accent: 24 80% 52%;           /* warm amber — single committed accent */
-  --accent-foreground: 0 0% 100%;
-  --muted: 36 33% 90%;
-  --muted-foreground: 217 30% 30%;
+  --accent-foreground: 217 42% 15%; /* navy on amber — ~5.1:1, AA for all text */
+  --muted-foreground: 215 16% 44%;  /* 4.75:1+ on cream — WCAG AA body text */
   --card: 0 0% 100%;
-  --border: 36 33% 85%;
+  --ink: 217 50% 8%;              /* cinematic dark sections */
 }
 ```
 
@@ -31,7 +32,7 @@ Pure `#000` and `#fff` are forbidden. Cream is `36 33% 95%` (warm tint). White c
 
 ## Typography
 
-- **Family:** Rubik (Google Fonts), single family. Hebrew + Latin coverage. No serif companion — single-family commitment.
+- **Family:** Rubik Variable, self-hosted via `@fontsource-variable/rubik` (no Google Fonts `<link>`). Hebrew + Latin coverage. No serif companion — single-family commitment.
 - **Display weight:** 900 (black). Used for `.text-display-xl/lg/md/sm`.
 - **Body weight:** 400-500.
 - **Eyebrow weight:** 700, uppercase, letter-spacing 0.18em.
@@ -81,8 +82,7 @@ Glow shadows used sparingly (פעם 1-2 בעמוד). Not on every card.
 
 ## Motion
 
-- Library: framer-motion (page transitions) + custom IntersectionObserver-based `<Reveal>`.
-- Lenis for smooth scroll.
+- Library: framer-motion (page transitions) + custom IntersectionObserver-based `<Reveal>`. Smooth scroll is native CSS (`scroll-behavior`) — Lenis was removed for INP.
 - **Easing:** `ease-out-quart` / `ease-out-quint`. Never bounce, never elastic.
 - **Duration:** 150-300ms for micro, 600-800ms for entrance reveals.
 - `prefers-reduced-motion`: all Reveals collapse to instant.

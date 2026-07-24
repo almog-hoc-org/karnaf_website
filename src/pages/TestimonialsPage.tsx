@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import PageHero from "@/layouts/PageHero";
 import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { botLink } from "@/lib/whatsapp";
 import BigCTA from "@/components/BigCTA";
 import { Reveal } from "@/components/v2/Reveal";
 import SEOHead, {
@@ -35,12 +35,12 @@ const TestimonialsPage = () => {
           aggregateRatingSchema({
             ratingValue: "4.9",
             reviewCount: String(testimonials.length),
-            itemName: "הדרך לדירה — תוכנית הליווי הדיגיטלית",
+            itemName: "הדרך לדירה — הקורס הדיגיטלי לרכישת דירה",
             itemUrl: "https://www.karnafnadlan.com/course",
           }),
           ...testimonials.map((t) =>
             reviewSchema({
-              itemName: "הדרך לדירה — תוכנית הליווי הדיגיטלית",
+              itemName: "הדרך לדירה — הקורס הדיגיטלי לרכישת דירה",
               itemUrl: "https://www.karnafnadlan.com/course",
               reviewerName: t.name,
               reviewBody: t.quote,
@@ -114,7 +114,7 @@ const TestimonialsPage = () => {
             </p>
           </Reveal>
           <Reveal delay={0.16}>
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="inline-block">
+            <a href={botLink("שאלה כללית")} target="_blank" rel="noopener noreferrer" className="inline-block">
               <Button
                 size="lg"
                 className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.35)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.55)] transition-all"

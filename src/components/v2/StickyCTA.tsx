@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { botLink } from "@/lib/whatsapp";
 
 interface StickyCTAProps {
   label?: string;
@@ -92,7 +92,7 @@ export const StickyCTA = ({
           </div>
           <div className="flex items-center gap-3">
             <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              href={botLink("התוכנית הדיגיטלית")}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex text-sm font-semibold text-white/80 hover:text-accent transition-colors px-3 py-2"

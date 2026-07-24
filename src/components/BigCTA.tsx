@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { botLink } from "@/lib/whatsapp";
 import { SectionDark } from "@/components/v2/Section";
 import { Reveal } from "@/components/v2/Reveal";
 
@@ -23,7 +23,7 @@ const BigCTA = () => {
         </Reveal>
         <Reveal delay={0.18}>
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            href={botLink("שאלה כללית")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block"

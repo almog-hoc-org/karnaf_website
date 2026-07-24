@@ -1,5 +1,5 @@
 import { Instagram, Facebook, Youtube, Music } from "lucide-react";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { botLink } from "@/lib/whatsapp";
 import { Reveal } from "@/components/v2/Reveal";
 import { TiltCard } from "@/components/v2/TiltCard";
 
@@ -13,7 +13,7 @@ const communityLinks = [
         <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" />
       </svg>
     ),
-    href: `https://wa.me/${WHATSAPP_NUMBER}`,
+    href: botLink("שאלה כללית"),
     label: "WhatsApp",
   },
   { icon: Youtube, href: "https://www.youtube.com/@%D7%A7%D7%A8%D7%A0%D7%A3%D7%A0%D7%93%D7%9C%D7%9F", label: "YouTube" },
@@ -31,7 +31,7 @@ const advantages = [
     num: "02",
     title: "הדרך לדירה",
     description:
-      "תוכנית הליווי המקצועית בישראל שתעזור לכם לזהות עסקאות מצוינות, לקבל החלטות נכונות ולהרגיש בטוחים בכל צעד",
+      "הקורס הדיגיטלי המקיף בישראל שילמד אתכם לזהות עסקאות מצוינות, לקבל החלטות נכונות ולהרגיש בטוחים בכל צעד",
   },
   {
     num: "03",

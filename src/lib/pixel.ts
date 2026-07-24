@@ -9,6 +9,8 @@
  * breaks — the function simply does nothing.
  */
 
+import { COURSE_PRICE } from "@/lib/constants";
+
 type PixelParams = Record<string, string | number | boolean | undefined>;
 
 declare global {
@@ -57,6 +59,7 @@ export function trackPageView(pathname: string): void {
 /** Which form was submitted — maps the technical source to a Hebrew label. */
 export const FORM_LABELS: Record<string, { name: string; category: string }> = {
   "premium-investors": { name: "טופס ליווי משקיעים פרימיום", category: "ליווי משקיעים" },
+  "research-waitlist": { name: "רשימת המתנה — מערכת המחקר", category: "מערכת המחקר" },
   mortgage: { name: "טופס קרנף משכנתא", category: "ייעוץ משכנתא" },
   website: { name: "טופס יצירת קשר באתר", category: "יצירת קשר" },
   "webinar-section": { name: "הרשמה לוובינר", category: "וובינר" },
@@ -72,6 +75,18 @@ export function trackLead(source: string, extra?: PixelParams): void {
     content_category: label.category,
     source,
     ...extra,
+  });
+}
+
+/** מעבר לסליקה — נשלח בלחיצה על כפתור הרכישה, לפני היציאה לדף התשלום.
+ *  קהל "נוטשי סליקה" = מי שירה את האירוע הזה ולא ירה Purchase (שמגיע
+ *  מ-Schooler דרך ה-CRM ב-Conversions API). */
+export function trackInitiateCheckout(): void {
+  fbq("track", "InitiateCheckout", {
+    content_name: "הדרך לדירה — התוכנית הדיגיטלית",
+    content_category: "רכישה",
+    currency: "ILS",
+    value: COURSE_PRICE,
   });
 }
 

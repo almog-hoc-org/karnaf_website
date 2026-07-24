@@ -22,7 +22,8 @@ import { SectionDark } from "@/components/v2/Section";
 import { Reveal } from "@/components/v2/Reveal";
 import { useToast } from "@/hooks/use-toast";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { isValidIsraeliPhone, PHONE_ERROR_MESSAGE } from "@/lib/validation";
+import { botLink } from "@/lib/whatsapp";
 import SEOHead, {
   organizationSchema,
   serviceSchema,
@@ -36,9 +37,7 @@ import foundersImg from "@/assets/program/founders.png";
 const LEAD_SOURCE = "premium-investors";
 const LEAD_SERVICE = "premium";
 
-const WA_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  "היי! אני מעוניין/ת בליווי משקיעים פרימיום של קרנף"
-)}`;
+const WA_LINK = botLink("ליווי משקיעים פרימיום");
 
 /* The accompaniment journey — strategy → signature */
 const journey = [
@@ -109,18 +108,48 @@ const differentiators = [
   },
 ];
 
+/** Equity brackets — ₪250K steps, as agreed with the accompaniment partner. */
+const EQUITY_OPTIONS = [
+  "עד 250 אלף ₪",
+  "250–500 אלף ₪",
+  "500–750 אלף ₪",
+  "750 אלף – מיליון ₪",
+  "מעל מיליון ₪",
+];
+
+const isValidEmail = (raw: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(raw.trim());
+
 const InvestorForm = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [equity, setEquity] = useState("");
+  const [company, setCompany] = useState(""); // honeypot
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !phone.trim()) {
-      toast({ title: "נא למלא שם וטלפון", variant: "destructive" });
+    if (!name.trim() || !phone.trim() || !email.trim()) {
+      toast({ title: "נא למלא שם, טלפון ומייל", variant: "destructive" });
+      return;
+    }
+    if (!isValidIsraeliPhone(phone)) {
+      toast({ title: PHONE_ERROR_MESSAGE, variant: "destructive" });
+      return;
+    }
+    if (!isValidEmail(email)) {
+      toast({ title: "כתובת המייל לא נראית תקינה — בדקו ונסו שוב", variant: "destructive" });
+      return;
+    }
+    if (!equity) {
+      toast({ title: "נא לבחור הון עצמי זמין", variant: "destructive" });
+      return;
+    }
+    if (company) {
+      // Honeypot filled — bot. Pretend success, submit nothing.
+      setIsSubmitted(true);
       return;
     }
     setIsSubmitting(true);
@@ -128,13 +157,15 @@ const InvestorForm = () => {
       await submitWebsiteLead({
         name,
         phone,
-        equity: equity || undefined,
+        email,
+        equity,
         service: LEAD_SERVICE,
         source: LEAD_SOURCE,
-        message: "פנייה מעמוד ליווי משקיעים פרימיום",
+        message:
+          "מהות הפנייה: תיאום פגישת היכרות ללא התחייבות — ליווי משקיעים פרימיום",
       });
       setIsSubmitted(true);
-      toast({ title: "הפרטים נשלחו!", description: "אנליסט מהצוות יחזור אליכם בהקדם." });
+      toast({ title: "הפרטים נשלחו!", description: "נחזור אליכם לתיאום פגישת היכרות." });
     } catch {
       toast({ title: "שגיאה בשליחה", description: "נסו שוב או דברו איתנו בוואטסאפ.", variant: "destructive" });
     } finally {
@@ -143,6 +174,7 @@ const InvestorForm = () => {
     setTimeout(() => {
       setName("");
       setPhone("");
+      setEmail("");
       setEquity("");
       setIsSubmitted(false);
     }, 3500);
@@ -157,7 +189,9 @@ const InvestorForm = () => {
       >
         <CheckCircle className="w-14 h-14 text-accent" />
         <p className="text-white text-xl font-bold">קיבלנו — תודה!</p>
-        <p className="text-white/70">אנליסט מהצוות יחזור אליכם בהקדם.</p>
+        <p className="text-white/70">
+          נחזור אליכם לתיאום פגישת היכרות — ללא התחייבות.
+        </p>
       </motion.div>
     );
   }
@@ -178,28 +212,53 @@ const InvestorForm = () => {
         autoComplete="tel"
         inputMode="tel"
         dir="ltr"
-        placeholder="טלפון"
-        aria-label="מספר טלפון"
+        placeholder="טלפון לחזרה"
+        aria-label="מספר טלפון לחזרה"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
         required
         className="bg-white/95 border-white/10 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-full px-6"
       />
-      <Select value={equity} onValueChange={setEquity}>
+      <Input
+        type="email"
+        autoComplete="email"
+        inputMode="email"
+        dir="ltr"
+        placeholder="מייל"
+        aria-label="כתובת מייל"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        className="bg-white/95 border-white/10 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-full px-6"
+      />
+      <Select value={equity} onValueChange={setEquity} required>
         <SelectTrigger
           aria-label="הון עצמי זמין להשקעה"
           dir="rtl"
           className="bg-white/95 border-white/10 text-foreground h-14 text-right rounded-full px-6"
         >
-          <SelectValue placeholder="הון עצמי זמין להשקעה (אופציונלי)" />
+          <SelectValue placeholder="הון עצמי זמין להשקעה" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="עד 250 אלף">עד 250 אלף ₪</SelectItem>
-          <SelectItem value="250-500 אלף">250–500 אלף ₪</SelectItem>
-          <SelectItem value="500 אלף - מיליון">500 אלף – מיליון ₪</SelectItem>
-          <SelectItem value="מעל מיליון">מעל מיליון ₪</SelectItem>
+          {EQUITY_OPTIONS.map((option) => (
+            <SelectItem key={option} value={option}>
+              {option}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
+      {/* Honeypot — invisible to humans, catnip for bots */}
+      <div className="absolute -z-10 opacity-0 pointer-events-none" aria-hidden="true">
+        <label htmlFor="premium-company">חברה</label>
+        <input
+          id="premium-company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
+      </div>
       <Button
         type="submit"
         disabled={isSubmitting}
@@ -210,7 +269,7 @@ const InvestorForm = () => {
         ) : (
           <>
             <Send size={18} />
-            דברו איתי על ליווי
+            לתיאום פגישה — ללא התחייבות
           </>
         )}
       </Button>
