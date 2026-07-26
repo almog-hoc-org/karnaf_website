@@ -35,6 +35,7 @@ import { SectionDark } from "@/components/v2/Section";
 import { TransactionLifecycle, type LifecycleStep } from "@/components/v2/TransactionLifecycle";
 import { useSectionView } from "@/hooks/use-section-view";
 import { gaFaqOpen } from "@/lib/analytics";
+import { useExperiment } from "@/hooks/use-experiment";
 import ExitIntentOffer from "@/components/course/ExitIntentOffer";
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
@@ -108,6 +109,9 @@ const ScrollCta = ({ label }: { label: string }) => (
 );
 
 const CoursePage = () => {
+  // Registers the assignment as a GA4 user property (the visual switch
+  // itself is done by CSS on html[data-exp-hero] — see index.css).
+  useExperiment("hero");
   const mistakeRef = useSectionView<HTMLElement>("mistake");
   const storyRef = useSectionView<HTMLElement>("story");
   const transformationRef = useSectionView<HTMLElement>("transformation");
@@ -182,11 +186,21 @@ const CoursePage = () => {
               </p>
             </Reveal>
 
+            {/* Experiment "hero": both variants ship in the static HTML and
+                index.css hides the one this visitor isn't in — zero flicker,
+                zero CLS. Assignment is reported to GA4 by useExperiment. */}
             <Reveal delay={0.08}>
               <h1 className="text-display-lg md:text-display-xl font-black text-white mb-6 leading-[0.98] tracking-tight">
-                את הדירה של החיים קונים פעם אחת.
-                <br />
-                <span className="text-accent">תקנו אותה נכון.</span>
+                <span className="exp-hero-a">
+                  את הדירה של החיים קונים פעם אחת.
+                  <br />
+                  <span className="text-accent">תקנו אותה נכון.</span>
+                </span>
+                <span className="exp-hero-b">
+                  ההכנה הזאת שווה עשרות אלפי שקלים בעסקה אחת.
+                  <br />
+                  <span className="text-accent">היא עולה ₪{COURSE_PRICE.toLocaleString("he-IL")}.</span>
+                </span>
               </h1>
             </Reveal>
 

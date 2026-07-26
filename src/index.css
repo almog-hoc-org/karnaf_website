@@ -485,3 +485,13 @@
   }
 }
 
+
+/* =========================================================================
+   A/B experiments — both variants ship in the pre-rendered HTML and the
+   assignment (set on <html data-exp-*> by the inline script in index.html,
+   before hydration) decides which one is visible. No flicker, no CLS.
+   Default (no JS / no assignment): variant A.
+   ========================================================================= */
+.exp-hero-b { display: none; }
+html[data-exp-hero="b"] .exp-hero-a { display: none; }
+html[data-exp-hero="b"] .exp-hero-b { display: inline; }
