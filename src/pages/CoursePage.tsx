@@ -126,7 +126,7 @@ const CoursePage = () => {
     <>
       <SEOHead
         title="הדרך לדירה — הקורס הדיגיטלי המקיף לרכישת דירה | קרנף נדל״ן"
-        description="הקורס הדיגיטלי המקיף בישראל לרכישת דירה: 67 שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון) ואנליסט AI. ₪980, תשלום אחד, גישה מיידית ל-12 חודשים — לגמרי בקצב שלכם."
+        description="הקורס הדיגיטלי המקיף בישראל לרכישת דירה: 62 שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון) ואנליסט AI. ₪980, תשלום אחד, גישה מיידית ל-12 חודשים — לגמרי בקצב שלכם."
         path="/course"
         keywords="קורס נדל״ן, קורס נדל״ן דיגיטלי, הדרך לדירה, דירה ראשונה, מחשבון משכנתא, מס רכישה, השקעה בנדל״ן"
         jsonLd={[
@@ -308,7 +308,7 @@ const CoursePage = () => {
       {/* S4 — the founders' story: empathy that earns authority */}
       <SectionDark size="lg" glow="bottom">
         <div ref={storyRef} className="container mx-auto px-6 max-w-5xl">
-          <div className="grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] gap-10 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] gap-10 lg:gap-16 items-center">
             <div>
               <Reveal>
                 <p
@@ -402,7 +402,7 @@ const CoursePage = () => {
 
           {/* Compact feature strip */}
           <Reveal delay={0.12}>
-            <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-12">
               {featureStrip.map((f) => (
                 <div
                   key={f.text}
@@ -462,7 +462,7 @@ const CoursePage = () => {
               הם היו בדיוק במקום שלכם.
             </h2>
           </Reveal>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {courseTestimonials.map((t, i) => (
               <Reveal key={t.name} delay={i * 0.06}>
                 <TestimonialVideoCard testimonial={t} index={i} />
@@ -476,7 +476,7 @@ const CoursePage = () => {
               ומהלקוחות שליווינו יד ביד:
             </p>
           </Reveal>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {premiumTestimonials.map((t, i) => (
               <Reveal key={t.name} delay={i * 0.06}>
                 <TestimonialVideoCard testimonial={t} index={i + 2} />

@@ -28,7 +28,7 @@ const ProofSection = () => (
         </Reveal>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
         {featured.map((t, i) => (
           <Reveal key={t.name} delay={i * 0.1}>
             <figure className="h-full flex flex-col bg-background border border-border rounded-2xl p-6 lg:p-8">

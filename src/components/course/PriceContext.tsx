@@ -27,7 +27,7 @@ const PriceContext = () => {
       </Reveal>
 
       <Reveal delay={0.08}>
-        <div className="grid sm:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           {references.map((ref) => (
             <div
               key={ref.label}

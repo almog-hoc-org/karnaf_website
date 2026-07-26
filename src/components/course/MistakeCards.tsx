@@ -13,7 +13,7 @@ const MistakeCards = () => {
 
   return (
     <div>
-      <div className="grid md:grid-cols-3 gap-5 lg:gap-6 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 items-stretch">
         {/* Card A — the big number */}
         <Reveal>
           <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1">

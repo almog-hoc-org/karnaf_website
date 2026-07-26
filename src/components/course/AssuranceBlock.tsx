@@ -38,7 +38,7 @@ const AssuranceBlock = () => {
         </h2>
       </Reveal>
 
-      <div className="grid md:grid-cols-3 gap-5 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
         {assurances.map((item, i) => (
           <Reveal key={item.title} delay={i * 0.08}>
             <div className="h-full rounded-2xl border border-border bg-card p-6 text-right">
@@ -52,7 +52,7 @@ const AssuranceBlock = () => {
                   href={botLink("התוכנית הדיגיטלית — שאלה לפני רכישה")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm font-bold text-accent mt-3 underline-offset-4 hover:underline"
+                  className="inline-flex items-center gap-1.5 text-sm font-bold text-accent mt-2 py-3 min-h-[44px] underline-offset-4 hover:underline"
                 >
                   לשאלה בוואטסאפ ←
                 </a>
