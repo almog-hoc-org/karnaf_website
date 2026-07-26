@@ -6,6 +6,15 @@ export interface Testimonial {
   service: "course" | "premium";
   videoUrl?: string;
   metric?: string;
+  /** Where they bought — concrete details read as more credible. */
+  location?: string;
+  /**
+   * Real photo of the person, imported from src/assets/testimonials/.
+   * Leave empty until the customer sends one and consents in writing —
+   * an initials avatar is shown instead. Never a stock face: attaching
+   * a stranger's photo to a real name fakes verification.
+   */
+  photo?: string;
 }
 
 export const testimonials: Testimonial[] = [
@@ -19,14 +28,14 @@ export const testimonials: Testimonial[] = [
   },
   {
     name: "אירית מ.",
-    role: "משקיעה",
+    role: "משקיעה בנדל״ן",
     quote: "אחרי שנים של חשיבה על השקעה בנדל\"ן, סוף סוף מצאתי את האנשים הנכונים. הניתוח הפיננסי שקיבלתי היה מדויק, והליווי האישי גרם לי להרגיש שאני לא לבד בתהליך.",
     rating: 5,
     service: "premium",
   },
   {
     name: "נועם ד.",
-    role: 'בוגר "הדרך לדירה"',
+    role: "בוגר התוכנית הדיגיטלית",
     quote: "התוכנית הדיגיטלית שינתה לי את הראש. הבנתי מה לבדוק, איך לנהל משא ומתן, ומה באמת קובע מחיר. רכשתי דירה מתחת למחיר השוק בזכות הכלים שקיבלתי.",
     rating: 5,
     service: "course",
@@ -42,14 +51,14 @@ export const testimonials: Testimonial[] = [
   },
   {
     name: "רותם ש.",
-    role: 'בוגרת "הדרך לדירה"',
+    role: "בוגרת התוכנית הדיגיטלית",
     quote: "בתור מישהי שעובדת בהייטק, אני רגילה ללמוד לבד. התוכנית בנויה בצורה מעולה — הסרטונים קצרים וממוקדים, והמחשבונים חסכו לי שעות של חישובים. רכשתי דירה להשקעה בביטחון.",
     rating: 5,
     service: "course",
   },
   {
     name: "משה ל.",
-    role: "משקיע ותיק",
+    role: "משקיע ותיק, 3 נכסים",
     quote: "יש לי כבר 3 נכסים, אבל הפעם רציתי ליווי מקצועי. הצוות של קרנף הפתיע אותי — הניתוח שלהם היה ברמה שלא ראיתי אצל אף אחד. העסקה הרביעית שלי היתה הטובה ביותר.",
     rating: 5,
     service: "premium",

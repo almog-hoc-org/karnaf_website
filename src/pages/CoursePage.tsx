@@ -39,7 +39,7 @@ import { useExperiment } from "@/hooks/use-experiment";
 import ExitIntentOffer from "@/components/course/ExitIntentOffer";
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
-import foundersImg from "@/assets/program/founders.png";
+import foundersImg from "@/assets/team/itamar-almog-about.webp";
 
 /*
  * Sales page — one emotional spine, 13 beats:
@@ -83,9 +83,7 @@ const featureStrip = [
 ];
 
 const courseTestimonials = testimonials.filter((t) => t.service === "course");
-const premiumTestimonials = testimonials
-  .filter((t) => t.service === "premium" && t.metric)
-  .slice(0, 2);
+const premiumTestimonials = testimonials.filter((t) => t.service === "premium");
 
 const scrollToPricing = () =>
   document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
@@ -192,14 +190,16 @@ const CoursePage = () => {
             <Reveal delay={0.08}>
               <h1 className="text-display-lg md:text-display-xl font-black text-white mb-6 leading-[0.98] tracking-tight">
                 <span className="exp-hero-a">
-                  את הדירה של החיים קונים פעם אחת.
+                  דירה קונים פעם אחת.
                   <br />
-                  <span className="text-accent">תקנו אותה נכון.</span>
+                  <span className="text-accent">תקנו נכון.</span>
                 </span>
                 <span className="exp-hero-b">
-                  ההכנה הזאת שווה עשרות אלפי שקלים בעסקה אחת.
+                  עסקה של 2 מיליון ₪.
                   <br />
-                  <span className="text-accent">היא עולה ₪{COURSE_PRICE.toLocaleString("he-IL")}.</span>
+                  <span className="text-accent">
+                    הכנה של ₪{COURSE_PRICE.toLocaleString("he-IL")}.
+                  </span>
                 </span>
               </h1>
             </Reveal>
@@ -209,9 +209,9 @@ const CoursePage = () => {
                 className="text-body-lg lg:text-xl leading-relaxed max-w-2xl mb-8"
                 style={{ color: "hsl(36 33% 95% / 0.82)" }}
               >
-                רוב הישראלים חותמים על עסקה של שני מיליון שקל עם פחות הכנה
-                משהם קונים איתה רכב יד שנייה. ״הדרך לדירה״ מכניסה אתכם לחדר —
-                כשאתם הצד שהגיע מוכן.
+                רוב הישראלים נכנסים לעסקה הגדולה בחייהם בלי הכנה, ומגלים את המחיר
+                של זה שנים אחר כך. ״הדרך לדירה״ מכניסה אתכם לחדר עם הידע,
+                הכלים והביטחון של הצד שהגיע מוכן.
               </p>
             </Reveal>
 
@@ -253,7 +253,7 @@ const CoursePage = () => {
               className="text-center mb-8 leading-relaxed"
               style={{ color: "hsl(36 33% 95% / 0.7)" }}
             >
-              הסבר קצר על התוכנית: מה יש בפנים, איך היא בנויה, ולמי היא מתאימה.
+              שתי דקות על התוכנית: מה יש בפנים, איך היא בנויה ולמי היא מתאימה.
             </p>
           </Reveal>
           <Reveal delay={0.08}>
@@ -297,8 +297,8 @@ const CoursePage = () => {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="text-body-lg text-muted-foreground mb-12 lg:mb-16 leading-relaxed text-center max-w-2xl mx-auto">
-              אף אחד לא מתכנן לשלם 100,000 ₪ יותר מדי. זה פשוט קורה — למי שלא
-              ידע מה לבדוק.
+              אף אחד לא מתכנן לשלם 100,000 ₪ מיותרים. זה פשוט קורה — למי שלא ידע
+              מה לבדוק.
             </p>
           </Reveal>
           <MistakeCards />
@@ -340,13 +340,23 @@ const CoursePage = () => {
               </Reveal>
             </div>
             <Reveal delay={0.14}>
-              <img
-                src={foundersImg}
-                alt="איתמר ואלמוג — מייסדי קרנף נדל״ן"
-                className="rounded-2xl w-full max-w-sm mx-auto shadow-depth-3"
-                loading="lazy"
-                decoding="async"
-              />
+              <figure className="max-w-sm mx-auto">
+                <img
+                  src={foundersImg}
+                  alt="איתמר נחליאל ואלמוג חכמה, מייסדי קרנף נדל״ן"
+                  width={1080}
+                  height={1350}
+                  className="rounded-2xl w-full h-auto shadow-depth-3"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption
+                  className="text-center text-sm mt-3"
+                  style={{ color: "hsl(36 33% 95% / 0.6)" }}
+                >
+                  איתמר נחליאל ואלמוג חכמה, מייסדי קרנף נדל״ן
+                </figcaption>
+              </figure>
             </Reveal>
           </div>
         </div>
@@ -364,7 +374,7 @@ const CoursePage = () => {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="text-body-lg text-muted-foreground mb-14 leading-relaxed text-center max-w-2xl mx-auto">
-              אתם יושבים מול המוכר עם נתונים ביד. תאמינו לנו — הוא מרגיש את זה.
+              אותה דירה, אותו מוכר, אותו בנקאי — רק שהפעם אתם מגיעים עם נתונים ביד.
             </p>
           </Reveal>
           {/* Dark card wrapper — the lifecycle component is styled for dark surfaces */}
@@ -395,8 +405,8 @@ const CoursePage = () => {
               className="text-body-lg mb-10 leading-relaxed text-center max-w-2xl mx-auto"
               style={{ color: "hsl(36 33% 95% / 0.72)" }}
             >
-              בלי הרצאות של שעתיים. שיעורים של 5-15 דקות, בנויים בסדר שבו
-              תפגשו אותם במציאות — מהתקציב ועד המפתח.
+              בלי הרצאות של שעתיים. שיעורים של 5 עד 15 דקות, מסודרים לפי הסדר שבו
+              תפגשו אותם במציאות: מהתקציב, דרך החיפוש והבדיקות, ועד המפתח.
             </p>
           </Reveal>
 
@@ -438,17 +448,18 @@ const CoursePage = () => {
         </div>
       </SectionDark>
 
-      {/* S7 — tools + AI analyst spotlight */}
-      <SectionDark size="lg" glow="none">
+      {/* S7 — tools + AI analyst. Follows another dark section, so it uses
+          the medium rhythm: two stacked lg sections leave a dead gap. */}
+      <SectionDark size="md" glow="none">
         <div ref={toolsRef} className="container mx-auto px-6 max-w-6xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-white mb-5 leading-[0.98] tracking-tight text-center max-w-3xl mx-auto">
-              הכלים שהאנליסטים שלנו עובדים איתם —
+              כל החלטה בעסקה —
               <br />
-              <span className="text-accent">עוברים אליכם.</span>
+              <span className="text-accent">הופכת למספר.</span>
             </h2>
           </Reveal>
-          <div className="mt-12">
+          <div className="mt-10">
             <ToolsShowcase />
           </div>
         </div>
@@ -458,29 +469,31 @@ const CoursePage = () => {
       <section ref={testimonialsRef} className="py-section-lg bg-background">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight text-center">
               הם היו בדיוק במקום שלכם.
             </h2>
           </Reveal>
+          <Reveal delay={0.06}>
+            <p className="text-body-lg text-muted-foreground mb-12 leading-relaxed text-center max-w-xl mx-auto">
+              בוגרי התוכנית, במילים שלהם.
+            </p>
+          </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {courseTestimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.06}>
-                <TestimonialVideoCard testimonial={t} index={i} />
-              </Reveal>
+              <TestimonialVideoCard key={t.name} testimonial={t} index={i} />
             ))}
           </div>
 
-          {/* Honesty guard — accompaniment outcomes labeled as such */}
-          <Reveal delay={0.15}>
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground text-center mt-12 mb-6">
-              ומהלקוחות שליווינו יד ביד:
+          {/* Honesty guard — accompaniment outcomes are labeled as such and
+              never presented as results of the self-serve course. */}
+          <Reveal delay={0.12}>
+            <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground text-center mt-14 mb-6">
+              ומהלקוחות שליווינו יד ביד בליווי האישי:
             </p>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {premiumTestimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.06}>
-                <TestimonialVideoCard testimonial={t} index={i + 2} />
-              </Reveal>
+              <TestimonialVideoCard key={t.name} testimonial={t} index={i} />
             ))}
           </div>
           <ScrollCta label="מצטרפים לבוגרים" />
@@ -492,12 +505,12 @@ const CoursePage = () => {
         <div className="container mx-auto px-6 max-w-4xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight text-center">
-              שווה לבדוק: עד כמה התוכנית פוגשת אתכם בדיוק בזמן?
+              התוכנית מתאימה לכם עכשיו?
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="text-body-lg text-muted-foreground mb-10 lg:mb-14 leading-relaxed text-center max-w-2xl mx-auto">
-              ארבע שאלות קצרות. בסוף — תשובה במספרים, כמו שאנחנו אוהבים.
+              ארבע שאלות, חצי דקה. בסוף תקבלו תשובה כנה — גם אם היא ״עוד מוקדם לכם״.
             </p>
           </Reveal>
           <Reveal delay={0.14}>

@@ -25,8 +25,8 @@ const MistakeCards = () => {
               <span className="text-accent"> ₪</span>
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              בעסקה של 2 מיליון ₪, לשלם 3% מעל השוק זה 60,000 ₪. זה ההפרש בין
-              מי שבדק עסקאות דומות ברחוב — למי שסמך על התחושה.
+              בעסקה של 2 מיליון ₪, שלושה אחוזים מעל מחיר השוק הם 60,000 ₪. זה כל
+              ההפרש בין מי שבדק עסקאות דומות באותו רחוב לבין מי שסמך על תחושה.
             </p>
           </article>
         </Reveal>
@@ -64,8 +64,8 @@ const MistakeCards = () => {
               חשופים בו.״
             </blockquote>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              ראינו את זה ב-375+ עסקאות. כמעט תמיד זה סעיף שאפשר היה לתקן —
-              לפני החתימה.
+              ראינו את זה שוב ושוב ב-375+ עסקאות. וכמעט תמיד — זה סעיף שאפשר היה
+              לתקן לפני החתימה.
             </p>
           </article>
         </Reveal>
