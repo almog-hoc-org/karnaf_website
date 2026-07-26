@@ -140,7 +140,7 @@ export const PathChooser = () => {
           </div>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-stretch">
           {/* Door A — the self-serve digital course */}
           <Reveal>
             <article

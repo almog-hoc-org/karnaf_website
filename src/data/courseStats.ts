@@ -11,6 +11,6 @@ export const TOTAL_LESSONS = curriculum.reduce(
   0
 );
 
-/** Ready-made label, e.g. "67 שיעורים". */
+/** Ready-made label, e.g. "62 שיעורים". */
 export const LESSONS_LABEL = `${TOTAL_LESSONS} שיעורים`;
 export const MODULES_LABEL = `${TOTAL_MODULES} מודולים`;
