@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/v2/Reveal";
+import { useCountUp } from "@/hooks/use-count-up";
 
 /**
  * S3 — the emotional engine of the sales page: the price of walking in
@@ -8,6 +9,8 @@ import { Reveal } from "@/components/v2/Reveal";
  * lands against these figures a few screens later.
  */
 const MistakeCards = () => {
+  const overpay = useCountUp(60000);
+
   return (
     <div>
       <div className="grid md:grid-cols-3 gap-5 lg:gap-6 items-stretch">
@@ -18,7 +21,8 @@ const MistakeCards = () => {
               פער של 3% במחיר
             </p>
             <p className="text-display-md font-black text-foreground tabular-nums leading-none mb-4">
-              60,000<span className="text-accent"> ₪</span>
+              <span ref={overpay.ref}>{overpay.value.toLocaleString("he-IL")}</span>
+              <span className="text-accent"> ₪</span>
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
               בעסקה של 2 מיליון ₪, לשלם 3% מעל השוק זה 60,000 ₪. זה ההפרש בין

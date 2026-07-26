@@ -24,6 +24,45 @@
       // PixelTracker, so it also counts navigations inside this SPA.
     </script>
     <!-- End Meta Pixel Code -->
+    <!-- A/B assignment — runs before hydration so variants never flicker.
+         Deterministic per visitor: FNV-1a(visitorId + experimentId) % 100.
+         Assignments land on <html data-exp-*> (CSS can switch pre-rendered
+         copy with zero CLS) and on window.__exp for the useExperiment hook. -->
+    <script>
+      (function () {
+        // id: [variantName, weightPercent] — weights must sum to 100.
+        var EXPERIMENTS = { hero: [["a", 50], ["b", 50]] };
+        try {
+          var KEY = "karnaf_vid";
+          var vid = localStorage.getItem(KEY);
+          if (!vid) {
+            vid = (Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
+            localStorage.setItem(KEY, vid);
+          }
+          var assignments = {};
+          Object.keys(EXPERIMENTS).forEach(function (exp) {
+            var seed = vid + ":" + exp;
+            var h = 2166136261;
+            for (var i = 0; i < seed.length; i++) {
+              h ^= seed.charCodeAt(i);
+              h = (h * 16777619) >>> 0;
+            }
+            var bucket = h % 100;
+            var acc = 0;
+            var variant = EXPERIMENTS[exp][0][0];
+            for (var j = 0; j < EXPERIMENTS[exp].length; j++) {
+              acc += EXPERIMENTS[exp][j][1];
+              if (bucket < acc) { variant = EXPERIMENTS[exp][j][0]; break; }
+            }
+            assignments[exp] = variant;
+            document.documentElement.setAttribute("data-exp-" + exp, variant);
+          });
+          window.__exp = assignments;
+        } catch (e) {
+          window.__exp = {};
+        }
+      })();
+    </script>
   </head>
   <body>
     <!-- Meta Pixel (noscript fallback) -->

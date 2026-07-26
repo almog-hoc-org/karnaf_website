@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Reveal } from "@/components/v2/Reveal";
 import { COURSE_PRICE } from "@/lib/constants";
+import { LESSONS_LABEL } from "@/data/courseStats";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { isValidIsraeliPhone } from "@/lib/validation";
 import { useToast } from "@/hooks/use-toast";
@@ -24,7 +25,7 @@ import { useToast } from "@/hooks/use-toast";
  */
 
 const courseBullets = [
-  "50+ שיעורים — גישה מיידית לכולם",
+  `${LESSONS_LABEL} — גישה מיידית לכולם`,
   "מחשבונים, כלים ואנליסט AI",
   "12 חודשי גישה — לגמרי בקצב שלכם",
 ];

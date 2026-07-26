@@ -1,5 +1,6 @@
 import { Head } from "vite-react-ssg";
 import { COURSE_PRICE } from "@/lib/constants";
+import { LESSONS_LABEL } from "@/data/courseStats";
 
 const SITE_URL = "https://www.karnafnadlan.com";
 const SITE_NAME = "קרנף נדל\"ן";
@@ -155,7 +156,7 @@ export const courseSchema = {
   "@id": `${SITE_URL}/course#course`,
   name: "הדרך לדירה — הקורס הדיגיטלי לרכישת דירה",
   description:
-    "הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. 50+ שיעורים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון עצמי), אנליסט AI, וגישה ל-12 חודשים.",
+    `הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. ${LESSONS_LABEL}, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון עצמי), אנליסט AI, וגישה ל-12 חודשים.`,
   url: `${SITE_URL}/course`,
   provider: {
     "@type": "EducationalOrganization",
@@ -364,7 +365,7 @@ export const serviceSchema = {
           "@type": "Service",
           name: "הדרך לדירה — הקורס הדיגיטלי (מסלול עצמאי)",
           description:
-            "50+ שיעורים, 6+ מחשבונים, אנליסט AI, גישה 12 חודשים.",
+            `${LESSONS_LABEL}, 6+ מחשבונים, אנליסט AI, גישה 12 חודשים.`,
         },
       },
       {

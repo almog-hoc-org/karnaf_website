@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Play, FileText, HelpCircle, Wrench, BookOpen } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { curriculum } from "@/data/curriculum";
+import { gaCurriculumOpen } from "@/lib/analytics";
 
 const lessonTypeIcon = {
   video: Play,
@@ -39,7 +40,16 @@ const CurriculumAccordion = () => {
         </div>
       </div>
 
-      <Accordion type="single" collapsible className="space-y-2">
+      <Accordion
+        type="single"
+        collapsible
+        className="space-y-2"
+        onValueChange={(value) => {
+          if (!value) return;
+          const mod = curriculum.find((m) => `module-${m.id}` === value);
+          gaCurriculumOpen(mod?.title ?? value);
+        }}
+      >
         {curriculum.map((module) => (
           <AccordionItem
             key={module.id}

@@ -21,7 +21,7 @@ import CurriculumAccordion from "@/components/rich-media/CurriculumAccordion";
 import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
 import { faqData } from "@/data/faq";
-import { curriculum } from "@/data/curriculum";
+import { TOTAL_MODULES, TOTAL_LESSONS, LESSONS_LABEL } from "@/data/courseStats";
 import { COURSE_PRICE } from "@/lib/constants";
 import PricingCard from "@/components/course/PricingCard";
 import PriceContext from "@/components/course/PriceContext";
@@ -34,6 +34,9 @@ import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
 import { TransactionLifecycle, type LifecycleStep } from "@/components/v2/TransactionLifecycle";
 import { useSectionView } from "@/hooks/use-section-view";
+import { gaFaqOpen } from "@/lib/analytics";
+import { useExperiment } from "@/hooks/use-experiment";
+import ExitIntentOffer from "@/components/course/ExitIntentOffer";
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
 import foundersImg from "@/assets/program/founders.png";
@@ -50,11 +53,9 @@ import foundersImg from "@/assets/program/founders.png";
 const VIDEO_URL = "";
 const isPlaceholderVideo = !VIDEO_URL || VIDEO_URL.includes("dQw4w9WgXcQ");
 
-const totalModules = curriculum.length;
-const totalLessons = curriculum.reduce(
-  (sum, mod) => sum + mod.lessons.length,
-  0
-);
+/* Advertised numbers come from the real syllabus — see courseStats.ts */
+const totalModules = TOTAL_MODULES;
+const totalLessons = TOTAL_LESSONS;
 
 /* S2 — authority stats: the guide's credentials, not the product's specs. */
 const authorityStats = [
@@ -76,7 +77,7 @@ const preparedSteps: LifecycleStep[] = [
 
 /* S6 — compact feature strip (replaces the old 3 big identical cards). */
 const featureStrip = [
-  { icon: BookOpen, text: "67 שיעורים מובנים צעד אחר צעד — מהתקציב ועד המפתח" },
+  { icon: BookOpen, text: `${LESSONS_LABEL} מובנים צעד אחר צעד — מהתקציב ועד המפתח` },
   { icon: Calculator, text: "6+ מחשבונים וכלים שהופכים כל החלטה למספרים" },
   { icon: Sparkles, text: "אנליסט AI לכל שאלה + קהילת תלמידים ובוגרים" },
 ];
@@ -108,6 +109,9 @@ const ScrollCta = ({ label }: { label: string }) => (
 );
 
 const CoursePage = () => {
+  // Registers the assignment as a GA4 user property (the visual switch
+  // itself is done by CSS on html[data-exp-hero] — see index.css).
+  useExperiment("hero");
   const mistakeRef = useSectionView<HTMLElement>("mistake");
   const storyRef = useSectionView<HTMLElement>("story");
   const transformationRef = useSectionView<HTMLElement>("transformation");
@@ -182,11 +186,21 @@ const CoursePage = () => {
               </p>
             </Reveal>
 
+            {/* Experiment "hero": both variants ship in the static HTML and
+                index.css hides the one this visitor isn't in — zero flicker,
+                zero CLS. Assignment is reported to GA4 by useExperiment. */}
             <Reveal delay={0.08}>
               <h1 className="text-display-lg md:text-display-xl font-black text-white mb-6 leading-[0.98] tracking-tight">
-                את הדירה של החיים קונים פעם אחת.
-                <br />
-                <span className="text-accent">תקנו אותה נכון.</span>
+                <span className="exp-hero-a">
+                  את הדירה של החיים קונים פעם אחת.
+                  <br />
+                  <span className="text-accent">תקנו אותה נכון.</span>
+                </span>
+                <span className="exp-hero-b">
+                  ההכנה הזאת שווה עשרות אלפי שקלים בעסקה אחת.
+                  <br />
+                  <span className="text-accent">היא עולה ₪{COURSE_PRICE.toLocaleString("he-IL")}.</span>
+                </span>
               </h1>
             </Reveal>
 
@@ -203,7 +217,7 @@ const CoursePage = () => {
 
             <Reveal delay={0.24}>
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm">
-                67 שיעורים · 6+ כלים · אנליסט AI · גישה מיידית
+                {LESSONS_LABEL} · 6+ כלים · אנליסט AI · גישה מיידית
               </div>
             </Reveal>
 
@@ -481,7 +495,9 @@ const CoursePage = () => {
             </p>
           </Reveal>
           <Reveal delay={0.14}>
-            <FitQuiz />
+            <div data-quiz-root>
+              <FitQuiz />
+            </div>
           </Reveal>
           <Reveal delay={0.2}>
             <div className="max-w-2xl mx-auto mt-10 rounded-2xl border border-dashed border-border bg-background p-6 text-center">
@@ -529,7 +545,17 @@ const CoursePage = () => {
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
-            <Accordion type="single" collapsible className="space-y-3">
+            <Accordion
+              type="single"
+              collapsible
+              className="space-y-3"
+              onValueChange={(value) => {
+                if (!value) return;
+                const idx = Number(value.replace("faq-", ""));
+                const item = faqData.course[idx];
+                if (item) gaFaqOpen(item.question);
+              }}
+            >
               {faqData.course.map((item, i) => (
                 <AccordionItem
                   key={i}
@@ -554,6 +580,7 @@ const CoursePage = () => {
         <FinalClose />
       </div>
       <CoursePriceBar />
+      <ExitIntentOffer />
     </>
   );
 };
