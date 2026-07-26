@@ -15,7 +15,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import VideoPlayer from "@/components/rich-media/VideoPlayer";
+import VimeoEmbed from "@/components/course/VimeoEmbed";
 import FitQuiz from "@/components/rich-media/FitQuiz";
 import CurriculumAccordion from "@/components/rich-media/CurriculumAccordion";
 import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
@@ -50,8 +50,8 @@ import foundersImg from "@/assets/program/founders.png";
  * opened. "מספרים, לא תחושות" is the texture of every emotional beat.
  */
 
-const VIDEO_URL = "";
-const isPlaceholderVideo = !VIDEO_URL || VIDEO_URL.includes("dQw4w9WgXcQ");
+/** Vimeo id of the program explainer shown right under the hero. */
+const COURSE_VIDEO_ID = "1213042212";
 
 /* Advertised numbers come from the real syllabus — see courseStats.ts */
 const totalModules = TOTAL_MODULES;
@@ -240,21 +240,27 @@ const CoursePage = () => {
         </div>
       </section>
 
-      {/* S1.5 — future VSL slot (renders nothing while VIDEO_URL is empty) */}
-      {!isPlaceholderVideo && (
-        <SectionDark size="sm" glow="none">
-          <div className="container mx-auto px-6 max-w-4xl">
-            <Reveal>
-              <h2 className="text-2xl font-bold text-white text-center mb-8">
-                90 שניות על מה שמחכה בפנים
-              </h2>
-              <div className="rounded-2xl overflow-hidden border border-white/10 shadow-depth-3">
-                <VideoPlayer url={VIDEO_URL} title="הדרך לדירה — טריילר" />
-              </div>
-            </Reveal>
-          </div>
-        </SectionDark>
-      )}
+      {/* S1.5 — the explainer video, in the classic VSL position right
+          under the hero. Click-to-play facade: nothing loads from Vimeo
+          until the visitor asks for it. */}
+      <SectionDark size="sm" glow="none">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <Reveal>
+            <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-3">
+              רגע לפני שממשיכים — צפו בזה
+            </h2>
+            <p
+              className="text-center mb-8 leading-relaxed"
+              style={{ color: "hsl(36 33% 95% / 0.7)" }}
+            >
+              הסבר קצר על התוכנית: מה יש בפנים, איך היא בנויה, ולמי היא מתאימה.
+            </p>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <VimeoEmbed videoId={COURSE_VIDEO_ID} title="הדרך לדירה — הסבר על התוכנית" />
+          </Reveal>
+        </div>
+      </SectionDark>
 
       {/* S2 — authority strip */}
       <section className="py-section-sm bg-card border-y border-border">

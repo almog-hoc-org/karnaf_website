@@ -117,6 +117,16 @@ export function gaStickyBar(action: "impression" | "click", state: "pre_pricing"
   gtag("event", "sticky_bar", { action, state });
 }
 
+/** The sales video was started. */
+export function gaVideoPlay(): void {
+  gtag("event", "video_play", { video: "course_vsl" });
+}
+
+/** Watch milestones — do people actually watch it through? */
+export function gaVideoProgress(percent: number): void {
+  gtag("event", "video_progress", { video: "course_vsl", percent });
+}
+
 /** Exit-intent offer shown / accepted. */
 export function gaExitIntent(action: "shown" | "accepted" | "dismissed"): void {
   gtag("event", "exit_intent", { action });
