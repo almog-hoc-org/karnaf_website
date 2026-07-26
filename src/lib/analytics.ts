@@ -93,9 +93,68 @@ export function gaQuizStart(): void {
   gtag("event", "quiz_start", {});
 }
 
-export function gaQuizComplete(score: number): void {
-  gtag("event", "quiz_complete", {
-    score_bucket: score >= 97 ? "97+" : score >= 95 ? "95-96" : "<95",
+export function gaQuizComplete(score: number, fit: string): void {
+  gtag("event", "quiz_complete", { score, fit });
+}
+
+/** Started the quiz but never reached the result — where they dropped. */
+export function gaQuizAbandon(step: number): void {
+  gtag("event", "quiz_abandon", { step });
+}
+
+/** Which curriculum module drew attention = which promise sells. */
+export function gaCurriculumOpen(moduleTitle: string): void {
+  gtag("event", "curriculum_open", { module: moduleTitle });
+}
+
+/** The FAQ open-rate ranking is the objection leaderboard. */
+export function gaFaqOpen(question: string): void {
+  gtag("event", "faq_open", { question });
+}
+
+/** Sticky bar shown / clicked, split by whether pricing was already seen. */
+export function gaStickyBar(action: "impression" | "click", state: "pre_pricing" | "post_pricing"): void {
+  gtag("event", "sticky_bar", { action, state });
+}
+
+/** Exit-intent offer shown / accepted. */
+export function gaExitIntent(action: "shown" | "accepted" | "dismissed"): void {
+  gtag("event", "exit_intent", { action });
+}
+
+/** Scroll milestones (mirrors the Meta Pixel scroll-depth events). */
+export function gaScrollDepth(depth: number, page: string): void {
+  gtag("event", "scroll_depth", { depth, page_path: page });
+}
+
+/** Register an A/B assignment as a GA4 user property so every downstream
+ *  event (including purchases via Measurement Protocol) can be segmented. */
+export function gaSetExperiment(experimentId: string, variant: string): void {
+  gtag("set", "user_properties", { [`exp_${experimentId}`]: variant });
+}
+
+/** The GA4 client id, for stitching server-side purchases back to this
+ *  session (the payment itself happens on the Schooler domain). */
+export function getGaClientId(): Promise<string | null> {
+  return new Promise((resolve) => {
+    if (typeof window === "undefined" || typeof window.gtag !== "function" || !GA4_ID) {
+      resolve(null);
+      return;
+    }
+    let settled = false;
+    const done = (value: string | null) => {
+      if (!settled) {
+        settled = true;
+        resolve(value);
+      }
+    };
+    // gtag never calls back if the script is blocked — don't hang the caller.
+    setTimeout(() => done(null), 800);
+    try {
+      window.gtag("get", GA4_ID, "client_id", (id: string) => done(id || null));
+    } catch {
+      done(null);
+    }
   });
 }
 

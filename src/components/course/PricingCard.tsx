@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { CheckCircle, GraduationCap, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
+import { LESSONS_LABEL } from "@/data/courseStats";
 import { buildCheckoutUrl } from "@/lib/checkout";
 import { botLink } from "@/lib/whatsapp";
 import { gaViewPricing, gaBeginCheckout } from "@/lib/analytics";
 import { trackInitiateCheckout } from "@/lib/pixel";
 
 const included = [
-  "67 שיעורים דיגיטליים — גישה מיידית לכולם",
+  `${LESSONS_LABEL} דיגיטליים — גישה מיידית לכולם`,
   "6+ כלים ומחשבונים מתקדמים",
   "אנליסט AI למענה על שאלות בתוך התוכנית",
   "גישה מלאה ל-12 חודשים",

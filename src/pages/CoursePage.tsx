@@ -21,7 +21,7 @@ import CurriculumAccordion from "@/components/rich-media/CurriculumAccordion";
 import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
 import { faqData } from "@/data/faq";
-import { curriculum } from "@/data/curriculum";
+import { TOTAL_MODULES, TOTAL_LESSONS, LESSONS_LABEL } from "@/data/courseStats";
 import { COURSE_PRICE } from "@/lib/constants";
 import PricingCard from "@/components/course/PricingCard";
 import PriceContext from "@/components/course/PriceContext";
@@ -50,11 +50,9 @@ import foundersImg from "@/assets/program/founders.png";
 const VIDEO_URL = "";
 const isPlaceholderVideo = !VIDEO_URL || VIDEO_URL.includes("dQw4w9WgXcQ");
 
-const totalModules = curriculum.length;
-const totalLessons = curriculum.reduce(
-  (sum, mod) => sum + mod.lessons.length,
-  0
-);
+/* Advertised numbers come from the real syllabus — see courseStats.ts */
+const totalModules = TOTAL_MODULES;
+const totalLessons = TOTAL_LESSONS;
 
 /* S2 — authority stats: the guide's credentials, not the product's specs. */
 const authorityStats = [
@@ -76,7 +74,7 @@ const preparedSteps: LifecycleStep[] = [
 
 /* S6 — compact feature strip (replaces the old 3 big identical cards). */
 const featureStrip = [
-  { icon: BookOpen, text: "67 שיעורים מובנים צעד אחר צעד — מהתקציב ועד המפתח" },
+  { icon: BookOpen, text: `${LESSONS_LABEL} מובנים צעד אחר צעד — מהתקציב ועד המפתח` },
   { icon: Calculator, text: "6+ מחשבונים וכלים שהופכים כל החלטה למספרים" },
   { icon: Sparkles, text: "אנליסט AI לכל שאלה + קהילת תלמידים ובוגרים" },
 ];
@@ -203,7 +201,7 @@ const CoursePage = () => {
 
             <Reveal delay={0.24}>
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm">
-                67 שיעורים · 6+ כלים · אנליסט AI · גישה מיידית
+                {LESSONS_LABEL} · 6+ כלים · אנליסט AI · גישה מיידית
               </div>
             </Reveal>
 

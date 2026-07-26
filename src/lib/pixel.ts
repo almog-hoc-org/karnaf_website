@@ -81,12 +81,13 @@ export function trackLead(source: string, extra?: PixelParams): void {
 /** מעבר לסליקה — נשלח בלחיצה על כפתור הרכישה, לפני היציאה לדף התשלום.
  *  קהל "נוטשי סליקה" = מי שירה את האירוע הזה ולא ירה Purchase (שמגיע
  *  מ-Schooler דרך ה-CRM ב-Conversions API). */
-export function trackInitiateCheckout(): void {
+export function trackInitiateCheckout(ctaLocation?: string): void {
   fbq("track", "InitiateCheckout", {
     content_name: "הדרך לדירה — התוכנית הדיגיטלית",
     content_category: "רכישה",
     currency: "ILS",
     value: COURSE_PRICE,
+    ...(ctaLocation ? { cta_location: ctaLocation } : {}),
   });
 }
 
