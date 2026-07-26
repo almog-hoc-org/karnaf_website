@@ -1,18 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { CheckCircle, GraduationCap, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  COURSE_PRICE,
-  COURSE_PRICE_ORIGINAL,
-  CHECKOUT_URL,
-} from "@/lib/constants";
+import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
 import { buildCheckoutUrl } from "@/lib/checkout";
 import { botLink } from "@/lib/whatsapp";
 import { gaViewPricing, gaBeginCheckout } from "@/lib/analytics";
 import { trackInitiateCheckout } from "@/lib/pixel";
 
 const included = [
-  "50+ שיעורים דיגיטליים — גישה מיידית לכולם",
+  "67 שיעורים דיגיטליים — גישה מיידית לכולם",
   "6+ כלים ומחשבונים מתקדמים",
   "אנליסט AI למענה על שאלות בתוך התוכנית",
   "גישה מלאה ל-12 חודשים",
@@ -26,11 +22,11 @@ const nextSteps = [
 ];
 
 /**
- * The single pricing card for the one product — the fully self-serve
- * digital program. The CTA goes straight to the hosted Schooler checkout
- * (buildCheckoutUrl carries utm/click-id attribution through). Fires
- * view_pricing once when scrolled into view, and InitiateCheckout +
- * begin_checkout on the purchase click.
+ * The decision point of the sales page. One clean price — the anchoring
+ * happened in the PriceContext strip above; here the visitor only needs
+ * relief and a door. Proof lives inside the card (testimonial line) per
+ * proof-at-decision-point research. Fires view_pricing once in-view and
+ * InitiateCheckout + begin_checkout(pricing_card) on click.
  */
 const PricingCard = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -77,34 +73,28 @@ const PricingCard = () => {
       <div className="text-center relative z-10">
         <GraduationCap size={36} className="text-accent mx-auto mb-4" />
         <h3 className="text-display-sm md:text-display-md font-black text-foreground mb-2">
-          הצטרפו לתוכנית
+          הדרך לדירה — כל התוכנית
         </h3>
         <p className="text-muted-foreground mb-8">
-          הצטרפו למאות בוגרים שכבר רכשו דירה בצורה חכמה.
+          כל מה שצריך כדי להיכנס לעסקה של החיים — מוכנים.
         </p>
 
-        {/* Price — the old list price anchors the new self-serve price. */}
+        {/* One clean price. The anchor is the mistake, not an old tag. */}
         <div className="mb-8">
-          <div className="flex items-baseline justify-center gap-3" dir="rtl">
-            <span className="text-display-lg font-black text-foreground tabular-nums leading-none">
+          <div className="flex items-baseline justify-center" dir="rtl">
+            <span className="text-display-lg font-black text-accent tabular-nums leading-none">
               ₪{COURSE_PRICE.toLocaleString("he-IL")}
             </span>
-            <span
-              className="text-xl md:text-2xl font-bold text-muted-foreground line-through tabular-nums"
-              aria-label={`במקום ₪${COURSE_PRICE_ORIGINAL.toLocaleString("he-IL")}`}
-            >
-              ₪{COURSE_PRICE_ORIGINAL.toLocaleString("he-IL")}
-            </span>
           </div>
-          <p className="text-muted-foreground mt-3">
-            תשלום אחד · גישה מיידית · לגמרי בקצב שלכם
+          <p className="text-foreground font-bold mt-3">
+            תשלום אחד · בלי מנוי · בלי אותיות קטנות
           </p>
           <p className="text-sm text-muted-foreground mt-1">
-            המחיר החדש של המודל הדיגיטלי העצמאי — בלי מסלולים, בלי הפתעות.
+            גישה מלאה ל-12 חודשים, מיד אחרי התשלום
           </p>
         </div>
 
-        <div className="text-right max-w-sm mx-auto space-y-3 mb-10">
+        <div className="text-right max-w-sm mx-auto space-y-3 mb-8">
           {included.map((item) => (
             <div key={item} className="flex items-center gap-3">
               <CheckCircle size={18} className="text-accent flex-shrink-0" />
@@ -113,6 +103,16 @@ const PricingCard = () => {
           ))}
         </div>
 
+        {/* Proof at the decision point */}
+        <figure className="max-w-sm mx-auto mb-8 text-right border-r-2 border-accent/50 pr-4">
+          <blockquote className="text-sm text-muted-foreground leading-relaxed">
+            ״רכשתי דירה מתחת למחיר השוק בזכות הכלים שקיבלתי.״
+          </blockquote>
+          <figcaption className="text-xs font-bold text-foreground mt-1">
+            — נועם ד., בוגר התוכנית
+          </figcaption>
+        </figure>
+
         <a
           href={checkoutHref}
           target="_blank"
@@ -120,14 +120,14 @@ const PricingCard = () => {
           className="inline-block w-full sm:w-auto"
           onClick={() => {
             trackInitiateCheckout();
-            gaBeginCheckout("checkout");
+            gaBeginCheckout("pricing_card");
           }}
         >
           <Button
             size="lg"
             className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 w-full sm:w-auto gap-3 mb-4 rounded-full transition-all"
           >
-            לרכישה מיידית — ₪{COURSE_PRICE.toLocaleString("he-IL")}
+            מתחילים עכשיו — גישה מיידית
             <span
               aria-hidden
               className="inline-block transition-transform group-hover:-translate-x-1"

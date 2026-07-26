@@ -23,8 +23,6 @@ export const WHATSAPP_BOT_NUMBER: string =
  * carries through to the payment page.
  */
 export const COURSE_PRICE = 980;
-/** The previous list price — shown struck-through as the price anchor. */
-export const COURSE_PRICE_ORIGINAL = 5490;
 export const CHECKOUT_URL: string =
   import.meta.env.VITE_CHECKOUT_URL ||
   "https://my.schooler.biz/s/117502/KarnafNewProgram?tid=30291&utm_source=%D7%A7%D7%A8%D7%A0%D7%A326";
