@@ -68,12 +68,34 @@ export function gaViewPricing(page: string): void {
   gtag("event", "view_pricing", { page_path: page });
 }
 
-/** Click on the purchase CTA (hosted checkout or WhatsApp purchase intent). */
-export function gaBeginCheckout(method: "checkout" | "whatsapp"): void {
+/** Purchase-CTA click locations on the sales page — which emotional beat closed. */
+export type CheckoutCtaLocation = "quiz" | "pricing_card" | "final_close" | "sticky_bar";
+
+/** Click on a purchase CTA (always hosted checkout). */
+export function gaBeginCheckout(location: CheckoutCtaLocation): void {
   gtag("event", "begin_checkout", {
     currency: "ILS",
     value: COURSE_PRICE,
-    payment_channel: method,
+    cta_location: location,
+  });
+}
+
+/** A named sales-page section entered the viewport (fired once per view).
+ *  The drop-off curve across sections is the page's diagnostic EKG. */
+export function gaSectionView(section: string): void {
+  gtag("event", "section_view", {
+    section,
+    page_path: typeof window !== "undefined" ? window.location.pathname : "",
+  });
+}
+
+export function gaQuizStart(): void {
+  gtag("event", "quiz_start", {});
+}
+
+export function gaQuizComplete(score: number): void {
+  gtag("event", "quiz_complete", {
+    score_bucket: score >= 97 ? "97+" : score >= 95 ? "95-96" : "<95",
   });
 }
 

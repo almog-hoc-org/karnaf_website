@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, MessageCircle } from "lucide-react";
 import { botLink } from "@/lib/whatsapp";
+import { buildCheckoutUrl } from "@/lib/checkout";
+import { gaQuizStart, gaQuizComplete, gaBeginCheckout } from "@/lib/analytics";
+import { trackInitiateCheckout } from "@/lib/pixel";
 
 interface Question {
   id: string;
@@ -76,12 +79,17 @@ const FitQuiz = () => {
   const handleSelect = (optionIndex: number) => {
     const q = questions[step];
     const newAnswers = { ...answers, [q.id]: optionIndex };
+    if (step === 0 && Object.keys(answers).length === 0) gaQuizStart();
     setAnswers(newAnswers);
 
     if (step < questions.length - 1) {
       setTimeout(() => setStep(step + 1), 300);
     } else {
-      setTimeout(() => setResult(computeResult(newAnswers)), 300);
+      setTimeout(() => {
+        const computed = computeResult(newAnswers);
+        gaQuizComplete(computed.score);
+        setResult(computed);
+      }, 300);
     }
   };
 
@@ -103,13 +111,6 @@ const FitQuiz = () => {
     animRef.current = requestAnimationFrame(animate);
     return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
   }, [result]);
-
-  const reset = () => {
-    setStep(0);
-    setAnswers({});
-    setResult(null);
-    setDisplayScore(0);
-  };
 
   return (
     <div className="bg-card border border-border rounded-2xl p-6 md:p-10 max-w-2xl mx-auto">
@@ -169,24 +170,31 @@ const FitQuiz = () => {
             <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
               {result.insight}
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="flex flex-col items-center justify-center gap-3">
+              <a
+                href={buildCheckoutUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto"
+                onClick={() => {
+                  trackInitiateCheckout();
+                  gaBeginCheckout("quiz");
+                }}
+              >
+                <Button className="group w-full sm:w-auto bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-8 py-6 text-base">
+                  מתחילים עכשיו — גישה מיידית
+                  <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
+                </Button>
+              </a>
               <a
                 href={botLink("התוכנית הדיגיטלית — בדיקת התאמה")}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-2"
               >
-                <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-7 py-5">
-                  <MessageCircle size={18} />
-                  בואו נדבר
-                </Button>
+                <MessageCircle size={14} />
+                יש שאלה קודם? וואטסאפ
               </a>
-              <Button
-                variant="outline"
-                onClick={reset}
-                className="border-accent/30 text-accent hover:bg-accent/10"
-              >
-                נסו שוב
-              </Button>
             </div>
           </motion.div>
         )}

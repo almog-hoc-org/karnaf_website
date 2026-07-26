@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Reveal } from "@/components/v2/Reveal";
-import { COURSE_PRICE, COURSE_PRICE_ORIGINAL } from "@/lib/constants";
+import { COURSE_PRICE } from "@/lib/constants";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { isValidIsraeliPhone } from "@/lib/validation";
 import { useToast } from "@/hooks/use-toast";
@@ -189,16 +189,10 @@ export const PathChooser = () => {
                     ₪{COURSE_PRICE.toLocaleString("he-IL")}
                   </span>
                   <span
-                    className="text-lg font-bold line-through tabular-nums"
-                    style={{ color: "hsl(36 33% 95% / 0.4)" }}
-                  >
-                    ₪{COURSE_PRICE_ORIGINAL.toLocaleString("he-IL")}
-                  </span>
-                  <span
                     className="text-sm"
                     style={{ color: "hsl(36 33% 95% / 0.65)" }}
                   >
-                    · רכישה מיידית
+                    תשלום אחד · רכישה מיידית
                   </span>
                 </div>
                 <Link to="/course" className="block">

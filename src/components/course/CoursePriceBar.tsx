@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { COURSE_PRICE, COURSE_PRICE_ORIGINAL } from "@/lib/constants";
+import { COURSE_PRICE } from "@/lib/constants";
 
 /**
  * Slim sticky purchase bar for the course page — appears after the visitor
@@ -57,16 +57,10 @@ const CoursePriceBar = () => {
               ₪{COURSE_PRICE.toLocaleString("he-IL")}
             </span>
             <span
-              className="text-sm line-through tabular-nums whitespace-nowrap"
-              style={{ color: "hsl(36 33% 95% / 0.45)" }}
-            >
-              ₪{COURSE_PRICE_ORIGINAL.toLocaleString("he-IL")}
-            </span>
-            <span
               className="text-sm truncate hidden sm:inline"
               style={{ color: "hsl(36 33% 95% / 0.65)" }}
             >
-              גישה מיידית · תשלום מאובטח
+              תשלום אחד · גישה מיידית · תשלום מאובטח
             </span>
           </div>
           <a

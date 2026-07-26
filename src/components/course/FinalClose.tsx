@@ -1,0 +1,77 @@
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { SectionDark } from "@/components/v2/Section";
+import { Reveal } from "@/components/v2/Reveal";
+import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
+import { buildCheckoutUrl } from "@/lib/checkout";
+import { gaBeginCheckout } from "@/lib/analytics";
+import { trackInitiateCheckout } from "@/lib/pixel";
+
+/**
+ * S13 — the final close. The page ends on the dream (keys in hand), not
+ * on logistics: future memory + one direct-checkout door. Replaces the
+ * old WhatsApp BigCTA, which diverted purchase intent into a chat funnel.
+ */
+const FinalClose = () => {
+  const [checkoutHref, setCheckoutHref] = useState(CHECKOUT_URL);
+
+  useEffect(() => {
+    setCheckoutHref(buildCheckoutUrl());
+  }, []);
+
+  return (
+    <SectionDark size="lg" glow="center">
+      <div className="container mx-auto px-5 md:px-6 text-center max-w-3xl">
+        <Reveal>
+          <h2 className="text-display-md md:text-display-xl font-black leading-[0.98] tracking-tight mb-6 text-white">
+            יום אחד תעמדו בפתח הדירה
+            <br />
+            עם המפתח ביד.
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p
+            className="text-body-lg max-w-xl mx-auto mb-10 leading-relaxed"
+            style={{ color: "hsl(36 33% 95% / 0.75)" }}
+          >
+            השאלה היחידה היא איך תרגישו רגע לפני החתימה: לחוצים ומנחשים — או
+            רגועים, כי בדקתם הכל. ההחלטה הזאת נלקחת עכשיו, והיא עולה פחות
+            מארוחה זוגית טובה בחודש, למשך שנה.
+          </p>
+        </Reveal>
+        <Reveal delay={0.18}>
+          <a
+            href={checkoutHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block w-full sm:w-auto"
+            onClick={() => {
+              trackInitiateCheckout();
+              gaBeginCheckout("final_close");
+            }}
+          >
+            <Button
+              size="lg"
+              className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all w-full sm:w-auto"
+            >
+              מתחילים הערב — ₪{COURSE_PRICE.toLocaleString("he-IL")}, גישה מיידית
+              <span
+                aria-hidden
+                className="inline-block transition-transform group-hover:-translate-x-1"
+              >
+                ←
+              </span>
+            </Button>
+          </a>
+        </Reveal>
+        <Reveal delay={0.24}>
+          <p className="text-sm mt-4" style={{ color: "hsl(36 33% 95% / 0.55)" }}>
+            תשלום מאובטח · מיד אחרי התשלום — כל התוכנית פתוחה
+          </p>
+        </Reveal>
+      </div>
+    </SectionDark>
+  );
+};
+
+export default FinalClose;

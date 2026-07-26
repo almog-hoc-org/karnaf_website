@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
-const STEPS = [
+export interface LifecycleStep {
+  num: string;
+  label: string;
+  duration: string;
+}
+
+const DEFAULT_STEPS: LifecycleStep[] = [
   { num: "01", label: "אבחון", duration: "פגישה ראשונה" },
   { num: "02", label: "מיפוי שוק", duration: "אזורים מתאימים" },
   { num: "03", label: "סינון נכסים", duration: "אפיון עסקאות" },
@@ -10,15 +16,17 @@ const STEPS = [
 ];
 
 interface TransactionLifecycleProps {
-  /** Optional: 0..6 — how many steps to show as completed (filled). */
+  /** Optional: 0..steps.length — how many steps to show as completed (filled). */
   progress?: number;
+  /** Override the step labels (defaults to the 1:1-service journey). */
+  steps?: LifecycleStep[];
 }
 
 /**
  * Horizontal step diagram of a real-estate transaction lifecycle.
  * Pure SVG/CSS — no deps. Fills progressively when scrolled into view.
  */
-export const TransactionLifecycle = ({ progress }: TransactionLifecycleProps) => {
+export const TransactionLifecycle = ({ progress, steps = DEFAULT_STEPS }: TransactionLifecycleProps) => {
   const ref = useRef<HTMLOListElement>(null);
   const [filled, setFilled] = useState(0);
 
@@ -31,15 +39,15 @@ export const TransactionLifecycle = ({ progress }: TransactionLifecycleProps) =>
     if (!el) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      setFilled(STEPS.length);
+      setFilled(steps.length);
       return;
     }
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            // animate filling 0 → STEPS.length
-            STEPS.forEach((_, i) => {
+            // animate filling 0 → steps.length
+            steps.forEach((_, i) => {
               setTimeout(() => setFilled(i + 1), 350 + i * 250);
             });
             io.disconnect();
@@ -50,9 +58,9 @@ export const TransactionLifecycle = ({ progress }: TransactionLifecycleProps) =>
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [progress]);
+  }, [progress, steps]);
 
-  const fillPct = (filled / STEPS.length) * 100;
+  const fillPct = (filled / steps.length) * 100;
 
   return (
     <div className="relative">
@@ -72,7 +80,7 @@ export const TransactionLifecycle = ({ progress }: TransactionLifecycleProps) =>
       />
 
       <ol ref={ref} className="grid grid-cols-3 md:grid-cols-6 gap-x-4 gap-y-10 md:gap-y-0 md:gap-6 relative">
-        {STEPS.map((s, i) => {
+        {steps.map((s, i) => {
           const done = i < filled;
           return (
             <li key={s.num} className="relative">
