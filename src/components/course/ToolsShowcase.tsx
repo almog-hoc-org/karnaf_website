@@ -1,142 +1,124 @@
-import { Calculator, Percent, Landmark, ClipboardCheck, FileSpreadsheet, Scale, Sparkles } from "lucide-react";
+import {
+  Calculator,
+  Percent,
+  Landmark,
+  ClipboardCheck,
+  FileSpreadsheet,
+  Scale,
+  Sparkles,
+} from "lucide-react";
 import { Reveal } from "@/components/v2/Reveal";
 
 /**
- * S7 — the tools + AI analyst spotlight. Deliberately STATIC (show, don't
- * make them work): a faux-UI deal-analysis card sells the experience
- * without turning the sales page into a homework session. The single
- * amber glow of the dark half of the page lives on the AI card.
+ * S7 — the tools. The point is not "look, we have calculators" but
+ * "every decision in the deal stops being a feeling and becomes a
+ * number". Each tool is therefore introduced by the question it answers
+ * — the question the buyer already recognizes from their own process.
  */
 
 const tools = [
-  { icon: Calculator, label: "מחשבון עסקת נדל״ן" },
-  { icon: Percent, label: "מחשבון מיסוי" },
-  { icon: Landmark, label: "מחשבון משכנתא וכדאיות" },
-  { icon: ClipboardCheck, label: "צ׳קליסט ביקור בנכס" },
-  { icon: FileSpreadsheet, label: "קובץ מעקב נכסים" },
-  { icon: Scale, label: "בדיקת כדאיות עסקה" },
+  {
+    icon: Calculator,
+    name: "מחשבון עסקה",
+    question: "המחיר שביקשו ממני הגיוני, או שאני משלם יותר מדי?",
+  },
+  {
+    icon: Landmark,
+    name: "מחשבון משכנתא ותמהיל",
+    question: "כמה באמת יעלה לי ההחזר החודשי, ובאיזה תמהיל?",
+  },
+  {
+    icon: Percent,
+    name: "מחשבון מיסוי",
+    question: "כמה מס רכישה או מס שבח אני צפוי לשלם בעסקה הזאת?",
+  },
+  {
+    icon: Scale,
+    name: "בדיקת כדאיות",
+    question: "העסקה הזאת שווה את הכסף, או שעדיף לוותר ולחכות?",
+  },
+  {
+    icon: ClipboardCheck,
+    name: "צ׳קליסט ביקור בנכס",
+    question: "מה בדיוק לבדוק בדירה לפני שמתאהבים בה?",
+  },
+  {
+    icon: FileSpreadsheet,
+    name: "קובץ מעקב נכסים",
+    question: "איך משווים בין כל הדירות שראיתי בלי להתבלבל?",
+  },
 ];
 
 const ToolsShowcase = () => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-      {/* Faux deal-analysis card — the feeling of "I input numbers, I get an answer" */}
+    <div>
       <Reveal>
-        <div
-          className="rounded-2xl p-6 md:p-8 border shadow-depth-3"
-          style={{
-            backgroundColor: "hsl(36 33% 95% / 0.05)",
-            borderColor: "hsl(36 33% 95% / 0.14)",
-          }}
-          aria-label="הדמיה של ניתוח עסקה במחשבון התוכנית"
+        <p
+          className="text-center text-body-lg leading-relaxed max-w-2xl mx-auto mb-12"
+          style={{ color: "hsl(36 33% 95% / 0.75)" }}
         >
-          <div
-            className="flex items-center justify-between text-eyebrow uppercase tracking-[0.18em] mb-6"
-            style={{ color: "hsl(36 33% 95% / 0.55)" }}
-          >
-            <span>ניתוח עסקה · הדמיה</span>
-            <span className="font-mono">KARNAF TOOLS</span>
-          </div>
-          <div className="space-y-4" dir="rtl">
-            {[
-              { label: "מחיר מבוקש", value: "1,890,000 ₪" },
-              { label: "עסקאות דומות ברחוב (ממוצע)", value: "1,812,000 ₪" },
-              { label: "מס רכישה צפוי", value: "0 ₪" },
-              { label: "החזר חודשי (תמהיל מוצע)", value: "6,480 ₪" },
-            ].map((row) => (
-              <div
-                key={row.label}
-                className="flex items-center justify-between border-b pb-3"
-                style={{ borderColor: "hsl(36 33% 95% / 0.08)" }}
-              >
-                <span className="text-sm" style={{ color: "hsl(36 33% 95% / 0.65)" }}>
-                  {row.label}
-                </span>
-                <span className="font-mono font-bold text-white tabular-nums">
-                  {row.value}
-                </span>
-              </div>
-            ))}
-            <div className="flex items-center justify-between pt-1">
-              <span className="text-sm font-bold text-white">שורה תחתונה</span>
-              <span className="font-bold text-accent">מעל מחיר השוק — יש מקום למו״מ</span>
-            </div>
-          </div>
-        </div>
+          בכל שלב בעסקה עולה שאלה שאי אפשר לענות עליה בתחושת בטן. לכל שאלה כזאת
+          יש בתוכנית כלי שמחזיר תשובה במספרים — בלי אקסלים ובלי רקע פיננסי.
+        </p>
       </Reveal>
 
-      <div>
-        {/* Tool chips */}
-        <Reveal>
-          <ul className="grid grid-cols-2 gap-3 mb-8">
-            {tools.map((tool) => (
-              <li
-                key={tool.label}
-                className="flex items-center gap-3 rounded-xl px-4 py-3 border text-sm"
-                style={{
-                  backgroundColor: "hsl(36 33% 95% / 0.04)",
-                  borderColor: "hsl(36 33% 95% / 0.12)",
-                  color: "hsl(36 33% 95% / 0.85)",
-                }}
-              >
-                <tool.icon size={16} className="text-accent shrink-0" />
-                <span>{tool.label}</span>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-
-        {/* AI analyst card — the one glow */}
-        <Reveal delay={0.1}>
-          <div
-            className="rounded-2xl p-6 md:p-7 border relative overflow-hidden"
-            style={{
-              backgroundColor: "hsl(36 33% 95% / 0.05)",
-              borderColor: "hsl(24 80% 52% / 0.4)",
-              boxShadow: "0 0 60px hsl(24 80% 52% / 0.15)",
-            }}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <Sparkles size={18} className="text-accent" />
-              <span className="font-bold text-white">האנליסט החכם של התוכנית</span>
-            </div>
-            <p
-              className="text-sm leading-relaxed mb-4"
-              style={{ color: "hsl(36 33% 95% / 0.75)" }}
-            >
-              שאלה בשתיים בלילה? האנליסט ה-AI עונה. על העסקה שלכם, במילים
-              שלכם — בלי תור, בלי מבוכה.
-            </p>
-            <div
-              className="rounded-xl rounded-tr-sm px-4 py-3 text-sm max-w-[85%]"
-              style={{ backgroundColor: "hsl(36 33% 95% / 0.08)", color: "hsl(36 33% 95% / 0.9)" }}
-              dir="rtl"
-            >
-              ״המוכר רוצה הצמדה למדד בחוזה — זה סביר?״
-            </div>
-            <div
-              className="mt-2 rounded-xl rounded-tl-sm px-4 py-3 text-sm max-w-[85%] mr-auto border"
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5 max-w-4xl mx-auto">
+        {tools.map((tool, i) => (
+          <Reveal key={tool.name} delay={i * 0.06}>
+            <article
+              className="h-full rounded-2xl p-5 md:p-6 border flex gap-4"
               style={{
-                backgroundColor: "hsl(24 80% 52% / 0.1)",
-                borderColor: "hsl(24 80% 52% / 0.25)",
-                color: "hsl(36 33% 95% / 0.9)",
+                backgroundColor: "hsl(36 33% 95% / 0.04)",
+                borderColor: "hsl(36 33% 95% / 0.12)",
               }}
-              dir="rtl"
             >
-              תלוי בתקופה עד המסירה. בוא נעבור על שלושת הדברים שחשוב לבדוק…
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.16}>
-          <p
-            className="text-sm mt-6"
-            style={{ color: "hsl(36 33% 95% / 0.6)" }}
-          >
-            לא צריך אקסל ולא רקע פיננסי. מזינים מספרים — מקבלים תשובה.
-          </p>
-        </Reveal>
+              <span
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                style={{ backgroundColor: "hsl(24 80% 52% / 0.14)" }}
+                aria-hidden
+              >
+                <tool.icon size={18} className="text-accent" />
+              </span>
+              <div>
+                <h3 className="font-bold text-white mb-1.5 leading-snug">
+                  {tool.name}
+                </h3>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: "hsl(36 33% 95% / 0.7)" }}
+                >
+                  עונה על: {tool.question}
+                </p>
+              </div>
+            </article>
+          </Reveal>
+        ))}
       </div>
+
+      {/* The AI analyst — the answer to "ומה אם תעלה שאלה שאין לה כלי?" */}
+      <Reveal delay={0.2}>
+        <div
+          className="mt-8 lg:mt-10 max-w-4xl mx-auto rounded-2xl p-6 md:p-8 border text-center"
+          style={{
+            backgroundColor: "hsl(36 33% 95% / 0.05)",
+            borderColor: "hsl(24 80% 52% / 0.4)",
+            boxShadow: "0 0 60px hsl(24 80% 52% / 0.14)",
+          }}
+        >
+          <span className="inline-flex items-center gap-2 text-accent font-bold mb-3">
+            <Sparkles size={18} />
+            ומה אם עולה שאלה שאין לה כלי?
+          </span>
+          <p
+            className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto"
+            style={{ color: "hsl(36 33% 95% / 0.8)" }}
+          >
+            בתוך התוכנית מחכה אנליסט AI שאומן על התכנים שלנו. שואלים אותו בדיוק
+            כמו ששואלים אדם — ״המוכר דורש הצמדה למדד, זה סביר?״ — ומקבלים תשובה
+            עניינית, בכל שעה, בלי להרגיש לא נעים.
+          </p>
+        </div>
+      </Reveal>
     </div>
   );
 };

@@ -1,17 +1,29 @@
 import { Reveal } from "@/components/v2/Reveal";
 
 /**
- * S10 beats 1+2 — the honest price choreography that replaces the old
- * strikethrough anchor: real market costs of adjacent professional
- * services, an integrity line (we're FOR those professionals), and one
- * arithmetic line that makes ₪980 land as a rounding error against the
- * deal. No fabricated "worth" numbers anywhere.
+ * S10, beats 1-2 — the honest price choreography that replaces a
+ * strikethrough anchor: what professional help around a deal actually
+ * costs in Israel, an explicit statement that we are FOR those
+ * professionals, and one line of arithmetic that puts ₪980 in scale.
+ * Real market ranges only — no invented "value stack" numbers.
  */
 
 const references = [
-  { label: "שעת ייעוץ אצל עו״ד מקרקעין", value: "מאות ₪" },
-  { label: "שמאות מלאה לנכס אחד", value: "1,500–3,000 ₪" },
-  { label: "יועץ משכנתאות לעסקה אחת", value: "3,000–6,000 ₪" },
+  {
+    label: "עורך דין לליווי עסקה",
+    value: "10,000 ₪ ומעלה",
+    note: "לעיתים נגזר כאחוז משווי הנכס — עד כ-2%, כלומר עשרות אלפי שקלים",
+  },
+  {
+    label: "ייעוץ משכנתאות",
+    value: "6,000–10,000 ₪",
+    note: "לעסקה אחת",
+  },
+  {
+    label: "שמאות מקרקעין",
+    value: "1,500–3,000 ₪",
+    note: "לנכס בודד",
+  },
 ];
 
 const PriceContext = () => {
@@ -19,11 +31,14 @@ const PriceContext = () => {
     <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
       <Reveal>
         <p className="text-eyebrow uppercase tracking-[0.32em] text-muted-foreground mb-4">
-          בשביל פרופורציה
+          רגע של פרופורציה
         </p>
-        <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-8">
-          כמה עולה ידע בעולם הנדל״ן?
+        <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-4">
+          כמה עולה מקצוענות בעסקת נדל״ן?
         </h2>
+        <p className="text-body-lg text-muted-foreground leading-relaxed max-w-xl mx-auto mb-10">
+          אלה המחירים המקובלים בשוק לליווי מקצועי סביב עסקה אחת:
+        </p>
       </Reveal>
 
       <Reveal delay={0.08}>
@@ -31,12 +46,17 @@ const PriceContext = () => {
           {references.map((ref) => (
             <div
               key={ref.label}
-              className="rounded-2xl border border-border bg-background p-5"
+              className="rounded-2xl border border-border bg-background p-5 text-right flex flex-col"
             >
               <p className="text-sm text-muted-foreground mb-2 leading-snug">
                 {ref.label}
               </p>
-              <p className="font-bold text-foreground tabular-nums">{ref.value}</p>
+              <p className="font-black text-lg text-foreground tabular-nums mb-2">
+                {ref.value}
+              </p>
+              <p className="text-xs text-muted-foreground leading-relaxed mt-auto">
+                {ref.note}
+              </p>
             </div>
           ))}
         </div>
@@ -44,9 +64,9 @@ const PriceContext = () => {
 
       <Reveal delay={0.14}>
         <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-10">
-          וחשוב לומר: אנחנו בעד אנשי המקצוע האלה. הקורס לא מחליף אותם — הוא
-          דואג שתגיעו אליהם מוכנים, תשאלו את השאלות הנכונות, ותשלמו רק על מה
-          שבאמת צריך.
+          ונאמר את זה בבירור: אנחנו בעד אנשי המקצוע האלה, וכל אחד מהם שווה את
+          שכרו. התוכנית לא מחליפה אף אחד מהם — היא דואגת שתגיעו אליהם מוכנים,
+          תשאלו את השאלות הנכונות, ותשלמו רק על מה שבאמת נדרש.
         </p>
       </Reveal>
 

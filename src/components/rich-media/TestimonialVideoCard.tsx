@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Play, Star } from "lucide-react";
+import { Play, Star, Quote } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import type { Testimonial } from "@/data/testimonials";
 import VideoPlayer from "./VideoPlayer";
@@ -10,59 +10,95 @@ interface TestimonialVideoCardProps {
   index?: number;
 }
 
+/** First letters of the first two name parts, e.g. "נועם ד." → "נד". */
+function initialsOf(name: string): string {
+  return name
+    .replace(/["״'׳]/g, "")
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("");
+}
+
 const TestimonialVideoCard = ({ testimonial, index = 0 }: TestimonialVideoCardProps) => {
   const [videoOpen, setVideoOpen] = useState(false);
   const hasVideo = !!testimonial.videoUrl;
 
   return (
     <>
-      <motion.div
+      <motion.figure
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 group relative overflow-hidden"
+        transition={{ duration: 0.5, delay: index * 0.08 }}
+        className="h-full bg-card border border-border rounded-2xl p-6 hover:border-accent/40 transition-colors duration-300 relative overflow-hidden flex flex-col"
       >
-        <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-bl-full" />
+        <Quote
+          size={64}
+          className="absolute -top-2 left-2 text-accent/[0.07] rotate-180"
+          aria-hidden
+        />
 
-        <div className="flex items-center gap-1 mb-4" role="img" aria-label={`דירוג ${testimonial.rating} מתוך 5`}>
-          {Array.from({ length: testimonial.rating }).map((_, i) => (
-            <Star key={i} size={14} aria-hidden="true" className="fill-primary text-primary" />
-          ))}
-        </div>
-
-        <p className="text-foreground text-sm leading-relaxed mb-6">
-          &ldquo;{testimonial.quote}&rdquo;
-        </p>
-
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-foreground font-bold text-sm">{testimonial.name}</p>
-            <p className="text-muted-foreground text-xs">{testimonial.role}</p>
+        <div className="relative flex items-center justify-between mb-4">
+          <div
+            className="flex items-center gap-1"
+            role="img"
+            aria-label={`דירוג ${testimonial.rating} מתוך 5`}
+          >
+            {Array.from({ length: testimonial.rating }).map((_, i) => (
+              <Star key={i} size={14} aria-hidden className="fill-accent text-accent" />
+            ))}
           </div>
-
-          {hasVideo && (
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setVideoOpen(true)}
-              className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              <Play size={16} className="ml-0.5" />
-            </motion.button>
+          {testimonial.metric && (
+            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-accent/10 text-accent-deep whitespace-nowrap">
+              {testimonial.metric}
+            </span>
           )}
         </div>
 
-        <div className="mt-3 pt-3 border-t border-border">
-          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-            testimonial.service === "course"
-              ? "bg-blue-500/10 text-blue-600"
-              : "bg-primary/10 text-primary"
-          }`}>
-            {testimonial.service === "course" ? "הדרך לדירה" : "ליווי פרימיום"}
-          </span>
-        </div>
-      </motion.div>
+        <blockquote className="relative text-foreground text-sm leading-relaxed mb-6 flex-1">
+          ״{testimonial.quote}״
+        </blockquote>
+
+        <figcaption className="relative flex items-center gap-3 pt-4 border-t border-border">
+          {testimonial.photo ? (
+            <img
+              src={testimonial.photo}
+              alt=""
+              className="w-11 h-11 rounded-full object-cover shrink-0"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <span
+              aria-hidden
+              className="w-11 h-11 rounded-full shrink-0 flex items-center justify-center font-bold text-sm bg-primary/10 text-primary"
+            >
+              {initialsOf(testimonial.name)}
+            </span>
+          )}
+
+          <div className="min-w-0 flex-1">
+            <p className="text-foreground font-bold text-sm truncate">
+              {testimonial.name}
+            </p>
+            <p className="text-muted-foreground text-xs truncate">
+              {testimonial.role}
+              {testimonial.location && ` · ${testimonial.location}`}
+            </p>
+          </div>
+
+          {hasVideo && (
+            <button
+              onClick={() => setVideoOpen(true)}
+              aria-label={`צפייה בעדות של ${testimonial.name}`}
+              className="w-11 h-11 rounded-full bg-accent/10 flex items-center justify-center text-accent hover:bg-accent hover:text-accent-foreground transition-colors shrink-0 active:scale-95"
+            >
+              <Play size={16} className="mr-0.5" fill="currentColor" />
+            </button>
+          )}
+        </figcaption>
+      </motion.figure>
 
       {hasVideo && (
         <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
