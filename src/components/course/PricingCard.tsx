@@ -7,6 +7,9 @@ import { buildCheckoutUrl } from "@/lib/checkout";
 import { botLink } from "@/lib/whatsapp";
 import { gaViewPricing, gaBeginCheckout } from "@/lib/analytics";
 import { trackInitiateCheckout } from "@/lib/pixel";
+import { useQuizContext } from "@/hooks/use-quiz-context";
+import { CONCERN_COPY } from "@/lib/personalization";
+import { markPricingSeen } from "@/lib/pricingState";
 
 const included = [
   `${LESSONS_LABEL} דיגיטליים — גישה מיידית לכולם`,
@@ -32,6 +35,8 @@ const nextSteps = [
 const PricingCard = () => {
   const ref = useRef<HTMLDivElement>(null);
   const seen = useRef(false);
+  const quiz = useQuizContext();
+  const personalized = quiz && quiz.fit !== "low" ? CONCERN_COPY[quiz.concern] : null;
   // SSG renders the plain checkout URL; the enriched one (utm/fbclid)
   // replaces it client-side after hydration.
   const [checkoutHref, setCheckoutHref] = useState(CHECKOUT_URL);
@@ -48,6 +53,8 @@ const PricingCard = () => {
         if (entries.some((e) => e.isIntersecting) && !seen.current) {
           seen.current = true;
           gaViewPricing(window.location.pathname);
+          // Tell the sticky bar it can switch to a direct-purchase CTA.
+          markPricingSeen();
           observer.disconnect();
         }
       },
@@ -76,9 +83,15 @@ const PricingCard = () => {
         <h3 className="text-display-sm md:text-display-md font-black text-foreground mb-2">
           הדרך לדירה — כל התוכנית
         </h3>
-        <p className="text-muted-foreground mb-8">
-          כל מה שצריך כדי להיכנס לעסקה של החיים — מוכנים.
-        </p>
+        {personalized ? (
+          <p className="text-foreground font-bold mb-8 max-w-md mx-auto leading-relaxed">
+            {personalized.pricingLine}
+          </p>
+        ) : (
+          <p className="text-muted-foreground mb-8">
+            כל מה שצריך כדי להיכנס לעסקה של החיים — מוכנים.
+          </p>
+        )}
 
         {/* One clean price. The anchor is the mistake, not an old tag. */}
         <div className="mb-8">
@@ -107,10 +120,12 @@ const PricingCard = () => {
         {/* Proof at the decision point */}
         <figure className="max-w-sm mx-auto mb-8 text-right border-r-2 border-accent/50 pr-4">
           <blockquote className="text-sm text-muted-foreground leading-relaxed">
-            ״רכשתי דירה מתחת למחיר השוק בזכות הכלים שקיבלתי.״
+            {personalized
+              ? personalized.testimonial.quote
+              : "״רכשתי דירה מתחת למחיר השוק בזכות הכלים שקיבלתי.״"}
           </blockquote>
           <figcaption className="text-xs font-bold text-foreground mt-1">
-            — נועם ד., בוגר התוכנית
+            {personalized ? personalized.testimonial.author : "— נועם ד., בוגר התוכנית"}
           </figcaption>
         </figure>
 
@@ -120,13 +135,13 @@ const PricingCard = () => {
           rel="noopener noreferrer"
           className="inline-block w-full sm:w-auto"
           onClick={() => {
-            trackInitiateCheckout();
+            trackInitiateCheckout("pricing_card");
             gaBeginCheckout("pricing_card");
           }}
         >
           <Button
             size="lg"
-            className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 w-full sm:w-auto gap-3 mb-4 rounded-full transition-all"
+            className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 w-full sm:w-auto gap-3 mb-4 rounded-full transition-all active:scale-[0.98]"
           >
             מתחילים עכשיו — גישה מיידית
             <span

@@ -6,6 +6,8 @@ import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
 import { buildCheckoutUrl } from "@/lib/checkout";
 import { gaBeginCheckout } from "@/lib/analytics";
 import { trackInitiateCheckout } from "@/lib/pixel";
+import { useQuizContext } from "@/hooks/use-quiz-context";
+import { CONCERN_COPY, timelineUrgency } from "@/lib/personalization";
 
 /**
  * S13 — the final close. The page ends on the dream (keys in hand), not
@@ -14,6 +16,9 @@ import { trackInitiateCheckout } from "@/lib/pixel";
  */
 const FinalClose = () => {
   const [checkoutHref, setCheckoutHref] = useState(CHECKOUT_URL);
+  const quiz = useQuizContext();
+  const personalized = quiz && quiz.fit !== "low" ? CONCERN_COPY[quiz.concern] : null;
+  const urgency = timelineUrgency(quiz);
 
   useEffect(() => {
     setCheckoutHref(buildCheckoutUrl());
@@ -39,6 +44,13 @@ const FinalClose = () => {
             מארוחה זוגית טובה בחודש, למשך שנה.
           </p>
         </Reveal>
+        {(personalized || urgency) && (
+          <Reveal delay={0.14}>
+            <p className="text-base md:text-lg font-bold text-accent max-w-xl mx-auto mb-10 -mt-4 leading-relaxed">
+              {personalized?.closingLine ?? urgency}
+            </p>
+          </Reveal>
+        )}
         <Reveal delay={0.18}>
           <a
             href={checkoutHref}
@@ -46,7 +58,7 @@ const FinalClose = () => {
             rel="noopener noreferrer"
             className="inline-block w-full sm:w-auto"
             onClick={() => {
-              trackInitiateCheckout();
+              trackInitiateCheckout("final_close");
               gaBeginCheckout("final_close");
             }}
           >

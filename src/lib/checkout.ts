@@ -1,22 +1,33 @@
 import { CHECKOUT_URL } from "@/lib/constants";
 import { getLeadContext } from "@/lib/leadContext";
+import { getQuizContext } from "@/lib/quizContext";
 
 /** Ad-platform click IDs worth carrying into the checkout page so paid
  *  traffic stays attributable after the visitor leaves the site. */
 const CLICK_ID_PARAMS = ["fbclid", "gclid", "ttclid"] as const;
 
+/** Cached GA4 client id — resolved in the background, attached when ready. */
+let gaClientId: string | null = null;
+
+/** Store the GA4 client id so purchases reported server-side (Schooler →
+ *  CRM → GA4 Measurement Protocol) can be stitched to this session. */
+export function setCheckoutClientId(id: string | null): void {
+  gaClientId = id;
+}
+
 /**
  * The hosted-checkout URL enriched with attribution: first-touch UTM
- * context plus any ad click IDs present on the current page URL. Params
- * already baked into the checkout link (e.g. Schooler's tid and
- * utm_source) are never overwritten. SSR-safe — returns the plain
- * checkout URL when there is no window.
+ * context, ad click IDs, the visitor's quiz answers (so the CRM knows
+ * which fear bought) and the GA4 client id for closed-loop purchase
+ * reporting. Params already baked into the checkout link (Schooler's tid
+ * and utm_source) are never overwritten. SSR-safe.
  */
 export function buildCheckoutUrl(): string {
   if (typeof window === "undefined") return CHECKOUT_URL;
   try {
     const url = new URL(CHECKOUT_URL);
     const ctx = getLeadContext();
+    const quiz = getQuizContext();
     const current = new URLSearchParams(window.location.search);
 
     const utm: Record<string, string> = {
@@ -32,6 +43,12 @@ export function buildCheckoutUrl(): string {
       const value = current.get(param);
       if (value && !url.searchParams.has(param)) url.searchParams.set(param, value);
     }
+    if (quiz) {
+      url.searchParams.set("quiz_goal", quiz.goal);
+      url.searchParams.set("quiz_concern", quiz.concern);
+      url.searchParams.set("quiz_timeline", quiz.timeline);
+    }
+    if (gaClientId) url.searchParams.set("ga_cid", gaClientId);
     return url.toString();
   } catch {
     return CHECKOUT_URL;

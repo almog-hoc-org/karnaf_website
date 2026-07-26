@@ -34,6 +34,8 @@ import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
 import { TransactionLifecycle, type LifecycleStep } from "@/components/v2/TransactionLifecycle";
 import { useSectionView } from "@/hooks/use-section-view";
+import { gaFaqOpen } from "@/lib/analytics";
+import ExitIntentOffer from "@/components/course/ExitIntentOffer";
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
 import foundersImg from "@/assets/program/founders.png";
@@ -479,7 +481,9 @@ const CoursePage = () => {
             </p>
           </Reveal>
           <Reveal delay={0.14}>
-            <FitQuiz />
+            <div data-quiz-root>
+              <FitQuiz />
+            </div>
           </Reveal>
           <Reveal delay={0.2}>
             <div className="max-w-2xl mx-auto mt-10 rounded-2xl border border-dashed border-border bg-background p-6 text-center">
@@ -527,7 +531,17 @@ const CoursePage = () => {
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
-            <Accordion type="single" collapsible className="space-y-3">
+            <Accordion
+              type="single"
+              collapsible
+              className="space-y-3"
+              onValueChange={(value) => {
+                if (!value) return;
+                const idx = Number(value.replace("faq-", ""));
+                const item = faqData.course[idx];
+                if (item) gaFaqOpen(item.question);
+              }}
+            >
               {faqData.course.map((item, i) => (
                 <AccordionItem
                   key={i}
@@ -552,6 +566,7 @@ const CoursePage = () => {
         <FinalClose />
       </div>
       <CoursePriceBar />
+      <ExitIntentOffer />
     </>
   );
 };

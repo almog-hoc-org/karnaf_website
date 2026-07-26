@@ -8,8 +8,15 @@ import {
   trackScrollDepth,
   pageNameFor,
 } from "@/lib/pixel";
-import { initAnalytics, gaPageView, gaContactClick } from "@/lib/analytics";
+import {
+  initAnalytics,
+  gaPageView,
+  gaContactClick,
+  gaScrollDepth,
+  getGaClientId,
+} from "@/lib/analytics";
 import { captureLeadContext } from "@/lib/leadContext";
+import { setCheckoutClientId } from "@/lib/checkout";
 
 /**
  * PixelTracker — mounted once above the whole route tree. It reports to the
@@ -37,6 +44,9 @@ const PixelTracker = () => {
   useEffect(() => {
     initAnalytics();
     captureLeadContext();
+    // Resolve the GA4 client id once so checkout links can carry it and
+    // server-side purchases stitch back to this session.
+    getGaClientId().then(setCheckoutClientId);
   }, []);
 
   // Page view on every route change (+ reset scroll marks for the new page).
@@ -103,6 +113,7 @@ const PixelTracker = () => {
         if (pct >= mark && !scrollMarks.current.has(mark)) {
           scrollMarks.current.add(mark);
           trackScrollDepth(mark, window.location.pathname);
+          gaScrollDepth(mark, window.location.pathname);
         }
       }
     };
