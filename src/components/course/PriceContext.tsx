@@ -24,6 +24,11 @@ const references = [
     value: "1,500–3,000 ₪",
     note: "לנכס בודד",
   },
+  {
+    label: "ליווי אישי מלא (1:1)",
+    value: "2.5%–3% מהעסקה",
+    note: "בעסקה של 2 מיליון ₪ — 50,000 ₪ ומעלה. כך עולה גם הליווי שלנו",
+  },
 ];
 
 const PriceContext = () => {
@@ -42,7 +47,7 @@ const PriceContext = () => {
       </Reveal>
 
       <Reveal delay={0.08}>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {references.map((ref) => (
             <div
               key={ref.label}

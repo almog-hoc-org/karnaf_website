@@ -26,6 +26,7 @@ import { COURSE_PRICE } from "@/lib/constants";
 import PricingCard from "@/components/course/PricingCard";
 import PriceContext from "@/components/course/PriceContext";
 import MistakeCards from "@/components/course/MistakeCards";
+import NotYourFault from "@/components/course/NotYourFault";
 import ToolsShowcase from "@/components/course/ToolsShowcase";
 import AssuranceBlock from "@/components/course/AssuranceBlock";
 import FinalClose from "@/components/course/FinalClose";
@@ -111,6 +112,7 @@ const CoursePage = () => {
   // itself is done by CSS on html[data-exp-hero] — see index.css).
   useExperiment("hero");
   const mistakeRef = useSectionView<HTMLElement>("mistake");
+  const notYourFaultRef = useSectionView<HTMLElement>("not_your_fault");
   const storyRef = useSectionView<HTMLElement>("story");
   const transformationRef = useSectionView<HTMLElement>("transformation");
   const curriculumRef = useSectionView<HTMLElement>("curriculum");
@@ -305,6 +307,17 @@ const CoursePage = () => {
         </div>
       </section>
 
+      {/* S3.5 — relief: nobody taught you this; buying right is a
+          learnable skill. The bridge from fear to agency. */}
+      <section
+        ref={notYourFaultRef}
+        className="py-section-md bg-card border-y border-border"
+      >
+        <div className="container mx-auto px-6 max-w-3xl">
+          <NotYourFault />
+        </div>
+      </section>
+
       {/* S4 — the founders' story: empathy that earns authority */}
       <SectionDark size="lg" glow="bottom">
         <div ref={storyRef} className="container mx-auto px-6 max-w-5xl">
@@ -335,7 +348,8 @@ const CoursePage = () => {
               </Reveal>
               <Reveal delay={0.18}>
                 <p className="text-lg font-bold text-accent">
-                  קרנף נראה מאיים למי שמולו. למי שלצידו — הוא הגנה.
+                  ולמה דווקא קרנף? עור עבה, רגליים יציבות על הקרקע, וקרן
+                  אחת שמכוונת רק קדימה. מאיים למי שמולו — הגנה למי שלצידו.
                 </p>
               </Reveal>
             </div>

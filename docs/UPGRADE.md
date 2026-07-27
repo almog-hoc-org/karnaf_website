@@ -3,6 +3,12 @@
 This document tracks the site-wide CRO/UX/performance overhaul and the
 follow-up steps that require business accounts or credentials.
 
+> **Status update (late 2026-07):** prices and checkout below are historical.
+> The course now sells at **₪980, one payment**, straight to the hosted
+> Schooler checkout (default baked into `src/lib/constants.ts`;
+> `VITE_CHECKOUT_URL` overrides). The ₪5,490 figure survives only as the
+> anchor in price-drop marketing copy.
+
 ## What changed in code
 
 ### Conversion (CRO)

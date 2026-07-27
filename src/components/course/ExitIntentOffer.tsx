@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ClipboardCheck } from "lucide-react";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { botLink } from "@/lib/whatsapp";
 import { gaExitIntent } from "@/lib/analytics";
+import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
 
 /**
  * Honest exit-intent save — no discount, no countdown, no fake scarcity.
@@ -122,9 +123,14 @@ const ExitIntentOffer = () => {
               <X size={18} />
             </button>
 
-            <span className="inline-flex w-12 h-12 rounded-full bg-accent/10 items-center justify-center mb-4">
-              <ClipboardCheck size={22} className="text-accent" />
-            </span>
+            <img
+              src={mascotWelcome}
+              alt=""
+              aria-hidden
+              className="w-20 h-20 mx-auto mb-4 object-contain"
+              loading="lazy"
+              decoding="async"
+            />
 
             <h2
               id="exit-offer-title"
