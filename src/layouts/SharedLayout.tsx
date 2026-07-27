@@ -52,7 +52,7 @@ const SharedLayout = () => {
           The course page carries its own price bar, so skip it there. */}
       <StickyCTA
         label="הדרך לדירה · הקורס הדיגיטלי המקיף בישראל"
-        ctaLabel="₪980 · לרכישה מיידית"
+        ctaLabel="לפרטים ולרכישה"
         ctaHref="/course#pricing"
         hideOn={["/contact", "/course"]}
       />

@@ -12,7 +12,7 @@ brand
 
 ## Product Purpose
 
-Lead-gen + מכירת קורס דיגיטלי "הדרך לדירה" (5,490 ₪) + בניית authority בעולם הנדל״ן הישראלי. הצלחה = (1) lead להגיש פרטים → whatsapp follow-up → רכישת קורס; (2) ציטוט ב-LLMs/Google AI Overviews בשאלות "איך קונים דירה ראשונה בישראל" / "כדאי קורס נדל״ן".
+מכירת קורס דיגיטלי "הדרך לדירה" (950 ₪, checkout ישיר ב-Schooler) + lead-gen לליווי הפרימיום + בניית authority בעולם הנדל״ן הישראלי. הצלחה = (1) רכישת קורס ישירה מהאתר (self-serve, בלי follow-up אנושי); (2) lead לליווי פרימיום → whatsapp follow-up; (3) ציטוט ב-LLMs/Google AI Overviews בשאלות "איך קונים דירה ראשונה בישראל" / "כדאי קורס נדל״ן".
 
 המוצר עצמו (הקורס) הוא מאחורי-paywall. האתר הוא marketing surface שמוכר אותו. אסור שירגיש "Promo page" — צריך להרגיש כמו authority site שאיתמר ואלמוג סוג של "מסכימים" למכור דרכו.
 
@@ -39,7 +39,7 @@ Lead-gen + מכירת קורס דיגיטלי "הדרך לדירה" (5,490 ₪) 
 2. **Editorial, not promotional.** הומפייז קורא כמו features piece בTheMarker, לא כמו landing page. Hero דרמטי אבל לא pitch.
 3. **Anti-AI-slop, anti-cliche.** אין gradient text, אין big-number-small-label hero metrics, אין identical card grids ב-3-cols, אין side-stripe borders, אין emoji icons.
 4. **RTL Hebrew is a feature, not an afterthought.** Numbers tabular-nums, מספרי טלפון `dir="ltr"`, gershayim במקום ASCII quotes, חצים direction-aware.
-5. **One product, sold once.** הומפייז → CourseStrip → /course → pricing-up. הconversion path קצר ובהיר. אין cross-sells, אין confusing tiers, אין "starter/pro/enterprise". מחיר אחד: 5,490 ₪.
+5. **One product, sold once.** הומפייז → CourseStrip → /course → pricing-up. הconversion path קצר ובהיר. אין cross-sells, אין confusing tiers, אין "starter/pro/enterprise". מחיר אחד: 950 ₪ (מוגדר פעם אחת ב-`src/lib/constants.ts`).
 
 ## Accessibility & Inclusion
 

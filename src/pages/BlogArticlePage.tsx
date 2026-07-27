@@ -158,7 +158,7 @@ const BlogArticlePage = () => {
               <div className="relative z-10 flex-1 text-center sm:text-right">
                 <h3 className="text-xl md:text-2xl font-bold mb-1">רוצים ללמוד עוד?</h3>
                 <p className="text-white/70 text-sm md:text-base">
-                  {LESSONS_LABEL}, מחשבונים ואנליסט AI בקורס "הדרך לדירה" — ₪980
+                  {LESSONS_LABEL} ומחשבונים מתקדמים בקורס "הדרך לדירה" — ₪950
                 </p>
               </div>
               <Link to="/course" className="relative z-10">

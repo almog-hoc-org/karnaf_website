@@ -10,7 +10,7 @@ import karnafLogo from "@/assets/mascot/karnaf-logo.png";
 const serviceItems = [
   {
     label: "הדרך לדירה",
-    description: "הקורס הדיגיטלי לרכישת דירה — ₪980",
+    description: "הקורס הדיגיטלי לרכישת דירה — גישה מיידית",
     to: "/course",
     icon: GraduationCap,
   },

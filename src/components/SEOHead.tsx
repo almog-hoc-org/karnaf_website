@@ -81,7 +81,7 @@ export const organizationSchema = {
   image: DEFAULT_IMAGE,
   description:
     "חברת ידע והשקעות נדל״ן בישראל. הקורס הדיגיטלי המקיף \"הדרך לדירה\" לרכישה חכמה, וליווי משקיעים פרימיום 1:1 עד חתימה על נכס.",
-  foundingDate: "2018",
+  foundingDate: "2017",
   slogan: "מספרים, לא תחושות.",
   founders: [
     {
@@ -156,7 +156,7 @@ export const courseSchema = {
   "@id": `${SITE_URL}/course#course`,
   name: "הדרך לדירה — הקורס הדיגיטלי לרכישת דירה",
   description:
-    `הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. ${LESSONS_LABEL}, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון עצמי), אנליסט AI, וגישה ל-12 חודשים.`,
+    `הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. ${LESSONS_LABEL} ממוקדים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון עצמי), וגישה ל-12 חודשים.`,
   url: `${SITE_URL}/course`,
   provider: {
     "@type": "EducationalOrganization",
@@ -365,7 +365,7 @@ export const serviceSchema = {
           "@type": "Service",
           name: "הדרך לדירה — הקורס הדיגיטלי (מסלול עצמאי)",
           description:
-            `${LESSONS_LABEL}, 6+ מחשבונים, אנליסט AI, גישה 12 חודשים.`,
+            `${LESSONS_LABEL}, 6+ מחשבונים, גישה 12 חודשים.`,
         },
       },
       {

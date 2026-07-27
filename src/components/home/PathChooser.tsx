@@ -11,7 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Reveal } from "@/components/v2/Reveal";
-import { COURSE_PRICE } from "@/lib/constants";
 import { LESSONS_LABEL } from "@/data/courseStats";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { isValidIsraeliPhone } from "@/lib/validation";
@@ -26,7 +25,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const courseBullets = [
   `${LESSONS_LABEL} — גישה מיידית לכולם`,
-  "מחשבונים, כלים ואנליסט AI",
+  "מחשבונים וכלים חכמים",
   "12 חודשי גישה — לגמרי בקצב שלכם",
 ];
 
@@ -185,17 +184,6 @@ export const PathChooser = () => {
                     </li>
                   ))}
                 </ul>
-                <div className="flex items-baseline gap-3 mb-6" dir="rtl">
-                  <span className="text-display-sm md:text-display-md font-black text-white tabular-nums leading-none">
-                    ₪{COURSE_PRICE.toLocaleString("he-IL")}
-                  </span>
-                  <span
-                    className="text-sm"
-                    style={{ color: "hsl(36 33% 95% / 0.65)" }}
-                  >
-                    תשלום אחד · רכישה מיידית
-                  </span>
-                </div>
                 <Link to="/course" className="block">
                   <Button
                     size="lg"
