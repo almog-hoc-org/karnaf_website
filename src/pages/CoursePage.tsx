@@ -196,7 +196,7 @@ const CoursePage = () => {
                   <span className="text-accent">תקנו נכון.</span>
                 </span>
                 <span className="exp-hero-b">
-                  עסקה של 2 מיליון ₪.
+                  עסקה של 2 מיליון&nbsp;₪.
                   <br />
                   <span className="text-accent">
                     הכנה של ₪{COURSE_PRICE.toLocaleString("he-IL")}.
@@ -291,15 +291,15 @@ const CoursePage = () => {
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-5 leading-[0.98] tracking-tight text-center max-w-3xl mx-auto">
-              טעות בדירה לא מרגישים ביום החתימה.
+              טעות בדירה לא מרגישים ביום&nbsp;החתימה.
               <br />
               <span className="text-accent">מרגישים אותה עשר שנים.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="text-body-lg text-muted-foreground mb-10 leading-relaxed text-center max-w-2xl mx-auto">
-              אף אחד לא מתכנן לשלם 100,000 ₪ מיותרים. זה פשוט קורה — למי שלא ידע
-              מה לבדוק.
+              אף אחד לא מתכנן לשלם 100,000&nbsp;₪ מיותרים. זה פשוט קורה — למי שלא
+              ידע מה לבדוק.
             </p>
           </Reveal>
           <MistakeCards />
@@ -328,7 +328,7 @@ const CoursePage = () => {
               למה קרנף בכלל קיים
             </p>
             <h2 className="text-display-md md:text-display-lg font-black text-white mb-6 leading-[0.98] tracking-tight">
-              את שכר הלימוד הזה שילמנו בעצמנו.
+              את שכר הלימוד הזה שילמנו&nbsp;בעצמנו.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
@@ -377,7 +377,7 @@ const CoursePage = () => {
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-5 leading-[0.98] tracking-tight text-center max-w-3xl mx-auto">
-              עכשיו דמיינו את אותו תהליך —
+              עכשיו דמיינו את אותו&nbsp;תהליך&nbsp;—
               <br />
               <span className="text-accent">כשאתם הצד המוכן.</span>
             </h2>
@@ -405,7 +405,9 @@ const CoursePage = () => {
         <div ref={curriculumRef} className="container mx-auto px-6 max-w-5xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-white mb-5 leading-[0.98] tracking-tight text-center">
-              {TOTAL_PARTS} חלקים. {TOTAL_MODULES} מודולים. {LESSONS_LABEL}.
+              <span className="whitespace-nowrap">{TOTAL_PARTS} חלקים.</span>{" "}
+              <span className="whitespace-nowrap">{TOTAL_MODULES} מודולים.</span>{" "}
+              <span className="whitespace-nowrap">{LESSONS_LABEL}.</span>
               <br />
               כל הדרך — בלי לדלג על שלב.
             </h2>
