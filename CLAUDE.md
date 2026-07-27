@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real estate knowledge & investment company. Two commercial tracks: the self-serve digital course "הדרך לדירה" (₪950, direct Schooler checkout) and premium 1:1 investor accompaniment (lead form → karnaf-crm + Google Sheets via Make). Built with React 18 + TypeScript + Vite, statically pre-rendered with `vite-react-ssg`, hosted on Vercel. Leads POST to an external karnaf-crm Supabase edge function — there is no backend in this repo.
+Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real estate knowledge & investment company. Two commercial tracks: the self-serve digital course "המדריך המעשי לרכישת דירה" (₪950, direct Schooler checkout) and premium 1:1 investor accompaniment (lead form → karnaf-crm + Google Sheets via Make). Built with React 18 + TypeScript + Vite, statically pre-rendered with `vite-react-ssg`, hosted on Vercel. Leads POST to an external karnaf-crm Supabase edge function — there is no backend in this repo.
 
 ## Commands
 

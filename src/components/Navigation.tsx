@@ -9,7 +9,7 @@ import karnafLogo from "@/assets/mascot/karnaf-logo.png";
 /* All commercial offerings live under one "השירותים שלנו" mini-menu. */
 const serviceItems = [
   {
-    label: "הדרך לדירה",
+    label: "המדריך המעשי לרכישת דירה",
     description: "הקורס הדיגיטלי לרכישת דירה — גישה מיידית",
     to: "/course",
     icon: GraduationCap,

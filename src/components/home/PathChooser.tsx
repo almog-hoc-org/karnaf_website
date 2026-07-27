@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Reveal } from "@/components/v2/Reveal";
-import { LESSONS_LABEL } from "@/data/courseStats";
+import { CHAPTERS_LABEL } from "@/data/courseStats";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { isValidIsraeliPhone } from "@/lib/validation";
 import { useToast } from "@/hooks/use-toast";
@@ -24,7 +24,7 @@ import { useToast } from "@/hooks/use-toast";
  */
 
 const courseBullets = [
-  `${LESSONS_LABEL} — גישה מיידית לכולם`,
+  `${CHAPTERS_LABEL} מקיפים — גישה מיידית לכולם`,
   "מחשבונים וכלים חכמים",
   "12 חודשי גישה — לגמרי בקצב שלכם",
 ];
@@ -163,7 +163,7 @@ export const PathChooser = () => {
                   </span>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black text-white leading-tight mb-3">
-                  הדרך לדירה — הקורס הדיגיטלי
+                  המדריך המעשי לרכישת דירה — הקורס הדיגיטלי
                 </h3>
                 <p
                   className="text-base leading-relaxed mb-6"

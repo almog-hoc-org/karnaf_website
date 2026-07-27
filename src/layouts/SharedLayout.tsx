@@ -51,7 +51,7 @@ const SharedLayout = () => {
       {/* Desktop-only — on mobile the WhatsApp FAB is the single floating CTA.
           The course page carries its own price bar, so skip it there. */}
       <StickyCTA
-        label="הדרך לדירה · הקורס הדיגיטלי המקיף בישראל"
+        label="המדריך המעשי לרכישת דירה · הקורס הדיגיטלי המקיף בישראל"
         ctaLabel="לפרטים ולרכישה"
         ctaHref="/course#pricing"
         hideOn={["/contact", "/course"]}

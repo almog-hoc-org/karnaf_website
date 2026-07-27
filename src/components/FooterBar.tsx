@@ -15,7 +15,7 @@ const FooterBar = () => (
             to="/course"
             className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
           >
-            הדרך לדירה
+            המדריך המעשי לרכישת דירה
           </Link>
           <Link
             to="/about"

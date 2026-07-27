@@ -28,10 +28,10 @@ function fbq(...args: unknown[]): void {
 /** Human-readable Hebrew name for each page, by URL path. */
 export function pageNameFor(pathname: string): string {
   if (pathname === "/") return "דף הבית";
-  if (pathname.startsWith("/course")) return "הדרך לדירה — הקורס";
+  if (pathname.startsWith("/course")) return "המדריך המעשי לרכישת דירה — הקורס";
   if (pathname.startsWith("/premium")) return "ליווי משקיעים פרימיום";
   if (pathname.startsWith("/mortgage")) return "קרנף משכנתא — ייעוץ משכנתא";
-  if (pathname.startsWith("/program")) return "הדרך לדירה — עמוד תוכנית";
+  if (pathname.startsWith("/program")) return "המדריך המעשי לרכישת דירה — עמוד תוכנית";
   if (pathname.startsWith("/about")) return "אודות — סיפורו של קרנף";
   if (pathname.startsWith("/testimonials")) return "סיפורי הצלחה";
   if (pathname.startsWith("/contact")) return "צור קשר";
@@ -83,7 +83,7 @@ export function trackLead(source: string, extra?: PixelParams): void {
  *  מ-Schooler דרך ה-CRM ב-Conversions API). */
 export function trackInitiateCheckout(ctaLocation?: string): void {
   fbq("track", "InitiateCheckout", {
-    content_name: "הדרך לדירה — התוכנית הדיגיטלית",
+    content_name: "המדריך המעשי לרכישת דירה — התוכנית הדיגיטלית",
     content_category: "רכישה",
     currency: "ILS",
     value: COURSE_PRICE,

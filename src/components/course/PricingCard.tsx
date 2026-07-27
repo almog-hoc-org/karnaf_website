@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { CheckCircle, GraduationCap, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
-import { LESSONS_LABEL } from "@/data/courseStats";
+import { TOTAL_PARTS, TOTAL_CHAPTERS } from "@/data/courseStats";
 import { buildCheckoutUrl } from "@/lib/checkout";
 import { botLink } from "@/lib/whatsapp";
 import { gaViewPricing, gaBeginCheckout } from "@/lib/analytics";
@@ -12,7 +12,7 @@ import { CONCERN_COPY } from "@/lib/personalization";
 import { markPricingSeen } from "@/lib/pricingState";
 
 const included = [
-  `${LESSONS_LABEL} דיגיטליים — גישה מיידית לכולם`,
+  `כל ${TOTAL_PARTS} החלקים ו-${TOTAL_CHAPTERS} הפרקים — גישה מיידית`,
   "6+ כלים ומחשבונים מתקדמים",
   "גישה מלאה ל-12 חודשים",
   "קהילת בוגרים פעילה",
@@ -80,7 +80,7 @@ const PricingCard = () => {
       <div className="text-center relative z-10">
         <GraduationCap size={36} className="text-accent mx-auto mb-4" />
         <h3 className="text-display-sm md:text-display-md font-black text-foreground mb-2">
-          הדרך לדירה — כל התוכנית
+          המדריך המעשי לרכישת דירה — כל התוכנית
         </h3>
         {personalized ? (
           <p className="text-foreground font-bold mb-8 max-w-md mx-auto leading-relaxed">

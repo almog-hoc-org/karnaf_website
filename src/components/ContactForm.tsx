@@ -14,7 +14,7 @@ export interface ServiceOption {
 }
 
 const DEFAULT_SERVICE_OPTIONS: ServiceOption[] = [
-  { value: "derech", label: 'תוכנית "הדרך לדירה"' },
+  { value: "derech", label: 'תוכנית "המדריך המעשי לרכישת דירה"' },
   { value: "webinar", label: "וובינר" },
 ];
 

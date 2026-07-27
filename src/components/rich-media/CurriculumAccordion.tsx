@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { BookOpen } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { courseParts } from "@/data/curriculum";
-import { PARTS_LABEL, MODULES_LABEL } from "@/data/courseStats";
+import { PARTS_LABEL, CHAPTERS_LABEL } from "@/data/courseStats";
 import { gaCurriculumOpen } from "@/lib/analytics";
 
 /**
@@ -26,7 +26,7 @@ const CurriculumAccordion = () => {
         <div>
           <h3 className="text-foreground font-bold text-xl">סילבוס הקורס</h3>
           <p className="text-muted-foreground text-sm">
-            {PARTS_LABEL} · {MODULES_LABEL} · שיעורים קצרים של 3-10 דקות
+            {PARTS_LABEL} · {CHAPTERS_LABEL} · שיעורים קצרים של 3-10 דקות
           </p>
         </div>
       </div>
@@ -59,7 +59,7 @@ const CurriculumAccordion = () => {
                 <div className="flex-1 min-w-0">
                   <p className="text-foreground font-bold text-sm">{part.title}</p>
                   <p className="text-muted-foreground text-xs">
-                    {part.subtitle} · {part.modules.length} מודולים
+                    {part.subtitle} · {part.modules.length} פרקים
                   </p>
                 </div>
               </div>
