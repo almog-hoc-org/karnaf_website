@@ -33,7 +33,7 @@ const references = [
 
 const PriceContext = () => {
   return (
-    <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
+    <div className="max-w-3xl mx-auto text-center mb-10">
       <Reveal>
         <p className="text-eyebrow uppercase tracking-[0.32em] text-muted-foreground mb-4">
           רגע של פרופורציה

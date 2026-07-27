@@ -31,14 +31,18 @@ const CurriculumAccordion = () => {
         </div>
       </div>
 
+      {/* All parts open by default — the full module list is the richness
+          argument; visitors can still collapse. The GA event therefore
+          fires only on re-opens, which is fine. */}
       <Accordion
-        type="single"
-        collapsible
+        type="multiple"
+        defaultValue={courseParts.map((p) => `part-${p.id}`)}
         className="space-y-2"
-        onValueChange={(value) => {
-          if (!value) return;
-          const part = courseParts.find((p) => `part-${p.id}` === value);
-          gaCurriculumOpen(part?.title ?? value);
+        onValueChange={(values) => {
+          const last = values[values.length - 1];
+          if (!last) return;
+          const part = courseParts.find((p) => `part-${p.id}` === last);
+          gaCurriculumOpen(part?.title ?? last);
         }}
       >
         {courseParts.map((part) => (
