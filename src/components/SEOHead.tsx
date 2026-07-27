@@ -1,6 +1,6 @@
 import { Head } from "vite-react-ssg";
 import { COURSE_PRICE } from "@/lib/constants";
-import { LESSONS_LABEL } from "@/data/courseStats";
+import { PARTS_LABEL, CHAPTERS_LABEL } from "@/data/courseStats";
 
 const SITE_URL = "https://www.karnafnadlan.com";
 const SITE_NAME = "קרנף נדל\"ן";
@@ -80,7 +80,7 @@ export const organizationSchema = {
   logo: `${SITE_URL}/favicon.png`,
   image: DEFAULT_IMAGE,
   description:
-    "חברת ידע והשקעות נדל״ן בישראל. הקורס הדיגיטלי המקיף \"הדרך לדירה\" לרכישה חכמה, וליווי משקיעים פרימיום 1:1 עד חתימה על נכס.",
+    "חברת ידע והשקעות נדל״ן בישראל. הקורס הדיגיטלי המקיף \"המדריך המעשי לרכישת דירה\" לרכישה חכמה, וליווי משקיעים פרימיום 1:1 עד חתימה על נכס.",
   foundingDate: "2017",
   slogan: "מספרים, לא תחושות.",
   founders: [
@@ -154,9 +154,9 @@ export const courseSchema = {
   "@context": "https://schema.org",
   "@type": "Course",
   "@id": `${SITE_URL}/course#course`,
-  name: "הדרך לדירה — הקורס הדיגיטלי לרכישת דירה",
+  name: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל",
   description:
-    `הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. ${LESSONS_LABEL} ממוקדים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון עצמי), וגישה ל-12 חודשים.`,
+    `הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. ${PARTS_LABEL} ו-${CHAPTERS_LABEL} שמכסים את כל הדרך בשיעורים קצרים, 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון עצמי), וגישה ל-12 חודשים.`,
   url: `${SITE_URL}/course`,
   provider: {
     "@type": "EducationalOrganization",
@@ -182,7 +182,7 @@ export const courseSchema = {
   offers: {
     "@type": "Offer",
     "@id": `${SITE_URL}/course#offer`,
-    name: "הדרך לדירה — גישה מלאה ל-12 חודשים",
+    name: "המדריך המעשי לרכישת דירה — גישה מלאה ל-12 חודשים",
     category: "Online Course",
     price: String(COURSE_PRICE),
     priceCurrency: "ILS",
@@ -363,9 +363,9 @@ export const serviceSchema = {
         priceCurrency: "ILS",
         itemOffered: {
           "@type": "Service",
-          name: "הדרך לדירה — הקורס הדיגיטלי (מסלול עצמאי)",
+          name: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי (מסלול עצמאי)",
           description:
-            `${LESSONS_LABEL}, 6+ מחשבונים, גישה 12 חודשים.`,
+            `${PARTS_LABEL} ו-${CHAPTERS_LABEL}, 6+ מחשבונים, גישה 12 חודשים.`,
         },
       },
       {

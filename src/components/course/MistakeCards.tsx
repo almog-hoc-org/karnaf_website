@@ -74,7 +74,7 @@ const MistakeCards = () => {
         <p className="text-center text-lg md:text-xl font-bold text-foreground mt-8 md:mt-10">
           אנחנו לא מספרים לכם את זה כדי להפחיד.
           <span className="text-muted-foreground font-medium">
-            {" "}אנחנו מספרים כי זה קרה גם לנו.
+            {" "}אנחנו מספרים כדי שזה לא יקרה לכם.
           </span>
         </p>
       </Reveal>

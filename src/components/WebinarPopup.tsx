@@ -146,7 +146,7 @@ const WebinarPopup = () => {
               </span>
 
               <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight">
-                ״הדרך לדירה״{" "}
+                ״המדריך המעשי לרכישת דירה״{" "}
                 <span className="text-accent">שיעור חינם ללא עלות</span>
               </h2>
 

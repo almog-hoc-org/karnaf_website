@@ -23,7 +23,7 @@ const TestimonialsPage = () => {
     <>
       <SEOHead
         title="סיפורי הצלחה — לקוחות שרכשו דירה בליווי קרנף נדל״ן | עדויות"
-        description="עדויות של בוגרי תוכנית הדרך לדירה ולקוחות ליווי. 5 כוכבים ממאות רוכשי דירה. חיסכון של עשרות אלפי שקלים בעסקה."
+        description="עדויות של בוגרי תוכנית המדריך המעשי לרכישת דירה ולקוחות ליווי. 5 כוכבים ממאות רוכשי דירה. חיסכון של עשרות אלפי שקלים בעסקה."
         path="/testimonials"
         keywords="עדויות נדל״ן, סיפורי הצלחה, רוכשי דירה ראשונה, ביקורות קורס נדל״ן"
         jsonLd={[
@@ -35,12 +35,12 @@ const TestimonialsPage = () => {
           aggregateRatingSchema({
             ratingValue: "4.9",
             reviewCount: String(testimonials.length),
-            itemName: "הדרך לדירה — הקורס הדיגיטלי לרכישת דירה",
+            itemName: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל",
             itemUrl: "https://www.karnafnadlan.com/course",
           }),
           ...testimonials.map((t) =>
             reviewSchema({
-              itemName: "הדרך לדירה — הקורס הדיגיטלי לרכישת דירה",
+              itemName: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל",
               itemUrl: "https://www.karnafnadlan.com/course",
               reviewerName: t.name,
               reviewBody: t.quote,

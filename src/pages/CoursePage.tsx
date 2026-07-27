@@ -21,7 +21,7 @@ import CurriculumAccordion from "@/components/rich-media/CurriculumAccordion";
 import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
 import { faqData } from "@/data/faq";
-import { TOTAL_PARTS, TOTAL_MODULES, LESSONS_LABEL } from "@/data/courseStats";
+import { TOTAL_PARTS, TOTAL_CHAPTERS } from "@/data/courseStats";
 import { COURSE_PRICE } from "@/lib/constants";
 import PricingCard from "@/components/course/PricingCard";
 import PriceContext from "@/components/course/PriceContext";
@@ -74,9 +74,9 @@ const preparedSteps: LifecycleStep[] = [
   { num: "06", label: "חתימה", duration: "רגועים. מבינים כל סעיף" },
 ];
 
-/* S6 — compact feature strip (replaces the old 3 big identical cards). */
+/* Program section — compact feature strip. */
 const featureStrip = [
-  { icon: BookOpen, text: `${LESSONS_LABEL} מובנים צעד אחר צעד — מהתקציב ועד המפתח` },
+  { icon: BookOpen, text: "שיעורים קצרים וחדים של 3-10 דקות, צעד אחר צעד — מהתקציב ועד המפתח" },
   { icon: Calculator, text: "6+ מחשבונים וכלים שהופכים כל החלטה למספרים" },
   { icon: Sparkles, text: "קהילת תלמידים ובוגרים פעילה — לומדים לבד, לא בודדים" },
 ];
@@ -84,24 +84,24 @@ const featureStrip = [
 const courseTestimonials = testimonials.filter((t) => t.service === "course");
 const premiumTestimonials = testimonials.filter((t) => t.service === "premium");
 
-const scrollToPricing = () =>
-  document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
-
+/* Native anchor (not a JS scroll) so the CTA works even before React
+   hydrates — smooth scrolling comes from the global CSS scroll-behavior. */
 const ScrollCta = ({ label }: { label: string }) => (
   <div className="text-center mt-8">
-    <Button
-      size="lg"
-      onClick={scrollToPricing}
-      className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base px-8 py-6 rounded-full gap-2 transition-all w-full sm:w-auto"
-    >
-      {label}
-      <span
-        aria-hidden
-        className="inline-block transition-transform group-hover:-translate-x-1"
+    <a href="#pricing" className="inline-block w-full sm:w-auto">
+      <Button
+        size="lg"
+        className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base px-8 py-6 rounded-full gap-2 transition-all w-full sm:w-auto"
       >
-        ←
-      </span>
-    </Button>
+        {label}
+        <span
+          aria-hidden
+          className="inline-block transition-transform group-hover:-translate-x-1"
+        >
+          ←
+        </span>
+      </Button>
+    </a>
   </div>
 );
 
@@ -123,17 +123,17 @@ const CoursePage = () => {
   return (
     <>
       <SEOHead
-        title="הדרך לדירה — הקורס הדיגיטלי המקיף לרכישת דירה | קרנף נדל״ן"
-        description="הקורס הדיגיטלי המקיף בישראל לרכישת דירה: מעל 200 שיעורים ממוקדים של 3-10 דקות ו-6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון). ₪950, תשלום אחד, גישה מיידית ל-12 חודשים — לגמרי בקצב שלכם."
+        title="המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל | קרנף נדל״ן"
+        description="הקורס הדיגיטלי המקיף בישראל לרכישת דירה: 3 חלקים ו-15 פרקים שמכסים את כל הדרך, בשיעורים קצרים של 3-10 דקות, עם 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון). ₪950, גישה מיידית ל-12 חודשים — לגמרי בקצב שלכם."
         path="/course"
-        keywords="קורס נדל״ן, קורס נדל״ן דיגיטלי, הדרך לדירה, דירה ראשונה, מחשבון משכנתא, מס רכישה, השקעה בנדל״ן"
+        keywords="קורס נדל״ן, קורס נדל״ן דיגיטלי, המדריך המעשי לרכישת דירה, הדרך לדירה, דירה ראשונה, מחשבון משכנתא, מס רכישה, השקעה בנדל״ן"
         jsonLd={[
           organizationSchema,
           courseSchema,
           serviceSchema,
           breadcrumbSchema([
             { name: "דף הבית", url: "/" },
-            { name: "הדרך לדירה", url: "/course" },
+            { name: "המדריך המעשי לרכישת דירה", url: "/course" },
           ]),
           faqPageSchema(faqData.course),
         ]}
@@ -180,7 +180,7 @@ const CoursePage = () => {
                 style={{ color: "hsl(36 33% 95% / 0.7)" }}
               >
                 <span className="block w-10 h-px bg-accent" aria-hidden />
-                הדרך לדירה · התוכנית הדיגיטלית של קרנף נדל״ן
+                המדריך המעשי לרכישת דירה · התוכנית הדיגיטלית של קרנף נדל״ן
                 <span className="block w-10 h-px bg-accent" aria-hidden />
               </p>
             </Reveal>
@@ -214,29 +214,32 @@ const CoursePage = () => {
                 style={{ color: "hsl(36 33% 95% / 0.82)" }}
               >
                 רוב הישראלים נכנסים לעסקה הגדולה בחייהם בלי הכנה, ומגלים את המחיר
-                של זה שנים אחר כך. ״הדרך לדירה״ מכניסה אתכם לחדר עם הידע,
-                הכלים והביטחון של הצד שהגיע מוכן.
+                של זה שנים אחר כך. ״המדריך המעשי לרכישת דירה״ מכניס אתכם לחדר עם
+                הידע, הכלים והביטחון של הצד שהגיע מוכן.
               </p>
             </Reveal>
 
             <Reveal delay={0.24}>
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm">
-                {LESSONS_LABEL} · 6+ כלים · גישה מיידית
+                3 חלקים · 15 פרקים · 6+ כלים · גישה מיידית
               </div>
             </Reveal>
 
             <Reveal delay={0.32}>
               <div>
-                <Button
-                  size="lg"
-                  onClick={scrollToPricing}
-                  className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all w-full sm:w-auto"
-                >
-                  קחו אותי לתוכנית
-                  <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
-                </Button>
+                {/* Real anchor to the program section — works pre-hydration
+                    and actually "takes you to the program". */}
+                <a href="#program" className="inline-block w-full sm:w-auto">
+                  <Button
+                    size="lg"
+                    className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all w-full sm:w-auto"
+                  >
+                    קחו אותי לתוכנית
+                    <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
+                  </Button>
+                </a>
                 <p className="text-sm mt-3" style={{ color: "hsl(36 33% 95% / 0.6)" }}>
-                  ₪{COURSE_PRICE.toLocaleString("he-IL")} · תשלום אחד · גישה ל-12 חודשים
+                  {COURSE_PRICE.toLocaleString("he-IL")}&nbsp;₪ · גישה מלאה ל-12 חודשים
                 </p>
               </div>
             </Reveal>
@@ -261,33 +264,88 @@ const CoursePage = () => {
             </p>
           </Reveal>
           <Reveal delay={0.08}>
-            <VimeoEmbed videoId={COURSE_VIDEO_ID} title="הדרך לדירה — הסבר על התוכנית" />
+            <VimeoEmbed videoId={COURSE_VIDEO_ID} title="המדריך המעשי לרכישת דירה — הסבר על התוכנית" />
           </Reveal>
         </div>
       </SectionDark>
 
-      {/* S2 — authority strip */}
-      <section className="py-section-sm bg-card border-y border-border">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            {authorityStats.map((stat, i) => (
-              <Reveal key={stat.label} delay={i * 0.06}>
-                <div className="text-center">
-                  <p className="text-display-md font-black text-foreground tabular-nums leading-none mb-2">
-                    {stat.value}
-                  </p>
-                  <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
-                    {stat.label}
-                  </p>
+      {/* Program — what's inside: structure + open syllabus, right under
+          the video (id="program" is the hero CTA's anchor target). */}
+      <SectionDark id="program" size="md" glow="top-end">
+        <div ref={curriculumRef} className="container mx-auto px-6 max-w-5xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-white mb-5 leading-[0.98] tracking-tight text-center">
+              <span className="whitespace-nowrap">{TOTAL_PARTS} חלקים.</span>{" "}
+              <span className="whitespace-nowrap">{TOTAL_CHAPTERS} פרקים.</span>
+              <br />
+              כל הדרך — בלי לדלג על שלב.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p
+              className="text-body-lg mb-10 leading-relaxed text-center max-w-2xl mx-auto"
+              style={{ color: "hsl(36 33% 95% / 0.72)" }}
+            >
+              כל שלב בדרך מכוסה לעומק — מהתקציב, דרך החיפוש, הבדיקות והמשא
+              ומתן, ועד המפתח — בשיעורים קצרים וחדים של 3 עד 10 דקות.
+              מתקדמים צעד־צעד, בלי עומס, ותמיד יודעים מה הצעד הבא.
+            </p>
+          </Reveal>
+
+          {/* Compact feature strip */}
+          <Reveal delay={0.12}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-10">
+              {featureStrip.map((f) => (
+                <div
+                  key={f.text}
+                  className="flex flex-col items-center text-center gap-3 rounded-xl px-4 py-4 border text-sm leading-snug"
+                  style={{
+                    backgroundColor: "hsl(36 33% 95% / 0.04)",
+                    borderColor: "hsl(36 33% 95% / 0.12)",
+                    color: "hsl(36 33% 95% / 0.85)",
+                  }}
+                >
+                  <f.icon size={18} className="text-accent shrink-0" />
+                  <span>{f.text}</span>
                 </div>
-              </Reveal>
-            ))}
+              ))}
+            </div>
+          </Reveal>
+
+          <div className="max-w-3xl mx-auto">
+            <Reveal delay={0.16}>
+              <p
+                className="text-center text-sm mb-8"
+                style={{ color: "hsl(36 33% 95% / 0.6)" }}
+              >
+                בפנים, בין השאר: ״מאסטר קלאס משא ומתן״, ״עשרת הדיברות
+                בעסקת נדל״ן״ ו״יסודות המשכנתא: כך תנצחו את הבנק״.
+              </p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <CurriculumAccordion />
+            </Reveal>
           </div>
-          <p className="text-center text-sm font-bold text-muted-foreground mt-8 tracking-wide">
-            מספרים, לא תחושות.
-          </p>
+          <ScrollCta label="פותחים גישה לכל השיעורים" />
         </div>
-      </section>
+      </SectionDark>
+
+      {/* S7 — the tools. Follows another dark section, so it uses the
+          small rhythm: two stacked dark sections must not leave a dead gap. */}
+      <SectionDark size="sm" glow="none">
+        <div ref={toolsRef} className="container mx-auto px-6 max-w-6xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg font-black text-white mb-5 leading-[0.98] tracking-tight text-center max-w-3xl mx-auto">
+              כל החלטה בעסקה —
+              <br />
+              <span className="text-accent">הופכת למספר.</span>
+            </h2>
+          </Reveal>
+          <div className="mt-10">
+            <ToolsShowcase />
+          </div>
+        </div>
+      </SectionDark>
 
       {/* S3 — the price of the mistake (the emotional engine) */}
       <section ref={mistakeRef} className="py-section-md bg-background">
@@ -331,7 +389,7 @@ const CoursePage = () => {
               למה קרנף בכלל קיים
             </p>
             <h2 className="text-display-md md:text-display-lg font-black text-white mb-6 leading-[0.98] tracking-tight">
-              את שכר הלימוד הזה שילמנו&nbsp;בעצמנו.
+              את הניסיון הזה צברנו בשטח — עסקה אחרי&nbsp;עסקה.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
@@ -339,12 +397,12 @@ const CoursePage = () => {
               className="text-body-lg leading-relaxed mb-6 max-w-2xl mx-auto"
               style={{ color: "hsl(36 33% 95% / 0.78)" }}
             >
-              איתמר ואלמוג קנו את הדירות הראשונות שלהם כמו כולם — עם המון
-              התלהבות ואפס שיטה. הטעויות עלו לכל אחד מהם עשרות אלפי שקלים.
-              מאז 2017, מהעסקה הראשונה, הם בנו את מה שהיה חסר להם באותו
-              רגע: שיטה שמבוססת על נתונים, לא על תחושות בטן. היום, אחרי
-              375+ עסקאות מלוות ושנים של מחקר שוק, השיטה הזאת כולה בתוך
-              ״הדרך לדירה״.
+              אנחנו בתוך שוק הנדל״ן מאז 2017 — מהעסקה הראשונה שעשינו בעצמנו
+              ועד 375+ העסקאות שליווינו. אחרי מאות עסקאות לומדים לזהות מהר
+              מחיר מנופח, תמהיל שגוי וסעיף בעייתי בחוזה — ולדעת בדיוק מה
+              בודקים לפני שחותמים. את כל הניסיון הזה ארזנו לשיטה אחת
+              שמבוססת על נתונים, לא על תחושות בטן — והיא כולה בתוך
+              ״המדריך המעשי לרכישת דירה״.
             </p>
           </Reveal>
           <Reveal delay={0.18}>
@@ -403,83 +461,29 @@ const CoursePage = () => {
         </div>
       </section>
 
-      {/* S6 — the vehicle: what's inside */}
-      <SectionDark size="md" glow="top-end">
-        <div ref={curriculumRef} className="container mx-auto px-6 max-w-5xl">
-          <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-white mb-5 leading-[0.98] tracking-tight text-center">
-              <span className="whitespace-nowrap">{TOTAL_PARTS} חלקים.</span>{" "}
-              <span className="whitespace-nowrap">{TOTAL_MODULES} מודולים.</span>{" "}
-              <span className="whitespace-nowrap">{LESSONS_LABEL}.</span>
-              <br />
-              כל הדרך — בלי לדלג על שלב.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p
-              className="text-body-lg mb-10 leading-relaxed text-center max-w-2xl mx-auto"
-              style={{ color: "hsl(36 33% 95% / 0.72)" }}
-            >
-              בלי הרצאות של שעתיים. שיעורים ממוקדים וחדים של 3 עד 10 דקות,
-              מסודרים לפי הסדר שבו תפגשו אותם במציאות: מהתקציב, דרך החיפוש
-              והבדיקות, ועד המפתח.
-            </p>
-          </Reveal>
-
-          {/* Compact feature strip */}
-          <Reveal delay={0.12}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-10">
-              {featureStrip.map((f) => (
-                <div
-                  key={f.text}
-                  className="flex flex-col items-center text-center gap-3 rounded-xl px-4 py-4 border text-sm leading-snug"
-                  style={{
-                    backgroundColor: "hsl(36 33% 95% / 0.04)",
-                    borderColor: "hsl(36 33% 95% / 0.12)",
-                    color: "hsl(36 33% 95% / 0.85)",
-                  }}
-                >
-                  <f.icon size={18} className="text-accent shrink-0" />
-                  <span>{f.text}</span>
+      {/* Authority strip — the proof numbers, placed right before the
+          human proof (testimonials) per the owner's direction. */}
+      <section className="py-section-sm bg-card border-y border-border">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {authorityStats.map((stat, i) => (
+              <Reveal key={stat.label} delay={i * 0.06}>
+                <div className="text-center">
+                  <p className="text-display-md font-black text-foreground tabular-nums leading-none mb-2">
+                    {stat.value}
+                  </p>
+                  <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
+                    {stat.label}
+                  </p>
                 </div>
-              ))}
-            </div>
-          </Reveal>
-
-          <div className="max-w-3xl mx-auto">
-            <Reveal delay={0.16}>
-              <p
-                className="text-center text-sm mb-8"
-                style={{ color: "hsl(36 33% 95% / 0.6)" }}
-              >
-                בפנים, בין השאר: ״מאסטר קלאס משא ומתן״, ״עשרת הדיברות
-                בעסקת נדל״ן״ ו״יסודות המשכנתא: כך תנצחו את הבנק״.
-              </p>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <CurriculumAccordion />
-            </Reveal>
+              </Reveal>
+            ))}
           </div>
-          <ScrollCta label="פותחים גישה לכל השיעורים" />
+          <p className="text-center text-sm font-bold text-muted-foreground mt-8 tracking-wide">
+            מספרים, לא תחושות.
+          </p>
         </div>
-      </SectionDark>
-
-      {/* S7 — the tools. Follows another dark section, so it uses the
-          small rhythm: two stacked dark sections must not leave a dead gap. */}
-      <SectionDark size="sm" glow="none">
-        <div ref={toolsRef} className="container mx-auto px-6 max-w-6xl">
-          <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-white mb-5 leading-[0.98] tracking-tight text-center max-w-3xl mx-auto">
-              כל החלטה בעסקה —
-              <br />
-              <span className="text-accent">הופכת למספר.</span>
-            </h2>
-          </Reveal>
-          <div className="mt-10">
-            <ToolsShowcase />
-          </div>
-        </div>
-      </SectionDark>
+      </section>
 
       {/* S8 — proof */}
       <section ref={testimonialsRef} className="py-section-md bg-background">

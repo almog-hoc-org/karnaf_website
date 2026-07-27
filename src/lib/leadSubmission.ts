@@ -38,10 +38,10 @@ function productFor(payload: WebsiteLeadPayload): { product: string; productLabe
     return { product: "research", productLabel: "מערכת המחקר — רשימת המתנה" };
   }
   if (payload.service === "webinar") {
-    return { product: "course", productLabel: "וובינר (הדרך לדירה)" };
+    return { product: "course", productLabel: "וובינר (המדריך המעשי לרכישת דירה)" };
   }
   if (payload.service === "derech" || payload.service === "waitlist") {
-    return { product: "course", productLabel: "הדרך לדירה" };
+    return { product: "course", productLabel: "המדריך המעשי לרכישת דירה" };
   }
   return { product: "course", productLabel: "כללי — יצירת קשר" };
 }

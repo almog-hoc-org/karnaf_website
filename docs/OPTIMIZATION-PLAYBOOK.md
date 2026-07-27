@@ -27,9 +27,10 @@
 
 ## הטקס השבועי (45 דקות)
 
-1. **משפך ב-GA4 Explorations** (15 דק'): ‏page_view → section_view(mistake) →
-   (story) → (transformation) → (curriculum) → (tools) → (testimonials) →
-   (quiz) → view_pricing → begin_checkout. לפצל מובייל/דסקטופ ואורגני/ממומן.
+1. **משפך ב-GA4 Explorations** (15 דק'): ‏page_view → section_view(curriculum) →
+   (tools) → (mistake) → (not_your_fault) → (story) → (transformation) →
+   (testimonials) → (quiz) → view_pricing → begin_checkout. לפצל
+   מובייל/דסקטופ ואורגני/ממומן.
    **הירידה החדה ביותר בין שני סקשנים סמוכים היא הפוקוס היחיד של השבוע.**
 2. **Clarity** (15 דק'): 10 הקלטות מסוננות ל"הגיעו למחיר ולא לחצו" + דוחות
    rage-click ו-dead-click (לשים לב לכרטיס הכלים — הוא נראה לחיץ).
