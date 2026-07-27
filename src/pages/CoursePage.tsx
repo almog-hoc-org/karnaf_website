@@ -189,17 +189,20 @@ const CoursePage = () => {
                 index.css hides the one this visitor isn't in — zero flicker,
                 zero CLS. Assignment is reported to GA4 by useExperiment. */}
             <Reveal delay={0.08}>
-              <h1 className="text-display-lg md:text-display-xl font-black text-white mb-6 leading-[0.98] tracking-tight">
+              {/* Each headline line is nowrap so the split is always exactly
+                  two lines; max-[380px] size guard keeps the longer variant-B
+                  line inside very narrow viewports. */}
+              <h1 className="text-display-lg max-[380px]:text-[2rem] md:text-display-xl font-black text-white mb-6 leading-[0.98] tracking-tight">
                 <span className="exp-hero-a">
-                  דירה קונים פעם אחת.
+                  <span className="whitespace-nowrap">דירה קונים פעם אחת.</span>
                   <br />
-                  <span className="text-accent">תקנו נכון.</span>
+                  <span className="text-accent whitespace-nowrap">תקנו נכון.</span>
                 </span>
                 <span className="exp-hero-b">
-                  עסקה של 2 מיליון&nbsp;₪.
+                  <span className="whitespace-nowrap">עסקה של 2 מיליון&nbsp;₪.</span>
                   <br />
-                  <span className="text-accent">
-                    הכנה של ₪{COURSE_PRICE.toLocaleString("he-IL")}.
+                  <span className="text-accent whitespace-nowrap">
+                    הכנה של {COURSE_PRICE.toLocaleString("he-IL")}&nbsp;₪.
                   </span>
                 </span>
               </h1>
@@ -310,7 +313,7 @@ const CoursePage = () => {
           learnable skill. The bridge from fear to agency. */}
       <section
         ref={notYourFaultRef}
-        className="py-section-md bg-card border-y border-border"
+        className="py-section-sm bg-card border-y border-border"
       >
         <div className="container mx-auto px-6 max-w-3xl">
           <NotYourFault />
@@ -425,7 +428,7 @@ const CoursePage = () => {
 
           {/* Compact feature strip */}
           <Reveal delay={0.12}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-10">
               {featureStrip.map((f) => (
                 <div
                   key={f.text}
@@ -462,8 +465,8 @@ const CoursePage = () => {
       </SectionDark>
 
       {/* S7 — the tools. Follows another dark section, so it uses the
-          medium rhythm: two stacked lg sections leave a dead gap. */}
-      <SectionDark size="md" glow="none">
+          small rhythm: two stacked dark sections must not leave a dead gap. */}
+      <SectionDark size="sm" glow="none">
         <div ref={toolsRef} className="container mx-auto px-6 max-w-6xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg font-black text-white mb-5 leading-[0.98] tracking-tight text-center max-w-3xl mx-auto">

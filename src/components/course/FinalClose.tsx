@@ -25,7 +25,7 @@ const FinalClose = () => {
   }, []);
 
   return (
-    <SectionDark size="lg" glow="center">
+    <SectionDark size="md" glow="center">
       <div className="container mx-auto px-5 md:px-6 text-center max-w-3xl">
         <Reveal>
           <h2 className="text-display-md md:text-display-xl font-black leading-[0.98] tracking-tight mb-6 text-white">
