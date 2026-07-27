@@ -1,4 +1,4 @@
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, COURSE_PRICE } from "@/lib/constants";
 import { getLeadContext } from "@/lib/leadContext";
 import { getQuizContext } from "@/lib/quizContext";
 
@@ -8,6 +8,15 @@ const CLICK_ID_PARAMS = ["fbclid", "gclid", "ttclid"] as const;
 
 /** Cached GA4 client id — resolved in the background, attached when ready. */
 let gaClientId: string | null = null;
+
+/** Read a browser cookie by name (SSR-safe). */
+function readCookie(name: string): string | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(
+    new RegExp("(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, "\\$1") + "=([^;]*)")
+  );
+  return match ? decodeURIComponent(match[1]) : null;
+}
 
 /** Store the GA4 client id so purchases reported server-side (Schooler →
  *  CRM → GA4 Measurement Protocol) can be stitched to this session. */
@@ -43,6 +52,26 @@ export function buildCheckoutUrl(): string {
       const value = current.get(param);
       if (value && !url.searchParams.has(param)) url.searchParams.set(param, value);
     }
+
+    // Meta identity for the Purchase event fired on the checkout thank-you
+    // page (see docs/PIXEL-CLOSED-LOOP.md): the pixel's browser id (_fbp)
+    // and click id (_fbc). If _fbc isn't set yet but fbclid is in the URL,
+    // synthesise it in Meta's canonical "fb.1.<ts>.<fbclid>" format so the
+    // Purchase still attributes to the ad click across the domain hop.
+    const fbp = readCookie("_fbp");
+    if (fbp && !url.searchParams.has("_fbp")) url.searchParams.set("_fbp", fbp);
+    let fbc = readCookie("_fbc");
+    const fbclid = current.get("fbclid");
+    if (!fbc && fbclid) fbc = `fb.1.${Date.now()}.${fbclid}`;
+    if (fbc && !url.searchParams.has("_fbc")) url.searchParams.set("_fbc", fbc);
+
+    // Purchase value fallback for the thank-you page when the platform's
+    // own order-total variable isn't available.
+    if (!url.searchParams.has("karnaf_value")) {
+      url.searchParams.set("karnaf_value", String(COURSE_PRICE));
+    }
+    if (!url.searchParams.has("currency")) url.searchParams.set("currency", "ILS");
+
     if (quiz) {
       url.searchParams.set("quiz_goal", quiz.goal);
       url.searchParams.set("quiz_concern", quiz.concern);

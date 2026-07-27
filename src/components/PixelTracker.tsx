@@ -88,6 +88,10 @@ const PixelTracker = () => {
       const network = socialNetworkFor(href);
       if (network) return trackSocial(network, page);
 
+      // Purchase CTAs fire their own InitiateCheckout — don't also log them
+      // as a generic button click (that would double-count the same action).
+      if (el.closest("[data-no-btn-track]")) return;
+
       // Internal navigation is already captured by the PageView above, so we
       // only log buttons and external links here.
       const isInternal = href.startsWith("/") || href.startsWith("#");

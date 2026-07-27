@@ -1,4 +1,4 @@
-import { trackLead, FORM_LABELS } from "@/lib/pixel";
+import { trackLead, setAdvancedMatching, FORM_LABELS } from "@/lib/pixel";
 import { gaLead } from "@/lib/analytics";
 import { getLeadContext } from "@/lib/leadContext";
 
@@ -130,6 +130,14 @@ export async function submitWebsiteLead(payload: WebsiteLeadPayload): Promise<vo
     }
     throw new Error(errorMessage);
   }
+
+  // Turn on Advanced Matching with the details this lead just gave us, so
+  // the Lead event (and the eventual Purchase) match a real person.
+  setAdvancedMatching({
+    email: payload.email,
+    phone: payload.phone,
+    firstName: payload.name?.split(" ")[0],
+  });
 
   // Report a successful lead to the Meta Pixel (Hebrew-labelled by form) + GA4.
   trackLead(payload.source, {
