@@ -41,8 +41,8 @@ const AssuranceBlock = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
         {assurances.map((item, i) => (
           <Reveal key={item.title} delay={i * 0.08}>
-            <div className="h-full rounded-2xl border border-border bg-card p-6 text-right">
-              <item.icon size={20} className="text-accent mb-3" />
+            <div className="h-full rounded-2xl border border-border bg-card p-6 text-center">
+              <item.icon size={20} className="text-accent mb-3 mx-auto" />
               <h3 className="font-bold text-foreground mb-2">{item.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {item.body}

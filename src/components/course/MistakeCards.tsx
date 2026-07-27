@@ -5,7 +5,7 @@ import { useCountUp } from "@/hooks/use-count-up";
  * S3 — the emotional engine of the sales page: the price of walking in
  * unprepared, in honest arithmetic. Three deliberately different card
  * shapes (big number / plain text / quote) — calm tone, scary numbers.
- * This section is also the first half of the price choreography: ₪980
+ * This section is also the first half of the price choreography: ₪950
  * lands against these figures a few screens later.
  */
 const MistakeCards = () => {
@@ -13,11 +13,13 @@ const MistakeCards = () => {
 
   return (
     <div>
+      {/* One calm, unified card style — the scary part is the numbers,
+          not the palette. Amber marks only the figures and eyebrows. */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 items-stretch">
         {/* Card A — the big number */}
         <Reveal>
-          <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1">
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mb-4">
+          <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
+            <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
               פער של 3% במחיר
             </p>
             <p className="text-display-md font-black text-foreground tabular-nums leading-none mb-4">
@@ -31,32 +33,26 @@ const MistakeCards = () => {
           </article>
         </Reveal>
 
-        {/* Card B — plain text, heavier body */}
+        {/* Card B — the mortgage mix */}
         <Reveal delay={0.08}>
-          <article className="h-full rounded-2xl p-6 md:p-8 bg-primary text-primary-foreground shadow-depth-2">
-            <p
-              className="text-eyebrow uppercase tracking-[0.18em] mb-4"
-              style={{ color: "hsl(36 33% 95% / 0.6)" }}
-            >
+          <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
+            <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
               תמהיל משכנתא שגוי
             </p>
-            <p className="text-lg font-bold leading-snug mb-4">
+            <p className="text-lg font-bold text-foreground leading-snug mb-4">
               אותו סכום, אותו בנק, תמהיל אחר — וההפרש לאורך חיי ההלוואה נמדד
               בעשרות אלפי שקלים.
             </p>
-            <p
-              className="text-sm leading-relaxed"
-              style={{ color: "hsl(36 33% 95% / 0.7)" }}
-            >
+            <p className="text-sm text-muted-foreground leading-relaxed">
               הבנק לא יתקן אתכם. זו לא העבודה שלו.
             </p>
           </article>
         </Reveal>
 
-        {/* Card C — quote shape */}
+        {/* Card C — the contract clause */}
         <Reveal delay={0.16}>
-          <article className="h-full rounded-2xl p-6 md:p-8 bg-card border-r-4 border-accent shadow-depth-1">
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mb-4">
+          <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
+            <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
               סעיף אחד בחוזה
             </p>
             <blockquote className="text-lg font-bold text-foreground leading-snug mb-4">
@@ -72,7 +68,7 @@ const MistakeCards = () => {
       </div>
 
       <Reveal delay={0.24}>
-        <p className="text-center text-lg md:text-xl font-bold text-foreground mt-10 md:mt-12">
+        <p className="text-center text-lg md:text-xl font-bold text-foreground mt-8 md:mt-10">
           אנחנו לא מספרים לכם את זה כדי להפחיד.
           <span className="text-muted-foreground font-medium">
             {" "}אנחנו מספרים כי זה קרה גם לנו.

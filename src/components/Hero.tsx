@@ -6,7 +6,6 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
-import { COURSE_PRICE } from "@/lib/constants";
 
 const Hero = () => {
   const reduce = useReducedMotion();
@@ -129,7 +128,7 @@ const Hero = () => {
                   size="lg"
                   className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all"
                 >
-                  לקורס הדיגיטלי · ₪{COURSE_PRICE.toLocaleString("he-IL")}
+                  לקורס הדיגיטלי
                   <span
                     aria-hidden
                     className="inline-block transition-transform group-hover:-translate-x-1"

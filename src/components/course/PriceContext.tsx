@@ -4,7 +4,7 @@ import { Reveal } from "@/components/v2/Reveal";
  * S10, beats 1-2 — the honest price choreography that replaces a
  * strikethrough anchor: what professional help around a deal actually
  * costs in Israel, an explicit statement that we are FOR those
- * professionals, and one line of arithmetic that puts ₪980 in scale.
+ * professionals, and one line of arithmetic that puts ₪950 in scale.
  * Real market ranges only — no invented "value stack" numbers.
  */
 

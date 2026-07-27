@@ -96,7 +96,6 @@ export const curriculum: Module[] = [
       { title: "מילון מושגים מקצועי", duration: "כלי", type: "document" },
       { title: "קובץ מעקב נכסים", duration: "כלי", type: "tool" },
       { title: "מחשבון בדיקת כדאיות", duration: "כלי", type: "tool" },
-      { title: "אנליסט AI מתקדם למענה על שאלות", duration: "כלי", type: "tool" },
     ],
   },
   {

@@ -5,7 +5,6 @@ import {
   ClipboardCheck,
   FileSpreadsheet,
   Scale,
-  Sparkles,
 } from "lucide-react";
 import { Reveal } from "@/components/v2/Reveal";
 
@@ -66,7 +65,7 @@ const ToolsShowcase = () => {
         {tools.map((tool, i) => (
           <Reveal key={tool.name} delay={i * 0.06}>
             <article
-              className="h-full rounded-2xl p-5 md:p-6 border flex gap-4"
+              className="h-full rounded-2xl p-5 md:p-6 border flex flex-col items-center text-center gap-3"
               style={{
                 backgroundColor: "hsl(36 33% 95% / 0.04)",
                 borderColor: "hsl(36 33% 95% / 0.12)",
@@ -94,31 +93,6 @@ const ToolsShowcase = () => {
           </Reveal>
         ))}
       </div>
-
-      {/* The AI analyst — the answer to "ומה אם תעלה שאלה שאין לה כלי?" */}
-      <Reveal delay={0.2}>
-        <div
-          className="mt-8 lg:mt-10 max-w-4xl mx-auto rounded-2xl p-6 md:p-8 border text-center"
-          style={{
-            backgroundColor: "hsl(36 33% 95% / 0.05)",
-            borderColor: "hsl(24 80% 52% / 0.4)",
-            boxShadow: "0 0 60px hsl(24 80% 52% / 0.14)",
-          }}
-        >
-          <span className="inline-flex items-center gap-2 text-accent font-bold mb-3">
-            <Sparkles size={18} />
-            ומה אם עולה שאלה שאין לה כלי?
-          </span>
-          <p
-            className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto"
-            style={{ color: "hsl(36 33% 95% / 0.8)" }}
-          >
-            בתוך התוכנית מחכה אנליסט AI שאומן על התכנים שלנו. שואלים אותו בדיוק
-            כמו ששואלים אדם — ״המוכר דורש הצמדה למדד, זה סביר?״ — ומקבלים תשובה
-            עניינית, בכל שעה, בלי להרגיש לא נעים.
-          </p>
-        </div>
-      </Reveal>
     </div>
   );
 };

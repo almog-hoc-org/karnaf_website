@@ -19,8 +19,6 @@ const lessonTypeColor = {
 };
 
 const CurriculumAccordion = () => {
-  const totalLessons = curriculum.reduce((sum, mod) => sum + mod.lessons.length, 0);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -35,7 +33,7 @@ const CurriculumAccordion = () => {
           </div>
           <div>
             <h3 className="text-foreground font-bold text-xl">סילבוס הקורס</h3>
-            <p className="text-muted-foreground text-sm">{curriculum.length} מודולים · {totalLessons} שיעורים</p>
+            <p className="text-muted-foreground text-sm">הצצה לתכנים המרכזיים בקורס</p>
           </div>
         </div>
       </div>

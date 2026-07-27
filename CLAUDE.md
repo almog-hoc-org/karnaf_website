@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real estate knowledge & investment company. Two commercial tracks: the self-serve digital course "הדרך לדירה" (₪980, direct Schooler checkout) and premium 1:1 investor accompaniment (lead form → karnaf-crm + Google Sheets via Make). Built with React 18 + TypeScript + Vite, statically pre-rendered with `vite-react-ssg`, hosted on Vercel. Leads POST to an external karnaf-crm Supabase edge function — there is no backend in this repo.
+Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real estate knowledge & investment company. Two commercial tracks: the self-serve digital course "הדרך לדירה" (₪950, direct Schooler checkout) and premium 1:1 investor accompaniment (lead form → karnaf-crm + Google Sheets via Make). Built with React 18 + TypeScript + Vite, statically pre-rendered with `vite-react-ssg`, hosted on Vercel. Leads POST to an external karnaf-crm Supabase edge function — there is no backend in this repo.
 
 ## Commands
 
@@ -37,7 +37,7 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 
 **Fonts:** Self-hosted via `@fontsource-variable/rubik` (imported in `src/main.tsx`). No Google Fonts `<link>` tags.
 
-**Commerce:** One digital product, one price — ₪980 (anchored against the old ₪5,490), defined once in `src/lib/constants.ts`. Purchase CTAs go straight to the hosted Schooler checkout (default baked in; `VITE_CHECKOUT_URL` overrides). The course is fully self-serve — never add personal-support/analyst promises to course copy; 1:1 accompaniment belongs to /premium only.
+**Commerce:** One digital product, one price — ₪950 (anchored against the old ₪5,490), defined once in `src/lib/constants.ts`. Purchase CTAs go straight to the hosted Schooler checkout (default baked in; `VITE_CHECKOUT_URL` overrides). The course is fully self-serve — never add personal-support/analyst promises to course copy; 1:1 accompaniment belongs to /premium only.
 
 **Image optimization:** `vite-plugin-image-optimizer` compresses PNG/JPEG/SVG at build time.
 

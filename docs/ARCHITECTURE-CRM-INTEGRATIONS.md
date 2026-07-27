@@ -108,7 +108,7 @@ Endpoint (קיים): `https://svkzkpgccahwmyflobvn.functions.supabase.co/website
 
 הקורס הדיגיטלי נמכר ישירות בדף הסליקה:
 `https://my.schooler.biz/s/117502/KarnafNewProgram?tid=30291&utm_source=קרנף26`
-(מחיר: ₪980). האתר מעביר לכתובת זו גם `utm_*` (first-touch) ו-click IDs
+(מחיר: ₪950). האתר מעביר לכתובת זו גם `utm_*` (first-touch) ו-click IDs
 (`fbclid`/`gclid`/`ttclid`) — בלי לדרוס את הפרמטרים הקיימים.
 
 ### 4.1 Webhook רכישה (Schooler → CRM)
@@ -140,7 +140,7 @@ Endpoint (קיים): `https://svkzkpgccahwmyflobvn.functions.supabase.co/website
 (פיקסל 1659334891302781) בלחיצה על כפתור הרכישה; אירוע ה-`Purchase` חייב
 להגיע צד-שרת כי התשלום קורה בדומיין של Schooler:
 
-- על כל webhook רכישה — לשלוח `Purchase` ל-CAPI עם: `value: 980`,
+- על כל webhook רכישה — לשלוח `Purchase` ל-CAPI עם: `value: 950`,
   `currency: ILS`, `event_id` (מזהה העסקה — דה-דופ מול הפיקסל),
   ו-user_data מגובב (email/phone) + `fbclid` אם הגיע בפרמטרים של הסליקה.
 - **קהל רימרקטינג** (הגדרה ב-Ads Manager, לא בקוד): Custom Audience =
@@ -166,8 +166,8 @@ POST https://www.google-analytics.com/mp/collect?measurement_id=<GA4_ID>&api_sec
     "name": "purchase",
     "params": {
       "transaction_id": "<מזהה עסקה מ-Schooler>",
-      "value": 980, "currency": "ILS",
-      "items": [{ "item_id": "derech-ladira", "item_name": "הדרך לדירה", "price": 980 }]
+      "value": 950, "currency": "ILS",
+      "items": [{ "item_id": "derech-ladira", "item_name": "הדרך לדירה", "price": 950 }]
     }
   }]
 }
@@ -202,7 +202,7 @@ POST https://www.google-analytics.com/mp/collect?measurement_id=<GA4_ID>&api_sec
    - 💬 **נושא אחר**
 2. **כפתור 1 — תוכנית דיגיטלית:**
    - תשובה: טקסט קצר + קישור לדף הסליקה (סעיף 4) —
-     "מעולה! התוכנית הדיגיטלית המקיפה בישראל — ₪980, גישה מיידית: <קישור>"
+     "מעולה! התוכנית הדיגיטלית המקיפה בישראל — ₪950, גישה מיידית: <קישור>"
    - סיומת קבועה: "אם לא קיבלת מענה לפנייתך — כתבו את המילה **נציג**."
    - Webhook ל-CRM: סיווג **"מתעניין תוכנית דיגיטלית"** + טיקט מעקב.
 3. **כפתור 2 — ליווי משקיעים:**
