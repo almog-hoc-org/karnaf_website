@@ -1,17 +1,17 @@
+import { courseParts } from "@/data/curriculum";
+
 /**
- * Single source of truth for the course's advertised numbers.
- *
- * TEMPORARY OVERRIDE (2026-07): the program was restructured into
- * 3 parts / 15 modules / 200+ short lessons (3-10 min each), but the
- * detailed syllabus hasn't been delivered yet — curriculum.ts still
- * holds the old 9-module outline. Until the new syllabus lands, the
- * advertised numbers are declared here explicitly. TODO: once
- * curriculum.ts is rebuilt (parts → modules → lesson counts), restore
- * the derivation so the site can never quote numbers the curriculum
- * doesn't actually contain.
+ * Single source of truth for the course's advertised numbers — parts
+ * and modules are derived from the real syllabus (curriculum.ts) so
+ * the site can never quote a structure the syllabus doesn't contain.
+ * The lesson count is a declared label: the 200+ lessons are not
+ * enumerated on the site, only their total is advertised.
  */
-export const TOTAL_PARTS = 3;
-export const TOTAL_MODULES = 15;
+export const TOTAL_PARTS = courseParts.length;
+export const TOTAL_MODULES = courseParts.reduce(
+  (sum, part) => sum + part.modules.length,
+  0
+);
 
 /** Ready-made labels for copy. */
 export const LESSONS_LABEL = "מעל 200 שיעורים";
