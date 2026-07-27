@@ -110,11 +110,11 @@ const differentiators = [
 
 /** Equity brackets — ₪250K steps, as agreed with the accompaniment partner. */
 const EQUITY_OPTIONS = [
-  "עד 250 אלף ₪",
-  "250–500 אלף ₪",
-  "500–750 אלף ₪",
-  "750 אלף – מיליון ₪",
-  "מעל מיליון ₪",
+  "עד 250 אלף ₪",
+  "250–500 אלף ₪",
+  "500–750 אלף ₪",
+  "750 אלף – מיליון ₪",
+  "מעל מיליון ₪",
 ];
 
 const isValidEmail = (raw: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(raw.trim());

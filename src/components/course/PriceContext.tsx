@@ -11,23 +11,23 @@ import { Reveal } from "@/components/v2/Reveal";
 const references = [
   {
     label: "עורך דין לליווי עסקה",
-    value: "10,000 ₪ ומעלה",
+    value: "10,000 ₪ ומעלה",
     note: "לעיתים נגזר כאחוז משווי הנכס — עד כ-2%, כלומר עשרות אלפי שקלים",
   },
   {
     label: "ייעוץ משכנתאות",
-    value: "6,000–10,000 ₪",
+    value: "6,000–10,000 ₪",
     note: "לעסקה אחת",
   },
   {
     label: "שמאות מקרקעין",
-    value: "1,500–3,000 ₪",
+    value: "1,500–3,000 ₪",
     note: "לנכס בודד",
   },
   {
     label: "ליווי אישי מלא (1:1)",
     value: "2.5%–3% מהעסקה",
-    note: "בעסקה של 2 מיליון ₪ — 50,000 ₪ ומעלה. כך עולה גם הליווי שלנו",
+    note: "בעסקה של 2 מיליון ₪ — 50,000 ₪ ומעלה. כך עולה גם הליווי שלנו",
   },
 ];
 
@@ -39,7 +39,7 @@ const PriceContext = () => {
           רגע של פרופורציה
         </p>
         <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-4">
-          כמה עולה מקצוענות בעסקת נדל״ן?
+          כמה עולה מקצוענות בעסקת&nbsp;נדל״ן?
         </h2>
         <p className="text-body-lg text-muted-foreground leading-relaxed max-w-xl mx-auto mb-10">
           אלה המחירים המקובלים בשוק לליווי מקצועי סביב עסקה אחת:
@@ -77,7 +77,7 @@ const PriceContext = () => {
 
       <Reveal delay={0.2}>
         <p className="text-xl md:text-2xl font-bold text-foreground leading-snug max-w-2xl mx-auto">
-          בעסקה של 2 מיליון ₪, ההכנה הזאת עולה{" "}
+          בעסקה של 2 מיליון&nbsp;₪, ההכנה הזאת עולה{" "}
           <span className="text-accent">0.05%</span> מהמחיר.
           <br className="hidden md:block" />
           הטעות שהיא מונעת נמדדת באחוזים שלמים.

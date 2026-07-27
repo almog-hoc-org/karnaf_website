@@ -23,12 +23,15 @@ const MistakeCards = () => {
               פער של 3% במחיר
             </p>
             <p className="text-display-md font-black text-foreground tabular-nums leading-none mb-4">
-              <span ref={overpay.ref}>{overpay.value.toLocaleString("he-IL")}</span>
-              <span className="text-accent"> ₪</span>
+              <span className="whitespace-nowrap">
+                <span ref={overpay.ref}>{overpay.value.toLocaleString("he-IL")}</span>
+                <span className="text-accent"> ₪</span>
+              </span>
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              בעסקה של 2 מיליון ₪, שלושה אחוזים מעל מחיר השוק הם 60,000 ₪. זה כל
-              ההפרש בין מי שבדק עסקאות דומות באותו רחוב לבין מי שסמך על תחושה.
+              בעסקה של 2 מיליון&nbsp;₪, שלושה אחוזים מעל מחיר השוק הם
+              60,000&nbsp;₪. זה כל ההפרש בין מי שבדק עסקאות דומות באותו רחוב
+              לבין מי שסמך על תחושה.
             </p>
           </article>
         </Reveal>
