@@ -316,6 +316,7 @@ const FitQuiz = () => {
                     href={buildCheckoutUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-no-btn-track
                     className="w-full sm:w-auto"
                     onClick={() => {
                       trackInitiateCheckout("quiz");

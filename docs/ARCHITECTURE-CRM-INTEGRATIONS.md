@@ -143,6 +143,12 @@ Endpoint (קיים): `https://svkzkpgccahwmyflobvn.functions.supabase.co/website
 - על כל webhook רכישה — לשלוח `Purchase` ל-CAPI עם: `value: 950`,
   `currency: ILS`, `event_id` (מזהה העסקה — דה-דופ מול הפיקסל),
   ו-user_data מגובב (email/phone) + `fbclid` אם הגיע בפרמטרים של הסליקה.
+
+> **מצב נוכחי (יולי 2026):** ה-`Purchase` נסגר כרגע ב**פיקסל בדף התודה** של
+> Schooler/Grow (ראו `docs/PIXEL-CLOSED-LOOP.md`) — מהיר ובלי פיתוח שרת.
+> ה-CAPI כאן הוא שדרוג עתידי; כשיתווסף, עליו להשתמש ב**אותו `event_id`**
+> (מזהה ההזמנה) כמו הסניפט בדף התודה, כדי ש-Meta תבצע דה-דופ ולא תספור
+> את הרכישה פעמיים.
 - **קהל רימרקטינג** (הגדרה ב-Ads Manager, לא בקוד): Custom Audience =
   `InitiateCheckout` ב-30 הימים האחרונים **פחות** `Purchase` ב-30 הימים
   האחרונים. זה קהל "לחצו ולא סלקו" לטירגוט המשך.
@@ -167,7 +173,7 @@ POST https://www.google-analytics.com/mp/collect?measurement_id=<GA4_ID>&api_sec
     "params": {
       "transaction_id": "<מזהה עסקה מ-Schooler>",
       "value": 950, "currency": "ILS",
-      "items": [{ "item_id": "derech-ladira", "item_name": "הדרך לדירה", "price": 950 }]
+      "items": [{ "item_id": "derech-ladira", "item_name": "המדריך המעשי לרכישת דירה", "price": 950 }]
     }
   }]
 }

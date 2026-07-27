@@ -58,6 +58,7 @@ const FinalClose = () => {
             href={checkoutHref}
             target="_blank"
             rel="noopener noreferrer"
+            data-no-btn-track
             className="inline-block w-full sm:w-auto"
             onClick={() => {
               trackInitiateCheckout("final_close");

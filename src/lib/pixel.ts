@@ -13,6 +13,16 @@ import { COURSE_PRICE } from "@/lib/constants";
 
 type PixelParams = Record<string, string | number | boolean | undefined>;
 
+/** The Meta Pixel id — single source of truth, kept in sync with the
+ *  fbq('init', …) call in index.html and the Purchase snippet on the
+ *  Schooler/Grow thank-you page (see docs/PIXEL-CLOSED-LOOP.md). */
+export const META_PIXEL_ID = "1659334891302781";
+
+/** Stable product id shared across InitiateCheckout (site) and Purchase
+ *  (checkout thank-you page) so both map to the same catalog product and
+ *  can power value-based audiences. */
+export const COURSE_CONTENT_ID = "derech-ladira";
+
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
@@ -23,6 +33,26 @@ function fbq(...args: unknown[]): void {
   if (typeof window !== "undefined" && typeof window.fbq === "function") {
     window.fbq(...args);
   }
+}
+
+/**
+ * Enable Advanced Matching for this visitor by re-initialising the pixel
+ * with the identifiers they just gave us (on a successful lead). Meta
+ * hashes em/ph/fn in the browser before sending — we pass raw values and
+ * never store them. This lets Meta match the Lead (and the later
+ * Purchase) to a real person, tightening attribution and audiences.
+ */
+export function setAdvancedMatching(user: {
+  email?: string;
+  phone?: string;
+  firstName?: string;
+}): void {
+  const data: Record<string, string> = {};
+  if (user.email) data.em = user.email.trim().toLowerCase();
+  if (user.phone) data.ph = user.phone.replace(/[^\d]/g, "");
+  if (user.firstName) data.fn = user.firstName.trim().toLowerCase();
+  if (Object.keys(data).length === 0) return;
+  fbq("init", META_PIXEL_ID, data);
 }
 
 /** Human-readable Hebrew name for each page, by URL path. */
@@ -85,6 +115,10 @@ export function trackInitiateCheckout(ctaLocation?: string): void {
   fbq("track", "InitiateCheckout", {
     content_name: "המדריך המעשי לרכישת דירה — התוכנית הדיגיטלית",
     content_category: "רכישה",
+    // content_ids + content_type mirror the Purchase event fired on the
+    // Schooler/Grow thank-you page, so both feed the same product audiences.
+    content_ids: [COURSE_CONTENT_ID],
+    content_type: "product",
     currency: "ILS",
     value: COURSE_PRICE,
     ...(ctaLocation ? { cta_location: ctaLocation } : {}),

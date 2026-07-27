@@ -106,6 +106,7 @@ const CoursePriceBar = () => {
               href={checkoutHref}
               target="_blank"
               rel="noopener noreferrer"
+              data-no-btn-track
               onClick={() => {
                 gaStickyBar("click", "post_pricing");
                 trackInitiateCheckout("sticky_bar");
