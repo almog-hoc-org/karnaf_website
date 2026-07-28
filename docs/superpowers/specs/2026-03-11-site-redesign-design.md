@@ -1,5 +1,10 @@
 # Karnaf Site Redesign — Design Spec
 
+> ⚠️ **ארכיון — לא עדכני.** מסמך זה הוא ספק העיצוב ממרץ 2026 ואינו משקף
+> את המצב הנוכחי (שם המוצר, מחיר, מבנה, פונטים וספריות השתנו מאז).
+> למצב עדכני ראו: `CLAUDE.md`, `DESIGN.md` ו-`docs/CREATIVE-BRIEF.md`.
+
+
 **Date:** 2026-03-11
 **Tone:** Authoritative-professional
 **Focus:** CoursePage ("הדרך לדירה") + site-wide visual uplift

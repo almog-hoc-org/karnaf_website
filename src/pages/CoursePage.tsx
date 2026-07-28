@@ -36,7 +36,6 @@ import { SectionDark } from "@/components/v2/Section";
 import { TransactionLifecycle, type LifecycleStep } from "@/components/v2/TransactionLifecycle";
 import { useSectionView } from "@/hooks/use-section-view";
 import { gaFaqOpen } from "@/lib/analytics";
-import { useExperiment } from "@/hooks/use-experiment";
 import ExitIntentOffer from "@/components/course/ExitIntentOffer";
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
@@ -106,9 +105,6 @@ const ScrollCta = ({ label }: { label: string }) => (
 );
 
 const CoursePage = () => {
-  // Registers the assignment as a GA4 user property (the visual switch
-  // itself is done by CSS on html[data-exp-hero] — see index.css).
-  useExperiment("hero");
   const mistakeRef = useSectionView<HTMLElement>("mistake");
   const notYourFaultRef = useSectionView<HTMLElement>("not_your_fault");
   const storyRef = useSectionView<HTMLElement>("story");
@@ -180,31 +176,19 @@ const CoursePage = () => {
                 style={{ color: "hsl(36 33% 95% / 0.7)" }}
               >
                 <span className="block w-10 h-px bg-accent" aria-hidden />
-                המדריך המעשי לרכישת דירה · התוכנית הדיגיטלית של קרנף נדל״ן
+                המדריך המעשי לרכישת דירה · הקורס המקיף של קרנף נדל״ן
                 <span className="block w-10 h-px bg-accent" aria-hidden />
               </p>
             </Reveal>
 
-            {/* Experiment "hero": both variants ship in the static HTML and
-                index.css hides the one this visitor isn't in — zero flicker,
-                zero CLS. Assignment is reported to GA4 by useExperiment. */}
             <Reveal delay={0.08}>
-              {/* Each headline line is nowrap so the split is always exactly
-                  two lines; max-[380px] size guard keeps the longer variant-B
-                  line inside very narrow viewports. */}
+              {/* One approved headline — each line nowrap so the split stays
+                  exactly two lines; the narrow-viewport size guard keeps the
+                  longer first line on one row. */}
               <h1 className="text-display-lg max-[380px]:text-[2rem] md:text-display-xl font-black text-white mb-6 leading-[0.98] tracking-tight">
-                <span className="exp-hero-a">
-                  <span className="whitespace-nowrap">דירה קונים פעם אחת.</span>
-                  <br />
-                  <span className="text-accent whitespace-nowrap">תקנו נכון.</span>
-                </span>
-                <span className="exp-hero-b">
-                  <span className="whitespace-nowrap">עסקה של 2 מיליון&nbsp;₪.</span>
-                  <br />
-                  <span className="text-accent whitespace-nowrap">
-                    הכנה של {COURSE_PRICE.toLocaleString("he-IL")}&nbsp;₪.
-                  </span>
-                </span>
+                <span className="whitespace-nowrap">לעסקה הגדולה בחיים</span>
+                <br />
+                <span className="text-accent whitespace-nowrap">מגיעים מוכנים</span>
               </h1>
             </Reveal>
 
