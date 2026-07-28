@@ -28,8 +28,9 @@ export function setCheckoutClientId(id: string | null): void {
  * The hosted-checkout URL enriched with attribution: first-touch UTM
  * context, ad click IDs, the visitor's quiz answers (so the CRM knows
  * which fear bought) and the GA4 client id for closed-loop purchase
- * reporting. Params already baked into the checkout link (Schooler's tid
- * and utm_source) are never overwritten. SSR-safe.
+ * reporting. Everything is added as query params only — the checkout
+ * link's own path (Schooler's tracking segment, e.g. /t_JHrKI) and any
+ * params baked into it are never touched. SSR-safe.
  */
 export function buildCheckoutUrl(): string {
   if (typeof window === "undefined") return CHECKOUT_URL;

@@ -107,9 +107,10 @@ Endpoint (קיים): `https://svkzkpgccahwmyflobvn.functions.supabase.co/website
 ## 4. רכישות מ-Schooler → CRM + Meta CAPI (חדש — לפיתוח)
 
 הקורס הדיגיטלי נמכר ישירות בדף הסליקה:
-`https://my.schooler.biz/s/117502/KarnafNewProgram?tid=30291&utm_source=R82Ahg`
+`https://my.schooler.biz/s/117502/KarnafNewProgram/t_JHrKI`
 (מחיר: ₪950). האתר מעביר לכתובת זו גם `utm_*` (first-touch) ו-click IDs
-(`fbclid`/`gclid`/`ttclid`) — בלי לדרוס את הפרמטרים הקיימים.
+(`fbclid`/`gclid`/`ttclid`) — כפרמטרי query בלבד, בלי לגעת בנתיב המעקב של
+Schooler (`/t_JHrKI`) ובלי לדרוס פרמטרים קיימים.
 
 ### 4.1 Webhook רכישה (Schooler → CRM)
 
