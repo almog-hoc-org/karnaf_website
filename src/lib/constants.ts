@@ -25,7 +25,7 @@ export const WHATSAPP_BOT_NUMBER: string =
 export const COURSE_PRICE = 950;
 export const CHECKOUT_URL: string =
   import.meta.env.VITE_CHECKOUT_URL ||
-  "https://my.schooler.biz/s/117502/KarnafNewProgram?tid=30291&utm_source=R82Ahg";
+  "https://my.schooler.biz/s/117502/KarnafNewProgram/t_JHrKI";
 
 export const socialLinks = [
   { icon: Instagram, href: "https://www.instagram.com/karnaf_nadlan/", label: "Instagram", hoverColor: "hover:bg-pink-500/20 hover:text-pink-600 hover:border-pink-500/50" },
