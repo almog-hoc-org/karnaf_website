@@ -29,9 +29,8 @@ const MistakeCards = () => {
               </span>
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              בעסקה של 2 מיליון&nbsp;₪, שלושה אחוזים מעל מחיר השוק הם
-              60,000&nbsp;₪. זה כל ההפרש בין מי שבדק עסקאות דומות באותו רחוב
-              לבין מי שסמך על תחושה.
+              חלשים במשא ומתן? פער של 3% במחיר הדירה מוביל להבדל של
+              60,000&nbsp;₪ בעסקה של 2&nbsp;מיליון. הידע הזה הוא חובה.
             </p>
           </article>
         </Reveal>
@@ -52,32 +51,22 @@ const MistakeCards = () => {
           </article>
         </Reveal>
 
-        {/* Card C — the contract clause */}
+        {/* Card C — urban-renewal potential */}
         <Reveal delay={0.16}>
           <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
             <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
-              סעיף אחד בחוזה
+              פוטנציאל פינוי בינוי
             </p>
-            <blockquote className="text-lg font-bold text-foreground leading-snug mb-4">
-              ״מועד פינוי, הצמדות, ליקויים — סעיף אחד שלא הבנתם הוא סעיף שאתם
-              חשופים בו.״
-            </blockquote>
+            <p className="text-lg font-bold text-foreground leading-snug mb-4">
+              דירה בבניין עם פרויקט התחדשות מתקדם שווה מאות אלפי שקלים יותר —
+              ומי שלא יודע לבדוק את הסטטוס, קונה (או מוכר) במחיר הלא נכון.
+            </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              ראינו את זה שוב ושוב ב-375+ עסקאות. וכמעט תמיד — זה סעיף שאפשר היה
-              לתקן לפני החתימה.
+              את הבדיקה הזאת עושים לפני ההצעה, לא אחריה.
             </p>
           </article>
         </Reveal>
       </div>
-
-      <Reveal delay={0.24}>
-        <p className="text-center text-lg md:text-xl font-bold text-foreground mt-8 md:mt-10">
-          אנחנו לא מספרים לכם את זה כדי להפחיד.
-          <span className="text-muted-foreground font-medium">
-            {" "}אנחנו מספרים כדי שזה לא יקרה לכם.
-          </span>
-        </p>
-      </Reveal>
     </div>
   );
 };
