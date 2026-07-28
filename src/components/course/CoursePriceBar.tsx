@@ -23,6 +23,9 @@ const CoursePriceBar = () => {
   const quiz = useQuizContext();
 
   useEffect(() => {
+    // The bar always links to checkout, so enrich the URL on mount —
+    // not only once the price section has been reached.
+    setCheckoutHref(buildCheckoutUrl());
     setPricingSeen(hasSeenPricing());
     const onSeen = () => {
       setPricingSeen(true);
@@ -101,30 +104,23 @@ const CoursePriceBar = () => {
             </span>
           </div>
 
-          {pricingSeen ? (
-            <a
-              href={checkoutHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-no-btn-track
-              onClick={() => {
-                gaStickyBar("click", "post_pricing");
-                trackInitiateCheckout("sticky_bar");
-                gaBeginCheckout("sticky_bar");
-              }}
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-sm md:text-base px-6 py-2.5 rounded-full transition-colors whitespace-nowrap active:scale-[0.98]"
-            >
-              לרכישה מאובטחת ←
-            </a>
-          ) : (
-            <a
-              href="#pricing"
-              onClick={() => gaStickyBar("click", "pre_pricing")}
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-sm md:text-base px-6 py-2.5 rounded-full transition-colors whitespace-nowrap active:scale-[0.98]"
-            >
-              לפרטים ולמחיר
-            </a>
-          )}
+          {/* Always straight to checkout (owner decision). The pricingSeen
+              flag is kept only to label the click in analytics — it tells us
+              whether the buyer had already read the price section. */}
+          <a
+            href={checkoutHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-no-btn-track
+            onClick={() => {
+              gaStickyBar("click", pricingSeen ? "post_pricing" : "pre_pricing");
+              trackInitiateCheckout("sticky_bar");
+              gaBeginCheckout("sticky_bar");
+            }}
+            className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-sm md:text-base px-6 py-2.5 rounded-full transition-colors whitespace-nowrap active:scale-[0.98]"
+          >
+            לרכישה מאובטחת ←
+          </a>
         </div>
       </div>
     </motion.div>

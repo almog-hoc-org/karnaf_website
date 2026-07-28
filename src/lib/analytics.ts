@@ -69,7 +69,15 @@ export function gaViewPricing(page: string): void {
 }
 
 /** Purchase-CTA click locations on the sales page — which emotional beat closed. */
-export type CheckoutCtaLocation = "quiz" | "pricing_card" | "final_close" | "sticky_bar";
+export type CheckoutCtaLocation =
+  | "hero"
+  | "curriculum"
+  | "transformation"
+  | "testimonials"
+  | "quiz"
+  | "pricing_card"
+  | "final_close"
+  | "sticky_bar";
 
 /** Click on a purchase CTA (always hosted checkout). */
 export function gaBeginCheckout(location: CheckoutCtaLocation): void {

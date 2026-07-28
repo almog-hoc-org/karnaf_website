@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SEOHead, {
   courseSchema,
@@ -22,7 +23,8 @@ import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
 import { faqData } from "@/data/faq";
 import { TOTAL_PARTS, TOTAL_CHAPTERS } from "@/data/courseStats";
-import { COURSE_PRICE } from "@/lib/constants";
+import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
+import { buildCheckoutUrl } from "@/lib/checkout";
 import PricingCard from "@/components/course/PricingCard";
 import PriceContext from "@/components/course/PriceContext";
 import MistakeCards from "@/components/course/MistakeCards";
@@ -35,7 +37,12 @@ import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
 import { TransactionLifecycle, type LifecycleStep } from "@/components/v2/TransactionLifecycle";
 import { useSectionView } from "@/hooks/use-section-view";
-import { gaFaqOpen } from "@/lib/analytics";
+import {
+  gaFaqOpen,
+  gaBeginCheckout,
+  type CheckoutCtaLocation,
+} from "@/lib/analytics";
+import { trackInitiateCheckout } from "@/lib/pixel";
 import ExitIntentOffer from "@/components/course/ExitIntentOffer";
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
@@ -83,28 +90,61 @@ const featureStrip = [
 const courseTestimonials = testimonials.filter((t) => t.service === "course");
 const premiumTestimonials = testimonials.filter((t) => t.service === "premium");
 
-/* Native anchor (not a JS scroll) so the CTA works even before React
-   hydrates — smooth scrolling comes from the global CSS scroll-behavior. */
-const ScrollCta = ({ label }: { label: string }) => (
-  <div className="text-center mt-8">
-    <a href="#pricing" className="inline-block w-full sm:w-auto">
-      <Button
-        size="lg"
-        className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base px-8 py-6 rounded-full gap-2 transition-all w-full sm:w-auto"
+/**
+ * Every in-page CTA goes straight to the hosted checkout (owner decision).
+ * The href starts as the plain checkout URL so the button works before
+ * React hydrates, then upgrades to the attribution-enriched URL. Each one
+ * reports its own position so we can still see which section closes.
+ */
+const CheckoutCta = ({
+  label,
+  location,
+}: {
+  label: string;
+  location: CheckoutCtaLocation;
+}) => {
+  const [href, setHref] = useState(CHECKOUT_URL);
+
+  useEffect(() => {
+    setHref(buildCheckoutUrl());
+  }, []);
+
+  return (
+    <div className="text-center mt-8">
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block w-full sm:w-auto"
+        onClick={() => {
+          trackInitiateCheckout(location);
+          gaBeginCheckout(location);
+        }}
       >
-        {label}
-        <span
-          aria-hidden
-          className="inline-block transition-transform group-hover:-translate-x-1"
+        <Button
+          size="lg"
+          className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base px-8 py-6 rounded-full gap-2 transition-all w-full sm:w-auto active:scale-[0.98]"
         >
-          ←
-        </span>
-      </Button>
-    </a>
-  </div>
-);
+          {label}
+          <span
+            aria-hidden
+            className="inline-block transition-transform group-hover:-translate-x-1"
+          >
+            ←
+          </span>
+        </Button>
+      </a>
+    </div>
+  );
+};
 
 const CoursePage = () => {
+  // Hero CTA: plain URL for the pre-hydration render, enriched after.
+  const [heroCheckoutHref, setHeroCheckoutHref] = useState(CHECKOUT_URL);
+  useEffect(() => {
+    setHeroCheckoutHref(buildCheckoutUrl());
+  }, []);
+
   const mistakeRef = useSectionView<HTMLElement>("mistake");
   const notYourFaultRef = useSectionView<HTMLElement>("not_your_fault");
   const storyRef = useSectionView<HTMLElement>("story");
@@ -211,12 +251,19 @@ const CoursePage = () => {
 
             <Reveal delay={0.32}>
               <div>
-                {/* Real anchor to the program section — works pre-hydration
-                    and actually "takes you to the program". */}
-                <a href="#program" className="inline-block w-full sm:w-auto">
+                <a
+                  href={heroCheckoutHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block w-full sm:w-auto"
+                  onClick={() => {
+                    trackInitiateCheckout("hero");
+                    gaBeginCheckout("hero");
+                  }}
+                >
                   <Button
                     size="lg"
-                    className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all w-full sm:w-auto"
+                    className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all w-full sm:w-auto active:scale-[0.98]"
                   >
                     קחו אותי לתוכנית
                     <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
@@ -310,7 +357,7 @@ const CoursePage = () => {
               <CurriculumAccordion />
             </Reveal>
           </div>
-          <ScrollCta label="פותחים גישה לכל השיעורים" />
+          <CheckoutCta label="פותחים גישה לכל השיעורים" location="curriculum" />
         </div>
       </SectionDark>
 
@@ -441,7 +488,7 @@ const CoursePage = () => {
               <TransactionLifecycle steps={preparedSteps} />
             </div>
           </Reveal>
-          <ScrollCta label="אני רוצה להגיע ככה לעסקה" />
+          <CheckoutCta label="אני רוצה להגיע ככה לעסקה" location="transformation" />
         </div>
       </section>
 
@@ -500,7 +547,7 @@ const CoursePage = () => {
               <TestimonialVideoCard key={t.name} testimonial={t} index={i} />
             ))}
           </div>
-          <ScrollCta label="מצטרפים לבוגרים" />
+          <CheckoutCta label="מצטרפים לבוגרים" location="testimonials" />
         </div>
       </section>
 
