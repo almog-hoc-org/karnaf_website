@@ -31,7 +31,9 @@
     <script>
       (function () {
         // id: [variantName, weightPercent] — weights must sum to 100.
-        var EXPERIMENTS = { hero: [["a", 50], ["b", 50]] };
+        // Register experiments here, e.g. { hero: [["a", 50], ["b", 50]] }.
+        // Empty = no test running; the engine stays ready.
+        var EXPERIMENTS = {};
         try {
           var KEY = "karnaf_vid";
           var vid = localStorage.getItem(KEY);

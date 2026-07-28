@@ -492,6 +492,8 @@
    before hydration) decides which one is visible. No flicker, no CLS.
    Default (no JS / no assignment): variant A.
    ========================================================================= */
-.exp-hero-b { display: none; }
-html[data-exp-hero="b"] .exp-hero-a { display: none; }
-html[data-exp-hero="b"] .exp-hero-b { display: inline; }
+/* No experiment is running right now. To add one, register it in the
+   EXPERIMENTS map in index.html and add the matching pair of rules here:
+   .exp-<id>-b { display: none; }
+   html[data-exp-<id>="b"] .exp-<id>-a { display: none; }
+   html[data-exp-<id>="b"] .exp-<id>-b { display: inline; } */
