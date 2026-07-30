@@ -140,6 +140,15 @@ export function gaExitIntent(action: "shown" | "accepted" | "dismissed"): void {
   gtag("event", "exit_intent", { action });
 }
 
+/**
+ * Free-lesson preview offer shown / accepted. Deliberately NOT begin_checkout:
+ * a preview click is curiosity, not purchase intent, and folding the two
+ * together would teach the ad platforms to optimise for browsers over buyers.
+ */
+export function gaFreePreview(action: "shown" | "accepted" | "dismissed"): void {
+  gtag("event", "free_preview", { action });
+}
+
 /** Scroll milestones (mirrors the Meta Pixel scroll-depth events). */
 export function gaScrollDepth(depth: number, page: string): void {
   gtag("event", "scroll_depth", { depth, page_path: page });

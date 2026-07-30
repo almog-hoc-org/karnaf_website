@@ -7,6 +7,7 @@ import WhatsAppFAB from "@/components/WhatsAppFAB";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import { StickyCTA } from "@/components/v2/StickyCTA";
 import WebinarPopup from "@/components/WebinarPopup";
+import CoursePopup from "@/components/CoursePopup";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 const PageLoadingSkeleton = () => (
@@ -56,7 +57,10 @@ const SharedLayout = () => {
         ctaHref="/course#pricing"
         hideOn={["/contact", "/course"]}
       />
+      {/* Both dialogs share one slot (see lib/popupCoordinator): the webinar
+          goes first, the free-lesson offer only to visitors who stick around. */}
       <WebinarPopup />
+      <CoursePopup />
     </div>
   );
 };
