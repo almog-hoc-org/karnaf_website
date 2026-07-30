@@ -24,6 +24,16 @@ export function setCheckoutClientId(id: string | null): void {
   gaClientId = id;
 }
 
+export interface CheckoutUrlOptions {
+  /**
+   * Mark the visit as a free-lesson preview rather than purchase intent, so
+   * the checkout page's own reporting can tell the two apart. Attribution is
+   * still attached in full — a previewer who buys next week should credit
+   * the same source.
+   */
+  preview?: boolean;
+}
+
 /**
  * The hosted-checkout URL enriched with attribution: first-touch UTM
  * context, ad click IDs, the visitor's quiz answers (so the CRM knows
@@ -32,7 +42,7 @@ export function setCheckoutClientId(id: string | null): void {
  * link's own path (Schooler's tracking segment, e.g. /t_JHrKI) and any
  * params baked into it are never touched. SSR-safe.
  */
-export function buildCheckoutUrl(): string {
+export function buildCheckoutUrl(options: CheckoutUrlOptions = {}): string {
   if (typeof window === "undefined") return CHECKOUT_URL;
   try {
     const url = new URL(CHECKOUT_URL);
@@ -79,6 +89,9 @@ export function buildCheckoutUrl(): string {
       url.searchParams.set("quiz_timeline", quiz.timeline);
     }
     if (gaClientId) url.searchParams.set("ga_cid", gaClientId);
+    if (options.preview && !url.searchParams.has("karnaf_intent")) {
+      url.searchParams.set("karnaf_intent", "free_preview");
+    }
     return url.toString();
   } catch {
     return CHECKOUT_URL;

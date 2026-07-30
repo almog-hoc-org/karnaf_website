@@ -3,26 +3,20 @@ import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X, CalendarClock, ArrowLeft } from "lucide-react";
 import mascot from "@/assets/mascot/mascot-presenting.webp";
+import {
+  WEBINAR_SEEN_KEY,
+  isDiscoveryPath,
+  markShown,
+  release,
+  shownWithin,
+  tryAcquire,
+} from "@/lib/popupCoordinator";
 
 const WEBINAR_URL = "https://webinar.karnafnadlan.com";
-const SEEN_KEY = "karnaf_webinar_popup_seen_at";
-const FREQUENCY_CAP_MS = 7 * 24 * 60 * 60 * 1000; // once per 7 days
 const SCROLL_TRIGGER = 0.5; // fire after half the page is read
 
-/** The popup only earns an interruption on discovery pages — never where the
- * visitor is already converting (course/premium/contact/program). */
-const ALLOWED_PREFIXES = ["/blog"];
-const isAllowedPath = (pathname: string) =>
-  pathname === "/" || ALLOWED_PREFIXES.some((p) => pathname.startsWith(p));
-
-function seenRecently(): boolean {
-  try {
-    const at = Number(localStorage.getItem(SEEN_KEY) || 0);
-    return Date.now() - at < FREQUENCY_CAP_MS;
-  } catch {
-    return true; // storage unavailable — err on the quiet side
-  }
-}
+/** Identifies this dialog in the shared single-popup slot. */
+const POPUP_ID = "webinar";
 
 /**
  * Promo popup steering visitors to the upcoming-webinar landing page.
@@ -37,11 +31,13 @@ const WebinarPopup = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (!isAllowedPath(pathname) || seenRecently()) return;
+    if (!isDiscoveryPath(pathname) || shownWithin(WEBINAR_SEEN_KEY)) return;
 
     let fired = false;
     const fire = () => {
       if (fired) return;
+      // Another dialog is on screen — stay armed and try on the next trigger.
+      if (!tryAcquire(POPUP_ID)) return;
       fired = true;
       setOpen(true);
       cleanup();
@@ -67,12 +63,11 @@ const WebinarPopup = () => {
   }, [pathname]);
 
   const dismiss = () => {
-    try {
-      localStorage.setItem(SEEN_KEY, String(Date.now()));
-    } catch {
-      // storage unavailable — popup may reappear next visit, acceptable
-    }
+    markShown(WEBINAR_SEEN_KEY);
     setOpen(false);
+    // The slot is released in onExitComplete, not here — until the exit
+    // animation has finished this dialog is still on screen, and handing the
+    // slot over early would briefly show two popups at once.
   };
 
   useEffect(() => {
@@ -83,7 +78,7 @@ const WebinarPopup = () => {
   }, [open]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={() => release(POPUP_ID)}>
       {open && (
         <motion.div
           className="fixed inset-0 z-[70] flex items-center justify-center p-4"
