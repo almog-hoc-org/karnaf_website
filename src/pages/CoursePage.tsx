@@ -43,7 +43,6 @@ import {
   type CheckoutCtaLocation,
 } from "@/lib/analytics";
 import { trackInitiateCheckout } from "@/lib/pixel";
-import ExitIntentOffer from "@/components/course/ExitIntentOffer";
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
 import foundersImg from "@/assets/team/itamar-almog-about.webp";
@@ -650,7 +649,6 @@ const CoursePage = () => {
         <FinalClose />
       </div>
       <CoursePriceBar />
-      <ExitIntentOffer />
     </>
   );
 };
