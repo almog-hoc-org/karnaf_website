@@ -19,7 +19,7 @@
 | `curriculum_open` (מודול) | איזו הבטחה מושכת |
 | `faq_open` (שאלה) | **לוח ההתנגדויות** |
 | `sticky_bar` (impression/click, pre/post pricing) | האם הבר מייצר המרות |
-| `exit_intent` (shown/accepted/dismissed) | כמה נוטשים נתפסים |
+| `free_preview` (shown/accepted/dismissed) | פופ-אפ הצפייה החינמית בשיעור הראשון (דף הבית והבלוג) |
 | `scroll_depth` 25/50/75/100 | עומק קריאה |
 | `video_play` / `video_progress` 25/50/75/95 | האם צופים בסרטון ההסבר — ואיפה נוטשים אותו |
 | `Purchase` (Meta) | **הרכישה עצמה** — נורית מסניפט בדף התודה של Schooler/Grow. ראו `docs/PIXEL-CLOSED-LOOP.md` |
@@ -131,4 +131,5 @@
 - **וואטסאפ:** למי שכבר פתח שיחה בבוט ואז ירה InitiateCheckout בלי רכישה —
   ה-CRM מסמן, ומעקב אנושי אחד תוך 24 שעות. **בלי הנחה כברירת מחדל** (זה מאמן
   את הלקוחות לנטוש).
-- **exit-intent** מזין את אותו צינור עם מי שלא הגיע בכלל לסליקה.
+- **פופ-אפ הצפייה החינמית** (דף הבית והבלוג) מזין את אותו צינור עם מי שלא
+  הגיע בכלל לדף הקורס — אירוע `free_preview`, ולא `begin_checkout`.

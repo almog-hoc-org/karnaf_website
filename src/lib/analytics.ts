@@ -135,11 +135,6 @@ export function gaVideoProgress(percent: number): void {
   gtag("event", "video_progress", { video: "course_vsl", percent });
 }
 
-/** Exit-intent offer shown / accepted. */
-export function gaExitIntent(action: "shown" | "accepted" | "dismissed"): void {
-  gtag("event", "exit_intent", { action });
-}
-
 /**
  * Free-lesson preview offer shown / accepted. Deliberately NOT begin_checkout:
  * a preview click is curiosity, not purchase intent, and folding the two
