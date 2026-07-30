@@ -50,7 +50,14 @@ export function buildCheckoutUrl(options: CheckoutUrlOptions = {}): string {
     const quiz = getQuizContext();
     const current = new URLSearchParams(window.location.search);
 
+    // utm_source is forwarded like the rest: the old checkout link used that
+    // slot for Schooler's own tracking code, but the current link carries its
+    // tracking in the path (/t_JHrKI), so the visitor's real first-touch
+    // source (facebook / google / organic…) can finally ride along. The
+    // "never overwrite" guard below still protects a source baked into the
+    // link via VITE_CHECKOUT_URL.
     const utm: Record<string, string> = {
+      utm_source: ctx.utm_source,
       utm_medium: ctx.utm_medium,
       utm_campaign: ctx.utm_campaign,
       utm_content: ctx.utm_content,
