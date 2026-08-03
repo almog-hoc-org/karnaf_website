@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X, PlayCircle, ArrowLeft } from "lucide-react";
@@ -9,7 +9,6 @@ import { PARTS_LABEL, CHAPTERS_LABEL } from "@/data/courseStats";
 import { gaFreePreview } from "@/lib/analytics";
 import {
   COURSE_POPUP_SEEN_KEY,
-  WEBINAR_SEEN_KEY,
   isDiscoveryPath,
   markShown,
   release,
@@ -24,6 +23,11 @@ const POPUP_ID = "course-preview";
 /** How long the visitor has to stick around before the offer is earned. */
 const DWELL_MS = 100_000;
 const TICK_MS = 1000;
+
+/** Breathing room after another dialog leaves the screen — a popup that
+ *  appears the second the previous one closes is "pop-up city", the exact
+ *  anti-pattern PRODUCT.md names. */
+const HANDOFF_COOLDOWN_MS = 45_000;
 
 /**
  * Invites engaged visitors to watch the course's opening lesson for free.
@@ -44,6 +48,7 @@ const CoursePopup = () => {
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const { pathname } = useLocation();
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   // SSG renders the plain checkout URL; the attribution-enriched one replaces
   // it after hydration, same pattern as the sales page's purchase CTAs.
   const [href, setHref] = useState(CHECKOUT_URL);
@@ -58,16 +63,28 @@ const CoursePopup = () => {
     let matured = false;
     let opened = false;
     let visibleMs = 0;
+    let cooldownUntil = 0;
+    let retryTimer: number | undefined;
 
     const attempt = () => {
       if (opened || !matured) return;
-      // The webinar dialog gets first refusal: this one becomes eligible only
-      // once the webinar has had its turn — either shown and dismissed, or
-      // already inside its weekly cap so it won't appear at all this visit.
-      if (!shownWithin(WEBINAR_SEEN_KEY)) return;
+      // Another dialog just left the screen — give the visitor a breather
+      // instead of opening back-to-back.
+      const wait = cooldownUntil - Date.now();
+      if (wait > 0) {
+        window.clearTimeout(retryTimer);
+        retryTimer = window.setTimeout(attempt, wait);
+        return;
+      }
       // Something else is on screen; the subscription below retries later.
+      // The webinar still goes first when it wants the slot — it simply
+      // claims it on its own (earlier) triggers.
       if (!tryAcquire(POPUP_ID)) return;
       opened = true;
+      // Mark at open, not at close: the weekly cap counts impressions, and
+      // this also stops a route change while the dialog is up from re-arming
+      // the effect and firing a second "shown" for one impression.
+      markShown(COURSE_POPUP_SEEN_KEY);
       setOpen(true);
       gaFreePreview("shown");
     };
@@ -81,18 +98,21 @@ const CoursePopup = () => {
       attempt();
     }, TICK_MS);
 
-    // If the webinar was still on screen (or yet to appear) when the timer
-    // matured, take the slot as soon as it frees up.
-    const unsubscribe = subscribe(attempt);
+    // If another dialog held the slot when the timer matured, retry once it
+    // frees up — after a cooldown, never the same second.
+    const unsubscribe = subscribe(() => {
+      cooldownUntil = Date.now() + HANDOFF_COOLDOWN_MS;
+      attempt();
+    });
 
     return () => {
       window.clearInterval(timer);
+      window.clearTimeout(retryTimer);
       unsubscribe();
     };
   }, [pathname]);
 
   const close = () => {
-    markShown(COURSE_POPUP_SEEN_KEY);
     setOpen(false);
     // Slot released in onExitComplete — see WebinarPopup for why.
   };
@@ -107,7 +127,9 @@ const CoursePopup = () => {
     close();
   };
 
-  // Escape to close, and lock the page behind the dialog while it's open.
+  // Escape to close, lock the page behind the dialog, and move keyboard
+  // focus into it (aria-modal without focus leaves keyboard users stranded
+  // in the inert page behind the overlay).
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -116,6 +138,7 @@ const CoursePopup = () => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
+    closeButtonRef.current?.focus();
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = previousOverflow;
@@ -151,6 +174,7 @@ const CoursePopup = () => {
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
             <button
+              ref={closeButtonRef}
               onClick={dismiss}
               aria-label="סגירה"
               className="absolute top-3 left-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-foreground/5 hover:bg-foreground/10 text-foreground/60 hover:text-foreground transition-colors"
@@ -175,6 +199,8 @@ const CoursePopup = () => {
                 src={mascot}
                 alt=""
                 aria-hidden
+                width={500}
+                height={281}
                 className="relative h-28 w-auto object-contain drop-shadow-2xl"
                 loading="lazy"
                 decoding="async"

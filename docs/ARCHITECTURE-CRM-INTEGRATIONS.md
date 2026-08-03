@@ -128,8 +128,11 @@ Schooler (`/t_JHrKI`) ובלי לדרוס פרמטרים קיימים.
 
 | פרמטר | מקור | למה זה חשוב ל-CRM |
 |---|---|---|
-| `utm_medium/campaign/content/term` | first-touch בסשן | שיוך קמפיין מלא לרכישה |
+| `utm_source/medium/campaign/content/term` | first-touch בסשן | שיוך קמפיין מלא לרכישה (utm_source נוסף אחרי המעבר לקישור מבוסס-נתיב) |
 | `fbclid` / `gclid` / `ttclid` | ה-URL הנוכחי | שיוך קליק ממומן |
+| `_fbp` / `_fbc` | קוקיז הפיקסל (‏_fbc מסונתז מ-fbclid בהיעדרו) | תפירת ה-Purchase בדף התודה לאותו גולש ולאותה מודעה |
+| `karnaf_value` / `currency` | ‏constants (950 / ILS) | ערך ה-Purchase כשאין משתנה סכום מהפלטפורמה |
+| `karnaf_intent=free_preview` | פופ-אפ הצפייה החינמית בלבד | להבדיל סקרן-טעימה מקונה בכוונה מלאה בדוחות הסליקה |
 | `quiz_goal`, `quiz_concern`, `quiz_timeline` | שאלון ההתאמה בדף | סיווג הלקוח לפי הצורך שהצהיר עליו + חומר לאנשי המכירות |
 | `ga_cid` | מזהה הלקוח של GA4 | **קריטי** — ראו 4.2.1 |
 

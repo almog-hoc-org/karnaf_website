@@ -65,6 +65,8 @@ export function pageNameFor(pathname: string): string {
   if (pathname.startsWith("/about")) return "אודות — סיפורו של קרנף";
   if (pathname.startsWith("/testimonials")) return "סיפורי הצלחה";
   if (pathname.startsWith("/contact")) return "צור קשר";
+  if (pathname.startsWith("/services")) return "השירותים שלנו";
+  if (pathname.startsWith("/privacy")) return "מדיניות פרטיות";
   if (pathname.startsWith("/blog/")) return "מאמר בבלוג";
   if (pathname.startsWith("/blog")) return "בלוג — ידע ותובנות";
   return "עמוד באתר";
@@ -92,8 +94,6 @@ export const FORM_LABELS: Record<string, { name: string; category: string }> = {
   "research-waitlist": { name: "רשימת המתנה — מערכת המחקר", category: "מערכת המחקר" },
   mortgage: { name: "טופס קרנף משכנתא", category: "ייעוץ משכנתא" },
   website: { name: "טופס יצירת קשר באתר", category: "יצירת קשר" },
-  "webinar-section": { name: "הרשמה לוובינר", category: "וובינר" },
-  "contact-strip": { name: "טופס וובינר", category: "וובינר" },
   footer: { name: "טופס בתחתית העמוד", category: "יצירת קשר" },
 };
 

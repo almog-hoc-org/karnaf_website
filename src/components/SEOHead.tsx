@@ -176,7 +176,8 @@ export const courseSchema = {
   hasCourseInstance: {
     "@type": "CourseInstance",
     courseMode: ["Online", "Asynchronous"],
-    courseWorkload: "PT20H",
+    // No courseWorkload: the site deliberately advertises structure
+    // (3 parts / 15 chapters, 3-10 min lessons), not a total-hours figure.
     inLanguage: "he-IL",
   },
   offers: {

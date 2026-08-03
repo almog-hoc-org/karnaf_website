@@ -12,7 +12,7 @@ follow-up steps that require business accounts or credentials.
 ## What changed in code
 
 ### Conversion (CRO)
-- **Price is public**: ₪5,490 (or up to 12 × ₪458) on `/course` — single
+- **Price is public** (historical: launched at ₪5,490 with installments; today ₪950 flat — see the status banner above) on `/course` — single
   source of truth in `src/lib/constants.ts` (`COURSE_PRICE`).
 - **Checkout seam**: `VITE_CHECKOUT_URL` — set it to a hosted payment page
   (Grow/Meshulam, Cardcom, Stripe Payment Link) and every purchase CTA
@@ -24,7 +24,7 @@ follow-up steps that require business accounts or credentials.
 - Webinar popup: fires on 50% scroll or exit-intent, homepage/blog only,
   max once per 7 days, never on `/course`.
 - Homepage compressed to a single narrative: Hero → method → proof (real
-  client outcomes) → CourseStrip → About → one closing ask.
+  client outcomes) → PathChooser (formerly CourseStrip) → About → one closing ask.
 
 ### Measurement
 - `src/lib/analytics.ts`: GA4 + Microsoft Clarity, env-gated

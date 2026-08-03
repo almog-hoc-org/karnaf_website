@@ -48,12 +48,12 @@ import heroCityAvif from "@/assets/hero-city.avif";
 import foundersImg from "@/assets/team/itamar-almog-about.webp";
 
 /*
- * Sales page — one emotional spine, 13 beats:
- * recognition → amplification (cost of the mistake) → empathy+authority
- * (founders' story) → future pacing → the vehicle (curriculum, tools) →
- * belief (proof) → self-selection (quiz) → price choreography → safety →
- * objections → the keys. Every section closes the loop the previous one
- * opened. "מספרים, לא תחושות" is the texture of every emotional beat.
+ * Sales page — product-first spine (owner round 3):
+ * hero → explainer video → the vehicle (syllabus, tools) → amplification
+ * (cost of the mistake) → relief (not your fault) → empathy+authority
+ * (our experience) → future pacing → proof numbers → testimonials →
+ * self-selection (quiz) → price choreography → safety → objections →
+ * the keys. "מספרים, לא תחושות" is the texture of every beat.
  */
 
 /** Vimeo id of the program explainer shown right under the hero. */
@@ -114,6 +114,7 @@ const CheckoutCta = ({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        data-no-btn-track
         className="inline-block w-full sm:w-auto"
         onClick={() => {
           trackInitiateCheckout(location);
@@ -254,6 +255,7 @@ const CoursePage = () => {
                   href={heroCheckoutHref}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-no-btn-track
                   className="inline-block w-full sm:w-auto"
                   onClick={() => {
                     trackInitiateCheckout("hero");
@@ -300,7 +302,8 @@ const CoursePage = () => {
       </SectionDark>
 
       {/* Program — what's inside: structure + open syllabus, right under
-          the video (id="program" is the hero CTA's anchor target). */}
+          the video. id="program" stays as a deep-link anchor even though
+          the hero CTA now goes straight to checkout. */}
       <SectionDark id="program" size="md" glow="top-end">
         <div ref={curriculumRef} className="container mx-auto px-6 max-w-5xl">
           <Reveal>

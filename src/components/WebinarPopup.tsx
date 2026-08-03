@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X, CalendarClock, ArrowLeft } from "lucide-react";
@@ -29,6 +29,7 @@ const WebinarPopup = () => {
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const { pathname } = useLocation();
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!isDiscoveryPath(pathname) || shownWithin(WEBINAR_SEEN_KEY)) return;
@@ -70,11 +71,19 @@ const WebinarPopup = () => {
     // slot over early would briefly show two popups at once.
   };
 
+  // Escape to close, lock the page behind the dialog (parity with
+  // CoursePopup), and move keyboard focus into the modal.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && dismiss();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    closeButtonRef.current?.focus();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previousOverflow;
+    };
   }, [open]);
 
   return (
@@ -105,6 +114,7 @@ const WebinarPopup = () => {
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
             <button
+              ref={closeButtonRef}
               onClick={dismiss}
               aria-label="סגירה"
               className="absolute top-3 left-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-foreground/5 hover:bg-foreground/10 text-foreground/60 hover:text-foreground transition-colors"
@@ -129,8 +139,11 @@ const WebinarPopup = () => {
                 src={mascot}
                 alt=""
                 aria-hidden
+                width={500}
+                height={281}
                 className="relative h-28 w-auto object-contain drop-shadow-2xl"
                 loading="lazy"
+                decoding="async"
               />
             </div>
 
@@ -141,8 +154,8 @@ const WebinarPopup = () => {
               </span>
 
               <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight">
-                ״המדריך המעשי לרכישת דירה״{" "}
-                <span className="text-accent">שיעור חינם ללא עלות</span>
+                וובינר חינם:{" "}
+                <span className="text-accent">כך ניגשים נכון לרכישת דירה</span>
               </h2>
 
               <p className="mt-3 text-body text-muted-foreground leading-relaxed">
@@ -152,6 +165,8 @@ const WebinarPopup = () => {
 
               <a
                 href={WEBINAR_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={dismiss}
                 className="group mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg h-14 px-6 shadow-[0_0_50px_hsl(var(--accent)/0.4)] transition-all"
               >
