@@ -158,8 +158,10 @@ const Hero = () => {
             <img
               src={mascotWelcome}
               alt=""
-              className="h-[420px] xl:h-[480px] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
-              loading="eager"
+              width={362}
+              height={500}
+              className="h-[420px] xl:h-[480px] w-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
+              loading="lazy"
               decoding="async"
             />
           </motion.div>
@@ -178,15 +180,15 @@ const Hero = () => {
               375+
             </div>
             <div className="text-eyebrow uppercase tracking-[0.18em]">
-              לקוחות מרוצים
+              עסקאות מלוות
             </div>
           </div>
           <div>
             <div className="text-display-md font-black text-white tabular-nums leading-none mb-1">
-              50+
+              15
             </div>
             <div className="text-eyebrow uppercase tracking-[0.18em]">
-              שיעורים בקורס
+              פרקים בקורס
             </div>
           </div>
           <div>

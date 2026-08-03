@@ -37,7 +37,7 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 
 **Fonts:** Self-hosted via `@fontsource-variable/rubik` (imported in `src/main.tsx`). No Google Fonts `<link>` tags.
 
-**Commerce:** One digital product, one price — ₪950 (anchored against the old ₪5,490), defined once in `src/lib/constants.ts`. Purchase CTAs go straight to the hosted Schooler checkout (default baked in; `VITE_CHECKOUT_URL` overrides). The course is fully self-serve — never add personal-support/analyst promises to course copy; 1:1 accompaniment belongs to /premium only.
+**Commerce:** One digital product, one price — ₪950 (anchored against real market prices of adjacent services, not a strikethrough tag), defined once in `src/lib/constants.ts`. Purchase CTAs go straight to the hosted Schooler checkout (default baked in; `VITE_CHECKOUT_URL` overrides). The course is fully self-serve — never add personal-support/analyst promises to course copy; 1:1 accompaniment belongs to /premium only.
 
 **Image optimization:** `vite-plugin-image-optimizer` compresses PNG/JPEG/SVG at build time.
 

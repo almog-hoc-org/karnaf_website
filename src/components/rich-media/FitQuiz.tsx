@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, MessageCircle, Clock } from "lucide-react";
 import { botLink } from "@/lib/whatsapp";
+import { CHECKOUT_URL } from "@/lib/constants";
 import { buildCheckoutUrl } from "@/lib/checkout";
 import {
   gaQuizStart,
@@ -137,6 +138,13 @@ const FitQuiz = () => {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, Option<string>>>({});
   const [result, setResult] = useState<QuizResult | null>(null);
+  // Same SSG-safe pattern as every other checkout CTA: plain URL first,
+  // attribution-enriched one after hydration.
+  const [checkoutHref, setCheckoutHref] = useState(CHECKOUT_URL);
+
+  useEffect(() => {
+    setCheckoutHref(buildCheckoutUrl());
+  }, []);
   const [displayScore, setDisplayScore] = useState(0);
   const animRef = useRef<number>();
   // Refs so the unmount cleanup reads live values without re-subscribing.
@@ -313,7 +321,7 @@ const FitQuiz = () => {
                 )}
                 <div className="flex flex-col items-center justify-center gap-3">
                   <a
-                    href={buildCheckoutUrl()}
+                    href={checkoutHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     data-no-btn-track

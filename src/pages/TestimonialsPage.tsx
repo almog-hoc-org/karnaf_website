@@ -10,7 +10,6 @@ import SEOHead, {
   organizationSchema,
   breadcrumbSchema,
   reviewSchema,
-  aggregateRatingSchema,
 } from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
 
@@ -23,7 +22,7 @@ const TestimonialsPage = () => {
     <>
       <SEOHead
         title="סיפורי הצלחה — לקוחות שרכשו דירה בליווי קרנף נדל״ן | עדויות"
-        description="עדויות של בוגרי תוכנית המדריך המעשי לרכישת דירה ולקוחות ליווי. 5 כוכבים ממאות רוכשי דירה. חיסכון של עשרות אלפי שקלים בעסקה."
+        description="עדויות של בוגרי תוכנית המדריך המעשי לרכישת דירה ולקוחות הליווי האישי — במילים שלהם: חיסכון של עשרות אלפי שקלים, ביטחון במשא ומתן ורכישה מתחת למחיר השוק."
         path="/testimonials"
         keywords="עדויות נדל״ן, סיפורי הצלחה, רוכשי דירה ראשונה, ביקורות קורס נדל״ן"
         jsonLd={[
@@ -32,12 +31,10 @@ const TestimonialsPage = () => {
             { name: "דף הבית", url: "/" },
             { name: "סיפורי הצלחה", url: "/testimonials" },
           ]),
-          aggregateRatingSchema({
-            ratingValue: "4.9",
-            reviewCount: String(testimonials.length),
-            itemName: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל",
-            itemUrl: "https://www.karnafnadlan.com/course",
-          }),
+          /* aggregateRating deliberately NOT emitted: Google requires the
+             rating to be user-visible and backed by a real collection
+             mechanism (see OPTIMIZATION-PLAYBOOK "תשתית אמון"). Re-add via
+             aggregateRatingSchema only once genuine ratings exist. */
           ...testimonials.map((t) =>
             reviewSchema({
               itemName: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל",

@@ -155,7 +155,7 @@ const AccessibilityWidget = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 z-[60] bg-foreground/30 backdrop-blur-sm"
+              className="fixed inset-0 z-[80] bg-foreground/30 backdrop-blur-sm"
             />
 
             {/* Panel */}
@@ -164,7 +164,7 @@ const AccessibilityWidget = () => {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: "-100%", opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed top-0 left-0 bottom-0 z-[70] w-[340px] max-w-[90vw] bg-card shadow-2xl overflow-y-auto"
+              className="fixed top-0 left-0 bottom-0 z-[90] w-[340px] max-w-[90vw] bg-card shadow-2xl overflow-y-auto"
               dir="rtl"
               role="dialog"
               aria-label="תפריט נגישות"
