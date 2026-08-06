@@ -35,6 +35,8 @@ import FinalClose from "@/components/course/FinalClose";
 import CoursePriceBar from "@/components/course/CoursePriceBar";
 import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
+import { Figure } from "@/components/ui/figure-number";
+import { WedgeSeam } from "@/components/ui/wedge";
 import { TransactionLifecycle, type LifecycleStep } from "@/components/v2/TransactionLifecycle";
 import { useSectionView } from "@/hooks/use-section-view";
 import {
@@ -233,13 +235,16 @@ const CoursePage = () => {
             </Reveal>
 
             <Reveal delay={0.16}>
+              {/* Escalates the H1 instead of repeating it: names who sits
+                  on the other side of the table. */}
               <p
                 className="text-body-lg lg:text-xl leading-relaxed max-w-2xl mx-auto mb-8"
                 style={{ color: "hsl(36 33% 95% / 0.82)" }}
               >
-                רוב הישראלים נכנסים לעסקה הגדולה בחייהם בלי הכנה, ומגלים את המחיר
-                של זה שנים אחר כך. ״המדריך המעשי לרכישת דירה״ מכניס אתכם לחדר עם
-                הידע, הכלים והביטחון של הצד שהגיע מוכן.
+                בצד השני של השולחן יושבים מוכר, מתווך ובנקאי. בשבילם זו עוד
+                עסקה. בשבילכם — <span className="font-bold text-white">העסקה</span>.
+                ״המדריך המעשי לרכישת דירה״ מכניס אתכם לחדר כשאתם יודעים בדיוק
+                מה לבדוק, מה לשאול וכמה זה באמת שווה.
               </p>
             </Reveal>
 
@@ -266,7 +271,7 @@ const CoursePage = () => {
                     size="lg"
                     className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all w-full sm:w-auto active:scale-[0.98]"
                   >
-                    קחו אותי לתוכנית
+                    מצטרפים לצד המוכן
                     <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
                   </Button>
                 </a>
@@ -321,7 +326,8 @@ const CoursePage = () => {
             >
               כל שלב בדרך מכוסה לעומק — מהתקציב, דרך החיפוש, הבדיקות והמשא
               ומתן, ועד המפתח — בשיעורים קצרים וחדים של 3 עד 10 דקות.
-              מתקדמים צעד־צעד, בלי עומס, ותמיד יודעים מה הצעד הבא.
+              מתקדמים צעד־צעד, בלי עומס, ותמיד יודעים מה הצעד הבא. כי שלב
+              שמדלגים עליו לא נעלם — הוא מחכה לכם בחוזה, בתמהיל או במחיר.
             </p>
           </Reveal>
 
@@ -347,12 +353,17 @@ const CoursePage = () => {
 
           <div className="max-w-3xl mx-auto">
             <Reveal delay={0.16}>
+              {/* The YouTube objection, answered where it actually lives —
+                  before the syllabus, so the open accordion becomes the
+                  proof of the claim. */}
               <p
-                className="text-center text-sm mb-8"
+                className="text-center text-sm mb-8 leading-relaxed"
                 style={{ color: "hsl(36 33% 95% / 0.6)" }}
               >
-                בפנים, בין השאר: ״מאסטר קלאס משא ומתן״, ״עשרת הדיברות
-                בעסקת נדל״ן״ ו״יסודות המשכנתא: כך תנצחו את הבנק״.
+                כבר ראיתם עשרות סרטונים ביוטיוב? זה בדיוק העניין: יוטיוב נותן
+                חלקים של פאזל. הנה התמונה שעל הקופסה — ובפנים, בין השאר:
+                ״מאסטר קלאס משא ומתן״, ״עשרת הדיברות בעסקת נדל״ן״ ו״יסודות
+                המשכנתא: כך תנצחו את הבנק״.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
@@ -379,6 +390,10 @@ const CoursePage = () => {
           </div>
         </div>
       </SectionDark>
+
+      {/* Horn-wedge seam: ink cuts into cream at the turn from the
+          product to the price of skipping it. */}
+      <WedgeSeam from="ink" to="background" />
 
       {/* S3 — the price of the mistake (the emotional engine) */}
       <section ref={mistakeRef} className="py-section-md bg-background">
@@ -438,11 +453,19 @@ const CoursePage = () => {
               ״המדריך המעשי לרכישת דירה״.
             </p>
           </Reveal>
+          {/* The rhino credo — the brand's most quotable line, staged as a
+              staccato pull-quote instead of an apologetic aside. */}
           <Reveal delay={0.18}>
-            <p className="text-lg font-bold text-accent mb-10 max-w-2xl mx-auto">
-              ולמה דווקא קרנף? עור עבה, רגליים יציבות על הקרקע, וקרן
-              אחת שמכוונת רק קדימה. מאיים למי שמולו — הגנה למי שלצידו.
-            </p>
+            <blockquote className="mb-10 max-w-2xl mx-auto">
+              <p className="text-display-sm md:text-display-md font-black text-white leading-tight tracking-tight mb-3">
+                עור עבה. רגליים על הקרקע.
+                <br />
+                קרן שמכוונת רק קדימה.
+              </p>
+              <p className="text-lg font-bold text-accent">
+                מאיים למי שמולו — הגנה למי שלצידו.
+              </p>
+            </blockquote>
           </Reveal>
           <Reveal delay={0.14}>
             <figure className="max-w-sm mx-auto">
@@ -466,6 +489,10 @@ const CoursePage = () => {
         </div>
       </SectionDark>
 
+      {/* Horn-wedge seam #2: out of the founders' ink, into the future
+          pacing. Two seams on the page — the device stays a signature. */}
+      <WedgeSeam from="ink" to="background" />
+
       {/* S5 — future pacing: the same deal, with the prepared you */}
       <section ref={transformationRef} className="py-section-md bg-background">
         <div className="container mx-auto px-6 max-w-5xl">
@@ -487,7 +514,7 @@ const CoursePage = () => {
               className="rounded-3xl px-6 py-10 md:px-10 md:py-12"
               style={{ backgroundColor: "hsl(217 50% 8%)" }}
             >
-              <TransactionLifecycle steps={preparedSteps} />
+              <TransactionLifecycle steps={preparedSteps} scrub />
             </div>
           </Reveal>
           <CheckoutCta label="אני רוצה להגיע ככה לעסקה" location="transformation" />
@@ -502,8 +529,8 @@ const CoursePage = () => {
             {authorityStats.map((stat, i) => (
               <Reveal key={stat.label} delay={i * 0.06}>
                 <div className="text-center">
-                  <p className="text-display-md font-black text-foreground tabular-nums leading-none mb-2">
-                    {stat.value}
+                  <p className="mb-2">
+                    <Figure value={stat.value} size="md" ledger />
                   </p>
                   <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
                     {stat.label}
@@ -512,9 +539,21 @@ const CoursePage = () => {
               </Reveal>
             ))}
           </div>
-          <p className="text-center text-sm font-bold text-muted-foreground mt-8 tracking-wide">
-            מספרים, לא תחושות.
-          </p>
+          {/* The motto, demonstrated instead of declared: gut feeling vs.
+              number, face to face. */}
+          <Reveal delay={0.2}>
+            <div className="max-w-2xl mx-auto mt-10 text-center">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                תחושת בטן אומרת: ״נראה לי שהמחיר בסדר.״
+                <br />
+                מספר אומר: בכמה נמכרה הדירה בקומה מעליכם, לפני חצי שנה.
+              </p>
+              <p className="mt-3 font-bold text-foreground">
+                בתוכנית לומדים לשאול את השאלה השנייה.{" "}
+                <span className="text-accent">מספרים, לא תחושות.</span>
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -591,15 +630,17 @@ const CoursePage = () => {
         </div>
       </section>
 
-      {/* S10 — the price: choreographed reveal */}
-      <section id="pricing" ref={priceRef} className="py-section-md bg-background">
-        <div className="container mx-auto px-6 max-w-4xl">
+      {/* S10 — the price: the most important frame on the page gets the
+          most staged treatment. Full ink set-piece with grain; the white
+          pricing card is the single lit object on the dark stage. */}
+      <SectionDark id="pricing" size="md" glow="center">
+        <div ref={priceRef} className="container mx-auto px-6 max-w-4xl">
           <PriceContext />
           <Reveal delay={0.1}>
             <PricingCard />
           </Reveal>
         </div>
-      </section>
+      </SectionDark>
 
       {/* S11 — safety strip */}
       <section className="py-section-md bg-card border-y border-border">

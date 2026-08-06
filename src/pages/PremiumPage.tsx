@@ -531,6 +531,21 @@ const PremiumPage = () => {
               </div>
             </Reveal>
           </div>
+
+          {/* The rhino credo closes the page — the same brand signature
+              that seals the course page's founders section. */}
+          <Reveal delay={0.16}>
+            <blockquote className="max-w-2xl mx-auto mt-16 md:mt-20 pt-10 border-t border-white/10 text-center">
+              <p className="text-display-sm md:text-display-md font-black text-white leading-tight tracking-tight mb-3">
+                עור עבה. רגליים על הקרקע.
+                <br />
+                קרן שמכוונת רק קדימה.
+              </p>
+              <p className="text-lg font-bold text-accent">
+                מאיים למי שמולו — הגנה למי שלצידו.
+              </p>
+            </blockquote>
+          </Reveal>
         </div>
       </SectionDark>
     </>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useScroll, useMotionValueEvent } from "framer-motion";
 
 export interface LifecycleStep {
   num: string;
@@ -20,15 +21,32 @@ interface TransactionLifecycleProps {
   progress?: number;
   /** Override the step labels (defaults to the 1:1-service journey). */
   steps?: LifecycleStep[];
+  /**
+   * Scroll-linked fill: the track fills as the diagram travels up the
+   * viewport (scrubbing back down un-fills it) instead of a one-shot
+   * timer. The sales page's single scroll-linked set-piece.
+   */
+  scrub?: boolean;
 }
 
 /**
  * Horizontal step diagram of a real-estate transaction lifecycle.
- * Pure SVG/CSS — no deps. Fills progressively when scrolled into view.
+ * Fills progressively when scrolled into view (or scrubs with scroll).
  */
-export const TransactionLifecycle = ({ progress, steps = DEFAULT_STEPS }: TransactionLifecycleProps) => {
+export const TransactionLifecycle = ({ progress, steps = DEFAULT_STEPS, scrub = false }: TransactionLifecycleProps) => {
   const ref = useRef<HTMLOListElement>(null);
   const [filled, setFilled] = useState(0);
+
+  // Scroll-scrub mode — hooks run unconditionally, effect is gated below.
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.92", "start 0.45"],
+  });
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    if (!scrub || typeof progress === "number") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setFilled(Math.round(v * steps.length));
+  });
 
   useEffect(() => {
     if (typeof progress === "number") {
@@ -42,6 +60,7 @@ export const TransactionLifecycle = ({ progress, steps = DEFAULT_STEPS }: Transa
       setFilled(steps.length);
       return;
     }
+    if (scrub) return; // scroll-linked fill handles it
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -58,7 +77,7 @@ export const TransactionLifecycle = ({ progress, steps = DEFAULT_STEPS }: Transa
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [progress, steps]);
+  }, [progress, steps, scrub]);
 
   const fillPct = (filled / steps.length) * 100;
 

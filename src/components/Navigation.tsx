@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ChevronDown, GraduationCap, Users, Landmark } from "lucide-react";
 import { botLink } from "@/lib/whatsapp";
-import karnafLogo from "@/assets/mascot/karnaf-logo.png";
+import { WedgeBullet } from "@/components/ui/wedge";
 
 /* All commercial offerings live under one "השירותים שלנו" mini-menu. */
 const serviceItems = [
@@ -134,11 +134,13 @@ const Navigation = () => {
         }}
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
+          {/* Interim brand mark: horn wedge + wordmark. The old 3D-render
+              logo (an AI clip-art with a stray mouse artifact) is retired;
+              the commissioned line mark replaces the wedge when it lands
+              (see docs/CREATIVE-BRIEF.md §6). */}
           <Link to="/" className="flex items-center gap-2" aria-label="קרנף נדל״ן — דף הבית">
-            <img
-              src={karnafLogo}
-              alt="קרנף"
-              className={`object-contain transition-all duration-500 ${isScrolled ? "w-8 h-8" : "w-11 h-11"}`}
+            <WedgeBullet
+              className={`text-accent transition-all duration-500 ${isScrolled ? "w-5 h-5" : "w-6 h-6"}`}
             />
             <span className={`font-black tracking-tight transition-all duration-500 ${isScrolled ? "text-lg" : "text-xl"} ${useLightText ? "text-white" : "text-foreground"}`}>
               קרנף נדל״ן
