@@ -7,45 +7,22 @@ import {
   Scale,
 } from "lucide-react";
 import { Reveal } from "@/components/v2/Reveal";
+import GapCalculator from "@/components/course/GapCalculator";
 
 /**
- * S7 — the tools. The point is not "look, we have calculators" but
- * "every decision in the deal stops being a feeling and becomes a
- * number". Each tool is therefore introduced by the question it answers
- * — the question the buyer already recognizes from their own process.
+ * S7 — the tools. Show, don't tell: one live mini-calculator the visitor
+ * can actually drag (the 3% negotiation gap in shekels), then a compact
+ * roll-call of the rest. The old six identical icon+text cards told the
+ * story; this lets the visitor feel it.
  */
 
 const tools = [
-  {
-    icon: Calculator,
-    name: "מחשבון עסקה",
-    question: "המחיר שביקשו ממני הגיוני, או שאני משלם יותר מדי?",
-  },
-  {
-    icon: Landmark,
-    name: "מחשבון משכנתא ותמהיל",
-    question: "כמה באמת יעלה לי ההחזר החודשי, ובאיזה תמהיל?",
-  },
-  {
-    icon: Percent,
-    name: "מחשבון מיסוי",
-    question: "כמה מס רכישה או מס שבח אני צפוי לשלם בעסקה הזאת?",
-  },
-  {
-    icon: Scale,
-    name: "בדיקת כדאיות",
-    question: "העסקה הזאת שווה את הכסף, או שעדיף לוותר ולחכות?",
-  },
-  {
-    icon: ClipboardCheck,
-    name: "צ׳קליסט ביקור בנכס",
-    question: "מה בדיוק לבדוק בדירה לפני שמתאהבים בה?",
-  },
-  {
-    icon: FileSpreadsheet,
-    name: "קובץ מעקב נכסים",
-    question: "איך משווים בין כל הדירות שראיתי בלי להתבלבל?",
-  },
+  { icon: Calculator, name: "מחשבון עסקה" },
+  { icon: Landmark, name: "מחשבון משכנתא ותמהיל" },
+  { icon: Percent, name: "מחשבון מיסוי" },
+  { icon: Scale, name: "בדיקת כדאיות" },
+  { icon: ClipboardCheck, name: "צ׳קליסט ביקור בנכס" },
+  { icon: FileSpreadsheet, name: "קובץ מעקב נכסים" },
 ];
 
 const ToolsShowcase = () => {
@@ -53,46 +30,40 @@ const ToolsShowcase = () => {
     <div>
       <Reveal>
         <p
-          className="text-center text-body-lg leading-relaxed max-w-2xl mx-auto mb-12"
+          className="text-center text-body-lg leading-relaxed max-w-2xl mx-auto mb-10"
           style={{ color: "hsl(36 33% 95% / 0.75)" }}
         >
-          בכל שלב בעסקה עולה שאלה שאי אפשר לענות עליה בתחושת בטן. לכל שאלה כזאת
-          יש בתוכנית כלי שמחזיר תשובה במספרים — בלי אקסלים ובלי רקע פיננסי.
+          בכל שלב בעסקה עולה שאלה שאי אפשר לענות עליה בתחושת בטן. לכל שאלה
+          כזאת יש בתוכנית כלי שמחזיר תשובה במספרים — בלי אקסלים ובלי רקע
+          פיננסי.
         </p>
       </Reveal>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5 max-w-4xl mx-auto">
-        {tools.map((tool, i) => (
-          <Reveal key={tool.name} delay={i * 0.06}>
-            <article
-              className="h-full rounded-2xl p-5 md:p-6 border flex flex-col items-center text-center gap-3"
+      <GapCalculator />
+
+      <Reveal delay={0.08}>
+        <p
+          className="text-center text-sm font-bold mt-10 mb-4"
+          style={{ color: "hsl(36 33% 95% / 0.75)" }}
+        >
+          ובתוכנית מחכים עוד 6 כלים כאלה:
+        </p>
+        <ul className="flex flex-wrap justify-center gap-2.5 max-w-3xl mx-auto">
+          {tools.map((tool) => (
+            <li
+              key={tool.name}
+              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold text-white"
               style={{
-                backgroundColor: "hsl(36 33% 95% / 0.04)",
-                borderColor: "hsl(36 33% 95% / 0.12)",
+                backgroundColor: "hsl(36 33% 95% / 0.05)",
+                borderColor: "hsl(36 33% 95% / 0.14)",
               }}
             >
-              <span
-                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                style={{ backgroundColor: "hsl(24 80% 52% / 0.14)" }}
-                aria-hidden
-              >
-                <tool.icon size={18} className="text-accent" />
-              </span>
-              <div>
-                <h3 className="font-bold text-white mb-1.5 leading-snug">
-                  {tool.name}
-                </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: "hsl(36 33% 95% / 0.7)" }}
-                >
-                  עונה על: {tool.question}
-                </p>
-              </div>
-            </article>
-          </Reveal>
-        ))}
-      </div>
+              <tool.icon size={14} className="text-accent" aria-hidden />
+              {tool.name}
+            </li>
+          ))}
+        </ul>
+      </Reveal>
     </div>
   );
 };

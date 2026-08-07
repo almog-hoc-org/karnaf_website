@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Play } from "lucide-react";
 import { useInView } from "react-intersection-observer";
+import { WedgeBullet } from "@/components/ui/wedge";
 import { gaVideoPlay, gaVideoProgress } from "@/lib/analytics";
 
 interface VimeoEmbedProps {
@@ -150,8 +150,9 @@ const VimeoEmbed = ({ videoId, title, aspectPercent = 64.98 }: VimeoEmbedProps) 
             }}
           />
           <span className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+            {/* Play mark = the horn wedge (role #4 of the device). */}
             <span className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-accent flex items-center justify-center shadow-[0_16px_48px_-8px_hsl(24_80%_52%_/_0.6)] transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
-              <Play size={32} className="text-accent-foreground mr-1" fill="currentColor" />
+              <WedgeBullet className="w-9 h-9 text-accent-foreground" />
             </span>
             <span className="text-white font-bold text-base md:text-lg drop-shadow-lg">
               {title}

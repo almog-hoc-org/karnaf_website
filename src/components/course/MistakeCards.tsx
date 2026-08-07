@@ -1,72 +1,95 @@
 import { Reveal } from "@/components/v2/Reveal";
 import { useCountUp } from "@/hooks/use-count-up";
+import { Figure } from "@/components/ui/figure-number";
 
 /**
- * S3 — the emotional engine of the sales page: the price of walking in
- * unprepared, in honest arithmetic. Three deliberately different card
- * shapes (big number / plain text / quote) — calm tone, scary numbers.
- * This section is also the first half of the price choreography: ₪950
- * lands against these figures a few screens later.
+ * S3 — the emotional engine of the sales page, staged as one artifact:
+ * "the bill of walking in unprepared" — a paper ledger whose three lines
+ * accumulate to a ruled total. Same honest arithmetic as before (the
+ * owner-approved copy is preserved verbatim); only the stage changed
+ * from a generic card grid to an owned metaphor. This is also the first
+ * half of the price choreography: ₪950 lands against this bill on the
+ * dark pricing set-piece a few screens later.
  */
+
 const MistakeCards = () => {
   const overpay = useCountUp(60000);
 
   return (
-    <div>
-      {/* One calm, unified card style — the scary part is the numbers,
-          not the palette. Amber marks only the figures and eyebrows. */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 items-stretch">
-        {/* Card A — the big number */}
-        <Reveal>
-          <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
-              פער של 3% במחיר
+    <div className="max-w-2xl mx-auto">
+      <Reveal>
+        <article className="rounded-2xl bg-card border border-border shadow-depth-2 overflow-hidden">
+          {/* Receipt header */}
+          <header className="px-6 md:px-8 py-5 border-b border-dashed border-border text-center">
+            <p className="text-eyebrow uppercase tracking-[0.24em] text-muted-foreground font-bold">
+              החשבון של חוסר ההכנה
             </p>
-            <p className="text-display-md font-black text-foreground tabular-nums leading-none mb-4">
-              <span className="whitespace-nowrap">
-                <span ref={overpay.ref}>{overpay.value.toLocaleString("he-IL")}</span>
-                <span className="text-accent"> ₪</span>
-              </span>
+            <p className="text-xs text-muted-foreground mt-1">
+              שלוש טעויות נפוצות · עסקה אחת
             </p>
+          </header>
+
+          {/* Line 1 — the negotiation gap (the big counted number) */}
+          <div className="px-6 md:px-8 py-6 border-b border-dashed border-border">
+            <div className="flex items-baseline justify-between gap-4 mb-2">
+              <h3 className="font-bold text-foreground">פער של 3% במחיר</h3>
+              <Figure
+                value={
+                  <span ref={overpay.ref}>
+                    {overpay.value.toLocaleString("he-IL")}
+                  </span>
+                }
+                suffix="&nbsp;₪"
+                size="sm"
+              />
+            </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               חלשים במשא ומתן? פער של 3% במחיר הדירה מוביל להבדל של
               60,000&nbsp;₪ בעסקה של 2&nbsp;מיליון. הידע הזה הוא חובה.
             </p>
-          </article>
-        </Reveal>
+          </div>
 
-        {/* Card B — the mortgage mix */}
-        <Reveal delay={0.08}>
-          <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
-              תמהיל משכנתא שגוי
-            </p>
-            <p className="text-lg font-bold text-foreground leading-snug mb-4">
-              אותו סכום, אותו בנק, תמהיל אחר — וההפרש לאורך חיי ההלוואה נמדד
-              בעשרות אלפי שקלים.
-            </p>
+          {/* Line 2 — the mortgage mix */}
+          <div className="px-6 md:px-8 py-6 border-b border-dashed border-border">
+            <div className="flex items-baseline justify-between gap-4 mb-2">
+              <h3 className="font-bold text-foreground">תמהיל משכנתא שגוי</h3>
+              <p className="font-black text-foreground whitespace-nowrap">
+                עשרות אלפי&nbsp;<span className="text-accent">₪</span>
+              </p>
+            </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              הבנק לא יתקן אתכם. זו לא העבודה שלו.
+              אותו סכום, אותו בנק, תמהיל אחר — וההפרש לאורך חיי ההלוואה נמדד
+              בעשרות אלפי שקלים. הבנק לא יתקן אתכם. זו לא העבודה שלו.
             </p>
-          </article>
-        </Reveal>
+          </div>
 
-        {/* Card C — urban-renewal potential */}
-        <Reveal delay={0.16}>
-          <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
-              פוטנציאל פינוי בינוי
-            </p>
-            <p className="text-lg font-bold text-foreground leading-snug mb-4">
+          {/* Line 3 — urban-renewal potential */}
+          <div className="px-6 md:px-8 py-6">
+            <div className="flex items-baseline justify-between gap-4 mb-2">
+              <h3 className="font-bold text-foreground">פוטנציאל פינוי בינוי</h3>
+              <p className="font-black text-foreground whitespace-nowrap">
+                מאות אלפי&nbsp;<span className="text-accent">₪</span>
+              </p>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
               דירה בבניין עם פרויקט התחדשות מתקדם שווה מאות אלפי שקלים יותר —
               ומי שלא יודע לבדוק את הסטטוס, קונה (או מוכר) במחיר הלא נכון.
-            </p>
-            <p className="text-sm text-muted-foreground leading-relaxed">
               את הבדיקה הזאת עושים לפני ההצעה, לא אחריה.
             </p>
-          </article>
-        </Reveal>
-      </div>
+          </div>
+
+          {/* Ruled total */}
+          <footer
+            className="px-6 md:px-8 py-5 flex items-baseline justify-between gap-4"
+            style={{ borderTop: "3px double hsl(var(--border))" }}
+          >
+            <p className="font-bold text-foreground">סה״כ, בלי הכנה:</p>
+            <p className="font-black text-foreground text-left leading-snug">
+              נמדד במאות אלפי&nbsp;<span className="text-accent">₪</span>
+            </p>
+          </footer>
+        </article>
+      </Reveal>
     </div>
   );
 };

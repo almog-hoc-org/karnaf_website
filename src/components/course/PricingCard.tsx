@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { CheckCircle, GraduationCap, MessageCircle } from "lucide-react";
+import { GraduationCap, MessageCircle, PlayCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { WedgeBullet } from "@/components/ui/wedge";
 import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
 import { TOTAL_PARTS, TOTAL_CHAPTERS } from "@/data/courseStats";
 import { buildCheckoutUrl } from "@/lib/checkout";
 import { botLink } from "@/lib/whatsapp";
-import { gaViewPricing, gaBeginCheckout } from "@/lib/analytics";
+import { gaViewPricing, gaBeginCheckout, gaFreePreview } from "@/lib/analytics";
 import { trackInitiateCheckout } from "@/lib/pixel";
 import { useQuizContext } from "@/hooks/use-quiz-context";
 import { CONCERN_COPY } from "@/lib/personalization";
@@ -39,9 +40,11 @@ const PricingCard = () => {
   // SSG renders the plain checkout URL; the enriched one (utm/fbclid)
   // replaces it client-side after hydration.
   const [checkoutHref, setCheckoutHref] = useState(CHECKOUT_URL);
+  const [previewHref, setPreviewHref] = useState(CHECKOUT_URL);
 
   useEffect(() => {
     setCheckoutHref(buildCheckoutUrl());
+    setPreviewHref(buildCheckoutUrl({ preview: true }));
   }, []);
 
   useEffect(() => {
@@ -95,7 +98,7 @@ const PricingCard = () => {
         {/* One clean price. The anchor is the mistake, not an old tag. */}
         <div className="mb-8">
           <div className="flex items-baseline justify-center" dir="rtl">
-            <span className="text-display-lg font-black text-accent tabular-nums leading-none">
+            <span className="text-display-lg font-black text-accent tabular-nums leading-none drop-shadow-[0_0_28px_hsl(24_80%_52%_/_0.35)]">
               ₪{COURSE_PRICE.toLocaleString("he-IL")}
             </span>
           </div>
@@ -110,7 +113,7 @@ const PricingCard = () => {
         <div className="text-right max-w-sm mx-auto space-y-3 mb-8">
           {included.map((item) => (
             <div key={item} className="flex items-center gap-3">
-              <CheckCircle size={18} className="text-accent flex-shrink-0" />
+              <WedgeBullet className="w-3.5 h-3.5 text-accent flex-shrink-0" />
               <span className="text-foreground">{item}</span>
             </div>
           ))}
@@ -155,6 +158,24 @@ const PricingCard = () => {
         <p className="text-xs text-muted-foreground mb-2">
           תשלום מאובטח · מעבר לדף הסליקה של התוכנית
         </p>
+
+        {/* Risk reversal for a product with (deliberately) no refund
+            promise: the first lesson is open to watch, free, before
+            paying. Preview clicks are curiosity, not purchase intent —
+            free_preview in GA, no InitiateCheckout. */}
+        <div>
+          <a
+            href={previewHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-no-btn-track
+            onClick={() => gaFreePreview("accepted")}
+            className="inline-flex items-center gap-2 text-sm font-bold text-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-2 px-3"
+          >
+            <PlayCircle size={15} className="text-accent" />
+            רוצים לטעום קודם? השיעור הראשון פתוח לצפייה — חינם ←
+          </a>
+        </div>
 
         <div>
           <a

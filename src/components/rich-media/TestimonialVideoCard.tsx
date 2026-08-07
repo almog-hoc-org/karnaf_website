@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Play, Star, Quote } from "lucide-react";
+import { Play, Quote } from "lucide-react";
+import { FigureChip } from "@/components/ui/figure-number";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import type { Testimonial } from "@/data/testimonials";
 import VideoPlayer from "./VideoPlayer";
@@ -39,22 +40,15 @@ const TestimonialVideoCard = ({ testimonial, index = 0 }: TestimonialVideoCardPr
           aria-hidden
         />
 
-        <div className="relative flex items-center justify-between mb-4">
-          <div
-            className="flex items-center gap-1"
-            role="img"
-            aria-label={`דירוג ${testimonial.rating} מתוך 5`}
-          >
-            {Array.from({ length: testimonial.rating }).map((_, i) => (
-              <Star key={i} size={14} aria-hidden className="fill-accent text-accent" />
-            ))}
+        {/* No star rows — feelings are the competitor's currency. A
+            testimonial is crowned by its quantified outcome when it has
+            one ("מספרים, לא תחושות"); real stories without a number stay,
+            uncrowned, rather than getting a decorative rating. */}
+        {testimonial.metric && (
+          <div className="relative mb-4">
+            <FigureChip>{testimonial.metric}</FigureChip>
           </div>
-          {testimonial.metric && (
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-accent/10 text-accent-deep whitespace-nowrap">
-              {testimonial.metric}
-            </span>
-          )}
-        </div>
+        )}
 
         <blockquote className="relative text-foreground text-sm leading-relaxed mb-6 flex-1">
           ״{testimonial.quote}״
