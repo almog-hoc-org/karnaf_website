@@ -23,7 +23,7 @@ import { Reveal } from "@/components/v2/Reveal";
 import { useToast } from "@/hooks/use-toast";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { isValidIsraeliPhone, PHONE_ERROR_MESSAGE } from "@/lib/validation";
-import { botLink } from "@/lib/whatsapp";
+import { premiumLink } from "@/lib/whatsapp";
 import SEOHead, {
   organizationSchema,
   serviceSchema,
@@ -37,7 +37,8 @@ import foundersImg from "@/assets/program/founders.png";
 const LEAD_SOURCE = "premium-investors";
 const LEAD_SERVICE = "premium";
 
-const WA_LINK = botLink("ליווי משקיעים פרימיום");
+/* Premium goes straight to the human line, not the intake bot. */
+const WA_LINK = premiumLink();
 
 /* The accompaniment journey — strategy → signature */
 const journey = [
