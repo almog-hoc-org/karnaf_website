@@ -148,12 +148,12 @@ const WebinarPopup = () => {
             </div>
 
             <div className="px-7 pb-8 pt-6 text-center">
-              <span className="inline-flex items-center gap-2 rounded-full bg-accent/12 border border-accent/25 px-3.5 py-1.5 text-eyebrow font-bold uppercase tracking-[0.14em] text-accent">
+              <span className="inline-flex items-center gap-2 rounded-full bg-accent/12 border border-accent/25 px-3.5 py-1.5 text-eyebrow font-bold uppercase tracking-[0.18em] text-accent">
                 <CalendarClock size={14} />
                 וובינר קרוב · בחינם
               </span>
 
-              <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight">
+              <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight tracking-[-0.02em]">
                 וובינר חינם:{" "}
                 <span className="text-accent">כך ניגשים נכון לרכישת דירה</span>
               </h2>
@@ -168,7 +168,7 @@ const WebinarPopup = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={dismiss}
-                className="group mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg h-14 px-6 shadow-[0_0_50px_hsl(var(--accent)/0.4)] transition-all"
+                className="group mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg h-14 px-6 shadow-[0_0_50px_hsl(var(--accent)/0.4)] transition-all active:scale-[0.98]"
               >
                 להרשמה לוובינר
                 <ArrowLeft

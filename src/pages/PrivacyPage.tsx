@@ -61,7 +61,7 @@ const PrivacyPage = () => (
         <div className="space-y-10">
           {sections.map((s) => (
             <div key={s.title}>
-              <h2 className="text-2xl font-bold text-foreground mb-3">{s.title}</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-3 tracking-[-0.015em]">{s.title}</h2>
               {s.body.map((p, i) => (
                 <p key={i} className="text-body-lg text-muted-foreground leading-[1.85] mb-3">
                   {p}

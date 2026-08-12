@@ -95,7 +95,7 @@ const InvestmentSimulator = () => {
             className="rounded-xl p-4 border border-primary/20 bg-primary/5 text-center"
           >
             <p className="text-sm text-muted-foreground">ההפרש לטובתכם</p>
-            <p className="text-2xl font-bold text-primary">{formatCurrency(result.diff)}</p>
+            <p className="text-2xl font-bold text-primary tracking-[-0.015em]">{formatCurrency(result.diff)}</p>
           </motion.div>
 
           <div className="bg-background rounded-xl p-4 border border-border">

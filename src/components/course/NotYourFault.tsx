@@ -12,7 +12,7 @@ const NotYourFault = () => {
   return (
     <div className="text-center">
       <Reveal>
-        <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-6 leading-[0.98] tracking-tight">
+        <h2 className="text-display-md md:text-display-lg text-foreground mb-6">
           והנה האמת שאף אחד לא&nbsp;אומר:
           <br />
           <span className="text-accent">זו לא אשמתכם.</span>

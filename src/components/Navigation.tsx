@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ChevronDown, GraduationCap, Users, Landmark } from "lucide-react";
-import { botLink } from "@/lib/whatsapp";
+import { useWhatsAppLink } from "@/hooks/use-whatsapp-link";
 import karnafLogo from "@/assets/mascot/karnaf-logo.png";
 
 /* All commercial offerings live under one "השירותים שלנו" mini-menu. */
@@ -43,6 +43,8 @@ const Navigation = () => {
   const servicesRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout>>();
   const location = useLocation();
+  // On /premium the "בואו נדבר" button opens the human line, not the bot.
+  const whatsappHref = useWhatsAppLink("שאלה כללית");
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);
@@ -221,7 +223,7 @@ const Navigation = () => {
           </div>
 
           <div className="hidden lg:block">
-            <a href={botLink("שאלה כללית")} target="_blank" rel="noopener noreferrer">
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
               <Button
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-8 py-2.5"
               >
@@ -283,7 +285,7 @@ const Navigation = () => {
                 transition={{ delay: 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="flex flex-col items-center gap-3 py-2"
               >
-                <span className="text-eyebrow uppercase tracking-[0.24em] text-muted-foreground">
+                <span className="text-eyebrow uppercase tracking-[0.28em] text-muted-foreground">
                   השירותים שלנו
                 </span>
                 {serviceItems.map((item) => (
@@ -328,7 +330,7 @@ const Navigation = () => {
                 transition={{ delay: 0.45, duration: 0.4 }}
                 className="pt-4"
               >
-                <a href={botLink("שאלה כללית")} target="_blank" rel="noopener noreferrer">
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
                   <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full px-10 py-3 text-lg">
                     <MessageCircle size={18} />
                     בואו נדבר

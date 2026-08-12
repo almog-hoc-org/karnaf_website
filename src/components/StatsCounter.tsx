@@ -79,7 +79,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   return (
     <div
       ref={ref}
-      className="text-display-xl font-black tabular-nums text-foreground leading-[0.9] transition-opacity duration-300"
+      className="text-display-xl tabular-nums text-foreground leading-[0.9] transition-opacity duration-300"
       style={{ opacity: isCounting ? 0.85 : 1 }}
     >
       {count.toLocaleString("he-IL")}
@@ -102,7 +102,7 @@ const StatsCounter = () => {
 
       <div className="container mx-auto px-5 md:px-6">
         <Reveal>
-          <h2 className="text-display-md md:text-display-lg font-black text-center text-foreground mb-10 md:mb-16 leading-[1] tracking-tight">
+          <h2 className="text-display-md md:text-display-lg text-center text-foreground mb-10 md:mb-16 leading-[1]">
             <span className="text-accent">מספרים</span> ולא תחושות
           </h2>
         </Reveal>

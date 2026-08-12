@@ -208,12 +208,12 @@ const CoursePopup = () => {
             </div>
 
             <div className="px-7 pb-8 pt-6 text-center">
-              <span className="inline-flex items-center gap-2 rounded-full bg-accent/12 border border-accent/25 px-3.5 py-1.5 text-eyebrow font-bold uppercase tracking-[0.14em] text-accent">
+              <span className="inline-flex items-center gap-2 rounded-full bg-accent/12 border border-accent/25 px-3.5 py-1.5 text-eyebrow font-bold uppercase tracking-[0.18em] text-accent">
                 <PlayCircle size={14} />
                 הקורס הדיגיטלי המקיף בישראל
               </span>
 
-              <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight">
+              <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight tracking-[-0.02em]">
                 רוצים לראות איך זה נראה{" "}
                 <span className="text-accent">מבפנים?</span>
               </h2>

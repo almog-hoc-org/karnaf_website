@@ -79,7 +79,7 @@ const PricingCard = () => {
       <div className="absolute top-0 inset-x-0 h-1 bg-accent" />
       <div className="text-center relative z-10">
         <GraduationCap size={36} className="text-accent mx-auto mb-4" />
-        <h3 className="text-display-sm md:text-display-md font-black text-foreground mb-2">
+        <h3 className="text-display-sm md:text-display-md text-foreground mb-2">
           המדריך המעשי לרכישת דירה — כל התוכנית
         </h3>
         {personalized ? (
@@ -95,7 +95,7 @@ const PricingCard = () => {
         {/* One clean price. The anchor is the mistake, not an old tag. */}
         <div className="mb-8">
           <div className="flex items-baseline justify-center" dir="rtl">
-            <span className="text-display-lg font-black text-accent tabular-nums leading-none">
+            <span className="text-display-lg text-accent tabular-nums leading-none">
               ₪{COURSE_PRICE.toLocaleString("he-IL")}
             </span>
           </div>

@@ -23,7 +23,7 @@ import { Reveal } from "@/components/v2/Reveal";
 import { useToast } from "@/hooks/use-toast";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { isValidIsraeliPhone, PHONE_ERROR_MESSAGE } from "@/lib/validation";
-import { botLink } from "@/lib/whatsapp";
+import { premiumLink } from "@/lib/whatsapp";
 import SEOHead, {
   organizationSchema,
   serviceSchema,
@@ -37,7 +37,8 @@ import foundersImg from "@/assets/program/founders.png";
 const LEAD_SOURCE = "premium-investors";
 const LEAD_SERVICE = "premium";
 
-const WA_LINK = botLink("ליווי משקיעים פרימיום");
+/* Premium goes straight to the human line, not the intake bot. */
+const WA_LINK = premiumLink();
 
 /* The accompaniment journey — strategy → signature */
 const journey = [
@@ -307,7 +308,7 @@ const PremiumPage = () => {
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-5 md:px-6 max-w-3xl text-center">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-6">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-6">
               להשקיע לבד זה יקר
             </h2>
           </Reveal>
@@ -332,7 +333,7 @@ const PremiumPage = () => {
               <p className="text-eyebrow uppercase tracking-[0.28em] text-accent mb-5">
                 מה זה ליווי משקיעים פרימיום
               </p>
-              <h2 className="text-display-md md:text-display-lg font-black text-white leading-[1] tracking-tight">
+              <h2 className="text-display-md md:text-display-lg text-white leading-[1]">
                 לא קורס. לא ייעוץ כללי.{" "}
                 <span className="text-accent">אנליסט אישי לצידכם.</span>
               </h2>
@@ -358,7 +359,7 @@ const PremiumPage = () => {
                   }}
                 >
                   <div className="flex items-center gap-5 sm:w-56 sm:flex-shrink-0">
-                    <span className="font-mono text-display-sm font-black text-accent leading-none">
+                    <span className="font-mono text-display-sm text-accent leading-none">
                       {step.num}
                     </span>
                     <span className="inline-flex w-12 h-12 rounded-full bg-accent/10 border border-accent/20 items-center justify-center text-accent">
@@ -366,7 +367,7 @@ const PremiumPage = () => {
                     </span>
                   </div>
                   <div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white mb-1.5">
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-1.5 tracking-[-0.015em]">
                       {step.title}
                     </h3>
                     <p className="text-sm md:text-base leading-relaxed" style={{ color: "hsl(36 33% 95% / 0.72)" }}>
@@ -384,7 +385,7 @@ const PremiumPage = () => {
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-5 md:px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-10 lg:mb-14 text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-10 lg:mb-14 text-center">
               מה כולל הליווי
             </h2>
           </Reveal>
@@ -410,7 +411,7 @@ const PremiumPage = () => {
             <p className="text-eyebrow uppercase tracking-[0.28em] text-accent mb-4 text-center">
               הסטנדרט של קרנף
             </p>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-10 lg:mb-14 text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-10 lg:mb-14 text-center">
               למה ליווי פרימיום עובד
             </h2>
           </Reveal>
@@ -421,7 +422,7 @@ const PremiumPage = () => {
                   <span className="inline-flex w-12 h-12 rounded-full bg-accent/10 border border-accent/20 items-center justify-center text-accent mb-5">
                     <d.icon size={22} />
                   </span>
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 leading-snug">
+                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 leading-snug tracking-[-0.015em]">
                     {d.title}
                   </h3>
                   <p className="text-muted-foreground leading-[1.85]">{d.body}</p>
@@ -438,10 +439,10 @@ const PremiumPage = () => {
                 { v: "1:1", l: "ליווי אישי" },
               ].map((s) => (
                 <div key={s.l}>
-                  <div className="text-display-sm md:text-display-md font-black text-foreground tabular-nums leading-none mb-1">
+                  <div className="text-display-sm md:text-display-md text-foreground tabular-nums leading-none mb-1">
                     {s.v}
                   </div>
-                  <div className="text-eyebrow uppercase tracking-[0.16em] text-muted-foreground">
+                  <div className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
                     {s.l}
                   </div>
                 </div>
@@ -503,7 +504,7 @@ const PremiumPage = () => {
               <p className="text-eyebrow uppercase tracking-[0.28em] text-accent mb-5">
                 הצעד הראשון
               </p>
-              <h2 className="text-display-md md:text-display-lg font-black text-white leading-[1] tracking-tight mb-5">
+              <h2 className="text-display-md md:text-display-lg text-white leading-[1] mb-5">
                 בואו נבדוק אם הליווי{" "}
                 <span className="text-accent">מתאים לכם</span>
               </h2>

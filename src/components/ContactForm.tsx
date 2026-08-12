@@ -96,7 +96,7 @@ const ContactForm = ({
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 200 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           <CheckCircle className="w-16 h-16 text-accent" />
         </motion.div>

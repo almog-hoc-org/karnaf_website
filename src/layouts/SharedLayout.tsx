@@ -31,9 +31,13 @@ const SharedLayout = () => {
         <motion.main
           id="main-content"
           key={location.pathname}
+          // A page that arrives from below leaves back down the same way —
+          // enter and exit share one path, with mirrored easing, so the
+          // return trip reads as the reverse of the arrival rather than a
+          // disconnected fade.
           initial={reduceMotion ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
+          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
           transition={
             reduceMotion
               ? { duration: 0.15 }

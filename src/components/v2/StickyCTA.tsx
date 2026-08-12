@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { botLink } from "@/lib/whatsapp";
+import { useWhatsAppLink } from "@/hooks/use-whatsapp-link";
 
 interface StickyCTAProps {
   label?: string;
@@ -22,6 +22,8 @@ export const StickyCTA = ({
   const [visible, setVisible] = useState(false);
   const location = useLocation();
   const hidden = hideOn.some((p) => location.pathname.startsWith(p));
+  // On /premium this opens the human line, not the bot.
+  const whatsappHref = useWhatsAppLink("התוכנית הדיגיטלית");
 
   useEffect(() => {
     return scrollYProgress.on("change", (v) => setVisible(v > 0.3 && v < 0.95));
@@ -92,7 +94,7 @@ export const StickyCTA = ({
           </div>
           <div className="flex items-center gap-3">
             <a
-              href={botLink("התוכנית הדיגיטלית")}
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex text-sm font-semibold text-white/80 hover:text-accent transition-colors px-3 py-2"
@@ -100,7 +102,7 @@ export const StickyCTA = ({
               WhatsApp
             </a>
             <Link to={ctaHref} className="inline-block">
-              <button className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-bold text-sm md:text-base px-5 md:px-7 min-h-[44px] py-2.5 md:py-3 rounded-full hover:bg-accent/90 transition-colors">
+              <button className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-bold text-sm md:text-base px-5 md:px-7 min-h-[44px] py-2.5 md:py-3 rounded-full hover:bg-accent/90 transition-colors active:scale-[0.98]">
                 {ctaLabel}
                 <span aria-hidden>←</span>
               </button>

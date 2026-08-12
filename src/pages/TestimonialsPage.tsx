@@ -60,7 +60,7 @@ const TestimonialsPage = () => {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 gap-8 max-w-md mx-auto text-center">
             <Reveal>
-              <p className="text-display-md font-black text-foreground tabular-nums leading-none">
+              <p className="text-display-md text-foreground tabular-nums leading-none">
                 375<span className="text-accent">+</span>
               </p>
               <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mt-2">
@@ -68,7 +68,7 @@ const TestimonialsPage = () => {
               </p>
             </Reveal>
             <Reveal delay={0.08}>
-              <p className="text-display-md font-black text-foreground tabular-nums leading-none">
+              <p className="text-display-md text-foreground tabular-nums leading-none">
                 8<span className="text-accent">+</span>
               </p>
               <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mt-2">
@@ -83,7 +83,7 @@ const TestimonialsPage = () => {
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-12 lg:mb-16 text-center">
               מה הלקוחות אומרים?
             </h2>
           </Reveal>
@@ -101,7 +101,7 @@ const TestimonialsPage = () => {
       <section className="py-section-md bg-background">
         <div className="container mx-auto px-6 text-center max-w-2xl">
           <Reveal>
-            <h3 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight">
+            <h3 className="text-display-md md:text-display-lg text-foreground mb-4">
               רוצים להיות הסיפור הבא?
             </h3>
           </Reveal>
@@ -114,7 +114,7 @@ const TestimonialsPage = () => {
             <a href={botLink("שאלה כללית")} target="_blank" rel="noopener noreferrer" className="inline-block">
               <Button
                 size="lg"
-                className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.35)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.55)] transition-all"
+                className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.35)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.55)] transition-all active:scale-[0.98]"
               >
                 <MessageCircle size={20} />
                 דברו עם הקרנף

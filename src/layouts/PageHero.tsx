@@ -64,7 +64,7 @@ const PageHero = ({
           {tag && (
             <Reveal>
               <div
-                className={`text-eyebrow uppercase tracking-[0.32em] mb-5 flex items-center gap-3 ${
+                className={`text-eyebrow uppercase tracking-[0.28em] mb-5 flex items-center gap-3 ${
                   dark ? "" : ""
                 }`}
                 style={{
@@ -83,7 +83,7 @@ const PageHero = ({
 
           <Reveal delay={0.06}>
             <h1
-              className="text-display-lg md:text-display-xl font-black leading-[0.95] tracking-tight mb-6"
+              className="text-display-lg md:text-display-xl mb-6"
               style={{
                 color: dark ? "hsl(36 33% 95%)" : "hsl(var(--foreground))",
               }}

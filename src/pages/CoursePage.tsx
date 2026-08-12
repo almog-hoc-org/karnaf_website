@@ -212,7 +212,7 @@ const CoursePage = () => {
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
               <p
-                className="text-eyebrow uppercase tracking-[0.32em] mb-6 flex items-center justify-center gap-3"
+                className="text-eyebrow uppercase tracking-[0.28em] mb-6 flex items-center justify-center gap-3"
                 style={{ color: "hsl(36 33% 95% / 0.7)" }}
               >
                 <span className="block w-10 h-px bg-accent" aria-hidden />
@@ -225,7 +225,7 @@ const CoursePage = () => {
               {/* One approved headline — each line nowrap so the split stays
                   exactly two lines; the narrow-viewport size guard keeps the
                   longer first line on one row. */}
-              <h1 className="text-display-lg max-[380px]:text-[2rem] md:text-display-xl font-black text-white mb-6 leading-[0.98] tracking-tight">
+              <h1 className="text-display-lg max-[380px]:text-[2rem] md:text-display-xl text-white mb-6">
                 <span className="whitespace-nowrap">לעסקה הגדולה בחיים</span>
                 <br />
                 <span className="text-accent whitespace-nowrap">מגיעים מוכנים</span>
@@ -285,7 +285,7 @@ const CoursePage = () => {
       <SectionDark size="sm" glow="none">
         <div className="container mx-auto px-6 max-w-4xl">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-3">
+            <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-3 tracking-[-0.02em]">
               רגע לפני שממשיכים — צפו בזה
             </h2>
             <p
@@ -307,7 +307,7 @@ const CoursePage = () => {
       <SectionDark id="program" size="md" glow="top-end">
         <div ref={curriculumRef} className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-white mb-5 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg text-white mb-5 text-center">
               <span className="whitespace-nowrap">{TOTAL_PARTS} חלקים.</span>{" "}
               <span className="whitespace-nowrap">{TOTAL_CHAPTERS} פרקים.</span>
               <br />
@@ -368,7 +368,7 @@ const CoursePage = () => {
       <SectionDark size="sm" glow="none">
         <div ref={toolsRef} className="container mx-auto px-6 max-w-6xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-white mb-5 leading-[0.98] tracking-tight text-center max-w-3xl mx-auto">
+            <h2 className="text-display-md md:text-display-lg text-white mb-5 text-center max-w-3xl mx-auto">
               כל החלטה בעסקה —
               <br />
               <span className="text-accent">הופכת למספר.</span>
@@ -384,7 +384,7 @@ const CoursePage = () => {
       <section ref={mistakeRef} className="py-section-md bg-background">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-5 leading-[0.98] tracking-tight text-center max-w-3xl mx-auto">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-5 text-center max-w-3xl mx-auto">
               טעות בדירה לא מרגישים ביום&nbsp;החתימה.
               <br />
               <span className="text-accent">מרגישים אותה עשר שנים.</span>
@@ -416,12 +416,12 @@ const CoursePage = () => {
         <div ref={storyRef} className="container mx-auto px-6 max-w-3xl text-center">
           <Reveal>
             <p
-              className="text-eyebrow uppercase tracking-[0.32em] mb-4"
+              className="text-eyebrow uppercase tracking-[0.28em] mb-4"
               style={{ color: "hsl(36 33% 95% / 0.6)" }}
             >
               למה קרנף בכלל קיים
             </p>
-            <h2 className="text-display-md md:text-display-lg font-black text-white mb-6 leading-[0.98] tracking-tight">
+            <h2 className="text-display-md md:text-display-lg text-white mb-6">
               את הניסיון הזה צברנו בשטח — עסקה אחרי&nbsp;עסקה.
             </h2>
           </Reveal>
@@ -470,7 +470,7 @@ const CoursePage = () => {
       <section ref={transformationRef} className="py-section-md bg-background">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-5 leading-[0.98] tracking-tight text-center max-w-3xl mx-auto">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-5 text-center max-w-3xl mx-auto">
               עכשיו דמיינו את אותו&nbsp;תהליך&nbsp;—
               <br />
               <span className="text-accent">כשאתם הצד המוכן.</span>
@@ -502,7 +502,7 @@ const CoursePage = () => {
             {authorityStats.map((stat, i) => (
               <Reveal key={stat.label} delay={i * 0.06}>
                 <div className="text-center">
-                  <p className="text-display-md font-black text-foreground tabular-nums leading-none mb-2">
+                  <p className="text-display-md text-foreground tabular-nums leading-none mb-2">
                     {stat.value}
                   </p>
                   <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
@@ -522,7 +522,7 @@ const CoursePage = () => {
       <section ref={testimonialsRef} className="py-section-md bg-background">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-4 text-center">
               הם היו בדיוק במקום שלכם.
             </h2>
           </Reveal>
@@ -557,7 +557,7 @@ const CoursePage = () => {
       <section ref={quizRef} className="py-section-md bg-card border-y border-border">
         <div className="container mx-auto px-6 max-w-4xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-4 text-center">
               התוכנית מתאימה לכם עכשיו?
             </h2>
           </Reveal>
@@ -612,7 +612,7 @@ const CoursePage = () => {
       <section className="py-section-md bg-background">
         <div className="container mx-auto px-6 max-w-3xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-10 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-10 text-center">
               שאלות נפוצות
             </h2>
           </Reveal>

@@ -1,15 +1,26 @@
 import { motion } from "framer-motion";
-import { botLink } from "@/lib/whatsapp";
+import { useWhatsAppLink } from "@/hooks/use-whatsapp-link";
 import mascotIcon from "@/assets/mascot/mascot-thumbsup.webp";
 
-const WhatsAppFAB = () => (
+/**
+ * The floating chat button follows the page it's floating over — on /premium
+ * it opens the human business line, so a high-intent investor lead never
+ * lands in the intake bot just because they tapped the green button instead
+ * of the in-page CTA.
+ */
+const WhatsAppFAB = () => {
+  const href = useWhatsAppLink("שאלה כללית");
+
+  return (
   <motion.a
-    href={botLink("שאלה כללית")}
+    href={href}
     target="_blank"
     rel="noopener noreferrer"
     initial={{ scale: 0 }}
     animate={{ scale: 1 }}
-    transition={{ delay: 2, type: "spring", stiffness: 200 }}
+    // Critically damped: this button arrives on a timer, not off a flick,
+    // so overshoot would be motion the gesture never earned.
+    transition={{ delay: 2, type: "spring", stiffness: 200, damping: 20 }}
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.95 }}
     className="fixed z-50 flex items-center gap-2 bg-[hsl(var(--whatsapp))] hover:bg-[hsl(var(--whatsapp-deep))] text-white font-bold px-5 py-3 rounded-full shadow-lg transition-[bottom,right] duration-500 ease-out"
@@ -22,6 +33,7 @@ const WhatsAppFAB = () => (
     <img src={mascotIcon} alt="" className="w-6 h-6 rounded-full object-cover" />
     <span className="hidden sm:inline">דברו עם הקרנף</span>
   </motion.a>
-);
+  );
+};
 
 export default WhatsAppFAB;

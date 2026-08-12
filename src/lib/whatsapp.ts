@@ -24,3 +24,17 @@ export function businessLink(text?: string): string {
     ? `https://wa.me/${WHATSAPP_BUSINESS_NUMBER}?text=${encodeURIComponent(text)}`
     : `https://wa.me/${WHATSAPP_BUSINESS_NUMBER}`;
 }
+
+/**
+ * The premium lane's one deliberate exception to the bot-first rule: every
+ * WhatsApp touchpoint on /premium opens the human business line instead.
+ * A 1:1 accompaniment lead is worth tens of thousands of shekels and is
+ * already deep in intent — routing it through an automated intake menu
+ * costs more than the classification is worth.
+ *
+ * Note for the CRM side: these arrive as plain messages on the business
+ * number, not as bot-classified tickets (see docs/ARCHITECTURE-CRM-INTEGRATIONS.md).
+ */
+export function premiumLink(): string {
+  return businessLink("היי, אשמח לקבל פרטים נוספים על תהליך ליווי משקיעים 1:1");
+}

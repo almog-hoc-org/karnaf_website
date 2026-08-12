@@ -25,7 +25,7 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 - `src/layouts/SharedLayout.tsx` — wraps all routes with nav, footer, floating CTAs
 - `src/data/` — static content (articles, curriculum, FAQ, team, testimonials)
 - `src/lib/constants.ts` — WhatsApp numbers (bot + business), social links, contact info, course price + checkout URL seam
-- `src/lib/whatsapp.ts` — botLink/businessLink builders (all chat CTAs go to the CRM intake bot)
+- `src/lib/whatsapp.ts` — botLink/businessLink/premiumLink builders. Chat CTAs go to the CRM intake bot, with one deliberate exception: **every WhatsApp link on `/premium` opens the human business line** (`premiumLink()`), including site-wide chrome — nav, sticky bar and floating button resolve via `useWhatsAppLink` in `src/hooks/`
 - `src/lib/checkout.ts` — buildCheckoutUrl (Schooler URL + utm/click-id passthrough)
 - `src/lib/leadSubmission.ts` — dual lead delivery: Make/Sheets mirror + karnaf-crm intake
 - `src/lib/analytics.ts` — env-gated GA4/Clarity loader + funnel events (mirrors Meta Pixel)
