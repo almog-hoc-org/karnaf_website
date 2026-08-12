@@ -153,7 +153,7 @@ const WebinarPopup = () => {
                 וובינר קרוב · בחינם
               </span>
 
-              <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight">
+              <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight tracking-[-0.02em]">
                 וובינר חינם:{" "}
                 <span className="text-accent">כך ניגשים נכון לרכישת דירה</span>
               </h2>

@@ -22,7 +22,7 @@ const MistakeCards = () => {
             <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
               פער של 3% במחיר
             </p>
-            <p className="text-display-md font-black text-foreground tabular-nums leading-none mb-4">
+            <p className="text-display-md text-foreground tabular-nums leading-none mb-4">
               <span className="whitespace-nowrap">
                 <span ref={overpay.ref}>{overpay.value.toLocaleString("he-IL")}</span>
                 <span className="text-accent"> ₪</span>

@@ -26,7 +26,7 @@ class ErrorBoundary extends Component<Props, State> {
         <div className="min-h-screen flex items-center justify-center bg-background px-6">
           <div className="text-center max-w-md">
             <img src="/favicon.png" alt="" className="w-20 h-20 mx-auto mb-6 opacity-50 grayscale" />
-            <h1 className="text-2xl font-bold text-foreground mb-3">
+            <h1 className="text-2xl font-bold text-foreground mb-3 tracking-[-0.015em]">
               אופס! משהו השתבש
             </h1>
             <p className="text-muted-foreground mb-8">

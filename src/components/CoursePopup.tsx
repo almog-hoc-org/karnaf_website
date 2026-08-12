@@ -213,7 +213,7 @@ const CoursePopup = () => {
                 הקורס הדיגיטלי המקיף בישראל
               </span>
 
-              <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight">
+              <h2 className="mt-4 text-2xl md:text-3xl font-black text-foreground leading-tight tracking-[-0.02em]">
                 רוצים לראות איך זה נראה{" "}
                 <span className="text-accent">מבפנים?</span>
               </h2>

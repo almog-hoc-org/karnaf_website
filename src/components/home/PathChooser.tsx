@@ -129,7 +129,7 @@ export const PathChooser = () => {
             <p className="text-eyebrow uppercase tracking-[0.32em] text-muted-foreground mb-4">
               שני מסלולים · מטרה אחת
             </p>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-4">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-4">
               איך תרצו להגיע לדירה?
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -162,7 +162,7 @@ export const PathChooser = () => {
                     עצמאי · דיגיטלי
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-black text-white leading-tight mb-3">
+                <h3 className="text-2xl md:text-3xl font-black text-white leading-tight mb-3 tracking-[-0.02em]">
                   המדריך המעשי לרכישת דירה — הקורס הדיגיטלי
                 </h3>
                 <p
@@ -213,7 +213,7 @@ export const PathChooser = () => {
                     אישי · 1:1
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-black text-foreground leading-tight mb-3">
+                <h3 className="text-2xl md:text-3xl font-black text-foreground leading-tight mb-3 tracking-[-0.02em]">
                   ליווי משקיעים פרימיום
                 </h3>
                 <p className="text-base text-muted-foreground leading-relaxed mb-6">
@@ -232,7 +232,7 @@ export const PathChooser = () => {
                   ))}
                 </ul>
                 <div className="flex items-baseline gap-3 mb-6 mt-auto" dir="rtl">
-                  <span className="text-display-sm font-black text-foreground leading-none">
+                  <span className="text-display-sm text-foreground leading-none">
                     בסוף התהליך — דירה.
                   </span>
                 </div>

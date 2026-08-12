@@ -38,7 +38,7 @@ const PriceContext = () => {
         <p className="text-eyebrow uppercase tracking-[0.32em] text-muted-foreground mb-4">
           רגע של פרופורציה
         </p>
-        <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-4">
+        <h2 className="text-display-md md:text-display-lg text-foreground mb-4">
           כמה עולה מקצוענות בעסקת&nbsp;נדל״ן?
         </h2>
         <p className="text-body-lg text-muted-foreground leading-relaxed max-w-xl mx-auto mb-10">
@@ -76,7 +76,7 @@ const PriceContext = () => {
       </Reveal>
 
       <Reveal delay={0.2}>
-        <p className="text-xl md:text-2xl font-bold text-foreground leading-snug max-w-2xl mx-auto">
+        <p className="text-xl md:text-2xl font-bold text-foreground leading-snug max-w-2xl mx-auto tracking-[-0.015em]">
           בעסקה של 2 מיליון&nbsp;₪, ההכנה הזאת עולה{" "}
           <span className="text-accent">0.05%</span> מהמחיר.
           <br className="hidden md:block" />

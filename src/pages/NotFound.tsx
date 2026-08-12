@@ -33,13 +33,13 @@ const NotFound = () => {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="font-mono text-display-xl font-black text-accent leading-none mb-6 tabular-nums">
+            <div className="font-mono text-display-xl text-accent leading-none mb-6 tabular-nums">
               404
             </div>
           </Reveal>
 
           <Reveal delay={0.14}>
-            <h1 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight">
+            <h1 className="text-display-md md:text-display-lg text-foreground mb-4">
               העמוד לא נמצא
             </h1>
           </Reveal>

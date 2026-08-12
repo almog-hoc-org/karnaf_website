@@ -47,7 +47,7 @@ const Advantages = () => {
       <div className="container mx-auto px-5 md:px-6 relative">
         <div className="max-w-3xl mb-10 md:mb-16">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black leading-[0.98] tracking-tight text-foreground">
+            <h2 className="text-display-md md:text-display-lg text-foreground">
               למה קרנף?
             </h2>
           </Reveal>
@@ -58,10 +58,10 @@ const Advantages = () => {
             <Reveal key={item.num} delay={i * 0.12}>
               <TiltCard max={4} className="h-full">
                 <article className="border-t border-primary pt-6 h-full flex flex-col">
-                  <div className="font-mono text-display-md font-black text-accent leading-none mb-5">
+                  <div className="font-mono text-display-md text-accent leading-none mb-5">
                     {item.num}
                   </div>
-                  <h3 className="text-2xl font-bold text-primary mb-3 leading-snug">
+                  <h3 className="text-2xl font-bold text-primary mb-3 leading-snug tracking-[-0.015em]">
                     {item.title}
                   </h3>
                   <p className="text-body text-muted-foreground leading-[1.85] mb-6">

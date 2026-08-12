@@ -165,7 +165,7 @@ const MortgagePage = () => {
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-6 leading-[0.98] tracking-tight">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-6">
               ההחלטה הפיננסית הגדולה בחיים — ורוב האנשים מקבלים אותה בפגישה אחת בבנק
             </h2>
           </Reveal>
@@ -184,7 +184,7 @@ const MortgagePage = () => {
       <SectionDark size="lg" glow="top-end">
         <div className="container mx-auto px-6 max-w-6xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-white mb-12 lg:mb-16 leading-[0.98] tracking-tight">
+            <h2 className="text-display-md md:text-display-lg text-white mb-12 lg:mb-16">
               איך זה עובד?
             </h2>
           </Reveal>
@@ -199,12 +199,12 @@ const MortgagePage = () => {
                   }}
                 >
                   <div className="flex items-center justify-between mb-5">
-                    <span className="font-mono text-display-md font-black text-accent leading-none">
+                    <span className="font-mono text-display-md text-accent leading-none">
                       {step.num}
                     </span>
                     <step.icon size={22} className="text-accent" aria-hidden />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 leading-snug">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 leading-snug tracking-[-0.015em]">
                     {step.title}
                   </h3>
                   <p
@@ -224,7 +224,7 @@ const MortgagePage = () => {
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-6 max-w-4xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-10 leading-[0.98] tracking-tight">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-10">
               מה כולל הליווי?
             </h2>
           </Reveal>
@@ -245,7 +245,7 @@ const MortgagePage = () => {
       <section className="py-section-lg bg-secondary/40">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 leading-[0.98] tracking-tight">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-12">
               למה משכנתא דרך קרנף?
             </h2>
           </Reveal>
@@ -273,7 +273,7 @@ const MortgagePage = () => {
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-6 max-w-3xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-12 text-center">
               שאלות נפוצות
             </h2>
           </Reveal>
@@ -304,7 +304,7 @@ const MortgagePage = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <div>
               <Reveal>
-                <h2 className="text-display-md md:text-display-lg font-black text-white mb-4 leading-[0.98] tracking-tight">
+                <h2 className="text-display-md md:text-display-lg text-white mb-4">
                   נבדוק יחד כמה אפשר לחסוך לכם
                 </h2>
               </Reveal>

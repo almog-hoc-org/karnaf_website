@@ -107,7 +107,7 @@ const ContactPage = () => {
       <section className="py-section-md bg-card border-y border-border">
         <div className="container mx-auto px-6 max-w-xl">
           <Reveal>
-            <h2 className="text-display-sm md:text-display-md font-black text-foreground leading-[0.98] tracking-tight mb-3 text-center">
+            <h2 className="text-display-sm md:text-display-md text-foreground mb-3 text-center">
               השאירו פרטים ונחזור אליכם
             </h2>
             <p className="text-muted-foreground mb-8 text-center">
@@ -124,7 +124,7 @@ const ContactPage = () => {
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-6 max-w-3xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-12 text-center">
               שאלות <span className="text-accent">נפוצות</span>
             </h2>
           </Reveal>
@@ -153,7 +153,7 @@ const ContactPage = () => {
       <section className="py-section-md bg-background">
         <div className="container mx-auto px-6 max-w-4xl text-center">
           <Reveal>
-            <h3 className="text-display-md font-black text-foreground mb-4 leading-[0.98] tracking-tight">
+            <h3 className="text-display-md text-foreground mb-4">
               פריסה <span className="text-accent">ארצית</span>
             </h3>
           </Reveal>

@@ -24,7 +24,7 @@ const About = () => {
 
           <div>
             <Reveal>
-              <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-6">
+              <h2 className="text-display-md md:text-display-lg text-foreground mb-6">
                 הצוות שמלווה אתכם לדירה הנכונה
               </h2>
             </Reveal>
@@ -53,7 +53,7 @@ const About = () => {
                   { num: "375+", label: "לקוחות מרוצים" },
                 ].map((stat, i) => (
                   <div key={i}>
-                    <div className="text-display-md font-black text-accent tabular-nums leading-none mb-1">
+                    <div className="text-display-md text-accent tabular-nums leading-none mb-1">
                       {stat.num}
                     </div>
                     <div className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">

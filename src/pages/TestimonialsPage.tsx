@@ -60,7 +60,7 @@ const TestimonialsPage = () => {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 gap-8 max-w-md mx-auto text-center">
             <Reveal>
-              <p className="text-display-md font-black text-foreground tabular-nums leading-none">
+              <p className="text-display-md text-foreground tabular-nums leading-none">
                 375<span className="text-accent">+</span>
               </p>
               <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mt-2">
@@ -68,7 +68,7 @@ const TestimonialsPage = () => {
               </p>
             </Reveal>
             <Reveal delay={0.08}>
-              <p className="text-display-md font-black text-foreground tabular-nums leading-none">
+              <p className="text-display-md text-foreground tabular-nums leading-none">
                 8<span className="text-accent">+</span>
               </p>
               <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mt-2">
@@ -83,7 +83,7 @@ const TestimonialsPage = () => {
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-12 lg:mb-16 text-center">
               מה הלקוחות אומרים?
             </h2>
           </Reveal>
@@ -101,7 +101,7 @@ const TestimonialsPage = () => {
       <section className="py-section-md bg-background">
         <div className="container mx-auto px-6 text-center max-w-2xl">
           <Reveal>
-            <h3 className="text-display-md md:text-display-lg font-black text-foreground mb-4 leading-[0.98] tracking-tight">
+            <h3 className="text-display-md md:text-display-lg text-foreground mb-4">
               רוצים להיות הסיפור הבא?
             </h3>
           </Reveal>

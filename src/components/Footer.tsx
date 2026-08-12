@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="container mx-auto px-5 md:px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 max-w-5xl mx-auto">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground leading-[0.98] tracking-tight mb-3">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-3">
               נשמח להכיר אתכם
             </h2>
             <p className="text-display-sm font-bold text-muted-foreground leading-snug mb-10">
@@ -25,7 +25,7 @@ const Footer = () => {
 
           <Reveal delay={0.15}>
             <div>
-              <h3 className="text-display-sm md:text-display-md font-black text-foreground mb-6 leading-[0.98] tracking-tight">דרכי יצירת קשר</h3>
+              <h3 className="text-display-sm md:text-display-md text-foreground mb-6">דרכי יצירת קשר</h3>
 
               <div className="space-y-3 mb-10">
                 <a

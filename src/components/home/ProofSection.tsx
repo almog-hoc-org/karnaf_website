@@ -16,7 +16,7 @@ const ProofSection = () => (
     <div className="container mx-auto px-5 md:px-6">
       <div className="max-w-3xl mb-10 md:mb-14">
         <Reveal>
-          <h2 className="text-display-md md:text-display-lg font-black leading-[0.98] tracking-tight text-foreground mb-4">
+          <h2 className="text-display-md md:text-display-lg text-foreground mb-4">
             תוצאות של לקוחות. במספרים.
           </h2>
         </Reveal>
@@ -32,7 +32,7 @@ const ProofSection = () => (
         {featured.map((t, i) => (
           <Reveal key={t.name} delay={i * 0.1}>
             <figure className="h-full flex flex-col bg-background border border-border rounded-2xl p-6 lg:p-8">
-              <div className="text-accent font-black text-xl md:text-2xl tabular-nums leading-tight mb-4">
+              <div className="text-accent font-black text-xl md:text-2xl tabular-nums leading-tight mb-4 tracking-[-0.015em]">
                 {t.metric}
               </div>
               <blockquote className="text-foreground leading-[1.85] flex-1">

@@ -49,7 +49,7 @@ const AboutPage = () => {
           <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <Reveal>
-                <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-6 leading-[0.98] tracking-tight">
+                <h2 className="text-display-md md:text-display-lg text-foreground mb-6">
                   למה קרנף?
                 </h2>
               </Reveal>
@@ -88,7 +88,7 @@ const AboutPage = () => {
       <section className="py-section-md bg-background">
         <div className="container mx-auto px-6 max-w-4xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-12 lg:mb-16 text-center">
               ציר הזמן
             </h2>
           </Reveal>
@@ -121,7 +121,7 @@ const AboutPage = () => {
       <section className="py-section-lg bg-background">
         <div className="container mx-auto px-6 max-w-5xl">
           <Reveal>
-            <h2 className="text-display-md md:text-display-lg font-black text-foreground mb-12 lg:mb-16 leading-[0.98] tracking-tight text-center">
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-12 lg:mb-16 text-center">
               הצוות שלנו
             </h2>
           </Reveal>

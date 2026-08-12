@@ -90,7 +90,7 @@ const Hero = () => {
               initial={reduce ? false : { opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="text-display-lg md:text-display-xl font-black text-white leading-[0.95] tracking-tight mb-6"
+              className="text-display-lg md:text-display-xl text-white mb-6"
             >
               הדירה הבאה שלכם{" "}
               <span className="text-accent">מתחילה כאן</span>.
@@ -176,7 +176,7 @@ const Hero = () => {
           style={{ color: "hsl(36 33% 95% / 0.7)" }}
         >
           <div>
-            <div className="text-display-md font-black text-white tabular-nums leading-none mb-1">
+            <div className="text-display-md text-white tabular-nums leading-none mb-1">
               375+
             </div>
             <div className="text-eyebrow uppercase tracking-[0.18em]">
@@ -184,7 +184,7 @@ const Hero = () => {
             </div>
           </div>
           <div>
-            <div className="text-display-md font-black text-white tabular-nums leading-none mb-1">
+            <div className="text-display-md text-white tabular-nums leading-none mb-1">
               15
             </div>
             <div className="text-eyebrow uppercase tracking-[0.18em]">
@@ -192,7 +192,7 @@ const Hero = () => {
             </div>
           </div>
           <div>
-            <div className="text-display-md font-black text-white tabular-nums leading-none mb-1">
+            <div className="text-display-md text-white tabular-nums leading-none mb-1">
               8+
             </div>
             <div className="text-eyebrow uppercase tracking-[0.18em]">

@@ -67,7 +67,7 @@ const BlogArticlePage = () => {
               <span>{categoryLabel(article.category)}</span>
             </span>
 
-            <h1 className="text-display-lg md:text-display-xl font-black text-foreground leading-[0.95] tracking-tight mb-6">
+            <h1 className="text-display-lg md:text-display-xl text-foreground mb-6">
               {article.title}
             </h1>
 
@@ -116,16 +116,7 @@ const BlogArticlePage = () => {
       <section className="pb-section-md bg-background">
         <div className="container mx-auto px-6 max-w-3xl">
           <Reveal delay={0.05}>
-            <div className="prose prose-orange max-w-none
-                prose-headings:text-foreground prose-headings:font-bold
-                prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
-                prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:text-base
-                prose-li:text-muted-foreground prose-li:leading-relaxed
-                prose-strong:text-foreground
-                prose-a:text-accent prose-a:font-semibold
-                prose-ul:space-y-1
-              "
+            <div className="prose prose-orange max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:text-base prose-li:text-muted-foreground prose-li:leading-relaxed prose-strong:text-foreground prose-a:text-accent prose-a:font-semibold prose-ul:space-y-1 tracking-[-0.015em]"
             >
               <ReactMarkdown>{article.content}</ReactMarkdown>
             </div>
@@ -156,7 +147,7 @@ const BlogArticlePage = () => {
                 <GraduationCap size={28} className="text-accent" />
               </div>
               <div className="relative z-10 flex-1 text-center sm:text-right">
-                <h3 className="text-xl md:text-2xl font-bold mb-1">רוצים ללמוד עוד?</h3>
+                <h3 className="text-xl md:text-2xl font-bold mb-1 tracking-[-0.015em]">רוצים ללמוד עוד?</h3>
                 <p className="text-white/70 text-sm md:text-base">
                   {CHAPTERS_LABEL} מקיפים ומחשבונים מתקדמים בקורס "המדריך המעשי לרכישת דירה" — ₪950
                 </p>
@@ -177,7 +168,7 @@ const BlogArticlePage = () => {
         <section className="py-section-lg bg-background">
           <div className="container mx-auto px-6 max-w-5xl">
             <Reveal>
-              <h3 className="text-display-md font-black text-foreground mb-12 leading-[0.98] tracking-tight text-center">
+              <h3 className="text-display-md text-foreground mb-12 text-center">
                 תכנים <span className="text-accent">נוספים</span>
               </h3>
             </Reveal>

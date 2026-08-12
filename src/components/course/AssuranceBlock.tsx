@@ -33,7 +33,7 @@ const AssuranceBlock = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <Reveal>
-        <h2 className="text-2xl md:text-3xl font-black text-foreground text-center leading-tight mb-10">
+        <h2 className="text-2xl md:text-3xl font-black text-foreground text-center leading-tight mb-10 tracking-[-0.02em]">
           הסיכון הכי קטן בכל תהליך הרכישה.
         </h2>
       </Reveal>

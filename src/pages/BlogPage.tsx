@@ -102,7 +102,7 @@ const BlogPage = () => {
                   >
                     {categoryLabels[featured.category].label}
                   </span>
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 leading-tight group-hover:text-accent transition-colors">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 leading-tight group-hover:text-accent transition-colors tracking-[-0.02em]">
                     {featured.title}
                   </h2>
                   <p className="text-muted-foreground leading-relaxed mb-5">
