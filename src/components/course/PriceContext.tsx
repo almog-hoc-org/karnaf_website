@@ -35,7 +35,7 @@ const PriceContext = () => {
   return (
     <div className="max-w-3xl mx-auto text-center mb-10">
       <Reveal>
-        <p className="text-eyebrow uppercase tracking-[0.32em] text-muted-foreground mb-4">
+        <p className="text-eyebrow uppercase tracking-[0.28em] text-muted-foreground mb-4">
           רגע של פרופורציה
         </p>
         <h2 className="text-display-md md:text-display-lg text-foreground mb-4">

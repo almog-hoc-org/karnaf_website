@@ -126,7 +126,7 @@ export const PathChooser = () => {
       <div className="container mx-auto px-5 md:px-6 max-w-6xl">
         <Reveal>
           <div className="text-center mb-12 lg:mb-16">
-            <p className="text-eyebrow uppercase tracking-[0.32em] text-muted-foreground mb-4">
+            <p className="text-eyebrow uppercase tracking-[0.28em] text-muted-foreground mb-4">
               שני מסלולים · מטרה אחת
             </p>
             <h2 className="text-display-md md:text-display-lg text-foreground mb-4">

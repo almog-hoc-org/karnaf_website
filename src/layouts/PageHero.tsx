@@ -64,7 +64,7 @@ const PageHero = ({
           {tag && (
             <Reveal>
               <div
-                className={`text-eyebrow uppercase tracking-[0.32em] mb-5 flex items-center gap-3 ${
+                className={`text-eyebrow uppercase tracking-[0.28em] mb-5 flex items-center gap-3 ${
                   dark ? "" : ""
                 }`}
                 style={{

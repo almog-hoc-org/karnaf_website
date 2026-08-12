@@ -212,7 +212,7 @@ const CoursePage = () => {
           <div className="max-w-4xl mx-auto text-center">
             <Reveal>
               <p
-                className="text-eyebrow uppercase tracking-[0.32em] mb-6 flex items-center justify-center gap-3"
+                className="text-eyebrow uppercase tracking-[0.28em] mb-6 flex items-center justify-center gap-3"
                 style={{ color: "hsl(36 33% 95% / 0.7)" }}
               >
                 <span className="block w-10 h-px bg-accent" aria-hidden />
@@ -416,7 +416,7 @@ const CoursePage = () => {
         <div ref={storyRef} className="container mx-auto px-6 max-w-3xl text-center">
           <Reveal>
             <p
-              className="text-eyebrow uppercase tracking-[0.32em] mb-4"
+              className="text-eyebrow uppercase tracking-[0.28em] mb-4"
               style={{ color: "hsl(36 33% 95% / 0.6)" }}
             >
               למה קרנף בכלל קיים

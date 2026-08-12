@@ -321,7 +321,7 @@ const MortgagePage = () => {
                 <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="inline-block">
                   <Button
                     size="lg"
-                    className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-8 py-6 rounded-full gap-3 transition-all"
+                    className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-8 py-6 rounded-full gap-3 transition-all active:scale-[0.98]"
                   >
                     <MessageCircle size={20} />
                     דברו איתנו בוואטסאפ

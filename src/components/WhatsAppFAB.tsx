@@ -18,7 +18,9 @@ const WhatsAppFAB = () => {
     rel="noopener noreferrer"
     initial={{ scale: 0 }}
     animate={{ scale: 1 }}
-    transition={{ delay: 2, type: "spring", stiffness: 200 }}
+    // Critically damped: this button arrives on a timer, not off a flick,
+    // so overshoot would be motion the gesture never earned.
+    transition={{ delay: 2, type: "spring", stiffness: 200, damping: 20 }}
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.95 }}
     className="fixed z-50 flex items-center gap-2 bg-[hsl(var(--whatsapp))] hover:bg-[hsl(var(--whatsapp-deep))] text-white font-bold px-5 py-3 rounded-full shadow-lg transition-[bottom,right] duration-500 ease-out"

@@ -110,6 +110,9 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Rubik Variable', 'Rubik', sans-serif;
+    /* Rubik ships as a variable font — let it pick the optical size for the
+       rendered size instead of drawing one master at every scale. */
+    font-optical-sizing: auto;
     touch-action: manipulation;
     -webkit-tap-highlight-color: hsl(var(--accent) / 0.15);
   }
@@ -131,6 +134,42 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
+    }
+  }
+
+  /* Reduced transparency: the translucent chrome (nav, sticky bar, popup
+     scrims) becomes frosted-solid. Blur is the first thing to go — it is
+     what costs legibility for the people who ask for this. */
+  @media (prefers-reduced-transparency: reduce) {
+    nav,
+    [class*="backdrop-blur"],
+    [style*="backdropFilter"],
+    [style*="backdrop-filter"] {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    nav {
+      background-color: hsl(var(--background)) !important;
+    }
+    [role="dialog"] {
+      background-color: hsl(var(--background)) !important;
+    }
+  }
+
+  /* High contrast: near-solid surfaces with a defined, contrasting border,
+     so edges are readable without relying on shadow or translucency. */
+  @media (prefers-contrast: more) {
+    nav,
+    [role="dialog"],
+    .bg-card {
+      background-color: hsl(var(--background)) !important;
+      border: 1px solid hsl(var(--foreground)) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    :focus-visible {
+      outline: 3px solid hsl(var(--foreground)) !important;
+      outline-offset: 2px;
     }
   }
 

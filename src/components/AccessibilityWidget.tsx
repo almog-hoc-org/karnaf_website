@@ -131,7 +131,7 @@ const AccessibilityWidget = () => {
         onClick={() => setIsOpen(true)}
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        transition={{ delay: 2.2, type: "spring", stiffness: 200 }}
+        transition={{ delay: 2.2, type: "spring", stiffness: 200, damping: 20 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         className="fixed left-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 transition-[bottom,colors] duration-500 ease-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"

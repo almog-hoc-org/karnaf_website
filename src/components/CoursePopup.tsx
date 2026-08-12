@@ -208,7 +208,7 @@ const CoursePopup = () => {
             </div>
 
             <div className="px-7 pb-8 pt-6 text-center">
-              <span className="inline-flex items-center gap-2 rounded-full bg-accent/12 border border-accent/25 px-3.5 py-1.5 text-eyebrow font-bold uppercase tracking-[0.14em] text-accent">
+              <span className="inline-flex items-center gap-2 rounded-full bg-accent/12 border border-accent/25 px-3.5 py-1.5 text-eyebrow font-bold uppercase tracking-[0.18em] text-accent">
                 <PlayCircle size={14} />
                 הקורס הדיגיטלי המקיף בישראל
               </span>

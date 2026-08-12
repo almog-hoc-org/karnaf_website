@@ -285,7 +285,7 @@ const Navigation = () => {
                 transition={{ delay: 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="flex flex-col items-center gap-3 py-2"
               >
-                <span className="text-eyebrow uppercase tracking-[0.24em] text-muted-foreground">
+                <span className="text-eyebrow uppercase tracking-[0.28em] text-muted-foreground">
                   השירותים שלנו
                 </span>
                 {serviceItems.map((item) => (

@@ -97,7 +97,7 @@ export const TransactionLifecycle = ({ progress, steps = DEFAULT_STEPS }: Transa
               </div>
               <div className="text-center">
                 <div
-                  className="font-mono text-[10px] uppercase tracking-[0.22em] mb-1"
+                  className="font-mono text-[10px] uppercase tracking-[0.28em] mb-1"
                   style={{ color: "hsl(var(--accent))" }}
                 >
                   {s.num}
@@ -106,7 +106,7 @@ export const TransactionLifecycle = ({ progress, steps = DEFAULT_STEPS }: Transa
                   {s.label}
                 </div>
                 <div
-                  className="text-[11px] font-mono uppercase tracking-[0.14em]"
+                  className="text-[11px] font-mono uppercase tracking-[0.18em]"
                   style={{ color: "hsl(36 33% 95% / 0.55)" }}
                 >
                   {s.duration}

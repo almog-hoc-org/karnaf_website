@@ -79,7 +79,7 @@ const Hero = () => {
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-eyebrow uppercase tracking-[0.32em] mb-6 flex items-center gap-3"
+              className="text-eyebrow uppercase tracking-[0.28em] mb-6 flex items-center gap-3"
               style={{ color: "hsl(36 33% 95% / 0.7)" }}
             >
               <span className="block w-10 h-px bg-accent" aria-hidden />
@@ -207,7 +207,7 @@ const Hero = () => {
         initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.6 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-eyebrow uppercase tracking-[0.32em] flex flex-col items-center gap-2"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-eyebrow uppercase tracking-[0.28em] flex flex-col items-center gap-2"
         style={{ color: "hsl(36 33% 95% / 0.5)" }}
         aria-hidden
       >

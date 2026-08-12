@@ -442,7 +442,7 @@ const PremiumPage = () => {
                   <div className="text-display-sm md:text-display-md text-foreground tabular-nums leading-none mb-1">
                     {s.v}
                   </div>
-                  <div className="text-eyebrow uppercase tracking-[0.16em] text-muted-foreground">
+                  <div className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
                     {s.l}
                   </div>
                 </div>
