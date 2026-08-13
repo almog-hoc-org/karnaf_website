@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X, PlayCircle, ArrowLeft } from "lucide-react";
 import mascot from "@/assets/mascot/mascot-thumbsup.webp";
-import { CHECKOUT_URL } from "@/lib/constants";
-import { buildCheckoutUrl } from "@/lib/checkout";
 import { PARTS_LABEL, CHAPTERS_LABEL } from "@/data/courseStats";
-import { gaFreePreview } from "@/lib/analytics";
+import { gaCoursePopup } from "@/lib/analytics";
 import {
   COURSE_POPUP_SEEN_KEY,
   isDiscoveryPath,
@@ -30,33 +28,23 @@ const TICK_MS = 1000;
 const HANDOFF_COOLDOWN_MS = 45_000;
 
 /**
- * Invites engaged visitors to watch the course's opening lesson for free.
- * The free lesson lives behind the same hosted-checkout URL as the purchase
- * itself, so this is not a second funnel — it's permission to click for
- * someone still deciding.
+ * Invites engaged visitors to look inside the course before deciding.
+ * It promises only what the course page actually gives away for free — the
+ * full syllabus and the explainer video — and links there, not to checkout.
  *
  * Earning the interruption: discovery pages only, 100 seconds of *foreground*
  * time (a forgotten background tab has survived nothing), at most once a week,
  * and never before the webinar popup has had its turn.
  *
- * The CTA deliberately reports free_preview rather than begin_checkout, and
- * carries data-no-btn-track so PixelTracker's global listener leaves it alone:
- * a preview click is curiosity, and letting it masquerade as purchase intent
- * would teach the ad platforms to buy browsers instead of buyers.
+ * The CTA reports course_popup, never begin_checkout: this is curiosity, not
+ * purchase intent, and letting it masquerade as the latter would teach the ad
+ * platforms to buy browsers instead of buyers.
  */
 const CoursePopup = () => {
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const { pathname } = useLocation();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  // SSG renders the plain checkout URL; the attribution-enriched one replaces
-  // it after hydration, same pattern as the sales page's purchase CTAs.
-  const [href, setHref] = useState(CHECKOUT_URL);
-
-  useEffect(() => {
-    setHref(buildCheckoutUrl({ preview: true }));
-  }, []);
-
   useEffect(() => {
     if (!isDiscoveryPath(pathname) || shownWithin(COURSE_POPUP_SEEN_KEY)) return;
 
@@ -86,7 +74,7 @@ const CoursePopup = () => {
       // the effect and firing a second "shown" for one impression.
       markShown(COURSE_POPUP_SEEN_KEY);
       setOpen(true);
-      gaFreePreview("shown");
+      gaCoursePopup("shown");
     };
 
     const timer = window.setInterval(() => {
@@ -118,12 +106,12 @@ const CoursePopup = () => {
   };
 
   const dismiss = () => {
-    gaFreePreview("dismissed");
+    gaCoursePopup("dismissed");
     close();
   };
 
   const accept = () => {
-    gaFreePreview("accepted");
+    gaCoursePopup("accepted");
     close();
   };
 
@@ -165,7 +153,7 @@ const CoursePopup = () => {
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label="צפייה בשיעור הראשון של הקורס הדיגיטלי"
+            aria-label="הסילבוס המלא של הקורס הדיגיטלי"
             dir="rtl"
             className="relative w-full max-w-md overflow-hidden rounded-3xl bg-background shadow-depth-4 border border-border"
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 24 }}
@@ -222,24 +210,21 @@ const CoursePopup = () => {
                 ״המדריך המעשי לרכישת דירה״ — {PARTS_LABEL}, {CHAPTERS_LABEL}{" "}
                 ו-6+ מחשבונים שהופכים כל החלטה למספרים.{" "}
                 <span className="font-bold text-foreground">
-                  השיעור הראשון פתוח לצפייה.
+                  הסילבוס המלא וסרטון ההסבר פתוחים לצפייה.
                 </span>
               </p>
 
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-no-btn-track
+              <Link
+                to="/course"
                 onClick={accept}
                 className="group mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg h-14 px-5 whitespace-nowrap shadow-[0_0_50px_hsl(var(--accent)/0.4)] transition-all active:scale-[0.98]"
               >
-                לצפייה בשיעור הראשון חינם
+                לצפייה בסילבוס המלא
                 <ArrowLeft
                   size={20}
                   className="transition-transform group-hover:-translate-x-1"
                 />
-              </a>
+              </Link>
 
               <button
                 onClick={dismiss}
