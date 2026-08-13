@@ -136,12 +136,12 @@ export function gaVideoProgress(percent: number): void {
 }
 
 /**
- * Free-lesson preview offer shown / accepted. Deliberately NOT begin_checkout:
- * a preview click is curiosity, not purchase intent, and folding the two
- * together would teach the ad platforms to optimise for browsers over buyers.
+ * Course-invite popup shown / accepted. Deliberately NOT begin_checkout: this
+ * is curiosity, not purchase intent, and folding the two together would teach
+ * the ad platforms to optimise for browsers over buyers.
  */
-export function gaFreePreview(action: "shown" | "accepted" | "dismissed"): void {
-  gtag("event", "free_preview", { action });
+export function gaCoursePopup(action: "shown" | "accepted" | "dismissed"): void {
+  gtag("event", "course_popup", { action });
 }
 
 /** Scroll milestones (mirrors the Meta Pixel scroll-depth events). */
