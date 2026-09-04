@@ -121,7 +121,7 @@ const PricingCard = () => {
           <blockquote className="text-sm text-muted-foreground leading-relaxed">
             {personalized
               ? personalized.testimonial.quote
-              : "״רכשתי דירה מתחת למחיר השוק בזכות הכלים שקיבלתי.״"}
+              : "״רכשתי דירה מתחת למחיר השוק בזכות מה שלמדתי בתוכנית.״"}
           </blockquote>
           <figcaption className="text-xs font-bold text-foreground mt-1">
             {personalized ? personalized.testimonial.author : "— נועם ד., בוגר התוכנית"}
