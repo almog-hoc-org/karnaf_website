@@ -8,7 +8,7 @@ import SEOHead, {
   faqPageSchema,
 } from "@/components/SEOHead";
 import { Head } from "vite-react-ssg";
-import { BookOpen, Calculator, Sparkles, ArrowLeft } from "lucide-react";
+import { BookOpen, FileText, MessageCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -29,7 +29,6 @@ import PricingCard from "@/components/course/PricingCard";
 import PriceContext from "@/components/course/PriceContext";
 import MistakeCards from "@/components/course/MistakeCards";
 import NotYourFault from "@/components/course/NotYourFault";
-import ToolsShowcase from "@/components/course/ToolsShowcase";
 import AssuranceBlock from "@/components/course/AssuranceBlock";
 import FinalClose from "@/components/course/FinalClose";
 import CoursePriceBar from "@/components/course/CoursePriceBar";
@@ -49,7 +48,7 @@ import foundersImg from "@/assets/team/itamar-almog-about.webp";
 
 /*
  * Sales page — product-first spine (owner round 3):
- * hero → explainer video → the vehicle (syllabus, tools) → amplification
+ * hero → explainer video → the vehicle (syllabus) → amplification
  * (cost of the mistake) → relief (not your fault) → empathy+authority
  * (our experience) → future pacing → proof numbers → testimonials →
  * self-selection (quiz) → price choreography → safety → objections →
@@ -82,8 +81,8 @@ const preparedSteps: LifecycleStep[] = [
 /* Program section — compact feature strip. */
 const featureStrip = [
   { icon: BookOpen, text: "שיעורים קצרים וחדים של 3-10 דקות, צעד אחר צעד — מהתקציב ועד המפתח" },
-  { icon: Calculator, text: "6+ מחשבונים וכלים שהופכים כל החלטה למספרים" },
-  { icon: Sparkles, text: "קהילת תלמידים ובוגרים פעילה — לומדים לבד, לא בודדים" },
+  { icon: FileText, text: "מסמכים, תבניות ובוחני ידע בסוף כל פרק" },
+  { icon: MessageCircle, text: "שאלה לפני שרוכשים? עונים בוואטסאפ, בלי לחץ מכירתי" },
 ];
 
 const courseTestimonials = testimonials.filter((t) => t.service === "course");
@@ -150,7 +149,6 @@ const CoursePage = () => {
   const storyRef = useSectionView<HTMLElement>("story");
   const transformationRef = useSectionView<HTMLElement>("transformation");
   const curriculumRef = useSectionView<HTMLElement>("curriculum");
-  const toolsRef = useSectionView<HTMLElement>("tools");
   const testimonialsRef = useSectionView<HTMLElement>("testimonials");
   const quizRef = useSectionView<HTMLElement>("quiz");
   const priceRef = useSectionView<HTMLElement>("price_context");
@@ -160,9 +158,9 @@ const CoursePage = () => {
     <>
       <SEOHead
         title="המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל | קרנף נדל״ן"
-        description="הקורס הדיגיטלי המקיף בישראל לרכישת דירה: 3 חלקים ו-15 פרקים שמכסים את כל הדרך, בשיעורים קצרים של 3-10 דקות, עם 6+ מחשבונים מתקדמים (משכנתא, מס רכישה, מס שבח, תשואה על הון). ₪950, גישה מיידית ל-12 חודשים — לגמרי בקצב שלכם."
+        description="הקורס הדיגיטלי המקיף בישראל לרכישת דירה: 3 חלקים ו-15 פרקים שמכסים את כל הדרך, בשיעורים קצרים של 3-10 דקות. ₪950, גישה מיידית ל-12 חודשים — לגמרי בקצב שלכם."
         path="/course"
-        keywords="קורס נדל״ן, קורס נדל״ן דיגיטלי, המדריך המעשי לרכישת דירה, הדרך לדירה, דירה ראשונה, מחשבון משכנתא, מס רכישה, השקעה בנדל״ן"
+        keywords="קורס נדל״ן, קורס נדל״ן דיגיטלי, המדריך המעשי לרכישת דירה, הדרך לדירה, דירה ראשונה, מס רכישה, השקעה בנדל״ן"
         jsonLd={[
           organizationSchema,
           courseSchema,
@@ -239,13 +237,13 @@ const CoursePage = () => {
               >
                 רוב הישראלים נכנסים לעסקה הגדולה בחייהם בלי הכנה, ומגלים את המחיר
                 של זה שנים אחר כך. ״המדריך המעשי לרכישת דירה״ מכניס אתכם לחדר עם
-                הידע, הכלים והביטחון של הצד שהגיע מוכן.
+                הידע, השיטה והביטחון של הצד שהגיע מוכן.
               </p>
             </Reveal>
 
             <Reveal delay={0.24}>
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm">
-                3 חלקים · 15 פרקים · 6+ כלים · גישה מיידית
+                3 חלקים · 15 פרקים · גישה מיידית
               </div>
             </Reveal>
 
@@ -360,23 +358,6 @@ const CoursePage = () => {
             </Reveal>
           </div>
           <CheckoutCta label="פותחים גישה לכל השיעורים" location="curriculum" />
-        </div>
-      </SectionDark>
-
-      {/* S7 — the tools. Follows another dark section, so it uses the
-          small rhythm: two stacked dark sections must not leave a dead gap. */}
-      <SectionDark size="sm" glow="none">
-        <div ref={toolsRef} className="container mx-auto px-6 max-w-6xl">
-          <Reveal>
-            <h2 className="text-display-md md:text-display-lg text-white mb-5 text-center max-w-3xl mx-auto">
-              כל החלטה בעסקה —
-              <br />
-              <span className="text-accent">הופכת למספר.</span>
-            </h2>
-          </Reveal>
-          <div className="mt-10">
-            <ToolsShowcase />
-          </div>
         </div>
       </SectionDark>
 
