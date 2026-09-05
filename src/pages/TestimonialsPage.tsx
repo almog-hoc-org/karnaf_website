@@ -12,6 +12,12 @@ import SEOHead, {
   reviewSchema,
 } from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
+import {
+  TOTAL_CLIENTS_STAT,
+  TOTAL_CLIENTS_LABEL,
+  YEARS_EXPERIENCE_STAT,
+  YEARS_EXPERIENCE_LABEL,
+} from "@/data/companyStats";
 
 const TestimonialsPage = () => {
   const courseTestimonials = testimonials.filter((t) => t.service === "course");
@@ -61,18 +67,18 @@ const TestimonialsPage = () => {
           <div className="grid grid-cols-2 gap-8 max-w-md mx-auto text-center">
             <Reveal>
               <p className="text-display-md text-foreground tabular-nums leading-none">
-                375<span className="text-accent">+</span>
+                {TOTAL_CLIENTS_STAT}
               </p>
               <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mt-2">
-                לקוחות בתוכניות השונות
+                {TOTAL_CLIENTS_LABEL}
               </p>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="text-display-md text-foreground tabular-nums leading-none">
-                8<span className="text-accent">+</span>
+                {YEARS_EXPERIENCE_STAT}
               </p>
               <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mt-2">
-                שנות ניסיון
+                {YEARS_EXPERIENCE_LABEL}
               </p>
             </Reveal>
           </div>

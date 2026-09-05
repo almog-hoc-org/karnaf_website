@@ -45,6 +45,15 @@ import { trackInitiateCheckout } from "@/lib/pixel";
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
 import foundersImg from "@/assets/team/itamar-almog-about.webp";
+import {
+  TOTAL_CLIENTS_STAT,
+  TOTAL_CLIENTS_LABEL,
+  YEARS_EXPERIENCE_STAT,
+  YEARS_EXPERIENCE_LABEL,
+  COURSE_STUDENTS_STAT,
+  COURSE_STUDENTS_LABEL,
+  ACTIVE_SINCE,
+} from "@/data/companyStats";
 
 /*
  * Sales page — product-first spine (owner round 3):
@@ -62,10 +71,10 @@ const COURSE_VIDEO_ID = "1213042212";
 
 /* S2 — authority stats: the guide's credentials, not the product's specs. */
 const authorityStats = [
-  { value: "375+", label: "עסקאות מלוות" },
-  { value: "8+", label: "שנות מחקר שוק" },
-  { value: "328", label: "לקוחות בקורסים השונים" },
-  { value: "2017", label: "פועלים מאז" },
+  { value: TOTAL_CLIENTS_STAT, label: TOTAL_CLIENTS_LABEL },
+  { value: YEARS_EXPERIENCE_STAT, label: YEARS_EXPERIENCE_LABEL },
+  { value: COURSE_STUDENTS_STAT, label: COURSE_STUDENTS_LABEL },
+  { value: `${ACTIVE_SINCE}`, label: "פועלים מאז" },
 ];
 
 /* S5 — the same journey, replayed with the prepared version of you. */
@@ -411,8 +420,9 @@ const CoursePage = () => {
               className="text-body-lg leading-relaxed mb-6 max-w-2xl mx-auto"
               style={{ color: "hsl(36 33% 95% / 0.78)" }}
             >
-              אנחנו בתוך שוק הנדל״ן מאז 2017 — מהעסקה הראשונה שעשינו בעצמנו
-              ועד 375+ העסקאות שליווינו. אחרי מאות עסקאות לומדים לזהות מהר
+              אנחנו בתוך שוק הנדל״ן מאז {ACTIVE_SINCE} — מהעסקה הראשונה שעשינו בעצמנו
+              ועד {TOTAL_CLIENTS_STAT} הלקוחות והתלמידים שעברו אצלנו. אחרי מאות ליוויים
+              וניתוחי עסקאות לומדים לזהות מהר
               מחיר מנופח, תמהיל שגוי וסעיף בעייתי בחוזה — ולדעת בדיוק מה
               בודקים לפני שחותמים. את כל הניסיון הזה ארזנו לשיטה אחת
               שמבוססת על נתונים, לא על תחושות בטן — והיא כולה בתוך

@@ -6,6 +6,13 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
+import { TOTAL_CHAPTERS } from "@/data/courseStats";
+import {
+  TOTAL_CLIENTS_STAT,
+  TOTAL_CLIENTS_LABEL,
+  YEARS_EXPERIENCE_STAT,
+  YEARS_EXPERIENCE_LABEL,
+} from "@/data/companyStats";
 
 const Hero = () => {
   const reduce = useReducedMotion();
@@ -177,15 +184,15 @@ const Hero = () => {
         >
           <div>
             <div className="text-display-md text-white tabular-nums leading-none mb-1">
-              375+
+              {TOTAL_CLIENTS_STAT}
             </div>
             <div className="text-eyebrow uppercase tracking-[0.18em]">
-              עסקאות מלוות
+              {TOTAL_CLIENTS_LABEL}
             </div>
           </div>
           <div>
             <div className="text-display-md text-white tabular-nums leading-none mb-1">
-              15
+              {TOTAL_CHAPTERS}
             </div>
             <div className="text-eyebrow uppercase tracking-[0.18em]">
               פרקים בקורס
@@ -193,10 +200,10 @@ const Hero = () => {
           </div>
           <div>
             <div className="text-display-md text-white tabular-nums leading-none mb-1">
-              8+
+              {YEARS_EXPERIENCE_STAT}
             </div>
             <div className="text-eyebrow uppercase tracking-[0.18em]">
-              שנות מחקר
+              {YEARS_EXPERIENCE_LABEL}
             </div>
           </div>
         </motion.div>

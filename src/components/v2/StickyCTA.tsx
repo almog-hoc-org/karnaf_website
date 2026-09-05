@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useWhatsAppLink } from "@/hooks/use-whatsapp-link";
+import { setBottomBarHeight } from "@/lib/bottomBar";
 
 interface StickyCTAProps {
   label?: string;
@@ -40,12 +41,9 @@ export const StickyCTA = ({
       typeof window !== "undefined" &&
       window.matchMedia("(min-width: 768px)").matches;
     const showing = visible && !hidden && isDesktop;
-    document.documentElement.style.setProperty(
-      "--sticky-cta-h",
-      showing ? "72px" : "0px"
-    );
+    setBottomBarHeight("sticky-cta", showing ? 72 : 0);
     return () => {
-      document.documentElement.style.setProperty("--sticky-cta-h", "0px");
+      setBottomBarHeight("sticky-cta", 0);
     };
   }, [visible, hidden]);
 

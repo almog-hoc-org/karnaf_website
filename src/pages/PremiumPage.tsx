@@ -31,6 +31,12 @@ import SEOHead, {
 } from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
 import foundersImg from "@/assets/program/founders.png";
+import {
+  TOTAL_CLIENTS_STAT,
+  TOTAL_CLIENTS_LABEL,
+  YEARS_EXPERIENCE_STAT,
+  YEARS_EXPERIENCE_LABEL,
+} from "@/data/companyStats";
 
 /* CRM classification for this funnel — change here if the CRM expects
    a different value for investor-guidance leads. */
@@ -168,17 +174,11 @@ const InvestorForm = () => {
       setIsSubmitted(true);
       toast({ title: "הפרטים נשלחו!", description: "נחזור אליכם לתיאום פגישת היכרות." });
     } catch {
+      // Keep what they typed — a failed send must not wipe four fields.
       toast({ title: "שגיאה בשליחה", description: "נסו שוב או דברו איתנו בוואטסאפ.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }
-    setTimeout(() => {
-      setName("");
-      setPhone("");
-      setEmail("");
-      setEquity("");
-      setIsSubmitted(false);
-    }, 3500);
   };
 
   if (isSubmitted) {
@@ -434,8 +434,8 @@ const PremiumPage = () => {
           <Reveal delay={0.2}>
             <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mt-14 text-center">
               {[
-                { v: "375+", l: "לקוחות מלווים" },
-                { v: "8+", l: "שנות ניסיון" },
+                { v: TOTAL_CLIENTS_STAT, l: TOTAL_CLIENTS_LABEL },
+                { v: YEARS_EXPERIENCE_STAT, l: YEARS_EXPERIENCE_LABEL },
                 { v: "1:1", l: "ליווי אישי" },
               ].map((s) => (
                 <div key={s.l}>

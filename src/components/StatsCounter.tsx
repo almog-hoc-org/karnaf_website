@@ -1,26 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/v2/Reveal";
-import { Sparkline } from "@/components/v2/Sparkline";
+import { TOTAL_CHAPTERS } from "@/data/courseStats";
+import {
+  TOTAL_CLIENTS,
+  TOTAL_CLIENTS_LABEL,
+  YEARS_EXPERIENCE,
+  YEARS_EXPERIENCE_LABEL,
+} from "@/data/companyStats";
 
+/* Real numbers only — no invented growth curves, no lesson counts
+   (courseStats.ts: lessons are deliberately not counted in site copy). */
 const stats = [
-  {
-    value: 375,
-    suffix: "+",
-    label: "לקוחות מרוצים",
-    trend: [40, 70, 105, 145, 180, 220, 265, 300, 340, 375],
-  },
-  {
-    value: 50,
-    suffix: "+",
-    label: "שיעורים בקורס",
-    trend: [12, 18, 22, 28, 32, 38, 42, 46, 48, 50],
-  },
-  {
-    value: 8,
-    suffix: "+",
-    label: "שנות מחקר",
-    trend: [1, 2, 3, 4, 5, 6, 7, 8, 8, 8],
-  },
+  { value: TOTAL_CLIENTS, suffix: "+", label: TOTAL_CLIENTS_LABEL },
+  { value: TOTAL_CHAPTERS, suffix: "", label: "פרקים בקורס הדיגיטלי" },
+  { value: YEARS_EXPERIENCE, suffix: "+", label: YEARS_EXPERIENCE_LABEL },
 ];
 
 const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
@@ -119,10 +112,6 @@ const StatsCounter = () => {
                 )}
 
                 <Counter value={stat.value} suffix={stat.suffix} />
-
-                <div className="mt-4 hidden md:flex justify-center">
-                  <Sparkline values={stat.trend} width={120} height={28} />
-                </div>
 
                 <div className="mt-4 md:mt-3 flex flex-col items-center gap-2">
                   <span

@@ -6,6 +6,10 @@ import { hasSeenPricing, PRICING_SEEN_EVENT } from "@/lib/pricingState";
 import { useQuizContext } from "@/hooks/use-quiz-context";
 import { gaBeginCheckout, gaStickyBar } from "@/lib/analytics";
 import { trackInitiateCheckout } from "@/lib/pixel";
+import { setBottomBarHeight } from "@/lib/bottomBar";
+
+/** Bar row height (h-16) — published so floating widgets lift above it. */
+const BAR_HEIGHT_PX = 64;
 
 /**
  * Sticky purchase bar for the sales page. It is state-aware: before the
@@ -61,6 +65,14 @@ const CoursePriceBar = () => {
       gaStickyBar("impression", pricingSeen ? "post_pricing" : "pre_pricing");
     }
   }, [visible, impressionSent, pricingSeen]);
+
+  // Tell the floating widgets a bar is occupying the bottom edge, so the
+  // accessibility button lifts above it and the WhatsApp FAB steps aside
+  // instead of covering the price and the purchase button on mobile.
+  useEffect(() => {
+    setBottomBarHeight("course-price-bar", visible ? BAR_HEIGHT_PX : 0);
+    return () => setBottomBarHeight("course-price-bar", 0);
+  }, [visible]);
 
   const showScore = quiz && quiz.fit !== "low";
 

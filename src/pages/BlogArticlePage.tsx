@@ -10,6 +10,7 @@ import VideoPlayer from "@/components/rich-media/VideoPlayer";
 import ReactMarkdown from "react-markdown";
 import { articles } from "@/data/articles";
 import { CHAPTERS_LABEL } from "@/data/courseStats";
+import { COURSE_PRICE } from "@/lib/constants";
 import BigCTA from "@/components/BigCTA";
 import { Reveal } from "@/components/v2/Reveal";
 
@@ -149,7 +150,7 @@ const BlogArticlePage = () => {
               <div className="relative z-10 flex-1 text-center sm:text-right">
                 <h3 className="text-xl md:text-2xl font-bold mb-1 tracking-[-0.015em]">רוצים ללמוד עוד?</h3>
                 <p className="text-white/70 text-sm md:text-base">
-                  {CHAPTERS_LABEL} מקיפים ומחשבונים מתקדמים בקורס "המדריך המעשי לרכישת דירה" — ₪950
+                  {CHAPTERS_LABEL} מקיפים, מסמכים ותבניות לעבודה — בקורס "המדריך המעשי לרכישת דירה" — ₪{COURSE_PRICE.toLocaleString("he-IL")}
                 </p>
               </div>
               <Link to="/course" className="relative z-10">

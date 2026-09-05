@@ -25,7 +25,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const courseBullets = [
   `${CHAPTERS_LABEL} מקיפים — גישה מיידית לכולם`,
-  "מחשבונים וכלים חכמים",
+  "מסמכים, תבניות ובוחני ידע בכל פרק",
   "12 חודשי גישה — לגמרי בקצב שלכם",
 ];
 
