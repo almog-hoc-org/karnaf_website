@@ -2,6 +2,7 @@ import PageHero from "@/layouts/PageHero";
 import { team } from "@/data/team";
 import StatsCounter from "@/components/StatsCounter";
 import BigCTA from "@/components/BigCTA";
+import { ResearchWaitlistStrip } from "@/components/ResearchWaitlist";
 import { Reveal } from "@/components/v2/Reveal";
 import SEOHead, { organizationSchema, breadcrumbSchema } from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
@@ -113,6 +114,11 @@ const AboutPage = () => {
                 </div>
               </Reveal>
             ))}
+          </div>
+
+          {/* What comes next — the research subscription waitlist */}
+          <div className="mt-14 max-w-3xl mx-auto">
+            <ResearchWaitlistStrip />
           </div>
         </div>
       </section>

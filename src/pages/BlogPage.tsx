@@ -4,6 +4,7 @@ import { Play, FileText, Wrench, ArrowLeft, Clock } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
 import { articles } from "@/data/articles";
 import { Reveal } from "@/components/v2/Reveal";
+import WebinarCapture from "@/components/WebinarCapture";
 import SEOHead, {
   organizationSchema,
   breadcrumbSchema,
@@ -199,6 +200,13 @@ const BlogPage = () => {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* The blog is the top of the cold funnel — leave with something. */}
+      <section className="py-section-md bg-card border-t border-border">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <WebinarCapture source="blog-index" />
         </div>
       </section>
     </>

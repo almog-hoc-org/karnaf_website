@@ -7,6 +7,7 @@ import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
 import { TOTAL_CHAPTERS } from "@/data/courseStats";
+import { COURSE_PRICE } from "@/lib/constants";
 import {
   TOTAL_CLIENTS_STAT,
   TOTAL_CLIENTS_LABEL,
@@ -120,22 +121,25 @@ const Hero = () => {
               className="text-body-lg leading-relaxed max-w-[52ch] mb-10"
               style={{ color: "hsl(36 33% 95% / 0.78)" }}
             >
-              שני מסלולים, מטרה אחת: הקורס הדיגיטלי המקיף בישראל שמלמד אתכם
-              לעשות את זה לבד — או ליווי אישי 1:1 עד שהמפתח בידיים שלכם.
+              הקורס הדיגיטלי המקיף בישראל מלמד אתכם לעשות את זה לבד, צעד אחר
+              צעד — מהתקציב ועד המפתח. ולמי שמעדיף שמישהו יעבור את הדרך איתו:
+              ליווי אישי 1:1 עד החתימה.
             </motion.p>
 
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.95 }}
-              className="flex flex-wrap items-center gap-4"
+              className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-4 sm:gap-6"
             >
-              <Link to="/course" className="inline-block">
+              {/* One primary door. The second track stays one click away as
+                  a text link, so the first screen asks for a single decision. */}
+              <Link to="/course" className="inline-block w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all"
+                  className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all w-full sm:w-auto"
                 >
-                  לקורס הדיגיטלי
+                  לתוכנית הדיגיטלית — ₪{COURSE_PRICE.toLocaleString("he-IL")}
                   <span
                     aria-hidden
                     className="inline-block transition-transform group-hover:-translate-x-1"
@@ -144,14 +148,12 @@ const Hero = () => {
                   </span>
                 </Button>
               </Link>
-              <Link to="/premium" className="inline-block">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="inline-flex items-center gap-3 border-white/40 bg-white/5 text-white hover:bg-white hover:text-primary font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all backdrop-blur-sm"
-                >
-                  ליווי משקיעים 1:1
-                </Button>
+              <Link
+                to="/premium"
+                className="inline-flex items-center gap-2 text-white/85 hover:text-white font-semibold underline-offset-4 hover:underline min-h-[44px]"
+              >
+                מחפשים ליווי אישי 1:1 למשקיעים?
+                <span aria-hidden>←</span>
               </Link>
             </motion.div>
           </div>

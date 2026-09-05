@@ -12,6 +12,7 @@ import {
   gaBeginCheckout,
 } from "@/lib/analytics";
 import { trackInitiateCheckout } from "@/lib/pixel";
+import WebinarCapture from "@/components/WebinarCapture";
 import {
   saveQuizContext,
   type QuizConcern,
@@ -288,16 +289,17 @@ const FitQuiz = () => {
               <>
                 <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
                   לפי מה שעניתם, אתם עדיין לא בתוך תהליך רכישה — והתוכנית באמת
-                  תיתן לכם הרבה יותר כשתהיו. עד אז תעקבו אחרינו: יש לנו מספיק
-                  תוכן חינמי כדי להתחיל להתמצא.
+                  תיתן לכם הרבה יותר כשתהיו. עד אז, הצעד הנכון הוא שעה אחת של
+                  יסודות — בחינם.
                 </p>
+                <div className="w-full max-w-lg mx-auto text-right">
+                  <WebinarCapture
+                    source="course-quiz-early"
+                    variant="inline"
+                    title="שריינו מקום בוובינר החינמי"
+                  />
+                </div>
                 <div className="flex flex-col items-center gap-3">
-                  <a
-                    href="/blog"
-                    className="inline-flex items-center gap-2 font-bold text-primary underline-offset-4 hover:underline"
-                  >
-                    למאמרים והמדריכים שלנו ←
-                  </a>
                   <a
                     href={botLink("התוכנית הדיגיטלית — בדיקת התאמה")}
                     target="_blank"

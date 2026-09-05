@@ -11,8 +11,8 @@ import {
   shownWithin,
   tryAcquire,
 } from "@/lib/popupCoordinator";
+import { WEBINAR_URL } from "@/lib/constants";
 
-const WEBINAR_URL = "https://webinar.karnafnadlan.com";
 const SCROLL_TRIGGER = 0.5; // fire after half the page is read
 
 /** Identifies this dialog in the shared single-popup slot. */

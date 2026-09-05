@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { WEBINAR_URL } from "@/lib/constants";
 
 const FooterBar = () => (
   <footer className="py-8 border-t border-border">
@@ -17,6 +18,14 @@ const FooterBar = () => (
           >
             המדריך המעשי לרכישת דירה
           </Link>
+          <a
+            href={WEBINAR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
+          >
+            וובינר חינם
+          </a>
           <Link
             to="/about"
             className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"

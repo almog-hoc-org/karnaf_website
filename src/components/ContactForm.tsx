@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +27,12 @@ interface ContactFormProps {
   serviceOptions?: ServiceOption[] | null;
   /** Preselected service value reported with the lead when the select is hidden. */
   fixedService?: string;
+  /** Submit button text. */
+  submitLabel?: string;
+  /** "row" lays name + phone + button on one line (wide placements). */
+  layout?: "stack" | "row";
+  /** Render on a dark surface. */
+  dark?: boolean;
 }
 
 /**
@@ -37,7 +44,11 @@ const ContactForm = ({
   source = "website",
   serviceOptions = DEFAULT_SERVICE_OPTIONS,
   fixedService = "",
+  submitLabel = "בואו נדבר — בלי התחייבות",
+  layout = "stack",
+  dark = false,
 }: ContactFormProps) => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [service, setService] = useState("");
@@ -57,9 +68,12 @@ const ContactForm = ({
       toast({ title: PHONE_ERROR_MESSAGE, variant: "destructive" });
       return;
     }
+    const serviceValue = serviceOptions ? service : fixedService;
+    const thankYou = `/thank-you?src=${encodeURIComponent(source)}&service=${encodeURIComponent(serviceValue)}`;
+
     if (company.trim()) {
       // Honeypot filled — almost certainly a bot. Pretend success, submit nothing.
-      setIsSubmitted(true);
+      navigate(thankYou);
       return;
     }
 
@@ -68,17 +82,13 @@ const ContactForm = ({
       await submitWebsiteLead({
         name,
         phone,
-        service: serviceOptions ? service : fixedService,
+        service: serviceValue,
         source,
       });
+      // A dedicated URL: the ad platforms get a conversion page, the visitor
+      // gets a next step instead of a form that wipes itself after 3s.
       setIsSubmitted(true);
-      toast({ title: "הפרטים נשלחו בהצלחה!", description: "ניצור איתך קשר בהקדם." });
-      setTimeout(() => {
-        setName("");
-        setPhone("");
-        setService("");
-        setIsSubmitted(false);
-      }, 3000);
+      navigate(thankYou);
     } catch {
       toast({ title: "שגיאה בשליחה", description: "נסו שוב או צרו קשר בוואטסאפ.", variant: "destructive" });
     } finally {
@@ -106,16 +116,24 @@ const ContactForm = ({
     );
   }
 
+  const row = layout === "row";
+  const inputClass = `${dark ? "bg-white/95 border-white/10 text-foreground" : "bg-card border-border"} ${
+    row ? "h-12" : "h-14"
+  } px-5 rounded-full text-right`;
+
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
+    <form
+      className={row ? "flex flex-col sm:flex-row gap-3 relative" : "space-y-4 relative"}
+      onSubmit={handleSubmit}
+    >
       <Input
         autoComplete="name"
-        placeholder="שם מלא"
+        placeholder={row ? "שם" : "שם מלא"}
         aria-label="שם מלא"
         required
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="bg-card border-border h-14 px-5 rounded-full text-right"
+        className={`${inputClass} ${row ? "sm:flex-1" : ""}`}
       />
       <Input
         type="tel"
@@ -127,7 +145,7 @@ const ContactForm = ({
         dir="ltr"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
-        className="bg-card border-border h-14 px-5 rounded-full text-right"
+        className={`${inputClass} ${row ? "sm:flex-1" : ""}`}
       />
       {/* Honeypot — hidden from humans and screen readers, attractive to bots */}
       <div className="absolute w-px h-px overflow-hidden -m-px" aria-hidden="true">
@@ -160,14 +178,16 @@ const ContactForm = ({
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold h-14 text-lg gap-2 rounded-full"
+        className={`bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 rounded-full ${
+          row ? "h-12 px-6 whitespace-nowrap" : "w-full h-14 text-lg"
+        }`}
       >
         {isSubmitting ? (
           <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
         ) : (
           <>
             <Send size={18} />
-            בואו נדבר — בלי התחייבות
+            {submitLabel}
           </>
         )}
       </Button>

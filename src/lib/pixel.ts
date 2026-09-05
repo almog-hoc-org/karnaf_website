@@ -95,15 +95,49 @@ export const FORM_LABELS: Record<string, { name: string; category: string }> = {
   mortgage: { name: "טופס קרנף משכנתא", category: "ייעוץ משכנתא" },
   website: { name: "טופס יצירת קשר באתר", category: "יצירת קשר" },
   footer: { name: "טופס בתחתית העמוד", category: "יצירת קשר" },
+  "course-quiz-early": { name: "הרשמה לוובינר — שאלון ההתאמה (עוד מוקדם)", category: "וובינר" },
+  "course-not-today": { name: "הרשמה לוובינר — דף התוכנית (לא היום)", category: "וובינר" },
+  "home-paths": { name: "הרשמה לוובינר — דף הבית", category: "וובינר" },
+  "blog-index": { name: "הרשמה לוובינר — הבלוג", category: "וובינר" },
 };
+
+/**
+ * Relative lead values (ILS). Without a value every Lead looks the same to
+ * Meta — a ₪1M-equity investor and a webinar sign-up would train the same
+ * optimisation. These are weights, not revenue: tune them in one place.
+ */
+const LEAD_VALUES: Record<string, number> = {
+  "premium-investors": 5000,
+  mortgage: 1500,
+  website: 500,
+  footer: 500,
+  "course-quiz-early": 200,
+  "course-not-today": 200,
+  "home-paths": 200,
+  "blog-index": 200,
+};
+const DEFAULT_LEAD_VALUE = 300;
 
 /** ליד — נשלח כשמישהו משאיר פרטים בטופס בהצלחה. */
 export function trackLead(source: string, extra?: PixelParams): void {
   const label = FORM_LABELS[source] || { name: "טופס באתר", category: "כללי" };
+  // A waitlist for an unreleased product is interest, not a sales lead —
+  // keep it out of the Lead event so it never trains the ad optimisation.
+  if (source === "research-waitlist") {
+    fbq("trackCustom", "רשימת_המתנה", {
+      content_name: label.name,
+      content_category: label.category,
+      source,
+      ...extra,
+    });
+    return;
+  }
   fbq("track", "Lead", {
     content_name: label.name,
     content_category: label.category,
     source,
+    value: LEAD_VALUES[source] ?? DEFAULT_LEAD_VALUE,
+    currency: "ILS",
     ...extra,
   });
 }

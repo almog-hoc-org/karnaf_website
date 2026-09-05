@@ -21,6 +21,7 @@ const BlogPage = lazy(() => import("./pages/BlogPage"));
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 const BlogArticlePage = lazy(() => import("./pages/BlogArticlePage"));
 const ProgramPage = lazy(() => import("./pages/ProgramPage"));
+const ThankYouPage = lazy(() => import("./pages/ThankYouPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 /**
@@ -109,6 +110,13 @@ export const routes: RouteRecord[] = [
             element: <BlogArticlePage />,
             entry: "src/pages/BlogArticlePage.tsx",
             getStaticPaths: () => articles.map((a) => `blog/${a.slug}`),
+          },
+          {
+            // Post-submit page for every lead form (noindex) — the URL the
+            // ad platforms count as a Lead conversion.
+            path: "thank-you",
+            element: <ThankYouPage />,
+            entry: "src/pages/ThankYouPage.tsx",
           },
           {
             path: "*",

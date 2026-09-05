@@ -32,6 +32,7 @@ import NotYourFault from "@/components/course/NotYourFault";
 import AssuranceBlock from "@/components/course/AssuranceBlock";
 import FinalClose from "@/components/course/FinalClose";
 import CoursePriceBar from "@/components/course/CoursePriceBar";
+import WebinarCapture from "@/components/WebinarCapture";
 import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
 import { TransactionLifecycle, type LifecycleStep } from "@/components/v2/TransactionLifecycle";
@@ -642,6 +643,18 @@ const CoursePage = () => {
       <div ref={closeRef}>
         <FinalClose />
       </div>
+
+      {/* Safety net — after the close, never before it. A visitor who is
+          not buying today leaves a lead for the free webinar instead of
+          leaving nothing. */}
+      <section className="py-section-sm bg-card border-t border-border">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <WebinarCapture
+            source="course-not-today"
+            title="לא היום? נתחיל מהוובינר החינמי."
+          />
+        </div>
+      </section>
       <CoursePriceBar />
     </>
   );

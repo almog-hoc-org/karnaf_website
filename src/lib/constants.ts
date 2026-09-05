@@ -34,6 +34,9 @@ export const socialLinks = [
   { icon: Music, href: "https://open.spotify.com/show/5aAgSHORYUNfYtxsxY3Dc8", label: "Spotify", hoverColor: "hover:bg-green-500/20 hover:text-green-600 hover:border-green-500/50" },
 ];
 
+/** Registration page for the recurring free webinar (external landing page). */
+export const WEBINAR_URL = "https://webinar.karnafnadlan.com";
+
 export const TIKTOK_URL = "https://www.tiktok.com/@karnaf.nadlan";
 export const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@%D7%A7%D7%A8%D7%A0%D7%A3%D7%A0%D7%93%D7%9C%D7%9F";
 export const PHONE_NUMBER = "055-996-6175";
