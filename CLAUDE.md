@@ -15,7 +15,7 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 
 ## Architecture
 
-**Routing:** React Router v6 with lazy-loaded pages wrapped in `SharedLayout` (Navigation + FooterBar + WhatsApp FAB + Accessibility widget + Framer Motion page transitions).
+**Routing:** React Router v6 with lazy-loaded pages wrapped in `SharedLayout` (Navigation + FooterBar + WhatsApp FAB + Accessibility widget + Framer Motion page transitions). The desktop `StickyCTA` (course cross-sell) is hidden on `/contact`, `/course` and `/premium` — never downsell the 1:1 funnel.
 
 **Path alias:** `@/` → `src/`
 
@@ -23,12 +23,15 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 - `src/pages/` — route-level page components (Index, CoursePage, ServicesPage, etc.)
 - `src/components/` — shared components; `components/ui/` is shadcn/ui primitives
 - `src/layouts/SharedLayout.tsx` — wraps all routes with nav, footer, floating CTAs
-- `src/data/` — static content (articles, curriculum, FAQ, team, testimonials)
+- `src/data/` — static content (articles, curriculum, FAQ, team, testimonials). `companyStats.ts` is the single source for proof numbers (375+ לקוחות ותלמידים, 328 תלמידים, 8+ שנות ניסיון, מאז 2017) — one label per number, never hard-code them in copy
 - `src/lib/constants.ts` — WhatsApp numbers (bot + business), social links, contact info, course price + checkout URL seam
 - `src/lib/whatsapp.ts` — botLink/businessLink/premiumLink builders. Chat CTAs go to the CRM intake bot, with one deliberate exception: **every WhatsApp link on `/premium` opens the human business line** (`premiumLink()`), including site-wide chrome — nav, sticky bar and floating button resolve via `useWhatsAppLink` in `src/hooks/`
 - `src/lib/checkout.ts` — buildCheckoutUrl (Schooler URL + utm/click-id passthrough)
-- `src/lib/leadSubmission.ts` — dual lead delivery: Make/Sheets mirror + karnaf-crm intake
+- `src/lib/leadSubmission.ts` — dual lead delivery: Make/Sheets mirror + karnaf-crm intake. Every lead form navigates to `/thank-you?src=&service=` on success (`src/pages/ThankYouPage.tsx`, noindex) — that URL is the ad platforms' Lead conversion; `trackLead` in `lib/pixel.ts` attaches a relative `value` per source
 - `src/lib/analytics.ts` — env-gated GA4/Clarity loader + funnel events (mirrors Meta Pixel)
+- `src/lib/bottomBar.ts` — bottom bars (desktop `StickyCTA`, `/course` `CoursePriceBar`) publish their height to `--sticky-cta-h`; the WhatsApp FAB and accessibility button lift above it, and the FAB steps aside on `/course` while the price bar shows
+- `src/components/WebinarCapture.tsx` — the free lead magnet (webinar) as a first-class form: home, blog index, `/course` after the close, and the quiz's "עוד מוקדם" result. `WEBINAR_URL` lives in `lib/constants.ts`
+- `src/components/blog/ArticleOffer.tsx` — one offer per article by topic (course vs. premium), used mid-article and as the end banner
 - `src/hooks/` — custom hooks
 
 **Styling:** Tailwind CSS 3 + shadcn/ui design system. Colors defined as HSL CSS variables in `src/index.css` (Navy/Cream/Amber palette). Custom display font sizes (`display-lg/md/sm`), layered shadows (`depth-1` through `depth-4`, `glow-*`). Uses `tailwindcss-animate` for animations.
