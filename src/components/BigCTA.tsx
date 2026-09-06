@@ -33,7 +33,7 @@ const BigCTA = () => {
               className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all"
             >
               <MessageCircle size={20} />
-              בואו נדבר — בלי התחייבות
+              לשיחה בוואטסאפ — בלי התחייבות
               <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
             </Button>
           </a>

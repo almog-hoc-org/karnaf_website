@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Reveal } from "@/components/v2/Reveal";
 
 interface PageHeroProps {
@@ -7,6 +8,8 @@ interface PageHeroProps {
   subtitle?: string;
   badge?: string;
   backgroundImage?: string;
+  /** CTA row under the subtitle — a cold visitor should never have to scroll to find the first door. */
+  actions?: ReactNode;
 }
 
 const PageHero = ({
@@ -16,6 +19,7 @@ const PageHero = ({
   subtitle,
   badge,
   backgroundImage,
+  actions,
 }: PageHeroProps) => {
   const dark = !!backgroundImage;
   return (
@@ -113,6 +117,14 @@ const PageHero = ({
               >
                 {subtitle}
               </p>
+            </Reveal>
+          )}
+
+          {actions && (
+            <Reveal delay={0.24}>
+              <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 sm:gap-6">
+                {actions}
+              </div>
             </Reveal>
           )}
         </div>

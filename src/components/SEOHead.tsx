@@ -139,7 +139,7 @@ export const websiteSchema = {
   inLanguage: "he-IL",
   publisher: { "@id": `${SITE_URL}/#organization` },
   description:
-    "קורס דיגיטלי לרכישת דירה, ליווי משקיעים 1:1 וכלי ניתוח לרוכשי דירות בישראל. מבוסס נתונים — לא תחושות.",
+    "קורס דיגיטלי לרכישת דירה וליווי משקיעים 1:1 לרוכשי דירות בישראל. מבוסס נתונים — לא תחושות.",
   potentialAction: {
     "@type": "SearchAction",
     target: {

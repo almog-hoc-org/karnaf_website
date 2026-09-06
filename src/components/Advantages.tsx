@@ -1,31 +1,17 @@
-import { Instagram, Facebook, Youtube, Music } from "lucide-react";
-import { botLink } from "@/lib/whatsapp";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { Reveal } from "@/components/v2/Reveal";
 import { TiltCard } from "@/components/v2/TiltCard";
+import { TOTAL_CLIENTS_STAT, TOTAL_CLIENTS_LABEL } from "@/data/companyStats";
 
-const communityLinks = [
-  { icon: Instagram, href: "https://www.instagram.com/karnaf_nadlan/", label: "Instagram" },
-  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61563350768976", label: "Facebook" },
-  {
-    icon: () => (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-        <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" />
-      </svg>
-    ),
-    href: botLink("שאלה כללית"),
-    label: "WhatsApp",
-  },
-  { icon: Youtube, href: "https://www.youtube.com/@%D7%A7%D7%A8%D7%A0%D7%A3%D7%A0%D7%93%D7%9C%D7%9F", label: "YouTube" },
-  { icon: Music, href: "https://open.spotify.com/show/5aAgSHORYUNfYtxsxY3Dc8", label: "Spotify" },
-];
-
+/* Mid-page there are no exits to social networks — those live in the
+   footer. The community card carries one proof line and one internal link. */
 const advantages = [
   {
     num: "01",
     title: "קהילת הנדל״ן מהגדולות בישראל",
-    description: "עשרות אלפי עוקבים ותלמידים ברשתות השונות",
-    extra: "community",
+    description: "עשרות אלפי עוקבים ותלמידים ברשתות השונות — ואנשים אמיתיים שכבר עברו את הדרך.",
+    extra: "proof",
   },
   {
     num: "02",
@@ -67,20 +53,19 @@ const Advantages = () => {
                   <p className="text-body text-muted-foreground leading-[1.85] mb-6">
                     {item.description}
                   </p>
-                  {item.extra === "community" && (
-                    <div className="flex items-center gap-3 mt-auto">
-                      {communityLinks.map((link) => (
-                        <a
-                          key={link.label}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-11 h-11 rounded-full border border-primary/20 flex items-center justify-center text-primary/70 hover:text-accent hover:border-accent/50 hover:bg-accent/5 transition-all duration-200"
-                          aria-label={link.label}
-                        >
-                          <link.icon size={18} />
-                        </a>
-                      ))}
+                  {item.extra === "proof" && (
+                    <div className="mt-auto flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span className="text-display-sm text-accent tabular-nums leading-none">
+                        {TOTAL_CLIENTS_STAT}
+                      </span>
+                      <span className="text-sm font-bold text-foreground">{TOTAL_CLIENTS_LABEL}</span>
+                      <Link
+                        to="/testimonials"
+                        className="inline-flex items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline min-h-[44px]"
+                      >
+                        סיפורי הצלחה
+                        <ArrowLeft size={13} />
+                      </Link>
                     </div>
                   )}
                 </article>

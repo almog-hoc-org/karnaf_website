@@ -1,31 +1,22 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  GraduationCap,
-  Users,
-  Check,
-  ArrowLeft,
-  Sparkles,
-  CheckCircle,
-} from "lucide-react";
+import { GraduationCap, Users, Check, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Reveal } from "@/components/v2/Reveal";
 import { CHAPTERS_LABEL } from "@/data/courseStats";
-import { submitWebsiteLead } from "@/lib/leadSubmission";
-import { isValidIsraeliPhone } from "@/lib/validation";
-import { useToast } from "@/hooks/use-toast";
+import { COURSE_PRICE } from "@/lib/constants";
+import WebinarCapture from "@/components/WebinarCapture";
 
 /**
  * The homepage's decision point — two doors, zero ambiguity.
  * Door A: the self-serve digital course (buy now, learn alone).
  * Door B: premium 1:1 investor guidance (free intro call, guided to a keys-in-hand deal).
- * Below: a slim "coming soon" waitlist strip for the research subscription.
+ * Below: the free door — the webinar — for whoever is not ready for either.
+ * (The research-subscription waitlist moved to /about.)
  */
 
 const courseBullets = [
   `${CHAPTERS_LABEL} מקיפים — גישה מיידית לכולם`,
-  "מחשבונים וכלים חכמים",
+  "מסמכים, תבניות ובוחני ידע בכל פרק",
   "12 חודשי גישה — לגמרי בקצב שלכם",
 ];
 
@@ -34,91 +25,6 @@ const premiumBullets = [
   "מהאסטרטגיה ועד חתימת החוזה",
   "שיחת היכרות ראשונית — חינם",
 ];
-
-const ResearchWaitlist = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const { toast } = useToast();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !phone.trim()) {
-      toast({ title: "נא למלא שם וטלפון", variant: "destructive" });
-      return;
-    }
-    if (!isValidIsraeliPhone(phone)) {
-      toast({ title: "מספר הטלפון לא תקין", variant: "destructive" });
-      return;
-    }
-    setIsSubmitting(true);
-    try {
-      await submitWebsiteLead({
-        name,
-        phone,
-        service: "waitlist",
-        source: "research-waitlist",
-        message: "הרשמה לרשימת המתנה — מערכת המחקר במנוי חודשי",
-      });
-      setIsSubmitted(true);
-    } catch {
-      toast({
-        title: "שגיאה בשליחה",
-        description: "נסו שוב או דברו איתנו בוואטסאפ.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  if (isSubmitted) {
-    return (
-      <p className="flex items-center gap-2 text-sm font-semibold text-foreground">
-        <CheckCircle size={18} className="text-accent shrink-0" />
-        נרשמתם! נעדכן אתכם ברגע שהמערכת עולה לאוויר.
-      </p>
-    );
-  }
-
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto"
-    >
-      <Input
-        autoComplete="name"
-        placeholder="שם"
-        aria-label="שם"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-        className="h-11 rounded-full px-5 bg-background sm:w-36"
-      />
-      <Input
-        type="tel"
-        autoComplete="tel"
-        inputMode="tel"
-        dir="ltr"
-        placeholder="טלפון"
-        aria-label="מספר טלפון"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-        required
-        className="h-11 rounded-full px-5 bg-background sm:w-40 text-right"
-      />
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        variant="outline"
-        className="h-11 rounded-full px-6 font-bold border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground whitespace-nowrap"
-      >
-        {isSubmitting ? "שולח..." : "עדכנו אותי"}
-      </Button>
-    </form>
-  );
-};
 
 export const PathChooser = () => {
   return (
@@ -155,7 +61,7 @@ export const PathChooser = () => {
                 }}
               />
               <div className="absolute top-0 inset-x-0 h-1 bg-accent" />
-              <div className="relative">
+              <div className="relative flex flex-col h-full">
                 <div className="flex items-center justify-between mb-6">
                   <span className="inline-flex items-center gap-2 text-eyebrow uppercase tracking-[0.18em] text-accent font-bold">
                     <GraduationCap size={16} />
@@ -184,6 +90,16 @@ export const PathChooser = () => {
                     </li>
                   ))}
                 </ul>
+                {/* The price, up front — a cold visitor should not have to
+                    click through to learn it costs less than a lawyer's hour. */}
+                <div className="flex items-baseline gap-3 mb-6 mt-auto" dir="rtl">
+                  <span className="text-display-sm text-white leading-none tabular-nums">
+                    ₪{COURSE_PRICE.toLocaleString("he-IL")}
+                  </span>
+                  <span className="text-sm" style={{ color: "hsl(36 33% 95% / 0.65)" }}>
+                    תשלום אחד · גישה מיידית ל-12 חודשים
+                  </span>
+                </div>
                 <Link to="/course" className="block">
                   <Button
                     size="lg"
@@ -254,24 +170,10 @@ export const PathChooser = () => {
           </Reveal>
         </div>
 
-        {/* Coming soon — the research subscription (third division) */}
+        {/* The free door — for whoever is not ready for either track yet */}
         <Reveal delay={0.18}>
-          <div className="mt-8 lg:mt-10 rounded-2xl border border-dashed border-border bg-card/60 px-6 py-5 flex flex-col lg:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3 text-center lg:text-right">
-              <span className="hidden sm:inline-flex w-9 h-9 rounded-full bg-accent/10 items-center justify-center shrink-0">
-                <Sparkles size={16} className="text-accent" />
-              </span>
-              <p className="text-sm md:text-base text-foreground">
-                <span className="font-bold text-accent ml-1">בקרוב:</span>
-                <span className="font-bold">
-                  {" "}מערכת מחקר נדל״ן מקצועית במנוי חודשי.
-                </span>{" "}
-                <span className="text-muted-foreground">
-                  רוצים להיות ראשונים לדעת?
-                </span>
-              </p>
-            </div>
-            <ResearchWaitlist />
+          <div className="mt-8 lg:mt-10">
+            <WebinarCapture source="home-paths" />
           </div>
         </Reveal>
       </div>

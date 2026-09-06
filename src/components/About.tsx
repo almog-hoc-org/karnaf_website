@@ -4,6 +4,12 @@ import { Button } from "@/components/ui/button";
 import teamPhoto from "@/assets/team/itamar-almog-about.webp";
 import { Reveal } from "@/components/v2/Reveal";
 import { ClipImage } from "@/components/v2/ClipImage";
+import {
+  TOTAL_CLIENTS_STAT,
+  TOTAL_CLIENTS_LABEL,
+  YEARS_EXPERIENCE_STAT,
+  YEARS_EXPERIENCE_LABEL,
+} from "@/data/companyStats";
 
 const About = () => {
   return (
@@ -41,7 +47,7 @@ const About = () => {
                 בראש הצוות עומדים{" "}
                 <span className="text-foreground font-semibold">איתמר נחליאל</span> ו
                 <span className="text-foreground font-semibold">אלמוג חכמה</span> —
-                מומחי נדל״ן עם ניסיון מוכח בליווי מאות עסקאות מוצלחות.
+                מומחי נדל״ן עם ניסיון מוכח בליווי מאות רוכשים ומשקיעים.
                 המשימה שלנו: שתגיעו לעסקה הנכונה, בביטחון מלא.
               </p>
             </Reveal>
@@ -49,8 +55,8 @@ const About = () => {
             <Reveal delay={0.22}>
               <div className="grid grid-cols-2 gap-6 max-w-md pt-6 border-t border-primary/15 mb-8">
                 {[
-                  { num: "8+", label: "שנות ניסיון" },
-                  { num: "375+", label: "לקוחות מרוצים" },
+                  { num: YEARS_EXPERIENCE_STAT, label: YEARS_EXPERIENCE_LABEL },
+                  { num: TOTAL_CLIENTS_STAT, label: TOTAL_CLIENTS_LABEL },
                 ].map((stat, i) => (
                   <div key={i}>
                     <div className="text-display-md text-accent tabular-nums leading-none mb-1">

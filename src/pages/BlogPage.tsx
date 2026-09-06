@@ -4,6 +4,7 @@ import { Play, FileText, Wrench, ArrowLeft, Clock } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
 import { articles } from "@/data/articles";
 import { Reveal } from "@/components/v2/Reveal";
+import WebinarCapture from "@/components/WebinarCapture";
 import SEOHead, {
   organizationSchema,
   breadcrumbSchema,
@@ -39,7 +40,7 @@ const BlogPage = () => {
     <>
       <SEOHead
         title="ידע ותובנות נדל״ן — מדריכים, סרטונים וכלים | קרנף נדל״ן"
-        description="מאמרים על רכישת דירה, משכנתא, מיסוי, התחדשות עירונית. מדריכים מעשיים מבוססי 8+ שנות מחקר ו-375+ עסקאות מלוות."
+        description="מאמרים על רכישת דירה, משכנתא, מיסוי, התחדשות עירונית. מדריכים מעשיים מבוססי 8+ שנות ניסיון ו-375+ לקוחות ותלמידים."
         path="/blog"
         keywords="בלוג נדל״ן, מדריך רכישת דירה, משכנתא בישראל, מס רכישה, תמ״א 38, השקעות נדל״ן"
         jsonLd={[
@@ -199,6 +200,13 @@ const BlogPage = () => {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* The blog is the top of the cold funnel — leave with something. */}
+      <section className="py-section-md bg-card border-t border-border">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <WebinarCapture source="blog-index" />
         </div>
       </section>
     </>

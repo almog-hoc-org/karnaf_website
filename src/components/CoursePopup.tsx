@@ -207,8 +207,8 @@ const CoursePopup = () => {
               </h2>
 
               <p className="mt-3 text-body text-muted-foreground leading-relaxed">
-                ״המדריך המעשי לרכישת דירה״ — {PARTS_LABEL}, {CHAPTERS_LABEL}{" "}
-                ו-6+ מחשבונים שהופכים כל החלטה למספרים.{" "}
+                ״המדריך המעשי לרכישת דירה״ — {PARTS_LABEL}, {CHAPTERS_LABEL},
+                ומסמכים, תבניות ובוחני ידע בכל פרק.{" "}
                 <span className="font-bold text-foreground">
                   הסילבוס המלא וסרטון ההסבר פתוחים לצפייה.
                 </span>

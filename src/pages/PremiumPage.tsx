@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useId, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Compass,
@@ -13,6 +14,9 @@ import {
   Users,
   LineChart,
   Scale,
+  Phone,
+  ArrowLeft,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +28,9 @@ import { useToast } from "@/hooks/use-toast";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { isValidIsraeliPhone, PHONE_ERROR_MESSAGE } from "@/lib/validation";
 import { premiumLink } from "@/lib/whatsapp";
+import { PHONE_NUMBER, WHATSAPP_BUSINESS_NUMBER, COURSE_PRICE } from "@/lib/constants";
+import { testimonials } from "@/data/testimonials";
+import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import SEOHead, {
   organizationSchema,
   serviceSchema,
@@ -31,6 +38,12 @@ import SEOHead, {
 } from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
 import foundersImg from "@/assets/program/founders.png";
+import {
+  TOTAL_CLIENTS_STAT,
+  TOTAL_CLIENTS_LABEL,
+  YEARS_EXPERIENCE_STAT,
+  YEARS_EXPERIENCE_LABEL,
+} from "@/data/companyStats";
 
 /* CRM classification for this funnel — change here if the CRM expects
    a different value for investor-guidance leads. */
@@ -39,6 +52,22 @@ const LEAD_SERVICE = "premium";
 
 /* Premium goes straight to the human line, not the intake bot. */
 const WA_LINK = premiumLink();
+const TEL_LINK = `tel:+${WHATSAPP_BUSINESS_NUMBER}`;
+
+const premiumTestimonials = testimonials.filter((t) => t.service === "premium");
+
+/* Self-selection — who this is for, in plain words, before the form asks
+   for anything. No minimum-equity number is published: the intro call is
+   where fit gets decided. */
+const fitFor = [
+  "למי שיש הון עצמי זמין ורוצה לרכוש נכס בישראל — להשקעה או למגורים — בשנה הקרובה",
+  "למי שרוצה מישהו מקצועי לצידו, לא במקומו: ההחלטות נשארות שלכם, הנתונים והליווי שלנו",
+  "למי שמעדיף ליווי צמוד לאורך עסקה אמיתית על פני למידה עצמאית",
+];
+const notFor = [
+  "למי שמחפש מישהו שיחליט במקומו או יבטיח תשואה",
+  "למי שרוצה ללמוד ולעשות הכל לבד — לזה בדיוק בנינו את התוכנית הדיגיטלית",
+];
 
 /* The accompaniment journey — strategy → signature */
 const journey = [
@@ -84,8 +113,7 @@ const included = [
 ];
 
 /* What makes 1:1 premium investor guidance different — honest brand
-   positioning, not customer quotes. Real investor testimonials will be
-   added here once provided. */
+   positioning; the customers' own words follow in the testimonials section. */
 const differentiators = [
   {
     icon: Users,
@@ -120,7 +148,13 @@ const EQUITY_OPTIONS = [
 
 const isValidEmail = (raw: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(raw.trim());
 
+/**
+ * Two required fields (name + phone). Email and equity bracket help the
+ * analyst arrive prepared, so they are asked — but a cold visitor who
+ * skips them still becomes a lead instead of a bounce.
+ */
 const InvestorForm = () => {
+  const honeypotId = useId();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -129,23 +163,21 @@ const InvestorForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const thankYou = `/thank-you?src=${LEAD_SOURCE}&service=${LEAD_SERVICE}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !phone.trim() || !email.trim()) {
-      toast({ title: "נא למלא שם, טלפון ומייל", variant: "destructive" });
+    if (!name.trim() || !phone.trim()) {
+      toast({ title: "נא למלא שם וטלפון", variant: "destructive" });
       return;
     }
     if (!isValidIsraeliPhone(phone)) {
       toast({ title: PHONE_ERROR_MESSAGE, variant: "destructive" });
       return;
     }
-    if (!isValidEmail(email)) {
+    if (email.trim() && !isValidEmail(email)) {
       toast({ title: "כתובת המייל לא נראית תקינה — בדקו ונסו שוב", variant: "destructive" });
-      return;
-    }
-    if (!equity) {
-      toast({ title: "נא לבחור הון עצמי זמין", variant: "destructive" });
       return;
     }
     if (company) {
@@ -158,27 +190,21 @@ const InvestorForm = () => {
       await submitWebsiteLead({
         name,
         phone,
-        email,
-        equity,
+        email: email.trim() || undefined,
+        equity: equity || undefined,
         service: LEAD_SERVICE,
         source: LEAD_SOURCE,
         message:
           "מהות הפנייה: תיאום פגישת היכרות ללא התחייבות — ליווי משקיעים פרימיום",
       });
       setIsSubmitted(true);
-      toast({ title: "הפרטים נשלחו!", description: "נחזור אליכם לתיאום פגישת היכרות." });
+      navigate(thankYou);
     } catch {
+      // Keep what they typed — a failed send must not wipe four fields.
       toast({ title: "שגיאה בשליחה", description: "נסו שוב או דברו איתנו בוואטסאפ.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }
-    setTimeout(() => {
-      setName("");
-      setPhone("");
-      setEmail("");
-      setEquity("");
-      setIsSubmitted(false);
-    }, 3500);
   };
 
   if (isSubmitted) {
@@ -225,20 +251,19 @@ const InvestorForm = () => {
         autoComplete="email"
         inputMode="email"
         dir="ltr"
-        placeholder="מייל"
+        placeholder="מייל (לא חובה)"
         aria-label="כתובת מייל"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        required
         className="bg-white/95 border-white/10 text-foreground placeholder:text-muted-foreground h-14 text-right rounded-full px-6"
       />
-      <Select value={equity} onValueChange={setEquity} required>
+      <Select value={equity} onValueChange={setEquity}>
         <SelectTrigger
           aria-label="הון עצמי זמין להשקעה"
           dir="rtl"
           className="bg-white/95 border-white/10 text-foreground h-14 text-right rounded-full px-6"
         >
-          <SelectValue placeholder="הון עצמי זמין להשקעה" />
+          <SelectValue placeholder="הון עצמי זמין להשקעה (לא חובה — עוזר לנו להגיע מוכנים)" />
         </SelectTrigger>
         <SelectContent>
           {EQUITY_OPTIONS.map((option) => (
@@ -250,9 +275,9 @@ const InvestorForm = () => {
       </Select>
       {/* Honeypot — invisible to humans, catnip for bots */}
       <div className="absolute -z-10 opacity-0 pointer-events-none" aria-hidden="true">
-        <label htmlFor="premium-company">חברה</label>
+        <label htmlFor={honeypotId}>חברה</label>
         <input
-          id="premium-company"
+          id={honeypotId}
           type="text"
           tabIndex={-1}
           autoComplete="off"
@@ -275,11 +300,63 @@ const InvestorForm = () => {
         )}
       </Button>
       <p className="text-center text-sm text-white/50">
-        ללא התחייבות · שיחת היכרות ראשונית חינם
+        ללא התחייבות · שיחת היכרות ראשונית חינם · חוזרים תוך 24 שעות
       </p>
     </form>
   );
 };
+
+/** The capture block — used twice: right after the problem, and at the end. */
+const LeadCapture = ({ id, delay = 0 }: { id: string; delay?: number }) => (
+  <SectionDark id={id} size="lg" glow="bottom">
+    <div className="container mx-auto px-5 md:px-6">
+      <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-5xl mx-auto">
+        <Reveal delay={delay}>
+          <p className="text-eyebrow uppercase tracking-[0.28em] text-accent mb-5">
+            הצעד הראשון
+          </p>
+          <h2 className="text-display-md md:text-display-lg text-white leading-[1] mb-5">
+            בואו נבדוק אם הליווי{" "}
+            <span className="text-accent">מתאים לכם</span>
+          </h2>
+          <p className="text-body-lg leading-[1.9] mb-8" style={{ color: "hsl(36 33% 95% / 0.78)" }}>
+            השאירו שם וטלפון ואנליסט מהצוות יחזור אליכם לשיחת היכרות קצרה — בלי
+            התחייבות. נבין יחד איפה אתם נמצאים ואיך נוכל לעזור.
+          </p>
+          <div className="flex flex-col gap-4">
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 text-white font-semibold hover:text-accent transition-colors group"
+            >
+              <span className="inline-flex w-11 h-11 rounded-full bg-[hsl(var(--whatsapp))] items-center justify-center text-white shrink-0">
+                <MessageCircle size={20} />
+              </span>
+              מעדיפים וואטסאפ? דברו איתנו עכשיו
+              <span aria-hidden className="transition-transform group-hover:-translate-x-1">←</span>
+            </a>
+            <a
+              href={TEL_LINK}
+              className="inline-flex items-center gap-3 text-white/85 font-semibold hover:text-accent transition-colors group"
+            >
+              <span className="inline-flex w-11 h-11 rounded-full bg-white/10 items-center justify-center text-white shrink-0">
+                <Phone size={18} />
+              </span>
+              <span dir="ltr" className="tabular-nums">{PHONE_NUMBER}</span>
+            </a>
+          </div>
+        </Reveal>
+
+        <Reveal delay={delay + 0.12}>
+          <div className="bg-white/[0.04] border border-white/10 rounded-3xl p-6 md:p-8">
+            <InvestorForm />
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </SectionDark>
+);
 
 const PremiumPage = () => {
   return (
@@ -302,6 +379,28 @@ const PremiumPage = () => {
         subtitle="יד ביד, מהאסטרטגיה ועד החתימה. אנליסט נדל״ן אישי שלוקח אתכם לעסקה הנכונה — מקצועי, מבוסס נתונים, בסטנדרט קרנף."
         badge="שיחת היכרות ראשונית — חינם"
         backgroundImage={heroCity}
+        actions={
+          <>
+            <a href="#contact" className="inline-block w-full sm:w-auto">
+              <Button
+                size="lg"
+                className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-8 md:px-10 py-5 md:py-6 rounded-full transition-all w-full sm:w-auto"
+              >
+                לתיאום שיחת היכרות — חינם
+                <ArrowLeft size={18} className="transition-transform group-hover:-translate-x-1" />
+              </Button>
+            </a>
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-white/85 hover:text-white font-semibold underline-offset-4 hover:underline min-h-[44px]"
+            >
+              <MessageCircle size={18} className="text-[hsl(var(--whatsapp))]" />
+              או בוואטסאפ, עכשיו
+            </a>
+          </>
+        }
       />
 
       {/* The problem */}
@@ -324,6 +423,9 @@ const PremiumPage = () => {
           </Reveal>
         </div>
       </section>
+
+      {/* The door — right after the problem, not seven sections later */}
+      <LeadCapture id="contact" />
 
       {/* What it is + the journey */}
       <SectionDark size="lg" glow="top-end">
@@ -434,8 +536,8 @@ const PremiumPage = () => {
           <Reveal delay={0.2}>
             <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mt-14 text-center">
               {[
-                { v: "375+", l: "לקוחות מלווים" },
-                { v: "8+", l: "שנות ניסיון" },
+                { v: TOTAL_CLIENTS_STAT, l: TOTAL_CLIENTS_LABEL },
+                { v: YEARS_EXPERIENCE_STAT, l: YEARS_EXPERIENCE_LABEL },
                 { v: "1:1", l: "ליווי אישי" },
               ].map((s) => (
                 <div key={s.l}>
@@ -449,6 +551,97 @@ const PremiumPage = () => {
               ))}
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Proof — the customers' own words, accompaniment outcomes only */}
+      <section className="py-section-lg bg-background">
+        <div className="container mx-auto px-5 md:px-6 max-w-5xl">
+          <Reveal>
+            <h2 className="text-display-md md:text-display-lg text-foreground mb-4 text-center">
+              הם הגיעו לבד. יצאו עם דירה.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.06}>
+            <p className="text-body-lg text-muted-foreground mb-10 leading-relaxed text-center max-w-xl mx-auto">
+              לקוחות הליווי האישי, במילים שלהם.
+            </p>
+          </Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {premiumTestimonials.map((t, i) => (
+              <TestimonialVideoCard key={t.name} testimonial={t} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Fit + price — the two questions a cold visitor asks before a form */}
+      <section className="py-section-lg bg-card border-y border-border">
+        <div className="container mx-auto px-5 md:px-6 max-w-5xl">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            <Reveal>
+              <h2 className="text-display-sm md:text-display-md text-foreground mb-6">
+                למי הליווי מתאים
+              </h2>
+              <ul className="space-y-4 mb-8">
+                {fitFor.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-foreground leading-relaxed">
+                    <span className="inline-flex w-7 h-7 rounded-full bg-accent/10 items-center justify-center text-accent shrink-0 mt-0.5">
+                      <Check size={16} />
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mb-3">
+                ולמי לא
+              </p>
+              <ul className="space-y-3">
+                {notFor.map((item, i) => (
+                  <li key={item} className="flex items-start gap-3 text-muted-foreground leading-relaxed">
+                    <span className="inline-flex w-7 h-7 rounded-full bg-muted items-center justify-center text-muted-foreground shrink-0 mt-0.5">
+                      <X size={14} />
+                    </span>
+                    <span>
+                      {item}
+                      {i === 1 && (
+                        <>
+                          {" "}
+                          <Link to="/course" className="font-semibold text-primary underline-offset-4 hover:underline">
+                            (₪{COURSE_PRICE.toLocaleString("he-IL")}, גישה מיידית)
+                          </Link>
+                        </>
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <div className="h-full rounded-3xl border border-border bg-background p-7 md:p-9 shadow-depth-2">
+                <p className="text-eyebrow uppercase tracking-[0.28em] text-accent mb-4">
+                  כמה זה עולה
+                </p>
+                <p className="text-display-sm md:text-display-md text-foreground leading-tight mb-3">
+                  2.5%–3% משווי העסקה
+                </p>
+                <p className="text-muted-foreground leading-[1.85] mb-6">
+                  בעסקה של 2 מיליון ₪ — כ-50,000 ₪ ומעלה. הטווח המקובל בשוק לליווי
+                  אישי מלא, וזה גם המחיר שלנו: אין עמלות מיזמים ואין אינטרס בעסקה
+                  מסוימת — רק בעסקה הנכונה לכם.
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-8">
+                  מבנה התשלום המדויק ומה בדיוק כלול — בשיחת ההיכרות, לפני כל התחייבות.
+                </p>
+                <a href="#contact" className="inline-block w-full">
+                  <Button className="group w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-full py-6 text-base gap-2">
+                    לתיאום שיחת היכרות — חינם
+                    <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
+                  </Button>
+                </a>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -496,44 +689,8 @@ const PremiumPage = () => {
         </div>
       </section>
 
-      {/* Lead capture */}
-      <SectionDark id="contact" size="lg" glow="bottom">
-        <div className="container mx-auto px-5 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-5xl mx-auto">
-            <Reveal>
-              <p className="text-eyebrow uppercase tracking-[0.28em] text-accent mb-5">
-                הצעד הראשון
-              </p>
-              <h2 className="text-display-md md:text-display-lg text-white leading-[1] mb-5">
-                בואו נבדוק אם הליווי{" "}
-                <span className="text-accent">מתאים לכם</span>
-              </h2>
-              <p className="text-body-lg leading-[1.9] mb-8" style={{ color: "hsl(36 33% 95% / 0.78)" }}>
-                השאירו פרטים ואנליסט מהצוות יחזור אליכם לשיחת היכרות קצרה — בלי
-                התחייבות. נבין יחד איפה אתם נמצאים ואיך נוכל לעזור.
-              </p>
-              <a
-                href={WA_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 text-white font-semibold hover:text-accent transition-colors group"
-              >
-                <span className="inline-flex w-11 h-11 rounded-full bg-[hsl(var(--whatsapp))] items-center justify-center text-white shrink-0">
-                  <MessageCircle size={20} />
-                </span>
-                מעדיפים וואטסאפ? דברו איתנו עכשיו
-                <span aria-hidden className="transition-transform group-hover:-translate-x-1">←</span>
-              </a>
-            </Reveal>
-
-            <Reveal delay={0.12}>
-              <div className="bg-white/[0.04] border border-white/10 rounded-3xl p-6 md:p-8">
-                <InvestorForm />
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </SectionDark>
+      {/* The door again — for the reader who needed the whole story first */}
+      <LeadCapture id="contact-end" />
     </>
   );
 };

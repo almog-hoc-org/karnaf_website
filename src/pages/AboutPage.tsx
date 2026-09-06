@@ -2,6 +2,7 @@ import PageHero from "@/layouts/PageHero";
 import { team } from "@/data/team";
 import StatsCounter from "@/components/StatsCounter";
 import BigCTA from "@/components/BigCTA";
+import { ResearchWaitlistStrip } from "@/components/ResearchWaitlist";
 import { Reveal } from "@/components/v2/Reveal";
 import SEOHead, { organizationSchema, breadcrumbSchema } from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
@@ -15,7 +16,7 @@ const timeline = [
   { year: "2023", title: "קרנף נולד", description: "קרנף נדל\"ן מוקם רשמית — הלקוחות הראשונים מצטרפים." },
   { year: "2024", title: "מתפוצצים ברשתות", description: "צמיחה מסיבית ברשתות החברתיות — עשרות אלפי עוקבים חדשים." },
   { year: "2025", title: "50 עסקאות, 300 תלמידים", description: "50 עסקאות מוצלחות ו-300 תלמידים בהכשרות הדיגיטליות." },
-  { year: "2026", title: "הקהילה גדלה", description: "עשרות אלפי עוקבים ברשתות, מעל ל-350 לקוחות ותלמידים." },
+  { year: "2026", title: "הקהילה גדלה", description: "עשרות אלפי עוקבים ברשתות, 375+ לקוחות ותלמידים." },
 ];
 
 const AboutPage = () => {
@@ -23,7 +24,7 @@ const AboutPage = () => {
     <>
       <SEOHead
         title="סיפורו של הקרנף — איתמר ואלמוג, מייסדי קרנף נדל״ן | אודות"
-        description="הכירו את הצוות שמאחורי קרנף נדל״ן: 8+ שנות מחקר, 375+ עסקאות מלוות, סיפור על שני קצינים שהפכו טעות-יקרה לשיטה לרכישת דירה."
+        description="הכירו את הצוות שמאחורי קרנף נדל״ן: 8+ שנות ניסיון, 375+ לקוחות ותלמידים, סיפור על שני קצינים שהפכו טעות-יקרה לשיטה לרכישת דירה."
         path="/about"
         keywords="קרנף נדל״ן, איתמר נחליאל, אלמוג חכמה, מייסדים, סיפור, ליווי נדל״ן בישראל"
         jsonLd={[
@@ -64,7 +65,7 @@ const AboutPage = () => {
                     החלטנו שזה חייב להשתנות.
                   </p>
                   <p>
-                    היום, אחרי מעל 350 לקוחות ותלמידים, אנחנו ממשיכים באותה משימה: לתת לכל ישראלי את הכלים והידע לקנות דירה בצורה חכמה.
+                    היום, אחרי 375+ לקוחות ותלמידים, אנחנו ממשיכים באותה משימה: לתת לכל ישראלי את הכלים והידע לקנות דירה בצורה חכמה.
                   </p>
                 </div>
               </Reveal>
@@ -113,6 +114,11 @@ const AboutPage = () => {
                 </div>
               </Reveal>
             ))}
+          </div>
+
+          {/* What comes next — the research subscription waitlist */}
+          <div className="mt-14 max-w-3xl mx-auto">
+            <ResearchWaitlistStrip />
           </div>
         </div>
       </section>

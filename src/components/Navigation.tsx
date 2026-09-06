@@ -2,12 +2,22 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, ChevronDown, GraduationCap, Users, Landmark } from "lucide-react";
+import { MessageCircle, ChevronDown, GraduationCap, Users, Landmark, CalendarClock } from "lucide-react";
 import { useWhatsAppLink } from "@/hooks/use-whatsapp-link";
+import { WEBINAR_URL } from "@/lib/constants";
 import karnafLogo from "@/assets/mascot/karnaf-logo.png";
 
-/* All commercial offerings live under one "השירותים שלנו" mini-menu. */
-const serviceItems = [
+/* All commercial offerings live under one "השירותים שלנו" mini-menu —
+   plus the free door (the webinar), which is an external landing page. */
+interface ServiceItem {
+  label: string;
+  description: string;
+  icon: typeof GraduationCap;
+  to?: string;
+  href?: string;
+}
+
+const serviceItems: ServiceItem[] = [
   {
     label: "המדריך המעשי לרכישת דירה",
     description: "הקורס הדיגיטלי לרכישת דירה — גישה מיידית",
@@ -25,6 +35,12 @@ const serviceItems = [
     description: "ייעוץ משכנתא מבוסס נתונים",
     to: "/mortgage",
     icon: Landmark,
+  },
+  {
+    label: "וובינר חינם",
+    description: "שעה אחת: כך ניגשים נכון לרכישת דירה",
+    href: WEBINAR_URL,
+    icon: CalendarClock,
   },
 ];
 
@@ -187,28 +203,42 @@ const Navigation = () => {
                     style={{ insetInlineStart: "-1rem" }}
                     role="menu"
                   >
-                    {serviceItems.map((item) => (
-                      <Link
-                        key={item.to}
-                        to={item.to}
-                        role="menuitem"
-                        className={`flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-secondary ${
-                          isActive(item.to) ? "bg-secondary/70" : ""
-                        }`}
-                      >
-                        <span className="mt-0.5 inline-flex w-9 h-9 rounded-full bg-accent/10 items-center justify-center text-accent flex-shrink-0">
-                          <item.icon size={17} aria-hidden />
-                        </span>
-                        <span>
-                          <span className="block font-bold text-foreground leading-tight">
-                            {item.label}
+                    {serviceItems.map((item) => {
+                      const inner = (
+                        <>
+                          <span className="mt-0.5 inline-flex w-9 h-9 rounded-full bg-accent/10 items-center justify-center text-accent flex-shrink-0">
+                            <item.icon size={17} aria-hidden />
                           </span>
-                          <span className="block text-sm text-muted-foreground mt-0.5">
-                            {item.description}
+                          <span>
+                            <span className="block font-bold text-foreground leading-tight">
+                              {item.label}
+                            </span>
+                            <span className="block text-sm text-muted-foreground mt-0.5">
+                              {item.description}
+                            </span>
                           </span>
-                        </span>
-                      </Link>
-                    ))}
+                        </>
+                      );
+                      const cls = `flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-secondary ${
+                        item.to && isActive(item.to) ? "bg-secondary/70" : ""
+                      }`;
+                      return item.href ? (
+                        <a
+                          key={item.label}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          role="menuitem"
+                          className={cls}
+                        >
+                          {inner}
+                        </a>
+                      ) : (
+                        <Link key={item.label} to={item.to ?? "/"} role="menuitem" className={cls}>
+                          {inner}
+                        </Link>
+                      );
+                    })}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -288,18 +318,31 @@ const Navigation = () => {
                 <span className="text-eyebrow uppercase tracking-[0.28em] text-muted-foreground">
                   השירותים שלנו
                 </span>
-                {serviceItems.map((item) => (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`block text-xl font-bold transition-colors ${
-                      isActive(item.to) ? "text-accent" : "text-foreground hover:text-accent"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+                {serviceItems.map((item) =>
+                  item.href ? (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block text-xl font-bold transition-colors text-foreground hover:text-accent"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.label}
+                      to={item.to ?? "/"}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`block text-xl font-bold transition-colors ${
+                        item.to && isActive(item.to) ? "text-accent" : "text-foreground hover:text-accent"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  )
+                )}
                 <span className="block w-10 h-px bg-border mt-1" aria-hidden />
               </motion.div>
 
