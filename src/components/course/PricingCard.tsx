@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
 import { TOTAL_PARTS, TOTAL_CHAPTERS } from "@/data/courseStats";
 import { buildCheckoutUrl } from "@/lib/checkout";
-import { botLink } from "@/lib/whatsapp";
+import { chatLink } from "@/lib/whatsapp";
 import { gaViewPricing, gaBeginCheckout } from "@/lib/analytics";
 import { trackInitiateCheckout } from "@/lib/pixel";
 import { useQuizContext } from "@/hooks/use-quiz-context";
@@ -158,7 +158,7 @@ const PricingCard = () => {
 
         <div>
           <a
-            href={botLink("התוכנית הדיגיטלית — שאלה לפני רכישה")}
+            href={chatLink("התוכנית הדיגיטלית — שאלה לפני רכישה")}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-3 px-3 min-h-[44px]"

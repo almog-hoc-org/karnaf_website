@@ -5,7 +5,7 @@ import { CheckCircle, MessageCircle, ArrowLeft, CalendarClock } from "lucide-rea
 import { Button } from "@/components/ui/button";
 import { SectionDark } from "@/components/v2/Section";
 import { Reveal } from "@/components/v2/Reveal";
-import { botLink, premiumLink } from "@/lib/whatsapp";
+import { chatLink, premiumLink } from "@/lib/whatsapp";
 import { WEBINAR_URL } from "@/lib/constants";
 
 type Variant = "premium" | "webinar" | "mortgage" | "contact";
@@ -38,7 +38,7 @@ const COPY: Record<Variant, Copy> = {
       "בלי לחץ מכירתי — באים ללמוד",
       "שאלות? עונים בוואטסאפ",
     ],
-    whatsapp: botLink("וובינר — שאלה"),
+    whatsapp: chatLink("וובינר — שאלה"),
     whatsappLabel: "שאלה על הוובינר? וואטסאפ",
   },
   mortgage: {
@@ -49,7 +49,7 @@ const COPY: Record<Variant, Copy> = {
       "אם יש הצעה מהבנק — נשמח לראות אותה",
       "ניצור קשר בשעות הפעילות, א׳–ה׳ 09:00–20:00",
     ],
-    whatsapp: botLink("קרנף משכנתא — שאלה"),
+    whatsapp: chatLink("קרנף משכנתא — שאלה"),
     whatsappLabel: "מעדיפים וואטסאפ?",
   },
   contact: {
@@ -60,7 +60,7 @@ const COPY: Record<Variant, Copy> = {
       "מאמרים ומדריכים חינמיים בבלוג",
       "שאלה דחופה? וואטסאפ",
     ],
-    whatsapp: botLink("יצירת קשר — שאלה"),
+    whatsapp: chatLink("יצירת קשר — שאלה"),
     whatsappLabel: "מעדיפים וואטסאפ?",
   },
 };

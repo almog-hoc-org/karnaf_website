@@ -1,24 +1,23 @@
-import { WHATSAPP_BOT_NUMBER, WHATSAPP_BUSINESS_NUMBER } from "@/lib/constants";
+import { WHATSAPP_BUSINESS_NUMBER } from "@/lib/constants";
 
 /**
  * WhatsApp link builders.
  *
- * All initial site inquiries go to the CRM intake bot, which greets the
- * visitor, offers the service menu (digital program / premium guidance /
- * other) and files a classified ticket in karnaf-crm. The prefilled text
- * carries the page context so both the bot flow and the CRM ticket know
- * where the conversation started.
+ * Every chat CTA on the site opens the same WhatsApp Business line
+ * (055-996-6175), answered personally. The automated intake bot was
+ * retired as the front door, so a visitor never lands in a menu — but the
+ * prefilled text still carries the page context, so whoever answers knows
+ * which funnel the conversation started in and the CRM can classify it.
  */
 
-/** Chat with the intake bot. `context` names the page/funnel in Hebrew,
- *  e.g. "התוכנית הדיגיטלית", "ליווי משקיעים", "דף הבית". */
-export function botLink(context: string): string {
+/** Chat from anywhere on the site. `context` names the page/funnel in
+ *  Hebrew, e.g. "התוכנית הדיגיטלית", "ליווי משקיעים", "דף הבית". */
+export function chatLink(context: string): string {
   const text = `היי קרנף! אשמח לפרטים (הגעתי מהאתר — ${context})`;
-  return `https://wa.me/${WHATSAPP_BOT_NUMBER}?text=${encodeURIComponent(text)}`;
+  return `https://wa.me/${WHATSAPP_BUSINESS_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 
-/** Chat with the human business line — reserved for touchpoints that must
- *  stay personal (used sparingly; the bot is the default front door). */
+/** The same line with a fully custom opening message. */
 export function businessLink(text?: string): string {
   return text
     ? `https://wa.me/${WHATSAPP_BUSINESS_NUMBER}?text=${encodeURIComponent(text)}`
@@ -26,14 +25,9 @@ export function businessLink(text?: string): string {
 }
 
 /**
- * The premium lane's one deliberate exception to the bot-first rule: every
- * WhatsApp touchpoint on /premium opens the human business line instead.
- * A 1:1 accompaniment lead is worth tens of thousands of shekels and is
- * already deep in intent — routing it through an automated intake menu
- * costs more than the classification is worth.
- *
- * Note for the CRM side: these arrive as plain messages on the business
- * number, not as bot-classified tickets (see docs/ARCHITECTURE-CRM-INTEGRATIONS.md).
+ * The /premium opener. Same number as everywhere else — what differs is
+ * the message: a 1:1 accompaniment lead names its own intent so the reply
+ * can start from the right place.
  */
 export function premiumLink(): string {
   return businessLink("היי, אשמח לקבל פרטים נוספים על תהליך ליווי משקיעים 1:1");

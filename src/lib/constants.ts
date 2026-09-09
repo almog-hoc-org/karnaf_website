@@ -1,18 +1,16 @@
 import { Instagram, Facebook, Youtube, Music } from "lucide-react";
 
 /* ── WhatsApp ────────────────────────────────────────────────────
- * Two numbers, two jobs:
- * - BUSINESS (055-996-6175): the human line, answered personally. Also the
- *   tel: number across the site.
- * - BOT (055-992-5725): the automated intake bot wired to karnaf-crm. Site
- *   chat CTAs point here so every inquiry is classified and ticketed.
- * VITE_WHATSAPP_BOT_NUMBER overrides the bot number without a deploy —
- * set it to the business number to bypass the bot if its flow is down.
- * Build links via src/lib/whatsapp.ts (botLink / businessLink).
+ * One number for every chat touchpoint on the site: the WhatsApp Business
+ * line 055-996-6175, answered personally. It is also the tel: number
+ * across the site. The automated intake bot (055-992-5725) is no longer
+ * linked from anywhere on the site — owner decision: every visitor who
+ * opens a chat reaches a human.
+ * VITE_WHATSAPP_NUMBER overrides the number without a deploy.
+ * Build links via src/lib/whatsapp.ts (chatLink / businessLink).
  */
-export const WHATSAPP_BUSINESS_NUMBER = "972559966175";
-export const WHATSAPP_BOT_NUMBER: string =
-  import.meta.env.VITE_WHATSAPP_BOT_NUMBER || "972559925725";
+export const WHATSAPP_BUSINESS_NUMBER: string =
+  import.meta.env.VITE_WHATSAPP_NUMBER || "972559966175";
 
 /* ── Course commerce ─────────────────────────────────────────────
  * Single product, single price (see PRODUCT.md: "One product, sold once").
