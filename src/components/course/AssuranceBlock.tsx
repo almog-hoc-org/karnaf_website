@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Eye, CalendarClock, MessageCircle, ArrowLeft } from "lucide-react";
 import { Reveal } from "@/components/v2/Reveal";
-import { botLink } from "@/lib/whatsapp";
+import { chatLink } from "@/lib/whatsapp";
 
 /**
  * S11 — risk reversal without a refund promise: radical transparency
@@ -49,7 +49,7 @@ const AssuranceBlock = () => {
               </p>
               {item.href === "whatsapp" && (
                 <a
-                  href={botLink("התוכנית הדיגיטלית — שאלה לפני רכישה")}
+                  href={chatLink("התוכנית הדיגיטלית — שאלה לפני רכישה")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-sm font-bold text-accent mt-2 py-3 min-h-[44px] underline-offset-4 hover:underline"

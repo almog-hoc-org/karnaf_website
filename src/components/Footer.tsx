@@ -1,6 +1,6 @@
 import { MessageCircle, Phone, Mail } from "lucide-react";
 import { socialLinks, TIKTOK_URL } from "@/lib/constants";
-import { botLink } from "@/lib/whatsapp";
+import { chatLink } from "@/lib/whatsapp";
 import ContactForm from "@/components/ContactForm";
 import { Reveal } from "@/components/v2/Reveal";
 
@@ -29,7 +29,7 @@ const Footer = () => {
 
               <div className="space-y-3 mb-10">
                 <a
-                  href={botLink("יצירת קשר")}
+                  href={chatLink("יצירת קשר")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 p-4 bg-card rounded-2xl border border-border hover:border-accent/40 transition-all duration-200 active:scale-[0.98] group"

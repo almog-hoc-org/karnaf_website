@@ -41,18 +41,30 @@ Product classification (`productFor` in leadSubmission.ts):
 | FB Lead Ads → Karnaf CRM (x2 pages) | Facebook Lead Ads | CRM `make-intake` |
 
 Sheets connection: "Google Sheets — לידים מהאתר" (karnaf.yazamut@gmail.com).
-All sheet writes use `valueInputOption: RAW` so phone numbers keep their
-leading zero. Sheet columns (A–Q): timestamp (Asia/Jerusalem), full name,
-phone, email, product, form, page, full URL, referrer, utm_source,
-utm_medium, utm_campaign, utm_content, utm_term, message, stage, equity.
+All sheet writes use `valueInputOption: RAW`. Sheet columns (A–Q):
+timestamp (Asia/Jerusalem), full name, phone, email, product, form, page,
+full URL, referrer, utm_source, utm_medium, utm_campaign, utm_content,
+utm_term, message, stage, equity.
+
+The one exception is the shared investor-accompaniment file, which is a
+hand-kept working document with its own 9-column Hebrew layout — the
+premium route writes it a second, differently-mapped row (see below and
+docs/ARCHITECTURE-CRM-INTEGRATIONS.md §3).
+
+Note: `RAW` does **not** in practice preserve a phone's leading zero —
+Sheets still parses `0501234567` as a number. Format the phone column as
+plain text in the sheet itself if that matters.
 
 ## Spreadsheets
 
 - משכנתא: `14Q29gU84mEJwOSLPQSCFYtmBAmKt_YnTBo0nuhgHWb0`
-- ליווי משקיעים (משותף עם המלווה): `1KG3tw90wz0CmnhVI2qaLl7762IIKL7W5-6O0grn8pcg`
-  ⚠️ pending Make re-route — the scenario still points at the old sheet
-  `1ZZfQApTdo-jiikknf60T_t19KItut7y6bzZCSR-jXzw` until updated (see
-  docs/ARCHITECTURE-CRM-INTEGRATIONS.md §3).
+- ליווי משקיעים — two destinations, both written on every premium lead:
+  - backup, full A–Q layout: `1ZZfQApTdo-jiikknf60T_t19KItut7y6bzZCSR-jXzw`
+  - shared with the accompaniment partner, "קובץ לידים ומעקב משותף קרנף שחר":
+    `1KG3tw90wz0CmnhVI2qaLl7762IIKL7W5-6O0grn8pcg` — its own column layout
+    (שם פרטי / שם משפחה / הון עצמי / איפה פנה / מתי פנה / מספר טלפון /
+    פרטים נוספים), with the two manual columns left untouched. Wired and
+    verified end-to-end 9.9.2026.
 - המדריך המעשי לרכישת דירה (לשעבר ״הדרך לדירה״): `1ZbSm_OVrSnh8_YZ760gVsB0yB4kt3xbCCfB390MZ8p0`
 - מערכת המחקר (`product=research`, waitlist): sheet + Make route TBD —
   until routed, these leads reach the CRM only.

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, MessageCircle, Clock } from "lucide-react";
-import { botLink } from "@/lib/whatsapp";
+import { chatLink } from "@/lib/whatsapp";
 import { CHECKOUT_URL } from "@/lib/constants";
 import { buildCheckoutUrl } from "@/lib/checkout";
 import {
@@ -301,7 +301,7 @@ const FitQuiz = () => {
                 </div>
                 <div className="flex flex-col items-center gap-3">
                   <a
-                    href={botLink("התוכנית הדיגיטלית — בדיקת התאמה")}
+                    href={chatLink("התוכנית הדיגיטלית — בדיקת התאמה")}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-2"
@@ -339,7 +339,7 @@ const FitQuiz = () => {
                     </Button>
                   </a>
                   <a
-                    href={botLink("התוכנית הדיגיטלית — בדיקת התאמה")}
+                    href={chatLink("התוכנית הדיגיטלית — בדיקת התאמה")}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-2"

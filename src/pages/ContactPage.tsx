@@ -4,7 +4,7 @@ import PageHero from "@/layouts/PageHero";
 import ContactForm from "@/components/ContactForm";
 import { faqData } from "@/data/faq";
 import { PHONE_NUMBER, EMAIL } from "@/lib/constants";
-import { botLink } from "@/lib/whatsapp";
+import { chatLink } from "@/lib/whatsapp";
 import { Reveal } from "@/components/v2/Reveal";
 import SEOHead, {
   organizationSchema,
@@ -47,7 +47,7 @@ const ContactPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               {
-                href: botLink("יצירת קשר"),
+                href: chatLink("יצירת קשר"),
                 ext: true,
                 icon: MessageCircle,
                 color: "hsl(var(--whatsapp))",
