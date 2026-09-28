@@ -20,8 +20,8 @@ const POPUP_ID = "webinar";
 
 /**
  * Promo popup steering visitors to the upcoming-webinar landing page.
- * Value-first triggering: opens only after the visitor scrolled half the
- * page (or on exit intent), only on the homepage/blog, at most once every
+ * Value-first triggering: on the blog, after half the page is read or on
+ * exit intent; on the homepage, on exit intent only. At most once every
  * 7 days. The CTA is a plain external <a>, so PixelTracker's global click
  * listener classifies the click automatically.
  */
@@ -58,7 +58,10 @@ const WebinarPopup = () => {
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseout", onMouseOut);
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
+    // The homepage is a pinned scroll story (DealStory, StackCards) — a
+    // dialog halfway down would land in the middle of it. There it waits
+    // for exit intent only; the webinar is also offered inline (PathChooser).
+    if (pathname !== "/") window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("mouseout", onMouseOut);
     return cleanup;
   }, [pathname]);

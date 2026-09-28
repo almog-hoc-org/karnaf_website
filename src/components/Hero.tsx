@@ -177,7 +177,7 @@ const Hero = () => {
               <span className="absolute inset-0 rounded-full bg-accent live-ping" />
               <span className="relative w-2 h-2 rounded-full bg-accent" />
             </span>
-            ליווי נדל״ן מבוסס נתונים · מאז {ACTIVE_SINCE}
+            נדל״ן לפי מספרים · מאז {ACTIVE_SINCE}
           </div>
 
           <SplitReveal
@@ -185,8 +185,8 @@ const Hero = () => {
             trigger="load"
             delay={0.08}
             stagger={0.07}
-            text="הדירה הבאה שלכם מתחילה כאן."
-            highlight={["מתחילה", "כאן"]}
+            text="לקנות דירה בלי לשלם יותר מדי."
+            highlight={["בלי", "לשלם", "יותר", "מדי"]}
             className="text-display-lg md:text-display-xl text-white mb-6"
           />
 
@@ -194,15 +194,15 @@ const Hero = () => {
             className="rise-in text-display-sm md:text-[2rem] font-bold leading-snug text-[hsl(36_33%_95%/0.92)] mb-4"
             style={{ ["--d" as string]: "0.45s" }}
           >
-            לקנות דירה חכם ולהימנע מטעויות יקרות
+            ב-2026 כוח המיקוח עבר לקונים — אבל רק למי שיודע לבדוק מחיר.
           </p>
           <p
             className="rise-in text-body-lg leading-relaxed max-w-[56ch] mx-auto mb-9 text-[hsl(36_33%_95%/0.72)]"
             style={{ ["--d" as string]: "0.55s" }}
           >
-            הקורס הדיגיטלי המקיף בישראל מלמד אתכם לעשות את זה לבד, צעד אחר צעד —
-            מהתקציב ועד המפתח. ולמי שמעדיף שמישהו יעבור את הדרך איתו: ליווי
-            אישי 1:1 עד החתימה.
+            מחיר במודעה, מבצע 20/80 של קבלן, הצעה של הבנק — כל אחד מהם יכול לעלות
+            לכם עשרות אלפי שקלים. המדריך המעשי לרכישת דירה מלמד אתכם לבדוק כל
+            מספר בעצמכם, שלב אחר שלב, מהתקציב ועד החתימה.
           </p>
 
           <div
