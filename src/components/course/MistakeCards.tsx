@@ -97,7 +97,7 @@ const MistakeCards = () => {
               מחירים שאי אפשר להשוות.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              לפי סקירת הכלכלן הראשי באוצר (ינואר 2026), דירה של 2&nbsp;מיליון&nbsp;₪
+              לפי סקירת הכלכלן הראשי באוצר (מרץ 2026), דירה של 2&nbsp;מיליון&nbsp;₪
               במבצע 80/20 שווה בערך נוכחי כ-1.75–1.8 מיליון&nbsp;₪.
             </p>
           </article>
