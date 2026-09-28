@@ -158,7 +158,7 @@ const PricingCard = () => {
 
         <div>
           <a
-            href={chatLink("התוכנית הדיגיטלית — שאלה לפני רכישה")}
+            href={chatLink("course-question")}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-3 px-3 min-h-[44px]"

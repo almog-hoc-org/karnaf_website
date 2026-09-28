@@ -31,7 +31,7 @@ const BigCTA = () => {
             </Reveal>
             <Reveal delay={0.18}>
               <a
-                href={chatLink("שאלה כללית")}
+                href={chatLink("general")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block"

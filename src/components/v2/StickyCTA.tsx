@@ -24,7 +24,7 @@ export const StickyCTA = ({
   const location = useLocation();
   const hidden = hideOn.some((p) => location.pathname.startsWith(p));
   // On /premium this opens the human line, not the bot.
-  const whatsappHref = useWhatsAppLink("התוכנית הדיגיטלית");
+  const whatsappHref = useWhatsAppLink("course");
 
   useEffect(() => {
     return scrollYProgress.on("change", (v) => setVisible(v > 0.3 && v < 0.95));

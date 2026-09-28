@@ -49,7 +49,7 @@ const AssuranceBlock = () => {
               </p>
               {item.href === "whatsapp" && (
                 <a
-                  href={chatLink("התוכנית הדיגיטלית — שאלה לפני רכישה")}
+                  href={chatLink("course-question")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-sm font-bold text-accent mt-2 py-3 min-h-[44px] underline-offset-4 hover:underline"

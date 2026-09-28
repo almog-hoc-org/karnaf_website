@@ -38,7 +38,7 @@ const COPY: Record<Variant, Copy> = {
       "בלי לחץ מכירתי — באים ללמוד",
       "שאלות? עונים בוואטסאפ",
     ],
-    whatsapp: chatLink("וובינר — שאלה"),
+    whatsapp: chatLink("webinar-followup"),
     whatsappLabel: "שאלה על הוובינר? וואטסאפ",
   },
   mortgage: {
@@ -49,7 +49,7 @@ const COPY: Record<Variant, Copy> = {
       "אם יש הצעה מהבנק — נשמח לראות אותה",
       "ניצור קשר בשעות הפעילות, א׳–ה׳ 09:00–20:00",
     ],
-    whatsapp: chatLink("קרנף משכנתא — שאלה"),
+    whatsapp: chatLink("mortgage-followup"),
     whatsappLabel: "מעדיפים וואטסאפ?",
   },
   contact: {
@@ -60,7 +60,7 @@ const COPY: Record<Variant, Copy> = {
       "מאמרים ומדריכים חינמיים בבלוג",
       "שאלה דחופה? וואטסאפ",
     ],
-    whatsapp: chatLink("יצירת קשר — שאלה"),
+    whatsapp: chatLink("contact-followup"),
     whatsappLabel: "מעדיפים וואטסאפ?",
   },
 };

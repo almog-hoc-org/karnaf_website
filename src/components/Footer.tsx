@@ -29,7 +29,7 @@ const Footer = () => {
 
               <div className="space-y-3 mb-10">
                 <a
-                  href={chatLink("יצירת קשר")}
+                  href={chatLink("contact")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 p-4 bg-card rounded-2xl border border-border hover:border-accent/40 transition-all duration-200 active:scale-[0.98] group"

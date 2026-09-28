@@ -60,7 +60,7 @@ const Navigation = () => {
   const closeTimer = useRef<ReturnType<typeof setTimeout>>();
   const location = useLocation();
   // On /premium the "בואו נדבר" button opens the human line, not the bot.
-  const whatsappHref = useWhatsAppLink("שאלה כללית");
+  const whatsappHref = useWhatsAppLink("general");
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);

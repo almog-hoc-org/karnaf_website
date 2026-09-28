@@ -47,7 +47,7 @@ const ContactPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               {
-                href: chatLink("יצירת קשר"),
+                href: chatLink("contact"),
                 ext: true,
                 icon: MessageCircle,
                 color: "hsl(var(--whatsapp))",

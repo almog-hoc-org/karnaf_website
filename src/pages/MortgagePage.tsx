@@ -31,7 +31,7 @@ import heroCity from "@/assets/hero-city.jpg";
 /* CRM classification for this funnel. */
 const LEAD_SOURCE = "mortgage";
 
-const WA_LINK = chatLink("קרנף משכנתא");
+const WA_LINK = chatLink("mortgage");
 
 /* The advisory journey — diagnosis → signature */
 const journey = [

@@ -301,7 +301,7 @@ const FitQuiz = () => {
                 </div>
                 <div className="flex flex-col items-center gap-3">
                   <a
-                    href={chatLink("התוכנית הדיגיטלית — בדיקת התאמה")}
+                    href={chatLink("course-fit")}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-2"
@@ -339,7 +339,7 @@ const FitQuiz = () => {
                     </Button>
                   </a>
                   <a
-                    href={chatLink("התוכנית הדיגיטלית — בדיקת התאמה")}
+                    href={chatLink("course-fit")}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-accent transition-colors underline-offset-4 hover:underline py-2"

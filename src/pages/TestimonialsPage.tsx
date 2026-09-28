@@ -117,7 +117,7 @@ const TestimonialsPage = () => {
             </p>
           </Reveal>
           <Reveal delay={0.16}>
-            <a href={chatLink("שאלה כללית")} target="_blank" rel="noopener noreferrer" className="inline-block">
+            <a href={chatLink("general")} target="_blank" rel="noopener noreferrer" className="inline-block">
               <Button
                 size="lg"
                 className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full shadow-[0_0_60px_hsl(var(--accent)/0.35)] hover:shadow-[0_0_80px_hsl(var(--accent)/0.55)] transition-all active:scale-[0.98]"
