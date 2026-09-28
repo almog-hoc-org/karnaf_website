@@ -36,7 +36,7 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 
 **Styling:** Tailwind CSS 3 + shadcn/ui design system. Colors defined as HSL CSS variables in `src/index.css` (Navy/Cream/Amber palette). Custom display font sizes (`display-lg/md/sm`), layered shadows (`depth-1` through `depth-4`, `glow-*`). Uses `tailwindcss-animate` for animations.
 
-**Animation:** Framer Motion only (page transitions, reveals, scroll effects). Smooth scrolling is native CSS (`scroll-behavior` + `scroll-padding-top`). Do not add GSAP/Lenis back — they were removed deliberately for INP/bundle size (see docs/UPGRADE.md).
+**Animation:** Framer Motion only (page transitions, reveals, scroll effects). Smooth scrolling is native CSS (`scroll-behavior` + `scroll-padding-top`). Do not add GSAP/Lenis back — they were removed deliberately for INP/bundle size (see docs/UPGRADE.md). Scroll-linked primitives live in `src/components/v2/scroll/` (read `docs/SCROLL-MOTION.md` first): map any `target`-bound `scrollYProgress` through `useScrubbed`, never the range form of `useTransform` (framer 12 binds the accelerated version to the whole page); gate motion with `useStillMotion` (SSR-safe, honors the a11y widget) and give the still state explicit rest values, not `style={undefined}`.
 
 **Fonts:** Self-hosted via `@fontsource-variable/rubik` (imported in `src/main.tsx`). No Google Fonts `<link>` tags.
 

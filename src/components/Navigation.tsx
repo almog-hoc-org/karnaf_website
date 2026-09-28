@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ChevronDown, GraduationCap, Users, Landmark, CalendarClock } from "lucide-react";
@@ -64,9 +64,21 @@ const Navigation = () => {
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Get out of the way while reading down, come back on any scroll up.
+  const [tucked, setTucked] = useState(false);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (y) => {
+    const prev = scrollY.getPrevious() ?? 0;
+    if (y < 480) setTucked(false);
+    else if (y > prev + 6) setTucked(true);
+    else if (y < prev - 6) setTucked(false);
+  });
+  const navHidden = tucked && !isMenuOpen && !servicesOpen;
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -131,27 +143,35 @@ const Navigation = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
-            ? "py-3 shadow-depth-2"
-            : "py-5"
+        onFocusCapture={() => setTucked(false)}
+        className={`fixed top-0 left-0 right-0 z-50 transition-[transform,padding,background-color,border-color] duration-500 ease-smooth ${
+          isScrolled ? "pt-2.5 px-3 md:px-5" : "py-5"
         }`}
         style={{
+          // Past the pill's own shadow, so no dark hairline is left at the top edge.
+          transform: navHidden ? "translateY(calc(-100% - 2.5rem))" : "translateY(0)",
           backgroundColor: isScrolled
-            ? "hsl(var(--background) / 0.85)"
+            ? "transparent"
             : isDarkHeroPage
               ? "hsl(217 50% 8% / 0.30)"
               : "hsl(var(--background) / 0.75)",
           borderBottom: isScrolled
-            ? "1px solid hsl(var(--border))"
+            ? "1px solid transparent"
             : isDarkHeroPage
               ? "1px solid hsl(36 33% 95% / 0.10)"
               : "1px solid hsl(var(--border) / 0.4)",
-          backdropFilter: "blur(16px) saturate(1.6)",
-          WebkitBackdropFilter: "blur(16px) saturate(1.6)",
+          backdropFilter: isScrolled ? undefined : "blur(16px) saturate(1.6)",
+          WebkitBackdropFilter: isScrolled ? undefined : "blur(16px) saturate(1.6)",
         }}
       >
-        <div className="container mx-auto px-6 flex items-center justify-between">
+        {/* Scrolled: the bar lifts off the edge into a floating pill */}
+        <div
+          className={`mx-auto flex items-center justify-between transition-all duration-500 ease-smooth ${
+            isScrolled
+              ? "max-w-6xl rounded-full border border-border bg-background/85 shadow-depth-2 ps-4 pe-2 md:ps-6 md:pe-2 py-2 backdrop-blur-xl backdrop-saturate-150"
+              : "container px-6 border border-transparent"
+          }`}
+        >
           <Link to="/" className="flex items-center gap-2" aria-label="קרנף נדל״ן — דף הבית">
             <img
               src={karnafLogo}
@@ -265,7 +285,7 @@ const Navigation = () => {
 
           {/* Hamburger — animated 3 lines */}
           <button
-            className={`lg:hidden relative -m-3 p-3 flex items-center justify-center transition-colors ${useLightText ? "text-white" : "text-foreground"}`}
+            className={`lg:hidden relative ${isScrolled ? "me-1" : "-m-3"} p-3 flex items-center justify-center transition-colors ${useLightText ? "text-white" : "text-foreground"}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
             aria-expanded={isMenuOpen}

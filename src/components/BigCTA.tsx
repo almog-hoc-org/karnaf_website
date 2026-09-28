@@ -3,43 +3,53 @@ import { MessageCircle } from "lucide-react";
 import { chatLink } from "@/lib/whatsapp";
 import { SectionDark } from "@/components/v2/Section";
 import { Reveal } from "@/components/v2/Reveal";
+import { ExpandOnScroll, SplitReveal } from "@/components/v2/scroll";
 
+/**
+ * The closing ask. The dark panel arrives as an inset card and opens to
+ * full bleed as it rises (ExpandOnScroll) — the page "opens the door"
+ * right where it asks the visitor to walk through one.
+ */
 const BigCTA = () => {
   return (
-    <SectionDark size="md" glow="bottom">
-      <div className="container mx-auto px-5 md:px-6 text-center max-w-3xl">
-        <Reveal>
-          <h2 className="text-display-md md:text-display-xl mb-6 text-white">
-            מוכנים לצעד הראשון? בואו נתחיל.
-          </h2>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p
-            className="text-body-lg max-w-xl mx-auto mb-10 leading-relaxed"
-            style={{ color: "hsl(36 33% 95% / 0.72)" }}
-          >
-            דברו איתנו ונבנה יחד את התוכנית שלכם — בין אם אתם רוכשים דירה ראשונה או מחפשים את ההשקעה הבאה.
-          </p>
-        </Reveal>
-        <Reveal delay={0.18}>
-          <a
-            href={chatLink("שאלה כללית")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block"
-          >
-            <Button
-              size="lg"
-              className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all"
-            >
-              <MessageCircle size={20} />
-              לשיחה בוואטסאפ — בלי התחייבות
-              <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
-            </Button>
-          </a>
-        </Reveal>
-      </div>
-    </SectionDark>
+    <div className="bg-background">
+      <ExpandOnScroll>
+        <SectionDark size="md" glow="bottom">
+          <div className="container mx-auto px-5 md:px-6 text-center max-w-3xl">
+            <SplitReveal
+              text="מוכנים לצעד הראשון? בואו נתחיל."
+              highlight={["נתחיל"]}
+              className="text-display-md md:text-display-xl mb-6 text-white"
+            />
+            <Reveal delay={0.1}>
+              <p
+                className="text-body-lg max-w-xl mx-auto mb-10 leading-relaxed"
+                style={{ color: "hsl(36 33% 95% / 0.72)" }}
+              >
+                דברו איתנו ונבנה יחד את התוכנית שלכם — בין אם אתם רוכשים דירה ראשונה או מחפשים את ההשקעה הבאה.
+              </p>
+            </Reveal>
+            <Reveal delay={0.18}>
+              <a
+                href={chatLink("שאלה כללית")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block"
+              >
+                <Button
+                  size="lg"
+                  className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all shadow-glow-accent"
+                >
+                  <MessageCircle size={20} />
+                  לשיחה בוואטסאפ — בלי התחייבות
+                  <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
+                </Button>
+              </a>
+            </Reveal>
+          </div>
+        </SectionDark>
+      </ExpandOnScroll>
+    </div>
   );
 };
 

@@ -6,6 +6,7 @@ import FooterBar from "@/components/FooterBar";
 import WhatsAppFAB from "@/components/WhatsAppFAB";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import { StickyCTA } from "@/components/v2/StickyCTA";
+import { ScrollProgress } from "@/components/v2/scroll";
 import WebinarPopup from "@/components/WebinarPopup";
 import CoursePopup from "@/components/CoursePopup";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
@@ -26,6 +27,7 @@ const SharedLayout = () => {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-accent focus:text-accent-foreground focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold">
         דלג לתוכן הראשי
       </a>
+      <ScrollProgress />
       <Navigation />
       <AnimatePresence mode="wait">
         <motion.main

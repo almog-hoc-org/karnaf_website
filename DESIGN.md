@@ -82,10 +82,11 @@ Glow shadows used sparingly (פעם 1-2 בעמוד). Not on every card.
 
 ## Motion
 
-- Library: framer-motion (page transitions) + custom IntersectionObserver-based `<Reveal>`. Smooth scroll is native CSS (`scroll-behavior`) — Lenis was removed for INP.
+- Library: framer-motion (page transitions + scroll-linked effects) + custom IntersectionObserver-based `<Reveal>` (fade-up with a 6px blur-in). Smooth scroll is native CSS (`scroll-behavior`) — Lenis was removed for INP.
+- **Scroll choreography (2026-09):** the homepage is a scroll story — hero course-window tilts flat, syllabus marquee reacts to scroll speed, manifesto words light up, method panel pins while steps scroll, testimonials stack, closing CTA opens to full bleed. Primitives live in `src/components/v2/scroll/`; how-to and pitfalls in `docs/SCROLL-MOTION.md`. One "big" scroll effect per screen.
 - **Easing:** `ease-out-quart` / `ease-out-quint`. Never bounce, never elastic.
 - **Duration:** 150-300ms for micro, 600-800ms for entrance reveals.
-- `prefers-reduced-motion`: all Reveals collapse to instant.
+- `prefers-reduced-motion` **and** the accessibility widget's stop-animations profiles (`useStillMotion`): all Reveals collapse to instant, scroll-linked effects rest at their final state.
 - **No layout-property animation** — only transform/opacity/filter.
 
 GSAP intentionally absent — too heavy for a static-rendered marketing site, framer-motion + IO Reveal cover the use case.
@@ -106,6 +107,13 @@ GSAP intentionally absent — too heavy for a static-rendered marketing site, fr
 | `<Sparkline>` | inline mini chart |
 | `<ClipImage>` | masked image with editorial shape |
 | `<Eyebrow>` | small uppercase label |
+| `scroll/<SplitReveal>` | headline rising word by word from a mask (`trigger="load"` is CSS-only, for the H1) |
+| `scroll/<ScrollWords>` | statement whose words light up with scroll |
+| `scroll/<StackCards>` | sticky cards dealt onto a stack |
+| `scroll/<VelocityMarquee>` | endless ribbon that surges with scroll speed |
+| `scroll/<ExpandOnScroll>` | inset card that opens to full bleed |
+| `scroll/<ParallaxImage>` | bottom-up clip reveal + parallax |
+| `scroll/<ScrollProgress>` | amber reading-progress line (RTL fill) |
 | `<FitQuiz>` | multi-step qualification |
 
 shadcn/ui primitives: Button, Accordion, Toast, Tooltip, Input, Select, Tabs, Form (in `components/ui/`).
