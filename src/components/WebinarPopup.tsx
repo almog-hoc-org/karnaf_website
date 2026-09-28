@@ -151,7 +151,7 @@ const WebinarPopup = () => {
             </div>
 
             <div className="px-7 pb-8 pt-6 text-center">
-              <span className="inline-flex items-center gap-2 rounded-full bg-accent/12 border border-accent/25 px-3.5 py-1.5 text-eyebrow font-bold uppercase tracking-[0.18em] text-accent">
+              <span className="inline-flex items-center gap-2 rounded-full bg-accent/10 border border-accent/25 px-3.5 py-1.5 text-eyebrow font-bold uppercase tracking-[0.18em] text-accent">
                 <CalendarClock size={14} />
                 וובינר קרוב · בחינם
               </span>

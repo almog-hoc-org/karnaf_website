@@ -51,7 +51,7 @@ const PartCard = ({ part }: { part: (typeof courseParts)[number] }) => (
 );
 
 const ChapterCard = ({ stop }: { stop: Extract<Stop, { kind: "chapter" }> }) => (
-  <article data-chapter={stop.num} className="snap-start shrink-0 w-[78vw] sm:w-[19rem] lg:w-[20rem] min-h-[19rem] lg:min-h-[21rem] rounded-3xl border border-white/12 bg-white/[0.045] p-6 lg:p-7 flex flex-col">
+  <article data-chapter={stop.num} className="snap-start shrink-0 w-[78vw] sm:w-[19rem] lg:w-[20rem] min-h-[19rem] lg:min-h-[21rem] rounded-3xl border border-white/15 bg-white/[0.045] p-6 lg:p-7 flex flex-col">
     <div className="flex items-baseline justify-between">
       <span className="font-mono text-accent font-bold tabular-nums tracking-[0.15em] text-sm">
         פרק {pad(stop.num)}

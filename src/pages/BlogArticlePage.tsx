@@ -32,6 +32,7 @@ import {
   wasUpdated,
 } from "@/components/blog/articleUtils";
 import karnafLogo from "@/assets/mascot/karnaf-logo.png";
+import { useSuppressStickyCta } from "@/hooks/use-sticky-cta-suppression";
 
 /** The offer goes in after the second "##" section — past the intro, before a skimmer decides they're done. */
 const OFFER_BEFORE_HEADING = 3;
@@ -53,6 +54,9 @@ const BlogArticlePage = () => {
   }, [sections, faq.length, sources.length]);
 
   const { bodyRef, activeId } = useArticleReading(tocItems.map((t) => t.id));
+  // One product per article: a 1:1-track article doesn't also get the
+  // site-wide ₪950 course bar.
+  useSuppressStickyCta(article?.offer === "premium");
 
   if (!article) {
     return <Navigate to="/blog" replace />;

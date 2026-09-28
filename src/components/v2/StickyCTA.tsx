@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useWhatsAppLink } from "@/hooks/use-whatsapp-link";
 import { setBottomBarHeight } from "@/lib/bottomBar";
+import { useStickyCtaSuppressed } from "@/hooks/use-sticky-cta-suppression";
 
 interface StickyCTAProps {
   label?: string;
@@ -22,7 +23,8 @@ export const StickyCTA = ({
   const smooth = useSpring(scrollYProgress, { stiffness: 80, damping: 20 });
   const [visible, setVisible] = useState(false);
   const location = useLocation();
-  const hidden = hideOn.some((p) => location.pathname.startsWith(p));
+  const suppressed = useStickyCtaSuppressed();
+  const hidden = suppressed || hideOn.some((p) => location.pathname.startsWith(p));
   // On /premium this opens the human line, not the bot.
   const whatsappHref = useWhatsAppLink("course");
 

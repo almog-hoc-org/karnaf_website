@@ -31,7 +31,8 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 - `src/lib/analytics.ts` — env-gated GA4/Clarity loader + funnel events (mirrors Meta Pixel)
 - `src/lib/bottomBar.ts` — bottom bars (desktop `StickyCTA`, `/course` `CoursePriceBar`) publish their height to `--sticky-cta-h`; the WhatsApp FAB and accessibility button lift above it, and the FAB steps aside on `/course` while the price bar shows
 - `src/components/WebinarCapture.tsx` — the free lead magnet (webinar) as a first-class form: home, blog index, `/course` after the close, and the quiz's "עוד מוקדם" result. `WEBINAR_URL` lives in `lib/constants.ts`
-- `src/components/blog/ArticleOffer.tsx` — one offer per article by topic (course vs. premium), used mid-article and as the end banner
+- `src/data/blog/` — the blog: one article per file in `posts/` (schema in `types.ts`: cover with photo credit/license, takeaways, sources, faq, `offer`), collected by `src/data/articles.ts`. Every figure in an article needs a dated source in `sources`
+- `src/components/blog/ArticleOffer.tsx` — one offer per article from `article.offer` / `offerLine` (course vs. premium), used mid-article and as the end banner; premium articles also switch off the desktop course StickyCTA (`useSuppressStickyCta`)
 - `src/hooks/` — custom hooks
 
 **Styling:** Tailwind CSS 3 + shadcn/ui design system. Colors defined as HSL CSS variables in `src/index.css` (Navy/Cream/Amber palette). Custom display font sizes (`display-lg/md/sm`), layered shadows (`depth-1` through `depth-4`, `glow-*`). Uses `tailwindcss-animate` for animations.
