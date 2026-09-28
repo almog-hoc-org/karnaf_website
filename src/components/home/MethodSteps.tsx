@@ -101,7 +101,17 @@ const StepText = ({
   );
 };
 
-/** The pinned panel — swaps to the active step's chapters. */
+/**
+ * The pinned panel — swaps to the active step's chapters.
+ *
+ * The panel itself never empties: `popLayout` lifts the outgoing content
+ * out of flow while the incoming content is already fading in on top, so
+ * the swap is a crossfade rather than exit-then-enter. With `mode="wait"`
+ * the card sat blank for ~0.5s on every step — the 1:1 comparison with
+ * reddgrow.ai (docs/REDDGROW-ANALYSIS.md) showed the reference keeps its
+ * card solid and changes only what's inside. No blur either: it's costly
+ * to paint and leaves the text unreadable mid-swap.
+ */
 const StepPanel = ({ step, still }: { step: StepData; still: boolean }) => (
   <div className="relative rounded-3xl overflow-hidden bg-[hsl(var(--ink))] text-[hsl(var(--ink-foreground))] p-8 xl:p-10 min-h-[26rem] shadow-depth-3">
     <div
@@ -112,14 +122,18 @@ const StepPanel = ({ step, still }: { step: StepData; still: boolean }) => (
       }}
     />
     <div className="absolute inset-0 grain-texture pointer-events-none" aria-hidden />
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="popLayout" initial={false}>
       <motion.div
         key={step.num}
         className="relative"
-        initial={still ? false : { opacity: 0, y: 18, filter: "blur(6px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
-        exit={still ? { opacity: 0 } : { opacity: 0, y: -12, filter: "blur(6px)" }}
-        transition={{ duration: still ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
+        initial={still ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={
+          still
+            ? { opacity: 0, transition: { duration: 0 } }
+            : { opacity: 0, y: -10, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }
+        }
+        transition={{ duration: still ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="flex items-baseline justify-between mb-6">
           <span className="text-eyebrow uppercase tracking-[0.28em] text-white/55">
