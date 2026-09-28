@@ -15,7 +15,7 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 
 ## Architecture
 
-**Routing:** React Router v6 with lazy-loaded pages wrapped in `SharedLayout` (Navigation + FooterBar + WhatsApp FAB + Accessibility widget + Framer Motion page transitions). The desktop `StickyCTA` (course cross-sell) is hidden on `/contact`, `/course` and `/premium` — never downsell the 1:1 funnel.
+**Routing:** React Router v6 with lazy-loaded pages wrapped in `SharedLayout` (Navigation + FooterBar + WhatsApp FAB + Accessibility widget + Framer Motion page transitions). The desktop `StickyCTA` (course cross-sell) is hidden on `/contact`, `/course`, `/premium` and `/mortgage`, and on 1:1-offer blog articles — never downsell a lead funnel.
 
 **Path alias:** `@/` → `src/`
 

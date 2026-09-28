@@ -57,12 +57,14 @@ const SharedLayout = () => {
       <AccessibilityWidget />
       {/* Desktop-only — on mobile the WhatsApp FAB is the single floating CTA.
           The course page carries its own price bar, so skip it there — and
-          never cross-sell the ₪950 course inside the 1:1 accompaniment funnel. */}
+          never cross-sell the ₪950 course inside a lead funnel (1:1
+          accompaniment, mortgage) or on a 1:1-offer article
+          (useSuppressStickyCta). */}
       <StickyCTA
         label="המדריך המעשי לרכישת דירה · הקורס הדיגיטלי המקיף בישראל"
         ctaLabel="לפרטים ולרכישה"
         ctaHref="/course#pricing"
-        hideOn={["/contact", "/course", "/premium"]}
+        hideOn={["/contact", "/course", "/premium", "/mortgage"]}
       />
       {/* Both dialogs share one slot (see lib/popupCoordinator): the webinar
           goes first, the free-lesson offer only to visitors who stick around. */}
