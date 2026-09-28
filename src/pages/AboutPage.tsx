@@ -110,8 +110,8 @@ const AboutPage = () => {
       />
 
       <PageHero
-        containerClassName="max-w-6xl"
         splitTitle
+        titleSize="lg"
         tag="אודות · איתמר נחליאל ואלמוג חכמה"
         title="למדנו את השוק עסקה אחרי עסקה."
         accentWords={["עסקה", "אחרי", "עסקה."]}

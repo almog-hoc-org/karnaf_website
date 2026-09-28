@@ -42,6 +42,12 @@ interface PageHeroProps {
    * text edge lines up with the content column of the page below it.
    */
   containerClassName?: string;
+  /**
+   * With `splitTitle`: "lg" keeps the H1 at display-lg on desktop too — for
+   * a longer line sharing the row with an `aside`, so it breaks in two
+   * phrases instead of three stubs.
+   */
+  titleSize?: "lg" | "xl";
 }
 
 /** CSS-only rise for above-the-fold copy (`.rise-in` in index.css). */
@@ -65,6 +71,7 @@ const PageHero = ({
   aside,
   footnote,
   containerClassName = "",
+  titleSize = "xl",
 }: PageHeroProps) => {
   const photo = !!backgroundImage;
   const ink = !photo && tone === "ink";
@@ -90,7 +97,7 @@ const PageHero = ({
       text={highlight ? `${title} ${highlight}` : title}
       highlight={[...accentWords, ...(highlight ? highlight.split(" ") : [])]}
       stagger={0.05}
-      className="text-display-lg md:text-display-xl mb-6 text-balance"
+      className={`text-display-lg ${titleSize === "xl" ? "md:text-display-xl" : ""} mb-6 text-balance`}
     />
   ) : (
     <h1 className="text-display-lg md:text-display-xl mb-6">

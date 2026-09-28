@@ -412,7 +412,6 @@ const PremiumPage = () => {
       />
 
       <PageHero
-        containerClassName="max-w-6xl"
         tag="ליווי משקיעים 1:1"
         title="מישהו בצד שלכם של השולחן."
         accentWords={["בצד", "שלכם"]}
