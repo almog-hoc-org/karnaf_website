@@ -122,7 +122,7 @@ const Navigation = () => {
 
   // Routes whose hero starts on a cinematic dark background.
   // When the user has not scrolled yet on these, the nav text is light.
-  const darkHeroPrefixes = ["/course", "/preview/v2"];
+  const darkHeroPrefixes = ["/course", "/premium", "/mortgage", "/preview/v2"];
   const isDarkHeroPage =
     location.pathname === "/" ||
     darkHeroPrefixes.some((p) => location.pathname.startsWith(p));
