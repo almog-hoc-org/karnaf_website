@@ -49,9 +49,10 @@ const premiumReviews = premiumStories.map((t) => ({
   reviewBody: t.quote,
 }));
 
-const StoryCard = ({ t, className = "" }: { t: Testimonial; className?: string }) => (
+/* `cream` for cards sitting on the white (bg-card) section. */
+const StoryCard = ({ t, cream = false }: { t: Testimonial; cream?: boolean }) => (
   <figure
-    className={`h-full flex flex-col bg-card border border-border rounded-2xl p-6 md:p-7 shadow-depth-1 ${className}`}
+    className={`h-full flex flex-col ${cream ? "bg-background" : "bg-card"} border border-border rounded-2xl p-6 md:p-7 shadow-depth-1`}
   >
     <div className="flex items-center justify-between gap-3 mb-4">
       <span className="text-eyebrow uppercase tracking-[0.16em] border border-border text-muted-foreground rounded-full px-3 py-1">
@@ -167,7 +168,7 @@ const TestimonialsPage = () => {
             <div className={`grid gap-6 mb-12 ${moreCourse.length > 1 ? "md:grid-cols-2" : "max-w-2xl"}`}>
               {moreCourse.map((t, i) => (
                 <Reveal key={t.name} delay={i * 0.08} className="h-full">
-                  <StoryCard t={t} className="bg-background" />
+                  <StoryCard t={t} cream />
                 </Reveal>
               ))}
             </div>
