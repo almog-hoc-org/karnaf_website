@@ -1,10 +1,10 @@
 // Build-time sitemap generator.
-// Reads `src/data/articles.ts` for blog dates, emits `dist/sitemap.xml`
+// Reads the blog post files (src/data/blog/posts) for blog dates, emits `dist/sitemap.xml`
 // (and copies `public/sitemap.xml` so dev still has one).
 //
 // Run automatically as a postbuild step.
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -15,17 +15,19 @@ const SITE = "https://www.karnafnadlan.com";
 const today = new Date().toISOString().slice(0, 10);
 
 /**
- * Parse the articles array out of the TS source without compiling.
- * Each article has a `slug` and a `date` (YYYY-MM-DD). We don't need
- * the full content — just slug + date.
+ * Read slug + dates out of each post file (src/data/blog/posts/*.ts)
+ * without compiling. `updated` (last fact-check) wins over `date` for
+ * lastmod when present.
  */
 function readArticles() {
-  const src = readFileSync(resolve(ROOT, "src/data/articles.ts"), "utf8");
+  const dir = resolve(ROOT, "src/data/blog/posts");
   const out = [];
-  const re = /\{\s*slug:\s*"([^"]+)",[^}]*?date:\s*"([^"]+)"/gs;
-  let m;
-  while ((m = re.exec(src))) {
-    out.push({ slug: m[1], date: m[2] });
+  for (const file of readdirSync(dir).filter((f) => f.endsWith(".ts"))) {
+    const src = readFileSync(resolve(dir, file), "utf8");
+    const field = (name) => src.match(new RegExp(`"?${name}"?:\\s*"([^"]+)"`))?.[1];
+    const slug = field("slug");
+    const date = field("updated") ?? field("date");
+    if (slug && date) out.push({ slug, date });
   }
   return out;
 }
@@ -66,7 +68,7 @@ function buildSitemap() {
     entries.push(urlEntry(r.loc, today, r.priority, r.changefreq));
   }
 
-  // Article routes — use article date as lastmod
+  // Article routes — last update (or publish) date as lastmod
   for (const a of articles) {
     entries.push(
       urlEntry(`/blog/${a.slug}`, a.date, "0.6", "monthly")

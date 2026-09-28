@@ -51,7 +51,7 @@ const BlogArticlePage = () => {
         description={article.excerpt}
         path={`/blog/${article.slug}`}
         type="article"
-        image={article.image}
+        image={article.cover.src}
         jsonLd={[
           organizationSchema,
           breadcrumbSchema([
@@ -63,7 +63,7 @@ const BlogArticlePage = () => {
             title: article.title,
             description: article.excerpt,
             url: `/blog/${article.slug}`,
-            image: article.image,
+            image: article.cover.og ?? article.cover.src,
             datePublished: article.date,
           }),
         ]}
@@ -105,11 +105,11 @@ const BlogArticlePage = () => {
       </section>
 
       {/* Video or hero image */}
-      {article.videoUrl ? (
+      {(article as { videoUrl?: string }).videoUrl ? (
         <section className="pb-12 bg-background">
           <div className="container mx-auto px-6 max-w-3xl">
             <Reveal>
-              <VideoPlayer url={article.videoUrl} title={article.title} />
+              <VideoPlayer url={(article as { videoUrl?: string }).videoUrl} title={article.title} />
             </Reveal>
           </div>
         </section>
@@ -119,7 +119,7 @@ const BlogArticlePage = () => {
             <Reveal>
               <div className="rounded-2xl overflow-hidden border border-border shadow-depth-2">
                 <img
-                  src={article.image}
+                  src={article.cover.src}
                   alt={article.title}
                   loading="lazy"
                   className="w-full aspect-video object-cover"
@@ -171,7 +171,7 @@ const BlogArticlePage = () => {
                     <article className="bg-card border border-border rounded-2xl overflow-hidden h-full transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-depth-2">
                       <div className="aspect-video overflow-hidden">
                         <img
-                          src={a.image}
+                          src={a.cover.src}
                           alt={a.title}
                           loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

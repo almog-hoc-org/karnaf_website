@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Play, FileText, Wrench, ArrowLeft, Clock } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
-import { articles } from "@/data/articles";
+import { articles, CATEGORY_LABELS } from "@/data/articles";
 import { Reveal } from "@/components/v2/Reveal";
 import WebinarCapture from "@/components/WebinarCapture";
 import SEOHead, {
@@ -33,7 +33,7 @@ const BlogPage = () => {
   const filtered =
     activeCategory === "all"
       ? articles
-      : articles.filter((a) => a.category === activeCategory);
+      : articles.filter((a) => (a.category as string) === activeCategory);
   const featured = articles[0];
 
   return (
@@ -84,12 +84,12 @@ const BlogPage = () => {
               <article className="grid md:grid-cols-2 gap-0 bg-card border border-border rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-depth-3">
                 <div className="aspect-video md:aspect-auto relative overflow-hidden">
                   <img
-                    src={featured.image}
+                    src={featured.cover.src}
                     alt={featured.title}
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  {featured.category === "video" && (
+                  {(featured.category as string) === "video" && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                       <div className="w-14 h-14 rounded-full bg-accent flex items-center justify-center">
                         <Play size={24} className="text-accent-foreground ml-1" />
@@ -101,7 +101,7 @@ const BlogPage = () => {
                   <span
                     className={`text-eyebrow uppercase tracking-[0.18em] px-3 py-1 rounded-full inline-block w-fit mb-4 ${categoryColor[featured.category]}`}
                   >
-                    {categoryLabels[featured.category].label}
+                    {CATEGORY_LABELS[featured.category]}
                   </span>
                   <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 leading-tight group-hover:text-accent transition-colors tracking-[-0.02em]">
                     {featured.title}
@@ -160,12 +160,12 @@ const BlogPage = () => {
                   <article className="bg-card border border-border rounded-2xl overflow-hidden transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-depth-2 h-full flex flex-col">
                     <div className="relative aspect-video overflow-hidden">
                       <img
-                        src={article.image}
+                        src={article.cover.src}
                         alt={article.title}
                         loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
-                      {article.category === "video" && (
+                      {(article.category as string) === "video" && (
                         <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                           <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
                             <Play size={18} className="text-accent-foreground ml-0.5" />
@@ -175,7 +175,7 @@ const BlogPage = () => {
                       <span
                         className={`absolute top-3 right-3 text-eyebrow uppercase tracking-[0.18em] px-2.5 py-1 rounded-full ${categoryColor[article.category]}`}
                       >
-                        {categoryLabels[article.category].label}
+                        {CATEGORY_LABELS[article.category]}
                       </span>
                     </div>
                     <div className="p-5 flex-1 flex flex-col">
