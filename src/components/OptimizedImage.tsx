@@ -27,7 +27,6 @@ export function OptimizedImage({
       height={height}
       loading={priority ? 'eager' : (loading ?? 'lazy')}
       decoding={priority ? 'sync' : decoding}
-      // @ts-expect-error -- fetchPriority is valid HTML but not yet in React types
       fetchPriority={priority ? 'high' : undefined}
       className={className}
       {...props}

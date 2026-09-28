@@ -465,7 +465,7 @@ const DealCard = ({
 
 /* ── The beat (text) ────────────────────────────────────────────────── */
 
-const Beat = ({ i, still }: { i: number; still: boolean }) => {
+const Beat = ({ i, still, finalCta }: { i: number; still: boolean; finalCta?: ReactNode }) => {
   const beat = beats[i];
   const last = i === beats.length - 1;
   return (
@@ -500,7 +500,8 @@ const Beat = ({ i, still }: { i: number; still: boolean }) => {
         </div>
       )}
       </div>
-      {last && (
+      {last && finalCta && <div className="mt-4 md:mt-8">{finalCta}</div>}
+      {last && !finalCta && (
         <div className="mt-4 md:mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
           <Link
             to="/course"
@@ -530,7 +531,22 @@ const Beat = ({ i, still }: { i: number; still: boolean }) => {
  * stage runs on phones (text above the card), which is where most of the
  * traffic is — the reference site drops its story there.
  */
-const DealStory = () => {
+interface DealStoryProps {
+  eyebrow?: string;
+  title?: string;
+  highlight?: string[];
+  intro?: string;
+  /** Replaces the default last-beat CTA (the course page sends it to checkout). */
+  finalCta?: ReactNode;
+}
+
+const DealStory = ({
+  eyebrow = "תיק עסקה",
+  title = "ככה זה נראה על דירה אחת.",
+  highlight = ["דירה", "אחת"],
+  intro = "מהמודעה ועד החתימה, לפי השיטה שבקורס. גללו — והעסקה מתקדמת איתכם.",
+  finalCta,
+}: DealStoryProps = {}) => {
   const still = useStillMotion();
   const trackRef = useRef<HTMLDivElement>(null);
   const [stage, setStage] = useState(0);
@@ -559,17 +575,17 @@ const DealStory = () => {
 
       <div className="relative container mx-auto px-5 md:px-6 max-w-6xl pt-section-lg pb-6">
         <div className="max-w-3xl">
-          <Eyebrow className="mb-6">תיק עסקה</Eyebrow>
+          <Eyebrow className="mb-6">{eyebrow}</Eyebrow>
           <span id="deal-story-title" className="sr-only">
             תיק עסקה: דוגמה לקנייה של דירה אחת לפי מספרים
           </span>
           <SplitReveal
-            text="ככה זה נראה על דירה אחת."
-            highlight={["דירה", "אחת"]}
+            text={title}
+            highlight={highlight}
             className="text-display-md md:text-display-lg text-white mb-5"
           />
           <p className="text-body-lg text-white/70 leading-relaxed max-w-[60ch]">
-            מהמודעה ועד החתימה, לפי השיטה שבקורס. גללו — והעסקה מתקדמת איתכם.
+            {intro}
           </p>
         </div>
       </div>
@@ -604,7 +620,7 @@ const DealStory = () => {
           <div className="relative h-full container mx-auto px-5 md:px-6 max-w-6xl flex flex-col lg:grid lg:grid-cols-2 lg:gap-12 xl:gap-16 lg:items-center justify-center pt-14 pb-20 lg:py-0">
             <div className="relative shrink-0 h-[14.5rem] [@media(max-height:760px)]:h-[7.5rem] md:h-[13rem] lg:h-auto lg:min-h-[22rem] flex flex-col justify-end lg:justify-center mb-3 lg:mb-0">
               <AnimatePresence mode="popLayout" initial={false}>
-                <Beat key={stage} i={stage} still={still} />
+                <Beat key={stage} i={stage} still={still} finalCta={finalCta} />
               </AnimatePresence>
             </div>
             <motion.div

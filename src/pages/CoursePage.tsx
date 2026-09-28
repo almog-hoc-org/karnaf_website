@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import SEOHead, {
   courseSchema,
@@ -18,7 +19,6 @@ import {
 } from "@/components/ui/accordion";
 import VimeoEmbed from "@/components/course/VimeoEmbed";
 import FitQuiz from "@/components/rich-media/FitQuiz";
-import CurriculumAccordion from "@/components/rich-media/CurriculumAccordion";
 import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
 import { faqData } from "@/data/faq";
@@ -35,7 +35,10 @@ import CoursePriceBar from "@/components/course/CoursePriceBar";
 import WebinarCapture from "@/components/WebinarCapture";
 import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
-import { TransactionLifecycle, type LifecycleStep } from "@/components/v2/TransactionLifecycle";
+import SyllabusRoute from "@/components/course/SyllabusRoute";
+import DealStory from "@/components/home/DealStory";
+import { useCountUp } from "@/hooks/use-count-up";
+import { useStillMotion } from "@/hooks/use-still-motion";
 import { useSectionView } from "@/hooks/use-section-view";
 import {
   gaFaqOpen,
@@ -47,21 +50,27 @@ import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
 import foundersImg from "@/assets/team/itamar-almog-about.webp";
 import {
+  TOTAL_CLIENTS,
   TOTAL_CLIENTS_STAT,
   TOTAL_CLIENTS_LABEL,
-  YEARS_EXPERIENCE_STAT,
+  YEARS_EXPERIENCE,
   YEARS_EXPERIENCE_LABEL,
-  COURSE_STUDENTS_STAT,
+  COURSE_STUDENTS,
   COURSE_STUDENTS_LABEL,
   ACTIVE_SINCE,
 } from "@/data/companyStats";
 
 /*
- * Sales page — product-first spine (owner round 3):
- * hero → explainer video → the vehicle (syllabus) → amplification
- * (cost of the mistake) → relief (not your fault) → empathy+authority
- * (our experience) → future pacing → proof numbers → testimonials →
- * self-selection (quiz) → price choreography → safety → objections →
+ * Sales page — product-first spine (owner round 3), told as a scroll
+ * story (2026-09 round):
+ * hero (settles as you scroll) → explainer video → the vehicle: the
+ * syllabus as a route you travel (SyllabusRoute — pinned sideways travel
+ * on desktop, swipe carousel on phones, real lesson titles) → amplification
+ * (the four costs of the mistake, incl. 2026's financing-deal trap) →
+ * relief (not your fault) → empathy+authority (our experience) → future
+ * pacing played out on one deal (DealStory — the pinned stage from the
+ * homepage, ending in checkout) → proof numbers (counting) → testimonials
+ * → self-selection (quiz) → price choreography → safety → objections →
  * the keys. "מספרים, לא תחושות" is the texture of every beat.
  */
 
@@ -70,23 +79,25 @@ const COURSE_VIDEO_ID = "1213042212";
 
 /* Advertised numbers — single source of truth in courseStats.ts */
 
-/* S2 — authority stats: the guide's credentials, not the product's specs. */
-const authorityStats = [
-  { value: TOTAL_CLIENTS_STAT, label: TOTAL_CLIENTS_LABEL },
-  { value: YEARS_EXPERIENCE_STAT, label: YEARS_EXPERIENCE_LABEL },
-  { value: COURSE_STUDENTS_STAT, label: COURSE_STUDENTS_LABEL },
+/* S2 — authority stats: the guide's credentials, not the product's specs.
+   Counts run up when they scroll into view; the year doesn't count. */
+const authorityStats: { count?: number; value: string; suffix?: string; label: string }[] = [
+  { count: TOTAL_CLIENTS, value: TOTAL_CLIENTS_STAT, suffix: "+", label: TOTAL_CLIENTS_LABEL },
+  { count: YEARS_EXPERIENCE, value: `${YEARS_EXPERIENCE}+`, suffix: "+", label: YEARS_EXPERIENCE_LABEL },
+  { count: COURSE_STUDENTS, value: `${COURSE_STUDENTS}`, label: COURSE_STUDENTS_LABEL },
   { value: `${ACTIVE_SINCE}`, label: "פועלים מאז" },
 ];
 
-/* S5 — the same journey, replayed with the prepared version of you. */
-const preparedSteps: LifecycleStep[] = [
-  { num: "01", label: "תקציב", duration: "יודעים בדיוק כמה" },
-  { num: "02", label: "חיפוש", duration: "קוראים שכונה ב-20 דקות" },
-  { num: "03", label: "ביקור בנכס", duration: "צ׳קליסט ביד" },
-  { num: "04", label: "ניתוח", duration: "כדאי או לא — במספרים" },
-  { num: "05", label: "משא ומתן", duration: "עם נתונים, לא תחושות" },
-  { num: "06", label: "חתימה", duration: "רגועים. מבינים כל סעיף" },
-];
+const StatValue = ({ count, value, suffix = "" }: { count?: number; value: string; suffix?: string }) => {
+  const c = useCountUp(count ?? 0);
+  if (count === undefined) return <>{value}</>;
+  return (
+    <>
+      <span ref={c.ref}>{c.value}</span>
+      {suffix}
+    </>
+  );
+};
 
 /* Program section — compact feature strip. */
 const featureStrip = [
@@ -107,9 +118,11 @@ const premiumTestimonials = testimonials.filter((t) => t.service === "premium");
 const CheckoutCta = ({
   label,
   location,
+  align = "center",
 }: {
   label: string;
   location: CheckoutCtaLocation;
+  align?: "center" | "start";
 }) => {
   const [href, setHref] = useState(CHECKOUT_URL);
 
@@ -118,7 +131,7 @@ const CheckoutCta = ({
   }, []);
 
   return (
-    <div className="text-center mt-8">
+    <div className={align === "center" ? "text-center mt-8" : ""}>
       <a
         href={href}
         target="_blank"
@@ -148,6 +161,15 @@ const CheckoutCta = ({
 };
 
 const CoursePage = () => {
+  // The hero settles as the page starts to move: the city pulls back to
+  // rest and the headline drifts up and fades. Page-level scrollY (no
+  // target), so the range form of useTransform is safe here.
+  const still = useStillMotion();
+  const { scrollY } = useScroll();
+  const heroImgScale = useTransform(scrollY, [0, 700], [1.08, 1]);
+  const heroTextY = useTransform(scrollY, [0, 600], [0, 70]);
+  const heroTextOpacity = useTransform(scrollY, [0, 520], [1, 0.25]);
+
   // Hero CTA: plain URL for the pre-hydration render, enriched after.
   const [heroCheckoutHref, setHeroCheckoutHref] = useState(CHECKOUT_URL);
   useEffect(() => {
@@ -156,13 +178,13 @@ const CoursePage = () => {
 
   const mistakeRef = useSectionView<HTMLElement>("mistake");
   const notYourFaultRef = useSectionView<HTMLElement>("not_your_fault");
-  const storyRef = useSectionView<HTMLElement>("story");
-  const transformationRef = useSectionView<HTMLElement>("transformation");
-  const curriculumRef = useSectionView<HTMLElement>("curriculum");
+  const storyRef = useSectionView<HTMLDivElement>("story");
+  const transformationRef = useSectionView<HTMLDivElement>("transformation");
+  const curriculumRef = useSectionView<HTMLDivElement>("curriculum");
   const testimonialsRef = useSectionView<HTMLElement>("testimonials");
   const quizRef = useSectionView<HTMLElement>("quiz");
   const priceRef = useSectionView<HTMLElement>("price_context");
-  const closeRef = useSectionView<HTMLElement>("final_close");
+  const closeRef = useSectionView<HTMLDivElement>("final_close");
 
   return (
     <>
@@ -192,12 +214,12 @@ const CoursePage = () => {
         className="relative min-h-[80svh] flex items-end overflow-hidden"
         style={{ backgroundColor: "hsl(217 50% 8%)" }}
       >
-        <div className="absolute inset-0">
+        <motion.div className="absolute inset-0" style={{ scale: still ? 1 : heroImgScale }}>
           <picture>
             <source srcSet={heroCityAvif} type="image/avif" />
             <img src={heroCity} alt="" className="w-full h-full object-cover" loading="eager" decoding="async" {...{ fetchpriority: "high" }} />
           </picture>
-        </div>
+        </motion.div>
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden
@@ -217,7 +239,10 @@ const CoursePage = () => {
         <div className="absolute inset-0 grain-texture pointer-events-none" />
 
         <div className="relative z-10 container mx-auto px-5 md:px-6 pt-32 pb-16 lg:pt-40 lg:pb-20">
-          <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            className="max-w-4xl mx-auto text-center"
+            style={still ? { y: 0, opacity: 1 } : { y: heroTextY, opacity: heroTextOpacity }}
+          >
             <Reveal>
               <p
                 className="text-eyebrow uppercase tracking-[0.28em] mb-6 flex items-center justify-center gap-3"
@@ -245,9 +270,9 @@ const CoursePage = () => {
                 className="text-body-lg lg:text-xl leading-relaxed max-w-2xl mx-auto mb-8"
                 style={{ color: "hsl(36 33% 95% / 0.82)" }}
               >
-                רוב הישראלים נכנסים לעסקה הגדולה בחייהם בלי הכנה, ומגלים את המחיר
-                של זה שנים אחר כך. ״המדריך המעשי לרכישת דירה״ מכניס אתכם לחדר עם
-                הידע, השיטה והביטחון של הצד שהגיע מוכן.
+                ב-2026 כוח המיקוח עבר לקונים — אבל רק למי שיודע לבדוק מחיר, לקרוא
+                מבצע מימון ולהתמקח עם מספרים. ״המדריך המעשי לרכישת דירה״ מכניס
+                אתכם לחדר עם הידע, השיטה והביטחון של הצד שהגיע מוכן.
               </p>
             </Reveal>
 
@@ -283,7 +308,7 @@ const CoursePage = () => {
                 </p>
               </div>
             </Reveal>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -312,7 +337,7 @@ const CoursePage = () => {
       {/* Program — what's inside: structure + open syllabus, right under
           the video. id="program" stays as a deep-link anchor even though
           the hero CTA now goes straight to checkout. */}
-      <SectionDark id="program" size="md" glow="top-end">
+      <SectionDark id="program" size="md" glow="top-end" className="pb-4 md:pb-6">
         <div ref={curriculumRef} className="container mx-auto px-6 max-w-5xl">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg text-white mb-5 text-center">
@@ -353,23 +378,17 @@ const CoursePage = () => {
             </div>
           </Reveal>
 
-          <div className="max-w-3xl mx-auto">
-            <Reveal delay={0.16}>
-              <p
-                className="text-center text-sm mb-8"
-                style={{ color: "hsl(36 33% 95% / 0.6)" }}
-              >
-                בפנים, בין השאר: ״מאסטר קלאס משא ומתן״, ״עשרת הדיברות
-                בעסקת נדל״ן״ ו״יסודות המשכנתא: כך תנצחו את הבנק״.
-              </p>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <CurriculumAccordion />
-            </Reveal>
-          </div>
-          <CheckoutCta label="פותחים גישה לכל השיעורים" location="curriculum" />
         </div>
       </SectionDark>
+
+      {/* The route — the syllabus as a journey (pinned on desktop, swipe on
+          phones), then the section's checkout CTA. */}
+      <section className="relative bg-[hsl(var(--ink))] pb-section-md -mt-px">
+        <SyllabusRoute />
+        <div className="container mx-auto px-6">
+          <CheckoutCta label="פותחים גישה לכל השיעורים" location="curriculum" />
+        </div>
+      </section>
 
       {/* S3 — the price of the mistake (the emotional engine) */}
       <section ref={mistakeRef} className="py-section-md bg-background">
@@ -458,33 +477,23 @@ const CoursePage = () => {
         </div>
       </SectionDark>
 
-      {/* S5 — future pacing: the same deal, with the prepared you */}
-      <section ref={transformationRef} className="py-section-md bg-background">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <Reveal>
-            <h2 className="text-display-md md:text-display-lg text-foreground mb-5 text-center max-w-3xl mx-auto">
-              עכשיו דמיינו את אותו&nbsp;תהליך&nbsp;—
-              <br />
-              <span className="text-accent">כשאתם הצד המוכן.</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p className="text-body-lg text-muted-foreground mb-10 leading-relaxed text-center max-w-2xl mx-auto">
-              אותה דירה, אותו מוכר, אותו בנקאי — רק שהפעם אתם מגיעים עם נתונים ביד.
-            </p>
-          </Reveal>
-          {/* Dark card wrapper — the lifecycle component is styled for dark surfaces */}
-          <Reveal delay={0.14}>
-            <div
-              className="rounded-3xl px-6 py-10 md:px-10 md:py-12"
-              style={{ backgroundColor: "hsl(217 50% 8%)" }}
-            >
-              <TransactionLifecycle steps={preparedSteps} />
-            </div>
-          </Reveal>
-          <CheckoutCta label="אני רוצה להגיע ככה לעסקה" location="transformation" />
-        </div>
-      </section>
+      {/* S5 — future pacing, played out on one deal: the pinned stage from
+          the homepage, ending in checkout instead of a link to this page. */}
+      <div ref={transformationRef}>
+        <DealStory
+          eyebrow="עכשיו דמיינו"
+          title="אותה עסקה — כשאתם הצד המוכן."
+          highlight={["הצד", "המוכן"]}
+          intro="אותה דירה, אותו מוכר, אותו בנקאי — רק שהפעם אתם מגיעים עם נתונים. גללו, והעסקה מתקדמת איתכם."
+          finalCta={
+            <CheckoutCta
+              label={`אני רוצה להגיע ככה לעסקה · ₪${COURSE_PRICE.toLocaleString("he-IL")}`}
+              location="transformation"
+              align="start"
+            />
+          }
+        />
+      </div>
 
       {/* Authority strip — the proof numbers, placed right before the
           human proof (testimonials) per the owner's direction. */}
@@ -495,7 +504,7 @@ const CoursePage = () => {
               <Reveal key={stat.label} delay={i * 0.06}>
                 <div className="text-center">
                   <p className="text-display-md text-foreground tabular-nums leading-none mb-2">
-                    {stat.value}
+                    <StatValue count={stat.count} value={stat.value} suffix={stat.suffix} />
                   </p>
                   <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
                     {stat.label}
