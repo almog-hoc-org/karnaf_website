@@ -28,3 +28,7 @@ export const ACTIVE_SINCE = 2017;
 export const YEARS_EXPERIENCE = 8;
 export const YEARS_EXPERIENCE_STAT = `${YEARS_EXPERIENCE}+`;
 export const YEARS_EXPERIENCE_LABEL = "שנות ניסיון בשוק";
+
+/** Deals accompanied — owner-confirmed wording (2026-09-29): a qualitative
+ *  "dozens", not a number, until an exact count is published. */
+export const DEALS_ACCOMPANIED_LABEL = "עשרות עסקאות";

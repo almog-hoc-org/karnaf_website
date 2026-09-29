@@ -23,7 +23,7 @@ import TestimonialVideoCard from "@/components/rich-media/TestimonialVideoCard";
 import { testimonials } from "@/data/testimonials";
 import { faqData } from "@/data/faq";
 import { TOTAL_PARTS, TOTAL_CHAPTERS } from "@/data/courseStats";
-import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
+import { COURSE_PRICE, CHECKOUT_URL, COURSE_ACCESS_LABEL, COURSE_INSTALLMENTS_LABEL } from "@/lib/constants";
 import { buildCheckoutUrl } from "@/lib/checkout";
 import PricingCard from "@/components/course/PricingCard";
 import PriceContext from "@/components/course/PriceContext";
@@ -190,7 +190,7 @@ const CoursePage = () => {
     <>
       <SEOHead
         title="המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל | קרנף נדל״ן"
-        description="הקורס הדיגיטלי המקיף בישראל לרכישת דירה: 3 חלקים ו-15 פרקים שמכסים את כל הדרך, בשיעורים קצרים של 3-10 דקות. ₪950, גישה מיידית ל-12 חודשים — לגמרי בקצב שלכם."
+        description={`הקורס הדיגיטלי המקיף בישראל לרכישת דירה: 3 חלקים ו-15 פרקים שמכסים את כל הדרך, בשיעורים קצרים של 3-10 דקות. ₪950, גישה מיידית ל-${COURSE_ACCESS_LABEL} — לגמרי בקצב שלכם.`}
         path="/course"
         keywords="קורס נדל״ן, קורס נדל״ן דיגיטלי, המדריך המעשי לרכישת דירה, הדרך לדירה, דירה ראשונה, מס רכישה, השקעה בנדל״ן"
         jsonLd={[
@@ -304,7 +304,7 @@ const CoursePage = () => {
                   </Button>
                 </a>
                 <p className="text-sm mt-3" style={{ color: "hsl(36 33% 95% / 0.6)" }}>
-                  {COURSE_PRICE.toLocaleString("he-IL")}&nbsp;₪ · גישה מלאה ל-12 חודשים
+                  {COURSE_PRICE.toLocaleString("he-IL")}&nbsp;₪ {COURSE_INSTALLMENTS_LABEL} · גישה מלאה ל-{COURSE_ACCESS_LABEL}
                 </p>
               </div>
             </Reveal>

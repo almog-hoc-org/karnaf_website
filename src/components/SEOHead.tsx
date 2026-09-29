@@ -1,6 +1,7 @@
 import { Head } from "vite-react-ssg";
 import { COURSE_PRICE } from "@/lib/constants";
 import { PARTS_LABEL, CHAPTERS_LABEL } from "@/data/courseStats";
+import { COURSE_ACCESS_LABEL } from "@/lib/constants";
 
 const SITE_URL = "https://www.karnafnadlan.com";
 const SITE_NAME = "קרנף נדל\"ן";
@@ -182,7 +183,7 @@ export const courseSchema = {
   "@id": `${SITE_URL}/course#course`,
   name: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל",
   description:
-    `הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. ${PARTS_LABEL} ו-${CHAPTERS_LABEL} שמכסים את כל הדרך בשיעורים קצרים, וגישה ל-12 חודשים.`,
+    `הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. ${PARTS_LABEL} ו-${CHAPTERS_LABEL} שמכסים את כל הדרך בשיעורים קצרים, וגישה ל-${COURSE_ACCESS_LABEL}.`,
   url: `${SITE_URL}/course`,
   provider: {
     "@type": "EducationalOrganization",
@@ -209,7 +210,7 @@ export const courseSchema = {
   offers: {
     "@type": "Offer",
     "@id": `${SITE_URL}/course#offer`,
-    name: "המדריך המעשי לרכישת דירה — גישה מלאה ל-12 חודשים",
+    name: `המדריך המעשי לרכישת דירה — גישה מלאה ל-${COURSE_ACCESS_LABEL}`,
     category: "Online Course",
     price: String(COURSE_PRICE),
     priceCurrency: "ILS",
@@ -399,7 +400,7 @@ export const serviceSchema = {
           "@type": "Service",
           name: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי (מסלול עצמאי)",
           description:
-            `${PARTS_LABEL} ו-${CHAPTERS_LABEL}, גישה 12 חודשים.`,
+            `${PARTS_LABEL} ו-${CHAPTERS_LABEL}, גישה ${COURSE_ACCESS_LABEL}.`,
         },
       },
       {

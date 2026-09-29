@@ -8,7 +8,7 @@ import { SplitReveal, useScrubbed } from "@/components/v2/scroll";
 import { useStillMotion } from "@/hooks/use-still-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { CHAPTERS_LABEL } from "@/data/courseStats";
-import { COURSE_PRICE } from "@/lib/constants";
+import { COURSE_PRICE, COURSE_ACCESS_MONTHS, COURSE_ACCESS_LABEL, COURSE_INSTALLMENTS_LABEL } from "@/lib/constants";
 import WebinarCapture from "@/components/WebinarCapture";
 
 /**
@@ -22,7 +22,7 @@ import WebinarCapture from "@/components/WebinarCapture";
 const courseBullets = [
   `${CHAPTERS_LABEL} מקיפים — גישה מיידית לכולם`,
   "מסמכים, תבניות ובוחני ידע בכל פרק",
-  "12 חודשי גישה — לגמרי בקצב שלכם",
+  `${COURSE_ACCESS_MONTHS} חודשי גישה — לגמרי בקצב שלכם`,
 ];
 
 const premiumBullets = [
@@ -121,7 +121,7 @@ export const PathChooser = () => {
                     ₪{COURSE_PRICE.toLocaleString("he-IL")}
                   </span>
                   <span className="text-sm" style={{ color: "hsl(36 33% 95% / 0.65)" }}>
-                    תשלום אחד · גישה מיידית ל-12 חודשים
+                    {COURSE_INSTALLMENTS_LABEL} · גישה מיידית ל-{COURSE_ACCESS_LABEL}
                   </span>
                 </div>
                 <Link to="/course" className="block">

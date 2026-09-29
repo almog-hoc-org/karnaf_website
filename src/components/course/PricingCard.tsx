@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CheckCircle, GraduationCap, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
+import { COURSE_PRICE, CHECKOUT_URL, COURSE_ACCESS_LABEL, COURSE_INSTALLMENTS_LABEL } from "@/lib/constants";
 import { TOTAL_PARTS, TOTAL_CHAPTERS } from "@/data/courseStats";
 import { buildCheckoutUrl } from "@/lib/checkout";
 import { chatLink } from "@/lib/whatsapp";
@@ -14,7 +14,7 @@ import { markPricingSeen } from "@/lib/pricingState";
 const included = [
   `כל ${TOTAL_PARTS} החלקים ו-${TOTAL_CHAPTERS} הפרקים — גישה מיידית`,
   "מסמכים, תבניות ובוחני ידע בכל פרק",
-  "גישה מלאה ל-12 חודשים",
+  `גישה מלאה ל-${COURSE_ACCESS_LABEL}`,
   "מענה בוואטסאפ לשאלות לפני הרכישה",
 ];
 
@@ -100,10 +100,10 @@ const PricingCard = () => {
             </span>
           </div>
           <p className="text-foreground font-bold mt-3">
-            תשלום אחד · בלי מנוי · בלי אותיות קטנות
+            {COURSE_INSTALLMENTS_LABEL} · בלי מנוי · בלי אותיות קטנות
           </p>
           <p className="text-sm text-muted-foreground mt-1">
-            גישה מלאה ל-12 חודשים, מיד אחרי התשלום
+            גישה מלאה ל-{COURSE_ACCESS_LABEL}, מיד אחרי התשלום
           </p>
         </div>
 

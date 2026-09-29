@@ -10,7 +10,7 @@ import { SplitReveal } from "@/components/v2/scroll";
 import { useStillMotion } from "@/hooks/use-still-motion";
 import { courseParts } from "@/data/curriculum";
 import { TOTAL_CHAPTERS, CHAPTERS_LABEL, LESSON_MINUTES } from "@/data/courseStats";
-import { COURSE_PRICE } from "@/lib/constants";
+import { COURSE_PRICE, COURSE_ACCESS_LABEL } from "@/lib/constants";
 import {
   ACTIVE_SINCE,
   TOTAL_CLIENTS_STAT,
@@ -121,7 +121,7 @@ const CourseWindow = () => (
               {FEATURED_MODULE}
             </p>
             <p className="mt-2 text-xs md:text-sm text-white/70">
-              שיעורים של {LESSON_MINUTES.replace("-", "–")} דקות · צפייה בקצב שלכם · גישה ל-12 חודשים
+              שיעורים של {LESSON_MINUTES.replace("-", "–")} דקות · צפייה בקצב שלכם · גישה ל-{COURSE_ACCESS_LABEL}
             </p>
             {/* Player rail — decoration, deliberately without numbers */}
             <div className="mt-4 md:mt-6 h-1 rounded-full bg-white/15 overflow-hidden" aria-hidden>

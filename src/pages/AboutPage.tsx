@@ -16,8 +16,7 @@ import {
   TOTAL_CLIENTS_STAT,
   TOTAL_CLIENTS_LABEL,
   YEARS_EXPERIENCE_STAT,
-  YEARS_EXPERIENCE_LABEL,
-} from "@/data/companyStats";
+  YEARS_EXPERIENCE_LABEL, DEALS_ACCOMPANIED_LABEL } from "@/data/companyStats";
 import foundersImg from "@/assets/team/itamar-almog-about.webp";
 
 /* The story, year by year. Only milestones the owners wrote themselves;
@@ -61,8 +60,8 @@ const timeline: RailStep[] = [
   },
   {
     num: "2025",
-    title: "מאות תלמידים",
-    body: "ההכשרות הדיגיטליות מגיעות למאות תלמידים.",
+    title: `${DEALS_ACCOMPANIED_LABEL}, מאות תלמידים`,
+    body: `${DEALS_ACCOMPANIED_LABEL} שליווינו, וההכשרות הדיגיטליות מגיעות למאות תלמידים.`,
   },
   {
     num: "2026",

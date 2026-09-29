@@ -3,6 +3,7 @@ import { ArrowLeft, GraduationCap, Users } from "lucide-react";
 import { Reveal } from "@/components/v2/Reveal";
 import { COURSE_PRICE_LABEL, offerLineFor } from "./articleUtils";
 import type { Article } from "@/data/blog/types";
+import { COURSE_ACCESS_LABEL } from "@/lib/constants";
 
 /**
  * One commercial offer per article, declared by the article itself
@@ -55,7 +56,7 @@ export const ArticleInlineOffer = ({ article }: { article: Pick<Article, "offer"
               <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-0.5" aria-hidden />
             </Link>
             <span className="text-sm text-muted-foreground">
-              {course ? "גישה מיידית · 12 חודשים" : "ללא התחייבות · חוזרים תוך 24 שעות"}
+              {course ? `גישה מיידית · ${COURSE_ACCESS_LABEL}` : "ללא התחייבות · חוזרים תוך 24 שעות"}
             </span>
           </div>
         </div>
@@ -105,7 +106,7 @@ export const OfferBanner = ({ offer, line, title, eyebrow, headingLevel = "h2" }
                 <span className="text-2xl font-black text-[hsl(var(--ink-foreground))] tabular-nums">
                   {COURSE_PRICE_LABEL}
                 </span>{" "}
-                · גישה מיידית ל-12 חודשים
+                · גישה מיידית ל-{COURSE_ACCESS_LABEL}
               </p>
             )}
             <Link

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Eye, CalendarClock, MessageCircle, ArrowLeft } from "lucide-react";
 import { Reveal } from "@/components/v2/Reveal";
 import { chatLink } from "@/lib/whatsapp";
+import { COURSE_ACCESS_MONTHS } from "@/lib/constants";
 
 /**
  * S11 — risk reversal without a refund promise: radical transparency
@@ -18,8 +19,8 @@ const assurances = [
   },
   {
     icon: CalendarClock,
-    title: "שנה שלמה, בקצב שלכם",
-    body: "אין דדליין. 12 חודשי גישה מלאה — גם אם הדירה שלכם תגיע רק באביב.",
+    title: `${COURSE_ACCESS_MONTHS} חודשים, בקצב שלכם`,
+    body: `אין דדליין. ${COURSE_ACCESS_MONTHS} חודשי גישה מלאה — גם אם הדירה שלכם תגיע רק בעוד שנה.`,
   },
   {
     icon: MessageCircle,

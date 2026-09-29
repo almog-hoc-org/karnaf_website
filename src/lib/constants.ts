@@ -21,6 +21,14 @@ export const WHATSAPP_BUSINESS_NUMBER: string =
  * carries through to the payment page.
  */
 export const COURSE_PRICE = 950;
+/** Access period, months — matches the Schooler course setting (547 days). */
+export const COURSE_ACCESS_MONTHS = 18;
+/** Installments offered at checkout (Schooler: "תשלומים של עד 95₪ בחודש"). */
+export const COURSE_INSTALLMENTS = 10;
+export const COURSE_INSTALLMENT_PRICE = COURSE_PRICE / COURSE_INSTALLMENTS;
+/** Ready-made copy: "18 חודשים" / "או 10 תשלומים של ₪95". */
+export const COURSE_ACCESS_LABEL = `${COURSE_ACCESS_MONTHS} חודשים`;
+export const COURSE_INSTALLMENTS_LABEL = `או ${COURSE_INSTALLMENTS} תשלומים של ₪${COURSE_INSTALLMENT_PRICE}`;
 export const CHECKOUT_URL: string =
   import.meta.env.VITE_CHECKOUT_URL ||
   "https://my.schooler.biz/s/117502/KarnafNewProgram/t_JHrKI";
