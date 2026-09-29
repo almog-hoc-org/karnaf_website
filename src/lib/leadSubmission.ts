@@ -60,8 +60,11 @@ function productFor(payload: WebsiteLeadPayload): { product: string; productLabe
   return { product: "course", productLabel: "כללי — יצירת קשר" };
 }
 
-/** Mirror the lead into the per-product Google Sheet via Make. Best-effort. */
-function mirrorLeadToSheets(payload: WebsiteLeadPayload): void {
+/**
+ * Mirror the lead into the per-product Google Sheet via Make. Resolves
+ * true when Make accepted it; never rejects.
+ */
+function mirrorLeadToSheets(payload: WebsiteLeadPayload): Promise<boolean> {
   try {
     const ctx = getLeadContext();
     const { product, productLabel } = productFor(payload);
@@ -97,17 +100,56 @@ function mirrorLeadToSheets(payload: WebsiteLeadPayload): void {
     });
 
     // keepalive lets the request survive an immediate navigation away.
-    fetch(SHEETS_WEBHOOK_URL, {
+    return fetch(SHEETS_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
       keepalive: true,
-    }).catch(() => {
-      // Backup channel only — never surface to the user.
-    });
+    })
+      .then((res) => res.ok)
+      .catch(() => false);
   } catch {
     // Never let the mirror break the main submission path.
+    return Promise.resolve(false);
   }
+}
+
+/** Resolves the promise's value, or false if it takes longer than `ms`. */
+function within(promise: Promise<boolean>, ms: number): Promise<boolean> {
+  return Promise.race([promise, new Promise<boolean>((r) => setTimeout(() => r(false), ms))]);
+}
+
+/** refused = the CRM rejected the submission itself (a 4xx the visitor must fix). */
+interface CrmResult {
+  ok: boolean;
+  refused: boolean;
+  error: string;
+}
+
+async function postToCrm(body: string): Promise<CrmResult> {
+  let response: Response;
+  try {
+    response = await fetch(CRM_WEBSITE_LEADS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+    });
+  } catch {
+    return { ok: false, refused: false, error: "Lead submission failed" };
+  }
+  if (response.ok) return { ok: true, refused: false, error: "" };
+
+  let error = "Lead submission failed";
+  try {
+    const data = await response.json();
+    if (typeof data?.error === "string") error = data.error;
+  } catch {
+    // Keep the generic error.
+  }
+  // A 4xx (other than a rate limit) refuses the submission itself — an
+  // invalid email, a missing name — so the visitor has to fix it.
+  const refused = response.status >= 400 && response.status < 500 && response.status !== 429;
+  return { ok: false, refused, error };
 }
 
 export async function submitWebsiteLead(payload: WebsiteLeadPayload): Promise<void> {
@@ -118,12 +160,10 @@ export async function submitWebsiteLead(payload: WebsiteLeadPayload): Promise<vo
 
   // Mirror to the backup sheet first — even if the CRM call fails, the
   // lead is not lost.
-  mirrorLeadToSheets(payload);
+  const mirrored = mirrorLeadToSheets(payload);
 
-  const response = await fetch(CRM_WEBSITE_LEADS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+  const crm = await postToCrm(
+    JSON.stringify({
       ...lead,
       // Extra classification/attribution fields. Intakes that don't know
       // them simply ignore unknown JSON keys.
@@ -142,18 +182,16 @@ export async function submitWebsiteLead(payload: WebsiteLeadPayload): Promise<vo
       marketing_consent_text: consent.text,
       marketing_consent_version: consent.version,
       marketing_consent_at: consent.at || null,
-    }),
-  });
+    })
+  );
 
-  if (!response.ok) {
-    let errorMessage = "Lead submission failed";
-    try {
-      const data = await response.json();
-      if (typeof data?.error === "string") errorMessage = data.error;
-    } catch {
-      // Keep the generic error.
-    }
-    throw new Error(errorMessage);
+  if (!crm.ok) {
+    if (crm.refused) throw new Error(crm.error);
+    // The CRM is down (5xx, network, rate limit). If the backup sheet took
+    // the lead, it is captured: carry on to the thank-you page rather than
+    // tell the visitor to retry into the same outage — and the conversion
+    // still counts. Only when both channels failed is it an error.
+    if (!(await within(mirrored, 6000))) throw new Error(crm.error);
   }
 
   // Turn on Advanced Matching with the details this lead just gave us, so

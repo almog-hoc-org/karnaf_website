@@ -26,6 +26,14 @@ Updated: July 2026. All automation lives in the owner's Make.com account
    best-effort — it can never block the form UX, and a CRM outage cannot
    lose a lead.
 
+**When is a lead "sent"?** When either channel accepted it. A CRM 4xx
+(invalid email, missing name) is a real refusal and the form shows the
+error. A CRM outage (5xx, network, rate limit) is not the visitor's
+problem: if Make accepted the lead within 6 seconds, the form continues to
+`/thank-you` and the Lead conversion fires. The lead is then **only in the
+sheets**, not in the CRM, so while the CRM is down, check the sheets.
+Only when both channels fail does the visitor see an error.
+
 Product classification (`productFor` in leadSubmission.ts):
 - source `mortgage` → mortgage sheet
 - source `premium-investors` → premium-investors sheet
