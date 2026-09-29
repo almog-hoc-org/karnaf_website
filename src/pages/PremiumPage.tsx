@@ -21,6 +21,7 @@ import { testimonials, type Testimonial } from "@/data/testimonials";
 import SEOHead, { organizationSchema, serviceSchema, breadcrumbSchema } from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
 import foundersImg from "@/assets/team/itamar-almog-about.webp";
+import MarketingConsent from "@/components/MarketingConsent";
 
 /* CRM classification for this funnel — change here if the CRM expects
    a different value for investor-guidance leads. */
@@ -146,6 +147,7 @@ const InvestorForm = () => {
   const [email, setEmail] = useState("");
   const [equity, setEquity] = useState("");
   const [company, setCompany] = useState(""); // honeypot
+  const [consent, setConsent] = useState(false); // marketing opt-in, never pre-checked
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -181,6 +183,7 @@ const InvestorForm = () => {
         service: LEAD_SERVICE,
         source: LEAD_SOURCE,
         message: "מהות הפנייה: תיאום פגישת היכרות ללא התחייבות — ליווי משקיעים פרימיום",
+        marketingConsent: consent,
       });
       setIsSubmitted(true);
       navigate(thankYou);
@@ -269,6 +272,7 @@ const InvestorForm = () => {
           onChange={(e) => setCompany(e.target.value)}
         />
       </div>
+      <MarketingConsent checked={consent} onChange={setConsent} dark />
       <Button
         type="submit"
         disabled={isSubmitting}

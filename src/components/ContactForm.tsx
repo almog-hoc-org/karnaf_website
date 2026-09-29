@@ -8,6 +8,7 @@ import { Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { isValidIsraeliPhone, PHONE_ERROR_MESSAGE } from "@/lib/validation";
+import MarketingConsent from "@/components/MarketingConsent";
 
 export interface ServiceOption {
   value: string;
@@ -53,6 +54,7 @@ const ContactForm = ({
   const [phone, setPhone] = useState("");
   const [service, setService] = useState("");
   const [company, setCompany] = useState(""); // honeypot — humans never see it
+  const [consent, setConsent] = useState(false); // marketing opt-in, never pre-checked
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -84,6 +86,7 @@ const ContactForm = ({
         phone,
         service: serviceValue,
         source,
+        marketingConsent: consent,
       });
       // A dedicated URL: the ad platforms get a conversion page, the visitor
       // gets a next step instead of a form that wipes itself after 3s.
@@ -121,11 +124,11 @@ const ContactForm = ({
     row ? "h-12" : "h-14"
   } px-5 rounded-full text-right`;
 
+  const consentField = <MarketingConsent checked={consent} onChange={setConsent} dark={dark} />;
+
   return (
-    <form
-      className={row ? "flex flex-col sm:flex-row gap-3 relative" : "space-y-4 relative"}
-      onSubmit={handleSubmit}
-    >
+    <form className="relative space-y-3" onSubmit={handleSubmit}>
+      <div className={row ? "flex flex-col sm:flex-row gap-3" : "space-y-4"}>
       <Input
         autoComplete="name"
         placeholder={row ? "שם" : "שם מלא"}
@@ -175,6 +178,7 @@ const ContactForm = ({
           </SelectContent>
         </Select>
       )}
+      {!row && consentField}
       <Button
         type="submit"
         disabled={isSubmitting}
@@ -191,6 +195,8 @@ const ContactForm = ({
           </>
         )}
       </Button>
+      </div>
+      {row && consentField}
     </form>
   );
 };
