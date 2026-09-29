@@ -119,6 +119,14 @@ export const routes: RouteRecord[] = [
             entry: "src/pages/ThankYouPage.tsx",
           },
           {
+            // Pre-rendered as dist/404.html — Vercel serves it (with a 404
+            // status) for any URL that isn't a page, so the static HTML and
+            // the client render agree (no hydration mismatch on unknown URLs).
+            path: "404",
+            element: <NotFound />,
+            entry: "src/pages/NotFound.tsx",
+          },
+          {
             path: "*",
             element: <NotFound />,
             entry: "src/pages/NotFound.tsx",

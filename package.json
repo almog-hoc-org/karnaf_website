@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/patch-ssg-utf8.mjs",
     "build": "vite-react-ssg build",
     "build:dev": "vite-react-ssg build --mode development",
     "build:csr": "vite build",
-    "postbuild": "node scripts/cleanup-preloads.mjs && node scripts/generate-sitemap.mjs",
+    "postbuild": "node scripts/cleanup-preloads.mjs && node scripts/generate-sitemap.mjs && node scripts/check-utf8.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -390,8 +390,10 @@ const DealCard = ({
             </span>
           </LedgerRow>
           <LedgerRow label="מחיר שוק">
-            <span className="relative inline-flex justify-end min-w-[8.5rem]">
-              <AnimatePresence mode="popLayout" initial={false}>
+            {/* A fixed box with both states absolutely inside it: the swap is a
+                pure crossfade, nothing in the layout moves (no CLS). */}
+            <span className="relative inline-block w-[8.5rem] h-8">
+              <AnimatePresence initial={false}>
                 {checked ? (
                   <motion.span
                     key="known"
@@ -399,7 +401,7 @@ const DealCard = ({
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, transition: { duration: still ? 0 : 0.15 } }}
                     transition={fade}
-                    className="text-accent"
+                    className="absolute inset-0 flex items-center justify-end text-accent"
                   >
                     <Price n={MARKET} />
                   </motion.span>
@@ -410,9 +412,11 @@ const DealCard = ({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0, transition: { duration: still ? 0 : 0.15 } }}
                     transition={fade}
-                    className="inline-flex items-center justify-center w-[8.5rem] h-7 rounded-lg border-2 border-dashed border-accent/70 text-accent text-base"
+                    className="absolute inset-0 flex items-center justify-end"
                   >
-                    ?
+                    <span className="inline-flex items-center justify-center w-full h-7 rounded-lg border-2 border-dashed border-accent/70 text-accent text-base">
+                      ?
+                    </span>
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -422,11 +426,14 @@ const DealCard = ({
 
         <PriceTrack t={track} stage={stage} />
 
-        {/* Fixed height for the tallest stage, so the card never jumps */}
-        <div className="relative mt-1 md:mt-2 min-h-[7.25rem] md:min-h-[8.75rem]">
-          <AnimatePresence mode="popLayout" initial={false}>
+        {/* Fixed height for the tallest stage, with each stage absolutely
+            inside it: the card never jumps and the swap causes no layout
+            shift (popLayout's position flip counted as CLS). */}
+        <div className="relative mt-1 md:mt-2 h-[7.75rem] md:h-[9rem]">
+          <AnimatePresence initial={false}>
             <motion.div
               key={stage}
+              className="absolute inset-x-0 top-0"
               initial={still ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={
@@ -470,6 +477,7 @@ const Beat = ({ i, still, finalCta }: { i: number; still: boolean; finalCta?: Re
   const last = i === beats.length - 1;
   return (
     <motion.div
+      className="absolute inset-0 flex flex-col justify-end lg:justify-center"
       initial={still ? false : { opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       exit={still ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0, y: -14, transition: { duration: 0.2 } }}
@@ -618,8 +626,8 @@ const DealStory = ({
               so the card below it never moves between stages; the bottom
               padding keeps the rail clear of the floating buttons. */}
           <div className="relative h-full container mx-auto px-5 md:px-6 max-w-6xl flex flex-col lg:grid lg:grid-cols-2 lg:gap-12 xl:gap-16 lg:items-center justify-center pt-14 pb-20 lg:py-0">
-            <div className="relative shrink-0 h-[14.5rem] [@media(max-height:760px)]:h-[7.5rem] md:h-[13rem] lg:h-auto lg:min-h-[22rem] flex flex-col justify-end lg:justify-center mb-3 lg:mb-0">
-              <AnimatePresence mode="popLayout" initial={false}>
+            <div className="relative shrink-0 h-[14.5rem] [@media(max-height:800px)]:h-[12.5rem] [@media(max-height:700px)]:h-[7.5rem] md:h-[13rem] lg:h-[26rem] mb-3 lg:mb-0">
+              <AnimatePresence initial={false}>
                 <Beat key={stage} i={stage} still={still} finalCta={finalCta} />
               </AnimatePresence>
             </div>
