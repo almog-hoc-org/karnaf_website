@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Reveal } from "@/components/v2/Reveal";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
+import MarketingConsent from "@/components/MarketingConsent";
 import { isValidIsraeliPhone } from "@/lib/validation";
 import { useToast } from "@/hooks/use-toast";
 
@@ -15,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 const ResearchWaitlistForm = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false); // marketing opt-in, never pre-checked
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -37,6 +39,7 @@ const ResearchWaitlistForm = () => {
         service: "waitlist",
         source: "research-waitlist",
         message: "הרשמה לרשימת המתנה — מערכת המחקר במנוי חודשי",
+        marketingConsent: consent,
       });
       setIsSubmitted(true);
     } catch {
@@ -60,10 +63,8 @@ const ResearchWaitlistForm = () => {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto"
-    >
+    <form onSubmit={handleSubmit} className="w-full sm:w-auto space-y-2">
+      <div className="flex flex-col sm:flex-row gap-3">
       <Input
         autoComplete="name"
         placeholder="שם"
@@ -93,6 +94,8 @@ const ResearchWaitlistForm = () => {
       >
         {isSubmitting ? "שולח..." : "עדכנו אותי"}
       </Button>
+      </div>
+      <MarketingConsent checked={consent} onChange={setConsent} className="max-w-md" />
     </form>
   );
 };

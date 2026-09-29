@@ -1,6 +1,7 @@
 import { trackLead, setAdvancedMatching, FORM_LABELS } from "@/lib/pixel";
 import { gaLead } from "@/lib/analytics";
 import { getLeadContext } from "@/lib/leadContext";
+import { MARKETING_CONSENT_TEXT, MARKETING_CONSENT_VERSION } from "@/lib/consent";
 
 const CRM_WEBSITE_LEADS_URL: string =
   import.meta.env.VITE_LEADS_INTAKE_URL ||
@@ -24,6 +25,19 @@ export interface WebsiteLeadPayload {
   stage?: string;
   equity?: string;
   message?: string;
+  /** Opted in to marketing messages (unchecked by default — lib/consent.ts). */
+  marketingConsent?: boolean;
+}
+
+/** The consent record sent with every lead: yes/no, the exact text, when. */
+function consentRecord(payload: WebsiteLeadPayload) {
+  const yes = !!payload.marketingConsent;
+  return {
+    yes,
+    text: yes ? MARKETING_CONSENT_TEXT : "",
+    version: MARKETING_CONSENT_VERSION,
+    at: yes ? new Date().toISOString() : "",
+  };
 }
 
 /** Product bucket — decides which backup sheet the lead lands in. */
@@ -52,6 +66,7 @@ function mirrorLeadToSheets(payload: WebsiteLeadPayload): void {
     const ctx = getLeadContext();
     const { product, productLabel } = productFor(payload);
     const label = FORM_LABELS[payload.source] || { name: payload.source, category: "כללי" };
+    const consent = consentRecord(payload);
 
     const body = JSON.stringify({
       product,
@@ -74,6 +89,10 @@ function mirrorLeadToSheets(payload: WebsiteLeadPayload): void {
       message: payload.message || "",
       stage: payload.stage || "",
       equity: payload.equity || "",
+      marketingConsent: consent.yes ? "כן" : "לא",
+      marketingConsentText: consent.text,
+      marketingConsentVersion: consent.version,
+      marketingConsentAt: consent.at,
       submittedAt: new Date().toISOString(),
     });
 
@@ -94,6 +113,8 @@ function mirrorLeadToSheets(payload: WebsiteLeadPayload): void {
 export async function submitWebsiteLead(payload: WebsiteLeadPayload): Promise<void> {
   const ctx = getLeadContext();
   const { product, productLabel } = productFor(payload);
+  const consent = consentRecord(payload);
+  const { marketingConsent: _consent, ...lead } = payload;
 
   // Mirror to the backup sheet first — even if the CRM call fails, the
   // lead is not lost.
@@ -103,7 +124,7 @@ export async function submitWebsiteLead(payload: WebsiteLeadPayload): Promise<vo
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      ...payload,
+      ...lead,
       // Extra classification/attribution fields. Intakes that don't know
       // them simply ignore unknown JSON keys.
       product,
@@ -117,6 +138,10 @@ export async function submitWebsiteLead(payload: WebsiteLeadPayload): Promise<vo
       utm_campaign: ctx.utm_campaign,
       utm_content: ctx.utm_content,
       utm_term: ctx.utm_term,
+      marketing_consent: consent.yes,
+      marketing_consent_text: consent.text,
+      marketing_consent_version: consent.version,
+      marketing_consent_at: consent.at || null,
     }),
   });
 

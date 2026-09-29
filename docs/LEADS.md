@@ -79,3 +79,19 @@ These double as the partner-sharing surface — share a sheet, not CRM access.
 3. If it's a website form: add the source to `FORM_LABELS` in
    `src/lib/pixel.ts` and a branch in `productFor` in
    `src/lib/leadSubmission.ts`.
+
+## הסכמה לדיוור (ספטמבר 2026)
+
+כל טופס לידים באתר (צור קשר / פוטר / משכנתא / וובינר, ליווי משקיעים, רשימת
+ההמתנה) כולל תיבת סימון **לא מסומנת מראש** להסכמה לדיוור (חוק התקשורת,
+סעיף 30א). הנוסח מוגדר פעם אחת ב-`src/lib/consent.ts` ונשלח עם הליד:
+
+| לאן | שדות |
+|---|---|
+| karnaf-crm | `marketing_consent` (true/false), `marketing_consent_text`, `marketing_consent_version`, `marketing_consent_at` |
+| Make → גיליונות הגיבוי | עמודות R–T: הסכמה לדיוור (כן/לא) · נוסח ההסכמה · זמן ההסכמה (ISO) |
+| Make → הגיליון המשותף (ליווי) | בעמודת "פרטים נוספים": `דיוור: כן/לא` |
+
+**לשלוח דיוור רק למי שמסומן "כן".** בקשת הסרה ("הסר") — לעדכן את הסטטוס ב-CRM
+ולהפסיק לשלוח. אם הנוסח משתנה — לעדכן את `MARKETING_CONSENT_VERSION`.
+
