@@ -42,7 +42,7 @@ const WebinarCapture = ({
       } ${strip ? "grid lg:grid-cols-[1.1fr_1fr] gap-6 lg:gap-10 items-center" : ""}`}
     >
       <div className={strip ? "" : "mb-5"}>
-        <span className="inline-flex items-center gap-2 rounded-full bg-accent/12 border border-accent/25 px-3.5 py-1.5 text-eyebrow font-bold uppercase tracking-[0.18em] text-accent mb-4">
+        <span className="inline-flex items-center gap-2 rounded-full bg-accent/10 border border-accent/25 px-3.5 py-1.5 text-eyebrow font-bold uppercase tracking-[0.18em] text-accent mb-4">
           <CalendarClock size={14} />
           וובינר קרוב · בחינם
         </span>

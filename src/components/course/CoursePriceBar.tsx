@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { COURSE_PRICE, CHECKOUT_URL } from "@/lib/constants";
+import { COURSE_PRICE, CHECKOUT_URL, COURSE_INSTALLMENTS, COURSE_INSTALLMENT_PRICE } from "@/lib/constants";
 import { buildCheckoutUrl } from "@/lib/checkout";
 import { hasSeenPricing, PRICING_SEEN_EVENT } from "@/lib/pricingState";
 import { useQuizContext } from "@/hooks/use-quiz-context";
@@ -112,7 +112,7 @@ const CoursePriceBar = () => {
               className="text-sm truncate hidden sm:inline"
               style={{ color: "hsl(36 33% 95% / 0.65)" }}
             >
-              תשלום אחד · גישה מיידית · תשלום מאובטח
+              או {COURSE_INSTALLMENTS} תשלומים של ₪{COURSE_INSTALLMENT_PRICE} · גישה מיידית · תשלום מאובטח
             </span>
           </div>
 

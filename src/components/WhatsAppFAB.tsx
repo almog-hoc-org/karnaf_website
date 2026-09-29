@@ -17,7 +17,7 @@ import mascotIcon from "@/assets/mascot/mascot-thumbsup.webp";
  * price is competition, not help.
  */
 const WhatsAppFAB = () => {
-  const href = useWhatsAppLink("שאלה כללית");
+  const href = useWhatsAppLink("general");
   const { pathname } = useLocation();
   const barHeight = useBottomBarHeight();
   const hidden = pathname.startsWith("/course") && barHeight > 0;

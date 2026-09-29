@@ -1,5 +1,7 @@
 import Hero from "@/components/Hero";
-import Advantages from "@/components/Advantages";
+import TopicMarquee from "@/components/home/TopicMarquee";
+import Manifesto from "@/components/home/Manifesto";
+import DealStory from "@/components/home/DealStory";
 import ProofSection from "@/components/home/ProofSection";
 import { PathChooser } from "@/components/home/PathChooser";
 import About from "@/components/About";
@@ -8,9 +10,15 @@ import Footer from "@/components/Footer";
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
 
 /**
- * Homepage — a sharp two-door decision page: promise (Hero) → the choice
- * (PathChooser: digital course or premium 1:1) → proof (real client
- * outcomes) → method (Advantages) → people (About) → ask (BigCTA + form).
+ * Homepage — a course-first decision page, told as a scroll story:
+ * the promise (Hero: don't overpay; the course window flattens as you
+ * scroll) → the syllabus drifting past (TopicMarquee) → the thesis, lit
+ * word by word (Manifesto) → the thesis played out on one apartment
+ * (DealStory: a pinned stage where the scroll drives the deal — asking
+ * price, market check, three numbers, signature) → the choice
+ * (PathChooser: digital course or premium 1:1) → proof, dealt as a stack
+ * (ProofSection) → people (About) → ask (BigCTA opens up + form).
+ * Scroll primitives live in components/v2/scroll (docs/SCROLL-MOTION.md).
  */
 const Index = () => {
   return (
@@ -24,9 +32,11 @@ const Index = () => {
       />
       <div id="top" className="relative">
         <Hero />
+        <TopicMarquee />
+        <Manifesto />
+        <DealStory />
         <PathChooser />
         <ProofSection />
-        <Advantages />
         <About />
         <BigCTA />
         <Footer />

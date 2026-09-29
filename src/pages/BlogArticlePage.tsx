@@ -1,190 +1,304 @@
+import { Fragment, useMemo, type CSSProperties } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
-import { ArrowRight, Clock, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft, ChevronLeft } from "lucide-react";
 import SEOHead, {
   articleSchema,
   breadcrumbSchema,
+  faqPageSchema,
   organizationSchema,
 } from "@/components/SEOHead";
-import VideoPlayer from "@/components/rich-media/VideoPlayer";
-import ReactMarkdown from "react-markdown";
-import { articles } from "@/data/articles";
-import { ArticleInlineCta, ArticleEndBanner } from "@/components/blog/ArticleOffer";
+import { articles, CATEGORY_LABELS } from "@/data/articles";
 import { Reveal } from "@/components/v2/Reveal";
+import { ArticleEndBanner, ArticleInlineOffer } from "@/components/blog/ArticleOffer";
+import { ArticleCard, CategoryTag } from "@/components/blog/ArticleCard";
+import { CoverImage } from "@/components/blog/CoverImage";
+import { Prose, SECTION_HEADING_CLASS } from "@/components/blog/ArticleProse";
+import {
+  ArticleDisclaimer,
+  ArticleFaq,
+  ArticleSources,
+  ArticleTakeaways,
+} from "@/components/blog/ArticleExtras";
+import { ArticleTocCollapsible, ArticleTocRail, type TocItem } from "@/components/blog/ArticleToc";
+import { useArticleReading } from "@/components/blog/useArticleReading";
+import {
+  creditLine,
+  formatHebrewDate,
+  hasRealCover,
+  readTimeLabel,
+  relatedArticles,
+  splitSections,
+  stripInlineMarkdown,
+  wasUpdated,
+} from "@/components/blog/articleUtils";
+import karnafLogo from "@/assets/mascot/karnaf-logo.png";
+import { useSuppressStickyCta } from "@/hooks/use-sticky-cta-suppression";
 
-const categoryLabel = (cat: string) =>
-  cat === "article" ? "מאמר" : cat === "video" ? "סרטון" : "כלי";
-
-/**
- * Split the markdown before its Nth "## " heading so an offer can sit
- * between sections. Returns [whole, ""] when the article is too short.
- */
-const splitBeforeHeading = (md: string, n: number): [string, string] => {
-  const lines = md.split("\n");
-  let seen = 0;
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i].startsWith("## ")) {
-      seen += 1;
-      if (seen === n) return [lines.slice(0, i).join("\n"), lines.slice(i).join("\n")];
-    }
-  }
-  return [md, ""];
-};
+/** The offer goes in after the second "##" section — past the intro, before a skimmer decides they're done. */
+const OFFER_BEFORE_HEADING = 3;
 
 const BlogArticlePage = () => {
   const { slug } = useParams();
   const article = articles.find((a) => a.slug === slug);
 
+  const sections = useMemo(() => (article ? splitSections(article.content) : []), [article]);
+  const takeaways = article?.takeaways.filter((t) => t.trim()) ?? [];
+  const faq = article?.faq?.filter((f) => f.q.trim() && f.a.trim()) ?? [];
+  const sources = article?.sources.filter((s) => s.url && s.title) ?? [];
+
+  const tocItems: TocItem[] = useMemo(() => {
+    const items: TocItem[] = sections.flatMap((s) => (s.heading ? [s.heading] : []));
+    if (faq.length) items.push({ id: "faq", text: "שאלות נפוצות" });
+    if (sources.length) items.push({ id: "sources", text: "מקורות" });
+    return items;
+  }, [sections, faq.length, sources.length]);
+
+  const { bodyRef, activeId } = useArticleReading(tocItems.map((t) => t.id));
+  // One product per article: a 1:1-track article doesn't also get the
+  // site-wide ₪950 course bar.
+  useSuppressStickyCta(article?.offer === "premium");
+
   if (!article) {
     return <Navigate to="/blog" replace />;
   }
 
-  const relatedArticles = articles.filter((a) => a.slug !== slug).slice(0, 3);
-  // The offer goes in after the second section — past the intro, before the
-  // reader who skims decides they have what they came for.
-  const [bodyHead, bodyTail] = splitBeforeHeading(article.content, 3);
+  const url = `/blog/${article.slug}`;
+  const categoryLabel = CATEGORY_LABELS[article.category];
+  const modified = article.updated || article.date;
+  const hasCover = hasRealCover(article.cover);
+  const credit = hasCover ? creditLine(article.cover) : "";
+  const related = relatedArticles(article, articles, 3);
+  const showToc = tocItems.length >= 3;
+
+  // Index (in `sections`) of the section the inline offer precedes.
+  let headed = 0;
+  const offerAt = sections.findIndex((s) => s.heading && ++headed === OFFER_BEFORE_HEADING);
 
   return (
     <>
       <SEOHead
         title={`${article.title} | קרנף נדל״ן`}
         description={article.excerpt}
-        path={`/blog/${article.slug}`}
+        path={url}
         type="article"
-        image={article.image}
+        image={article.cover.og ?? article.cover.src}
+        imageAlt={hasCover ? article.cover.alt : undefined}
+        article={{ publishedTime: article.date, modifiedTime: modified, section: categoryLabel }}
         jsonLd={[
           organizationSchema,
           breadcrumbSchema([
             { name: "דף הבית", url: "/" },
             { name: "ידע ותובנות", url: "/blog" },
-            { name: article.title, url: `/blog/${article.slug}` },
+            { name: article.title, url },
           ]),
           articleSchema({
+            type: "BlogPosting",
             title: article.title,
             description: article.excerpt,
-            url: `/blog/${article.slug}`,
-            image: article.image,
+            url,
+            image: article.cover.og ?? article.cover.src,
             datePublished: article.date,
+            dateModified: modified,
+            section: categoryLabel,
           }),
+          ...(faq.length
+            ? [
+                faqPageSchema(
+                  faq.map((f) => ({ question: stripInlineMarkdown(f.q), answer: stripInlineMarkdown(f.a) }))
+                ),
+              ]
+            : []),
         ]}
       />
 
-      {/* Header */}
-      <section className="pt-32 md:pt-40 pb-12 bg-background">
-        <div className="container mx-auto px-6 max-w-3xl">
-          <Link to="/blog" className="inline-block">
-            <Button variant="ghost" className="text-muted-foreground mb-8 gap-2 hover:text-accent">
-              <ArrowRight size={16} />
-              חזרה לבלוג
-            </Button>
-          </Link>
+      <article>
+        {/* ── Header ─────────────────────────────────────────────── */}
+        <header className="pt-28 md:pt-36">
+          <div className="mx-auto max-w-[61rem] px-5 md:px-6">
+            <nav aria-label="פירורי לחם" className="-my-2 mb-5 md:mb-7">
+              <ol className="flex flex-wrap items-center gap-x-1.5 text-sm">
+                <li>
+                  <Link
+                    to="/blog"
+                    className="inline-flex min-h-[44px] items-center text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                  >
+                    ידע ותובנות
+                  </Link>
+                </li>
+                <li aria-hidden className="text-muted-foreground/60">
+                  <ChevronLeft size={14} />
+                </li>
+                <li>
+                  <Link
+                    to={`/blog?topic=${article.category}`}
+                    className="inline-flex min-h-[44px] items-center underline-offset-4 hover:underline"
+                  >
+                    <CategoryTag category={article.category} />
+                  </Link>
+                </li>
+              </ol>
+            </nav>
 
-          <Reveal>
-            <span className="text-eyebrow uppercase tracking-[0.18em] text-accent inline-flex items-center gap-3 mb-5">
-              <span className="block w-10 h-px bg-accent" aria-hidden />
-              <span>{categoryLabel(article.category)}</span>
-            </span>
-
-            <h1 className="text-display-lg md:text-display-xl text-foreground mb-6">
+            <h1 className="rise-in text-[2rem] font-black leading-[1.12] tracking-[-0.03em] text-primary sm:text-[2.5rem] md:text-[3.25rem] md:leading-[1.08]">
               {article.title}
             </h1>
-
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-1.5">
-                <Calendar size={14} />
-                <span>{new Date(article.date).toLocaleDateString("he-IL")}</span>
-              </div>
-              <span aria-hidden>·</span>
-              <div className="flex items-center gap-1.5">
-                <Clock size={14} />
-                <span>{article.readTime}</span>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Video or hero image */}
-      {article.videoUrl ? (
-        <section className="pb-12 bg-background">
-          <div className="container mx-auto px-6 max-w-3xl">
-            <Reveal>
-              <VideoPlayer url={article.videoUrl} title={article.title} />
-            </Reveal>
-          </div>
-        </section>
-      ) : (
-        <section className="pb-12 bg-background">
-          <div className="container mx-auto px-6 max-w-3xl">
-            <Reveal>
-              <div className="rounded-2xl overflow-hidden border border-border shadow-depth-2">
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  loading="lazy"
-                  className="w-full aspect-video object-cover"
-                />
-              </div>
-            </Reveal>
-          </div>
-        </section>
-      )}
-
-      {/* Markdown body */}
-      <section className="pb-section-md bg-background">
-        <div className="container mx-auto px-6 max-w-3xl">
-          <Reveal delay={0.05}>
-            <div className="prose prose-orange max-w-none prose-headings:text-foreground prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:text-base prose-li:text-muted-foreground prose-li:leading-relaxed prose-strong:text-foreground prose-a:text-accent prose-a:font-semibold prose-ul:space-y-1 tracking-[-0.015em]"
+            <p
+              className="rise-in mt-5 max-w-3xl text-lg leading-relaxed text-muted-foreground md:mt-6 md:text-[1.375rem]"
+              style={{ "--d": "0.08s" } as CSSProperties}
             >
-              <ReactMarkdown>{bodyHead}</ReactMarkdown>
-              {bodyTail && (
-                <>
-                  <ArticleInlineCta slug={article.slug} />
-                  <ReactMarkdown>{bodyTail}</ReactMarkdown>
-                </>
-              )}
+              {article.excerpt}
+            </p>
+
+            <div
+              className="rise-in mt-8 flex items-center gap-3.5 border-t border-border pt-5"
+              style={{ "--d": "0.14s" } as CSSProperties}
+            >
+              <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-card">
+                <img src={karnafLogo} alt="" width={32} height={32} className="h-8 w-8 object-contain" />
+              </span>
+              <div className="text-sm leading-relaxed">
+                <p className="font-bold text-primary">
+                  מערכת קרנף נדל״ן
+                  <span className="font-normal text-muted-foreground">
+                    <span className="mx-2" aria-hidden>
+                      ·
+                    </span>
+                    {readTimeLabel(article)}
+                  </span>
+                </p>
+                {/* Two dates stack on phones instead of wrapping around a dangling separator */}
+                <p className="flex flex-col text-muted-foreground sm:flex-row sm:flex-wrap sm:gap-x-2">
+                  <span>
+                    פורסם <time dateTime={article.date}>{formatHebrewDate(article.date)}</time>
+                  </span>
+                  {wasUpdated(article) && (
+                    <span>
+                      <span className="me-2 hidden sm:inline" aria-hidden>
+                        ·
+                      </span>
+                      עודכן <time dateTime={modified}>{formatHebrewDate(modified)}</time>
+                    </span>
+                  )}
+                </p>
+              </div>
             </div>
-          </Reveal>
+          </div>
+
+          {/* Cover — edge to edge on mobile, contained and wider than the text on
+              desktop. A post without a real photo goes straight to the text: a
+              full-width typographic placeholder would only push it down. */}
+          {hasCover && (
+            <figure className="mx-auto mt-8 max-w-6xl md:mt-12 md:px-6">
+              <CoverImage
+                article={article}
+                priority
+                size="lg"
+                className="aspect-[3/2] md:aspect-[2/1] md:rounded-editorial md:shadow-depth-2"
+              />
+              {credit && (
+                <figcaption className="px-5 pt-1 text-xs text-muted-foreground md:px-1 md:text-[0.8125rem]">
+                  {article.cover.sourceUrl ? (
+                    <a
+                      href={article.cover.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-[44px] items-center underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                    >
+                      {credit}
+                      <span className="sr-only"> (מקור התמונה, נפתח בחלון חדש)</span>
+                    </a>
+                  ) : (
+                    <span className="inline-flex min-h-[44px] items-center">{credit}</span>
+                  )}
+                </figcaption>
+              )}
+            </figure>
+          )}
+        </header>
+
+        {/* ── Body + contents ────────────────────────────────────── */}
+        <div
+          ref={bodyRef}
+          className={`mx-auto mt-8 px-5 md:mt-12 md:px-6 ${
+            showToc
+              ? "grid max-w-[61rem] gap-x-14 lg:grid-cols-[minmax(0,1fr)_14.5rem]"
+              : "max-w-[46rem]"
+          }`}
+        >
+          <div className="min-w-0">
+            {takeaways.length > 0 && <ArticleTakeaways items={takeaways} />}
+            {showToc && (
+              <div className={`lg:hidden ${takeaways.length > 0 ? "mt-6" : ""}`}>
+                <ArticleTocCollapsible items={tocItems} />
+              </div>
+            )}
+
+            <div className={takeaways.length > 0 ? "mt-12" : showToc ? "mt-10 lg:mt-0" : ""}>
+              {sections.map((s, i) => (
+                <Fragment key={s.heading?.id ?? `lede-${i}`}>
+                  {i === offerAt && <ArticleInlineOffer article={article} />}
+                  <section className={i === 0 ? "" : "mt-14"}>
+                    {s.heading && (
+                      <h2 id={s.heading.id} tabIndex={-1} className={SECTION_HEADING_CLASS}>
+                        {s.heading.text}
+                      </h2>
+                    )}
+                    {s.body && (
+                      <Prose
+                        markdown={s.body}
+                        className={
+                          s.heading
+                            ? ""
+                            : "[&>p:first-child]:text-[1.1875rem] [&>p:first-child]:leading-[1.75] [&>p:first-child]:text-primary md:[&>p:first-child]:text-[1.375rem]"
+                        }
+                      />
+                    )}
+                  </section>
+                </Fragment>
+              ))}
+            </div>
+
+            {faq.length > 0 && <ArticleFaq items={faq} />}
+            {sources.length > 0 && <ArticleSources sources={sources} />}
+            <ArticleDisclaimer updated={article.updated} />
+          </div>
+
+          {showToc && (
+            <aside className="hidden lg:block">
+              <ArticleTocRail items={tocItems} activeId={activeId} />
+            </aside>
+          )}
         </div>
+      </article>
+
+      {/* One offer at the end, the same product as the inline card */}
+      <section aria-label="המשך מהמאמר" className="mx-auto mt-16 max-w-[61rem] px-5 md:mt-20 md:px-6">
+        <ArticleEndBanner article={article} />
       </section>
 
-      {/* One offer at the end, matched to the article's topic */}
-      <section className="pb-section-md bg-background">
-        <div className="container mx-auto px-6 max-w-3xl">
-          <ArticleEndBanner slug={article.slug} />
-        </div>
-      </section>
-
-      {/* Related */}
-      {relatedArticles.length > 0 && (
-        <section className="py-section-lg bg-background">
-          <div className="container mx-auto px-6 max-w-5xl">
-            <Reveal>
-              <h3 className="text-display-md text-foreground mb-12 text-center">
-                תכנים <span className="text-accent">נוספים</span>
-              </h3>
-            </Reveal>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {relatedArticles.map((a, i) => (
-                <Reveal key={a.slug} delay={i * 0.06}>
-                  <Link to={`/blog/${a.slug}`} className="block group h-full">
-                    <article className="bg-card border border-border rounded-2xl overflow-hidden h-full transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-depth-2">
-                      <div className="aspect-video overflow-hidden">
-                        <img
-                          src={a.image}
-                          alt={a.title}
-                          loading="lazy"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        />
-                      </div>
-                      <div className="p-5">
-                        <h4 className="text-base font-bold text-foreground group-hover:text-accent transition-colors line-clamp-2 leading-snug">
-                          {a.title}
-                        </h4>
-                        <p className="text-sm text-muted-foreground mt-2">{a.readTime}</p>
-                      </div>
-                    </article>
-                  </Link>
+      {/* ── Related ──────────────────────────────────────────────── */}
+      {related.length > 0 && (
+        <section
+          aria-labelledby="related-title"
+          className="mt-16 border-t border-border pt-12 pb-section-sm md:mt-20 md:pt-16"
+        >
+          <div className="mx-auto max-w-6xl px-5 md:px-6">
+            <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
+              <h2 id="related-title" className="text-display-sm font-black text-primary">
+                להמשך קריאה
+              </h2>
+              <Link
+                to="/blog"
+                className="group inline-flex min-h-[44px] items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline"
+              >
+                לכל המאמרים
+                <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-0.5" aria-hidden />
+              </Link>
+            </div>
+            <div className="mt-8 grid gap-x-8 gap-y-7 sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-3">
+              {related.map((a, i) => (
+                <Reveal key={a.slug} delay={i * 0.07} blur={0} className="h-full">
+                  <ArticleCard article={a} compactOnMobile />
                 </Reveal>
               ))}
             </div>

@@ -3,13 +3,27 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import teamPhoto from "@/assets/team/itamar-almog-about.webp";
 import { Reveal } from "@/components/v2/Reveal";
-import { ClipImage } from "@/components/v2/ClipImage";
+import { ParallaxImage, SplitReveal } from "@/components/v2/scroll";
+import { useCountUp } from "@/hooks/use-count-up";
 import {
-  TOTAL_CLIENTS_STAT,
+  TOTAL_CLIENTS,
   TOTAL_CLIENTS_LABEL,
-  YEARS_EXPERIENCE_STAT,
+  YEARS_EXPERIENCE,
   YEARS_EXPERIENCE_LABEL,
 } from "@/data/companyStats";
+
+/** A proof number that counts up once it's on screen (final value in the SSG HTML). */
+const CountStat = ({ value, label }: { value: number; label: string }) => {
+  const { ref, value: shown } = useCountUp(value);
+  return (
+    <div>
+      <div className="text-display-md text-accent tabular-nums leading-none mb-1">
+        <span ref={ref}>{shown}</span>+
+      </div>
+      <div className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">{label}</div>
+    </div>
+  );
+};
 
 const About = () => {
   return (
@@ -19,21 +33,18 @@ const About = () => {
     >
       <div className="container mx-auto px-5 md:px-6 relative z-10">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-20 items-center">
-          <Reveal>
-            <ClipImage
-              src={teamPhoto}
-              alt="איתמר ואלמוג — מייסדי קרנף"
-              ratio="aspect-[4/5]"
-              className="rounded-2xl shadow-depth-3 max-w-md mx-auto lg:mx-0"
-            />
-          </Reveal>
+          <ParallaxImage
+            src={teamPhoto}
+            alt="איתמר ואלמוג — מייסדי קרנף"
+            ratio="aspect-[4/5]"
+            className="rounded-2xl shadow-depth-3 max-w-md w-full mx-auto lg:mx-0"
+          />
 
           <div>
-            <Reveal>
-              <h2 className="text-display-md md:text-display-lg text-foreground mb-6">
-                הצוות שמלווה אתכם לדירה הנכונה
-              </h2>
-            </Reveal>
+            <SplitReveal
+              text="הצוות שמלווה אתכם לדירה הנכונה"
+              className="text-display-md md:text-display-lg text-foreground mb-6"
+            />
 
             <Reveal delay={0.08}>
               <p className="text-body-lg text-muted-foreground leading-[1.85] mb-6 max-w-[60ch]">
@@ -54,19 +65,8 @@ const About = () => {
 
             <Reveal delay={0.22}>
               <div className="grid grid-cols-2 gap-6 max-w-md pt-6 border-t border-primary/15 mb-8">
-                {[
-                  { num: YEARS_EXPERIENCE_STAT, label: YEARS_EXPERIENCE_LABEL },
-                  { num: TOTAL_CLIENTS_STAT, label: TOTAL_CLIENTS_LABEL },
-                ].map((stat, i) => (
-                  <div key={i}>
-                    <div className="text-display-md text-accent tabular-nums leading-none mb-1">
-                      {stat.num}
-                    </div>
-                    <div className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
+                <CountStat value={YEARS_EXPERIENCE} label={YEARS_EXPERIENCE_LABEL} />
+                <CountStat value={TOTAL_CLIENTS} label={TOTAL_CLIENTS_LABEL} />
               </div>
             </Reveal>
 

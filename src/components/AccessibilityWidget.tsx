@@ -56,14 +56,21 @@ const STORAGE_KEY = "karnaf-accessibility";
 const AccessibilityWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showStatement, setShowStatement] = useState(false);
-  const [settings, setSettings] = useState<AccessibilitySettings>(() => {
+  // Start from the defaults on both server and client, then load the saved
+  // settings after mount — reading localStorage during the first render
+  // made returning visitors' HTML differ from the pre-rendered page
+  // (React #418 on every route).
+  const [settings, setSettings] = useState<AccessibilitySettings>(DEFAULT_SETTINGS);
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? { ...DEFAULT_SETTINGS, ...JSON.parse(saved) } : DEFAULT_SETTINGS;
+      if (saved) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(saved) });
     } catch {
-      return DEFAULT_SETTINGS;
+      // Ignore unreadable storage — defaults stand.
     }
-  });
+    setLoaded(true);
+  }, []);
 
   // Apply settings to document
   const applySettings = useCallback((s: AccessibilitySettings) => {
@@ -104,13 +111,15 @@ const AccessibilityWidget = () => {
   }, []);
 
   useEffect(() => {
+    // Until the saved settings are in, don't apply or overwrite them.
+    if (!loaded) return;
     applySettings(settings);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
     } catch {
       // Ignore storage failures in private/blocked browsing contexts.
     }
-  }, [settings, applySettings]);
+  }, [settings, applySettings, loaded]);
 
   const update = (key: keyof AccessibilitySettings, value: boolean | number) => {
     setSettings((prev) => ({ ...prev, [key]: value }));

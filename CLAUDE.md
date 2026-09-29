@@ -15,7 +15,7 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 
 ## Architecture
 
-**Routing:** React Router v6 with lazy-loaded pages wrapped in `SharedLayout` (Navigation + FooterBar + WhatsApp FAB + Accessibility widget + Framer Motion page transitions). The desktop `StickyCTA` (course cross-sell) is hidden on `/contact`, `/course` and `/premium` — never downsell the 1:1 funnel.
+**Routing:** React Router v6 with lazy-loaded pages wrapped in `SharedLayout` (Navigation + FooterBar + WhatsApp FAB + Accessibility widget + Framer Motion page transitions). The desktop `StickyCTA` (course cross-sell) is hidden on `/contact`, `/course`, `/premium` and `/mortgage`, and on 1:1-offer blog articles — never downsell a lead funnel.
 
 **Path alias:** `@/` → `src/`
 
@@ -25,18 +25,19 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 - `src/layouts/SharedLayout.tsx` — wraps all routes with nav, footer, floating CTAs
 - `src/data/` — static content (articles, curriculum, FAQ, team, testimonials). `companyStats.ts` is the single source for proof numbers (375+ לקוחות ותלמידים, 328 תלמידים, 8+ שנות ניסיון, מאז 2017) — one label per number, never hard-code them in copy
 - `src/lib/constants.ts` — the one WhatsApp number, social links, contact info, course price + checkout URL seam
-- `src/lib/whatsapp.ts` — chatLink/businessLink/premiumLink builders. **Every WhatsApp link on the site opens the one business line 055-996-6175** (`WHATSAPP_BUSINESS_NUMBER`, overridable via `VITE_WHATSAPP_NUMBER`); the old intake bot is no longer linked from anywhere. Only the prefilled text varies by page — `/premium` carries the 1:1 accompaniment message, resolved for site-wide chrome (nav, sticky bar, floating button) by `useWhatsAppLink` in `src/hooks/`
+- `src/lib/whatsapp.ts` — chatLink/businessLink/premiumLink builders. **Every WhatsApp link on the site opens the one business line 055-996-6175** (`WHATSAPP_BUSINESS_NUMBER`, overridable via `VITE_WHATSAPP_NUMBER`); the old intake bot is no longer linked from anywhere. Only the prefilled text varies by page — a natural first-person opener per `ChatIntent` (never a bracketed page tag); `/premium` carries the 1:1 accompaniment message, resolved for site-wide chrome (nav, sticky bar, floating button) by `useWhatsAppLink` in `src/hooks/`
 - `src/lib/checkout.ts` — buildCheckoutUrl (Schooler URL + utm/click-id passthrough)
 - `src/lib/leadSubmission.ts` — dual lead delivery: Make/Sheets mirror + karnaf-crm intake. Every lead form navigates to `/thank-you?src=&service=` on success (`src/pages/ThankYouPage.tsx`, noindex) — that URL is the ad platforms' Lead conversion; `trackLead` in `lib/pixel.ts` attaches a relative `value` per source
 - `src/lib/analytics.ts` — env-gated GA4/Clarity loader + funnel events (mirrors Meta Pixel)
 - `src/lib/bottomBar.ts` — bottom bars (desktop `StickyCTA`, `/course` `CoursePriceBar`) publish their height to `--sticky-cta-h`; the WhatsApp FAB and accessibility button lift above it, and the FAB steps aside on `/course` while the price bar shows
 - `src/components/WebinarCapture.tsx` — the free lead magnet (webinar) as a first-class form: home, blog index, `/course` after the close, and the quiz's "עוד מוקדם" result. `WEBINAR_URL` lives in `lib/constants.ts`
-- `src/components/blog/ArticleOffer.tsx` — one offer per article by topic (course vs. premium), used mid-article and as the end banner
+- `src/data/blog/` — the blog: one article per file in `posts/` (schema in `types.ts`: cover with photo credit/license, takeaways, sources, faq, `offer`), collected by `src/data/articles.ts`. Every figure in an article needs a dated source in `sources`
+- `src/components/blog/ArticleOffer.tsx` — one offer per article from `article.offer` / `offerLine` (course vs. premium), used mid-article and as the end banner; premium articles also switch off the desktop course StickyCTA (`useSuppressStickyCta`)
 - `src/hooks/` — custom hooks
 
 **Styling:** Tailwind CSS 3 + shadcn/ui design system. Colors defined as HSL CSS variables in `src/index.css` (Navy/Cream/Amber palette). Custom display font sizes (`display-lg/md/sm`), layered shadows (`depth-1` through `depth-4`, `glow-*`). Uses `tailwindcss-animate` for animations.
 
-**Animation:** Framer Motion only (page transitions, reveals, scroll effects). Smooth scrolling is native CSS (`scroll-behavior` + `scroll-padding-top`). Do not add GSAP/Lenis back — they were removed deliberately for INP/bundle size (see docs/UPGRADE.md).
+**Animation:** Framer Motion only (page transitions, reveals, scroll effects). Smooth scrolling is native CSS (`scroll-behavior` + `scroll-padding-top`). Do not add GSAP/Lenis back — they were removed deliberately for INP/bundle size (see docs/UPGRADE.md). Scroll-linked primitives live in `src/components/v2/scroll/` (read `docs/SCROLL-MOTION.md` first): map any `target`-bound `scrollYProgress` through `useScrubbed`, never the range form of `useTransform` (framer 12 binds the accelerated version to the whole page); gate motion with `useStillMotion` (SSR-safe, honors the a11y widget) and give the still state explicit rest values, not `style={undefined}`.
 
 **Fonts:** Self-hosted via `@fontsource-variable/rubik` (imported in `src/main.tsx`). No Google Fonts `<link>` tags.
 

@@ -1,46 +1,68 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Play, FileText, Wrench, ArrowLeft, Clock } from "lucide-react";
-import PageHero from "@/layouts/PageHero";
-import { articles } from "@/data/articles";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { articles, CATEGORY_LABELS } from "@/data/articles";
+import type { ArticleCategory } from "@/data/blog/types";
 import { Reveal } from "@/components/v2/Reveal";
+import { SplitReveal } from "@/components/v2/scroll";
 import WebinarCapture from "@/components/WebinarCapture";
-import SEOHead, {
-  organizationSchema,
-  breadcrumbSchema,
-} from "@/components/SEOHead";
+import { ArticleCard, LeadStory } from "@/components/blog/ArticleCard";
+import { OfferBanner } from "@/components/blog/ArticleOffer";
+import {
+  defaultOfferLine,
+  formatHebrewDate,
+  lastUpdated,
+  leadArticle,
+  usedCategories,
+} from "@/components/blog/articleUtils";
+import SEOHead, { organizationSchema, breadcrumbSchema } from "@/components/SEOHead";
 
-import type { LucideIcon } from "lucide-react";
+const SITE_URL = "https://www.karnafnadlan.com";
 
-type Category = "all" | "article" | "video" | "tool";
+type Filter = "all" | ArticleCategory;
 
-const categoryLabels: Record<Category, { label: string; icon: LucideIcon }> = {
-  all: { label: "הכל", icon: FileText },
-  article: { label: "מאמרים", icon: FileText },
-  video: { label: "סרטונים", icon: Play },
-  tool: { label: "כלים", icon: Wrench },
-};
+const CATEGORY_ORDER = Object.keys(CATEGORY_LABELS) as ArticleCategory[];
+const categories = usedCategories(articles, CATEGORY_ORDER);
+const lead = leadArticle(articles);
+const newestUpdate = articles.reduce((max, a) => (lastUpdated(a) > max ? lastUpdated(a) : max), "");
 
-const categoryColor: Record<string, string> = {
-  article: "bg-primary/10 text-primary",
-  video: "bg-accent/10 text-accent",
-  tool: "bg-foreground/10 text-foreground",
-};
+const isCategory = (v: string | null): v is ArticleCategory =>
+  !!v && (categories as string[]).includes(v);
 
 const BlogPage = () => {
-  const [activeCategory, setActiveCategory] = useState<Category>("all");
+  // "all" on the server and on the first client render (no hydration
+  // mismatch); a ?topic= link (e.g. from an article's breadcrumb) is
+  // applied right after mount.
+  const [filter, setFilter] = useState<Filter>("all");
 
-  const filtered =
-    activeCategory === "all"
-      ? articles
-      : articles.filter((a) => a.category === activeCategory);
-  const featured = articles[0];
+  useEffect(() => {
+    const topic = new URLSearchParams(window.location.search).get("topic");
+    if (isCategory(topic)) setFilter(topic);
+  }, []);
+
+  const choose = (next: Filter) => {
+    setFilter(next);
+    const url = new URL(window.location.href);
+    if (next === "all") url.searchParams.delete("topic");
+    else url.searchParams.set("topic", next);
+    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+  };
+
+  // "All" lists everything below the lead story; a topic lists every
+  // article in it, the lead story included.
+  const visible = useMemo(
+    () =>
+      filter === "all"
+        ? articles.filter((a) => a.slug !== lead?.slug)
+        : articles.filter((a) => a.category === filter),
+    [filter]
+  );
+
+  const countFor = (c: ArticleCategory) => articles.filter((a) => a.category === c).length;
 
   return (
     <>
       <SEOHead
-        title="ידע ותובנות נדל״ן — מדריכים, סרטונים וכלים | קרנף נדל״ן"
-        description="מאמרים על רכישת דירה, משכנתא, מיסוי, התחדשות עירונית. מדריכים מעשיים מבוססי 8+ שנות ניסיון ו-375+ לקוחות ותלמידים."
+        title="ידע ותובנות — מדריכים לרכישת דירה, משכנתא ומיסוי | קרנף נדל״ן"
+        description="מדריכים מעשיים לרכישת דירה בישראל: משכנתא, מס רכישה, משא ומתן, דירה מקבלן, התחדשות עירונית והשקעות — עם מספרים, מקורות ותאריך בדיקה."
         path="/blog"
         keywords="בלוג נדל״ן, מדריך רכישת דירה, משכנתא בישראל, מס רכישה, תמ״א 38, השקעות נדל״ן"
         jsonLd={[
@@ -52,160 +74,137 @@ const BlogPage = () => {
           {
             "@context": "https://schema.org",
             "@type": "Blog",
-            "@id": "https://www.karnafnadlan.com/blog#blog",
-            url: "https://www.karnafnadlan.com/blog",
+            "@id": `${SITE_URL}/blog#blog`,
+            url: `${SITE_URL}/blog`,
             name: "ידע ותובנות — קרנף נדל״ן",
-            description:
-              "מאמרים, סרטונים וכלים על רכישת דירה, משכנתא ומיסוי בישראל.",
+            description: "מדריכים מעשיים על רכישת דירה, משכנתא, מיסוי והשקעות נדל״ן בישראל.",
             inLanguage: "he-IL",
-            publisher: { "@id": "https://www.karnafnadlan.com/#organization" },
-            blogPost: articles.map((a) => ({
-              "@type": "BlogPosting",
-              headline: a.title,
-              datePublished: a.date,
-              url: `https://www.karnafnadlan.com/blog/${a.slug}`,
-            })),
+            publisher: { "@id": `${SITE_URL}/#organization` },
+            blogPost: articles.map((a) => {
+              const image = a.cover.og ?? a.cover.src;
+              return {
+                "@type": "BlogPosting",
+                headline: a.title,
+                description: a.excerpt,
+                datePublished: a.date,
+                dateModified: lastUpdated(a),
+                url: `${SITE_URL}/blog/${a.slug}`,
+                image: image.startsWith("http") ? image : `${SITE_URL}${image}`,
+              };
+            }),
           },
         ]}
       />
 
-      <PageHero
-        tag="ידע ותובנות"
-        title="ידע"
-        highlight="ותובנות"
-        subtitle={'מאמרים, סרטונים וכלים שיעזרו לכם לקבל החלטות חכמות בנדל"ן.'}
-      />
-
-      {/* Featured */}
-      <section className="py-section-md bg-background">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <Reveal>
-            <Link to={`/blog/${featured.slug}`} className="block group">
-              <article className="grid md:grid-cols-2 gap-0 bg-card border border-border rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-depth-3">
-                <div className="aspect-video md:aspect-auto relative overflow-hidden">
-                  <img
-                    src={featured.image}
-                    alt={featured.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  {featured.category === "video" && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                      <div className="w-14 h-14 rounded-full bg-accent flex items-center justify-center">
-                        <Play size={24} className="text-accent-foreground ml-1" />
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <div className="p-6 md:p-10 flex flex-col justify-center">
-                  <span
-                    className={`text-eyebrow uppercase tracking-[0.18em] px-3 py-1 rounded-full inline-block w-fit mb-4 ${categoryColor[featured.category]}`}
-                  >
-                    {categoryLabels[featured.category].label}
-                  </span>
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3 leading-tight group-hover:text-accent transition-colors tracking-[-0.02em]">
-                    {featured.title}
-                  </h2>
-                  <p className="text-muted-foreground leading-relaxed mb-5">
-                    {featured.excerpt}
-                  </p>
-                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <span>{new Date(featured.date).toLocaleDateString("he-IL")}</span>
-                    <span aria-hidden>·</span>
-                    <div className="flex items-center gap-1">
-                      <Clock size={14} />
-                      <span>{featured.readTime}</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Filter tabs */}
-      <section className="pb-4 bg-background">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <div className="flex gap-2 flex-wrap">
-            {(Object.keys(categoryLabels) as Category[]).map((cat) => {
-              const { label, icon: Icon } = categoryLabels[cat];
-              const active = activeCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`flex items-center gap-1.5 px-5 py-2.5 min-h-[44px] rounded-full text-sm font-bold transition-colors ${
-                    active
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-primary/40"
-                  }`}
-                >
-                  <Icon size={14} />
-                  {label}
-                </button>
-              );
-            })}
+      {/* ── Masthead ─────────────────────────────────────────────── */}
+      <header className="pt-[6.5rem] pb-6 md:pt-36 md:pb-12">
+        <div className="mx-auto max-w-6xl px-5 md:px-6">
+          <p className="rise-in inline-flex items-center gap-3 text-sm font-bold text-primary">
+            <span className="block h-[2px] w-8 rounded-full bg-accent" aria-hidden />
+            הבלוג של קרנף נדל״ן
+          </p>
+          <SplitReveal
+            as="h1"
+            trigger="load"
+            text="ידע ותובנות"
+            className="mt-3 text-display-xl text-primary md:mt-4"
+            stagger={0.08}
+          />
+          <p
+            className="rise-in mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-muted-foreground md:mt-6 md:text-xl"
+            style={{ "--d": "0.18s" } as CSSProperties}
+          >
+            מדריכים מעשיים לרכישת דירה בישראל — משכנתא, מיסוי, משא ומתן והשקעות. בגובה העיניים, עם
+            מספרים ומקורות.
+          </p>
+          <div className="mt-7 flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-y md:mt-10 border-primary/15 py-3 text-sm text-muted-foreground">
+            <span className="tabular-nums">
+              {articles.length} מאמרים · {categories.length} נושאים
+            </span>
+            {newestUpdate && (
+              <span>
+                עדכון אחרון: <time dateTime={newestUpdate}>{formatHebrewDate(newestUpdate)}</time>
+              </span>
+            )}
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* Articles grid */}
-      <section className="py-section-md bg-background">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((article, i) => (
-              <Reveal key={article.slug} delay={i * 0.06}>
-                <Link to={`/blog/${article.slug}`} className="block group h-full">
-                  <article className="bg-card border border-border rounded-2xl overflow-hidden transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-depth-2 h-full flex flex-col">
-                    <div className="relative aspect-video overflow-hidden">
-                      <img
-                        src={article.image}
-                        alt={article.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      {article.category === "video" && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                          <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
-                            <Play size={18} className="text-accent-foreground ml-0.5" />
-                          </div>
-                        </div>
-                      )}
-                      <span
-                        className={`absolute top-3 right-3 text-eyebrow uppercase tracking-[0.18em] px-2.5 py-1 rounded-full ${categoryColor[article.category]}`}
-                      >
-                        {categoryLabels[article.category].label}
+      {/* ── Lead story ───────────────────────────────────────────── */}
+      {lead && (
+        <section aria-labelledby="lead-story-title" className="pb-section-sm">
+          <div className="mx-auto max-w-6xl px-5 md:px-6">
+            <LeadStory article={lead} />
+          </div>
+        </section>
+      )}
+
+      {/* ── All articles, filterable by topic ────────────────────── */}
+      <section aria-labelledby="all-articles-title" className="pb-section-md">
+        <div className="mx-auto max-w-6xl px-5 md:px-6">
+          <div className="flex flex-col gap-5 border-t border-primary/15 pt-8 md:pt-10 lg:flex-row lg:items-center lg:justify-between">
+            <h2 id="all-articles-title" className="text-display-sm font-black text-primary">
+              {filter === "all" ? "כל המאמרים" : CATEGORY_LABELS[filter]}
+            </h2>
+            {categories.length > 1 && (
+              <div
+                role="group"
+                aria-label="סינון לפי נושא"
+                className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:flex-wrap lg:justify-end lg:overflow-visible lg:px-0 lg:pb-0"
+              >
+                {(["all", ...categories] as Filter[]).map((c) => {
+                  const active = filter === c;
+                  return (
+                    <button
+                      key={c}
+                      type="button"
+                      aria-pressed={active}
+                      onClick={() => choose(c)}
+                      className={`inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border px-4 text-sm font-bold transition-colors ${
+                        active
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border bg-card text-foreground hover:border-primary/40"
+                      }`}
+                    >
+                      {c === "all" ? "הכל" : CATEGORY_LABELS[c]}
+                      <span className={`tabular-nums text-xs ${active ? "opacity-75" : "text-muted-foreground"}`}>
+                        {c === "all" ? articles.length : countFor(c)}
                       </span>
-                    </div>
-                    <div className="p-5 flex-1 flex flex-col">
-                      <h3 className="text-foreground font-bold text-lg mb-2 leading-snug group-hover:text-accent transition-colors">
-                        {article.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm mb-4 flex-1 leading-relaxed">
-                        {article.excerpt}
-                      </p>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Clock size={12} />
-                          <span>{article.readTime}</span>
-                        </div>
-                        <span className="flex items-center gap-1 text-accent font-bold">
-                          קראו עוד <ArrowLeft size={12} />
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <p className="sr-only" role="status">
+            {filter === "all" ? "מוצגים כל המאמרים" : `מוצגים ${visible.length} מאמרים בנושא ${CATEGORY_LABELS[filter]}`}
+          </p>
+
+          <div className="mt-10 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+            {visible.map((a, i) => (
+              <Reveal key={a.slug} delay={(i % 3) * 0.07} blur={0} className="h-full">
+                <ArticleCard article={a} />
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
+      {/* ── The one commercial banner — after the reading grid, never inside it ── */}
+      <section aria-label="הקורס הדיגיטלי" className="pb-section-md">
+        <div className="mx-auto max-w-6xl px-5 md:px-6">
+          <OfferBanner
+            offer="course"
+            title="כל מה שבבלוג — בסדר אחד, מהתקציב ועד החתימה"
+            line={defaultOfferLine("course")}
+          />
+        </div>
+      </section>
+
       {/* The blog is the top of the cold funnel — leave with something. */}
-      <section className="py-section-md bg-card border-t border-border">
-        <div className="container mx-auto px-6 max-w-4xl">
+      <section className="border-t border-border py-section-md">
+        <div className="mx-auto max-w-4xl px-5 md:px-6">
           <WebinarCapture source="blog-index" />
         </div>
       </section>

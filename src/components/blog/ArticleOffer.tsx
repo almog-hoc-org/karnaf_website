@@ -1,117 +1,129 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, GraduationCap, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/v2/Reveal";
-import { CHAPTERS_LABEL } from "@/data/courseStats";
-import { COURSE_PRICE } from "@/lib/constants";
+import { COURSE_PRICE_LABEL, offerLineFor } from "./articleUtils";
+import type { Article } from "@/data/blog/types";
+import { COURSE_ACCESS_LABEL } from "@/lib/constants";
 
 /**
- * One commercial offer per article, chosen by topic: investment / accompaniment
- * articles point at the 1:1 track, everything about buying, financing and
- * checking a home points at the course. Both the mid-article card and the
- * end banner read from the same map so an article never sends its reader to
- * two different products.
+ * One commercial offer per article, declared by the article itself
+ * (`article.offer`): buying, financing and checking a home point at the
+ * self-serve course; investment / accompaniment topics point at the 1:1
+ * track. The mid-article card and the end banner both read the same field,
+ * so an article never sends its reader to two different products.
+ *
+ * Course copy stays inside what the course is: a self-paced digital
+ * program. No personal support, analyst, calculators or community — those
+ * belong to /premium only (CLAUDE.md → Commerce).
  */
 
-type OfferKind = "course" | "premium";
+type OfferKind = Article["offer"];
 
-interface Offer {
-  kind: OfferKind;
-  /** One contextual sentence — why this article's reader wants this offer. */
-  line: string;
-}
-
-const PREMIUM_SLUGS = new Set(["investor-accompaniment-guide", "real-estate-investment-tips"]);
-
-const LINES: Record<string, string> = {
-  "investor-accompaniment-guide":
-    "בדיוק התהליך שתואר כאן — אסטרטגיה, איתור, בדיקות ומשא ומתן — עם אנליסט אישי לצידכם עד החתימה.",
-  "real-estate-investment-tips":
-    "רוצים שמישהו יעבור על העסקה הבאה שלכם במספרים, לא בתחושות? ליווי משקיעים 1:1 — מהאסטרטגיה ועד החתימה.",
-  "first-apartment-guide":
-    "כל ארבעת השלבים שבמאמר — הכנה, מימון, חיפוש ובדיקות — הם פרקים שלמים בתוכנית, צעד אחר צעד.",
-  "mortgage-types-explained":
-    "פרק המימון בתוכנית מלמד לבנות תמהיל שמתאים לחיים שלכם — ולהגיע לבנק כלקוח שיודע מה הוא מבקש.",
-  "negotiation-secrets":
-    "פרק המשא ומתן בתוכנית: איך להיכנס לשיחה עם נתונים במקום עם תחושת בטן.",
-  "due-diligence-checklist":
-    "בתוכנית: בדיקת הנאותות המלאה, עם התבניות והמסמכים לכל שלב — לא רק רשימה.",
-  "how-to-choose-real-estate-course":
-    "כל מה שרשמנו כאן שקורס טוב חייב לכלול — מכוסה. הסילבוס המלא פתוח בדף התוכנית.",
-  "market-update-2025":
-    "לקרוא שוק זה כישור שלומדים: בתוכנית מלמדים לנתח אזור ולהשוות לעסקאות שנסגרו באותו רחוב.",
+const DESTINATION: Record<OfferKind, string> = {
+  course: "/course",
+  premium: "/premium#contact",
 };
 
-function offerFor(slug: string): Offer {
-  const kind: OfferKind = PREMIUM_SLUGS.has(slug) ? "premium" : "course";
-  const line =
-    LINES[slug] ??
-    (kind === "course"
-      ? `${CHAPTERS_LABEL} מקיפים, מסמכים ותבניות לעבודה — כל הדרך מהתקציב ועד המפתח.`
-      : "אנליסט אישי שעובר איתכם את כל הדרך — עד שאתם חותמים על נכס משלכם.");
-  return { kind, line };
-}
-
-const priceLabel = `₪${COURSE_PRICE.toLocaleString("he-IL")}`;
-
-/** Compact card injected into the article body after the second section. */
-export const ArticleInlineCta = ({ slug }: { slug: string }) => {
-  const offer = offerFor(slug);
-  const course = offer.kind === "course";
+/** Compact card set between the article's second and third sections. */
+export const ArticleInlineOffer = ({ article }: { article: Pick<Article, "offer" | "offerLine"> }) => {
+  const course = article.offer === "course";
+  const Icon = course ? GraduationCap : Users;
   return (
-    <aside className="not-prose my-10 rounded-2xl border border-border bg-card p-6 md:p-7 border-r-4 border-r-accent">
-      <p className="text-eyebrow uppercase tracking-[0.18em] text-accent mb-2 flex items-center gap-2">
-        {course ? <GraduationCap size={14} /> : <Users size={14} />}
-        {course ? "מהמאמר לתוכנית" : "מהמאמר לליווי אישי"}
-      </p>
-      <p className="text-foreground font-semibold leading-relaxed mb-4">{offer.line}</p>
-      <Link
-        to={course ? "/course" : "/premium#contact"}
-        className="inline-flex items-center gap-2 font-bold text-primary underline-offset-4 hover:underline min-h-[44px]"
-      >
-        {course ? `לתוכנית הדיגיטלית — ${priceLabel}, גישה מיידית` : "לתיאום שיחת היכרות — חינם"}
-        <ArrowLeft size={14} />
-      </Link>
+    <aside
+      aria-label={course ? "התוכנית הדיגיטלית" : "ליווי משקיעים אישי"}
+      className="my-12 rounded-2xl border border-border bg-card p-6 md:p-7 shadow-depth-1"
+    >
+      <div className="flex items-start gap-4 md:gap-5">
+        <span
+          className="hidden sm:inline-flex w-11 h-11 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent"
+          aria-hidden
+        >
+          <Icon size={20} />
+        </span>
+        <div className="min-w-0">
+          <p className="mb-1.5 text-sm font-bold text-muted-foreground">
+            {course ? "מהכתבה לתוכנית" : "מהכתבה לליווי אישי"}
+          </p>
+          <p className="text-[1.0625rem] md:text-lg font-bold leading-relaxed text-primary">
+            {offerLineFor(article)}
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link
+              to={DESTINATION[article.offer]}
+              className="group inline-flex min-h-[44px] items-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              {course ? `לתוכנית הדיגיטלית · ${COURSE_PRICE_LABEL}` : "לשיחת היכרות — חינם"}
+              <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-0.5" aria-hidden />
+            </Link>
+            <span className="text-sm text-muted-foreground">
+              {course ? `גישה מיידית · ${COURSE_ACCESS_LABEL}` : "ללא התחייבות · חוזרים תוך 24 שעות"}
+            </span>
+          </div>
+        </div>
+      </div>
     </aside>
   );
 };
 
-/** The end-of-article banner — one destination, matched to the topic. */
-export const ArticleEndBanner = ({ slug }: { slug: string }) => {
-  const offer = offerFor(slug);
-  const course = offer.kind === "course";
+interface OfferBannerProps {
+  offer: OfferKind;
+  line: string;
+  /** Overrides the default headline for the product. */
+  title?: string;
+  eyebrow?: string;
+  headingLevel?: "h2" | "h3";
+}
+
+/** Dark closing banner — one destination. Used at the end of an article and on the blog index. */
+export const OfferBanner = ({ offer, line, title, eyebrow, headingLevel = "h2" }: OfferBannerProps) => {
+  const course = offer === "course";
+  const Heading = headingLevel;
   return (
-    <Reveal>
-      <div
-        className="relative overflow-hidden rounded-2xl p-8 md:p-10 flex flex-col sm:flex-row items-center gap-6 grain-texture"
-        style={{ backgroundColor: "hsl(217 50% 8%)", color: "hsl(36 33% 95%)" }}
-      >
+    <Reveal blur={0}>
+      <div className="relative overflow-hidden rounded-editorial bg-[hsl(var(--ink))] text-[hsl(var(--ink-foreground))] p-7 md:p-12 grain-texture">
         <div
-          className="absolute inset-0 pointer-events-none opacity-50"
+          className="absolute inset-0 pointer-events-none"
           aria-hidden
           style={{
-            background: "radial-gradient(50% 70% at 80% 20%, hsl(24 80% 52% / 0.20) 0%, transparent 70%)",
+            background:
+              "radial-gradient(55% 80% at 88% 0%, hsl(var(--accent) / 0.22) 0%, transparent 70%)",
           }}
         />
-        <div className="relative z-10 w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
-          {course ? <GraduationCap size={28} className="text-accent" /> : <Users size={28} className="text-accent" />}
+        <div className="relative z-10 grid gap-7 md:grid-cols-[1fr_auto] md:items-end md:gap-12">
+          <div className="max-w-2xl">
+            <p className="mb-4 inline-flex items-center gap-3 text-sm font-bold text-accent">
+              <span className="block w-8 h-px bg-accent" aria-hidden />
+              {eyebrow ?? (course ? "המדריך המעשי לרכישת דירה" : "ליווי משקיעים 1:1")}
+            </p>
+            <Heading className="text-2xl md:text-[2.125rem] font-black leading-[1.15] tracking-[-0.02em] mb-4">
+              {title ?? (course ? "רוצים ללמוד לעשות את זה נכון?" : "מעדיפים שמישהו יעבור את הדרך איתכם?")}
+            </Heading>
+            <p className="text-base md:text-lg leading-relaxed text-[hsl(var(--ink-foreground)/0.75)]">{line}</p>
+          </div>
+          <div className="flex flex-col items-start gap-3 md:items-end">
+            {course && (
+              <p className="text-sm text-[hsl(var(--ink-foreground)/0.7)]">
+                <span className="text-2xl font-black text-[hsl(var(--ink-foreground))] tabular-nums">
+                  {COURSE_PRICE_LABEL}
+                </span>{" "}
+                · גישה מיידית ל-{COURSE_ACCESS_LABEL}
+              </p>
+            )}
+            <Link
+              to={DESTINATION[offer]}
+              className="group inline-flex min-h-[52px] items-center gap-2 whitespace-nowrap rounded-full bg-accent px-7 font-bold text-accent-foreground shadow-glow-accent transition-colors hover:bg-accent/90"
+            >
+              {course ? "לתוכנית המלאה" : "לשיחת היכרות — חינם"}
+              <ArrowLeft size={17} className="transition-transform group-hover:-translate-x-1" aria-hidden />
+            </Link>
+          </div>
         </div>
-        <div className="relative z-10 flex-1 text-center sm:text-right">
-          <h3 className="text-xl md:text-2xl font-bold mb-1 tracking-[-0.015em]">
-            {course ? "רוצים ללמוד לעשות את זה נכון?" : "מעדיפים שמישהו יעבור את הדרך איתכם?"}
-          </h3>
-          <p className="text-white/70 text-sm md:text-base">
-            {offer.line}{" "}
-            {course && <span className="text-white/90 font-semibold">{priceLabel} · גישה מיידית ל-12 חודשים.</span>}
-          </p>
-        </div>
-        <Link to={course ? "/course" : "/premium#contact"} className="relative z-10">
-          <Button className="group bg-accent hover:bg-accent/90 text-accent-foreground font-bold gap-2 whitespace-nowrap rounded-full px-7 py-5">
-            {course ? "לתוכנית המלאה" : "לשיחת היכרות — חינם"}
-            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
-          </Button>
-        </Link>
       </div>
     </Reveal>
   );
 };
+
+/** The end-of-article banner — the article's one offer, with its own line. */
+export const ArticleEndBanner = ({ article }: { article: Pick<Article, "offer" | "offerLine"> }) => (
+  <OfferBanner offer={article.offer} line={offerLineFor(article)} />
+);

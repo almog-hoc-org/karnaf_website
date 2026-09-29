@@ -1,6 +1,7 @@
 import { Head } from "vite-react-ssg";
 import { COURSE_PRICE } from "@/lib/constants";
 import { PARTS_LABEL, CHAPTERS_LABEL } from "@/data/courseStats";
+import { COURSE_ACCESS_LABEL } from "@/lib/constants";
 
 const SITE_URL = "https://www.karnafnadlan.com";
 const SITE_NAME = "קרנף נדל\"ן";
@@ -12,10 +13,23 @@ interface SEOHeadProps {
   path: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   keywords?: string;
+  /** Absolute URL or a site path ("/blog/covers/x.jpg") — paths are made absolute. */
   image?: string;
+  /** Alt text for the share image (og:image:alt / twitter:image:alt). */
+  imageAlt?: string;
   type?: "website" | "article";
+  /** Open Graph article:* tags — only rendered with type="article". */
+  article?: {
+    publishedTime: string;
+    modifiedTime?: string;
+    section?: string;
+  };
   noindex?: boolean;
 }
+
+/** Social crawlers need absolute image URLs; site paths get the origin prepended. */
+const absoluteUrl = (url: string) =>
+  /^https?:\/\//.test(url) ? url : `${SITE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
 
 const SEOHead = ({
   title,
@@ -24,12 +38,15 @@ const SEOHead = ({
   jsonLd,
   keywords,
   image,
+  imageAlt,
   type = "website",
+  article,
   noindex = false,
 }: SEOHeadProps) => {
   const canonicalUrl = `${SITE_URL}${path}`;
-  const ogImage = image || DEFAULT_IMAGE;
+  const ogImage = image ? absoluteUrl(image) : DEFAULT_IMAGE;
   const jsonLdArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+  const articleMeta = type === "article" ? article : undefined;
 
   return (
     <Head>
@@ -47,12 +64,22 @@ const SEOHead = ({
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:locale" content="he_IL" />
       <meta property="og:image" content={ogImage} />
+      {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+      {articleMeta && <meta property="article:published_time" content={articleMeta.publishedTime} />}
+      {articleMeta && (
+        <meta
+          property="article:modified_time"
+          content={articleMeta.modifiedTime || articleMeta.publishedTime}
+        />
+      )}
+      {articleMeta?.section && <meta property="article:section" content={articleMeta.section} />}
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
+      {imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
 
       {/* JSON-LD Structured Data */}
       {jsonLdArray.map((ld, i) => (
@@ -156,7 +183,7 @@ export const courseSchema = {
   "@id": `${SITE_URL}/course#course`,
   name: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל",
   description:
-    `הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. ${PARTS_LABEL} ו-${CHAPTERS_LABEL} שמכסים את כל הדרך בשיעורים קצרים, וגישה ל-12 חודשים.`,
+    `הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. ${PARTS_LABEL} ו-${CHAPTERS_LABEL} שמכסים את כל הדרך בשיעורים קצרים, וגישה ל-${COURSE_ACCESS_LABEL}.`,
   url: `${SITE_URL}/course`,
   provider: {
     "@type": "EducationalOrganization",
@@ -183,7 +210,7 @@ export const courseSchema = {
   offers: {
     "@type": "Offer",
     "@id": `${SITE_URL}/course#offer`,
-    name: "המדריך המעשי לרכישת דירה — גישה מלאה ל-12 חודשים",
+    name: `המדריך המעשי לרכישת דירה — גישה מלאה ל-${COURSE_ACCESS_LABEL}`,
     category: "Online Course",
     price: String(COURSE_PRICE),
     priceCurrency: "ILS",
@@ -277,6 +304,8 @@ export function articleSchema({
   datePublished,
   dateModified,
   author,
+  type = "Article",
+  section,
 }: {
   title: string;
   description: string;
@@ -285,17 +314,22 @@ export function articleSchema({
   datePublished: string;
   dateModified?: string;
   author?: { name: string; url?: string };
+  /** "BlogPosting" for blog articles; defaults to "Article". */
+  type?: "Article" | "BlogPosting";
+  /** Rendered as articleSection (e.g. the blog category label). */
+  section?: string;
 }) {
   const fullUrl = url.startsWith("http") ? url : `${SITE_URL}${url}`;
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": type,
     headline: title,
     description,
     image: image.startsWith("http") ? image : `${SITE_URL}${image}`,
     url: fullUrl,
     datePublished,
     dateModified: dateModified || datePublished,
+    ...(section ? { articleSection: section } : {}),
     inLanguage: "he-IL",
     isPartOf: { "@id": `${SITE_URL}/#website` },
     publisher: { "@id": `${SITE_URL}/#organization` },
@@ -366,7 +400,7 @@ export const serviceSchema = {
           "@type": "Service",
           name: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי (מסלול עצמאי)",
           description:
-            `${PARTS_LABEL} ו-${CHAPTERS_LABEL}, גישה 12 חודשים.`,
+            `${PARTS_LABEL} ו-${CHAPTERS_LABEL}, גישה ${COURSE_ACCESS_LABEL}.`,
         },
       },
       {

@@ -281,26 +281,79 @@
     animation: scroll-cue-dot 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 
-  /* Word-mask reveal — each word's span sits in an overflow-hidden parent */
+  /* Word-mask reveal (SplitReveal) — each word rises inside its own
+     overflow-hidden slot. The slot stays clipped for the whole move (opening
+     it early would show the word sliding up below the line); the padding /
+     negative margin pair gives Hebrew ascenders (ל) and final-letter
+     descenders (ן ף ץ ק) room at tight display line-heights without
+     changing the line box. vertical-align: top because an overflow-hidden
+     inline-block's baseline is its bottom margin edge. */
   .word-mask {
     overflow: hidden;
     display: inline-block;
-    vertical-align: baseline;
+    vertical-align: top;
+    padding-block: 0.14em;
+    margin-block: -0.14em;
   }
   .word-mask > .word {
     display: inline-block;
-    transform: translate3d(0, 110%, 0);
-    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .word-mask.is-revealed {
-    overflow: visible;
+    transform: translate3d(0, 115%, 0);
+    transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--w-delay, 0s);
   }
   .word-mask.is-revealed > .word {
     transform: translate3d(0, 0, 0);
   }
+  /* Load-triggered variant: plain keyframes that run from the first paint
+     of the pre-rendered HTML — no hydration gate in front of the H1. */
+  .word-mask--load > .word {
+    transform: none;
+    transition: none;
+    animation: word-rise 0.95s cubic-bezier(0.16, 1, 0.3, 1) var(--w-delay, 0s) both;
+  }
+  @keyframes word-rise {
+    from { transform: translate3d(0, 115%, 0); }
+    to   { transform: translate3d(0, 0, 0); }
+  }
   @media (prefers-reduced-motion: reduce) {
-    .word-mask { overflow: visible; }
-    .word-mask > .word { transform: none !important; transition: none !important; }
+    .word-mask > .word { transform: none !important; transition: none !important; animation: none !important; }
+  }
+
+  /* CSS-only entrance for above-the-fold hero copy (same reason as
+     .word-mask--load: visible without waiting for JS). Delay via --d. */
+  .rise-in {
+    animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) both;
+  }
+  @keyframes rise-in {
+    from { opacity: 0; transform: translate3d(0, 18px, 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rise-in { animation: none !important; }
+  }
+
+  /* Hero backdrop: a faint architectural grid that fades out from the
+     center — a drafting-table surface under the headline. */
+  .hero-grid {
+    background-image:
+      linear-gradient(to right, hsl(36 33% 95% / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(36 33% 95% / 0.06) 1px, transparent 1px);
+    background-size: 72px 72px;
+    background-position: center top;
+    -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, black 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, black 20%, transparent 75%);
+  }
+
+  /* Live-status dot (hero chip) */
+  @keyframes live-ping {
+    0%   { transform: scale(1); opacity: 0.7; }
+    80%, 100% { transform: scale(2.4); opacity: 0; }
+  }
+  .live-ping {
+    animation: live-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live-ping { animation: none !important; }
   }
 
   .text-heading {

@@ -6,6 +6,7 @@ import FooterBar from "@/components/FooterBar";
 import WhatsAppFAB from "@/components/WhatsAppFAB";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import { StickyCTA } from "@/components/v2/StickyCTA";
+import { ScrollProgress } from "@/components/v2/scroll";
 import WebinarPopup from "@/components/WebinarPopup";
 import CoursePopup from "@/components/CoursePopup";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
@@ -26,6 +27,7 @@ const SharedLayout = () => {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-accent focus:text-accent-foreground focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold">
         דלג לתוכן הראשי
       </a>
+      <ScrollProgress />
       <Navigation />
       <AnimatePresence mode="wait">
         <motion.main
@@ -55,12 +57,14 @@ const SharedLayout = () => {
       <AccessibilityWidget />
       {/* Desktop-only — on mobile the WhatsApp FAB is the single floating CTA.
           The course page carries its own price bar, so skip it there — and
-          never cross-sell the ₪950 course inside the 1:1 accompaniment funnel. */}
+          never cross-sell the ₪950 course inside a lead funnel (1:1
+          accompaniment, mortgage) or on a 1:1-offer article
+          (useSuppressStickyCta). */}
       <StickyCTA
         label="המדריך המעשי לרכישת דירה · הקורס הדיגיטלי המקיף בישראל"
         ctaLabel="לפרטים ולרכישה"
         ctaHref="/course#pricing"
-        hideOn={["/contact", "/course", "/premium"]}
+        hideOn={["/contact", "/course", "/premium", "/mortgage"]}
       />
       {/* Both dialogs share one slot (see lib/popupCoordinator): the webinar
           goes first, the free-lesson offer only to visitors who stick around. */}
