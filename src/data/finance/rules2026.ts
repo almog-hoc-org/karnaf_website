@@ -120,6 +120,132 @@ export const PURCHASE_TAX_OLEH: FinanceRule<{ brackets: TaxBracket[]; maxPrice: 
   source: OLEH_REGULATION,
 };
 
+/* ── Mortgage limits (Bank of Israel directive 329) ───────────────────── */
+
+const BOI_DIRECTIVE_329: ArticleSource = {
+  title: "ניהול בנקאי תקין 329 — מגבלות למתן הלוואות לדיור (גרסה 13, חוזר 2852)",
+  publisher: "בנק ישראל — הפיקוח על הבנקים",
+  url: "https://boi.org.il/media/ez4npagt/329.pdf",
+  date: "2026-06-30",
+};
+
+/** Maximum loan-to-value by buyer type (section 2). An eligible oleh buys a single home. */
+export const MAX_LTV: FinanceRule<{ single: number; replacement: number; additional: number }> = {
+  value: { single: 0.75, replacement: 0.7, additional: 0.5 },
+  asOf: "2026-06-30",
+  source: BOI_DIRECTIVE_329,
+};
+
+/**
+ * Repayment-to-income (sections 5–6): a bank may not approve a payment above
+ * 50% of disposable income; above 40% the loan carries a 100% risk weight
+ * (more capital for the bank), so many banks stop before it. Max term 30 years.
+ */
+export const PAYMENT_TO_INCOME: FinanceRule<{ max: number; extraCapitalAbove: number; maxYears: number }> = {
+  value: { max: 0.5, extraCapitalAbove: 0.4, maxYears: 30 },
+  asOf: "2026-06-30",
+  source: BOI_DIRECTIVE_329,
+};
+
+/* ── One-off costs of a purchase ──────────────────────────────────────── */
+
+export const VAT_RATE: FinanceRule = {
+  value: 0.18,
+  asOf: "2026-10-03",
+  source: {
+    title: "הוראת פרשנות: העלאת שיעור המע״מ ל-18% מ-1.1.2025",
+    publisher: "רשות המסים",
+    url: "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/represent-info-051224-2/he/vat_represent-info-051224-2.pdf",
+    date: "2024-12-05",
+  },
+};
+
+/**
+ * What a developer may charge a buyer toward its lawyer (תקנות המכר
+ * (דירות) (הגבלת גובה ההוצאות המשפטיות), 2014): the lower of the indexed
+ * cap and 0.5% of the price, before VAT. Not capped above the price
+ * ceiling. The cap is re-indexed every 1 January, hence validTo.
+ */
+export const DEVELOPER_LEGAL_FEE: FinanceRule<{ cap: number; rate: number; capAppliesUpTo: number }> = {
+  value: { cap: 5_915, rate: 0.005, capAppliesUpTo: 4_642_750 },
+  asOf: "2026-01-21",
+  validTo: "2026-12-31",
+  source: {
+    title: "הודעת המכר (דירות) (הגבלת גובה ההוצאות המשפטיות) (עדכון סכום), ק״ת 12242",
+    publisher: "קובץ התקנות",
+    url: "https://olaw.org.il/takanot/takanot-12242.pdf",
+    date: "2026-01-21",
+  },
+};
+
+/** Land registry fees from 1.1.2026, re-indexed every 1 January. */
+export const LAND_REGISTRY_FEES: FinanceRule<{ sale: number; caveat: number; mortgage: number; caveatRemoval: number }> = {
+  value: { sale: 44, caveat: 188, mortgage: 188, caveatRemoval: 127 },
+  asOf: "2026-01-05",
+  validTo: "2026-12-31",
+  source: {
+    title: "הודעת המקרקעין (אגרות) (עדכון סכומים), ק״ת 12193",
+    publisher: "קובץ התקנות",
+    url: "https://olaw.org.il/takanot/takanot-12193.pdf",
+    date: "2026-01-05",
+  },
+};
+
+/** Mortgage file-opening fee cap — חוק הבנקאות (שירות ללקוח), section 9ז(א1). */
+export const MORTGAGE_FILE_FEE: FinanceRule = {
+  value: 360,
+  asOf: "2026-10-01",
+  source: {
+    title: "חוק הבנקאות (שירות ללקוח) (תיקון מס׳ 34): עמלה על טיפול בבקשה להלוואה לדיור",
+    publisher: "ספר החוקים (הכנסת)",
+    url: "https://fs.knesset.gov.il/24/law/24_lsr_628369.pdf",
+    date: "2022-06-22",
+  },
+};
+
+const COSTS_2026_BIZPORTAL: ArticleSource = {
+  title: "העלויות הנלוות שמפילות תקציבים: כמה באמת עולה לקנות דירה",
+  publisher: "ביזפורטל",
+  url: "https://www.bizportal.co.il/realestates/news/article/20038031",
+  date: "2026-08-06",
+};
+
+/**
+ * Market ranges — practice, not law, so they are shown as ranges and
+ * re-checked yearly (validTo). Rates are before VAT.
+ */
+export const MARKET_FEES: FinanceRule<{
+  buyerLawyerRate: [number, number];
+  agentRate: [number, number];
+  bankAppraisal: [number, number];
+  privateAppraisal: [number, number];
+  mortgageAdvisor: [number, number];
+}> = {
+  value: {
+    buyerLawyerRate: [0.005, 0.01],
+    agentRate: [0.01, 0.02],
+    bankAppraisal: [350, 950],
+    privateAppraisal: [1_500, 3_500],
+    mortgageAdvisor: [5_000, 10_000],
+  },
+  asOf: "2026-08-06",
+  validTo: "2027-08-06",
+  source: COSTS_2026_BIZPORTAL,
+};
+
+export const MORTGAGE_ADVISOR_SOURCE: ArticleSource = {
+  title: "יועצי משכנתאות: כמה זה עולה ומה מקבלים",
+  publisher: "ביזפורטל",
+  url: "https://www.bizportal.co.il/realestates/news/article/20038357",
+  date: "2026-08-09",
+};
+
+export const REAL_ESTATE_AGENTS_LAW: ArticleSource = {
+  title: "חוק המתווכים במקרקעין, התשנ״ו–1996 (סעיפים 9 ו-14)",
+  publisher: "ויקיטקסט (נוסח החוק)",
+  url: "https://he.wikisource.org/wiki/%D7%97%D7%95%D7%A7_%D7%94%D7%9E%D7%AA%D7%95%D7%95%D7%9B%D7%99%D7%9D_%D7%91%D7%9E%D7%A7%D7%A8%D7%A7%D7%A2%D7%99%D7%9F",
+};
+
 /** All rules, for the staleness test. */
 export const FINANCE_RULES: Record<string, FinanceRule<unknown>> = {
   BOI_RATE,
@@ -127,4 +253,11 @@ export const FINANCE_RULES: Record<string, FinanceRule<unknown>> = {
   PURCHASE_TAX_SINGLE,
   PURCHASE_TAX_ADDITIONAL,
   PURCHASE_TAX_OLEH,
+  MAX_LTV,
+  PAYMENT_TO_INCOME,
+  VAT_RATE,
+  DEVELOPER_LEGAL_FEE,
+  LAND_REGISTRY_FEES,
+  MORTGAGE_FILE_FEE,
+  MARKET_FEES,
 };

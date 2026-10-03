@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatILS, formatPercent } from "./format";
+import { formatDateDots, formatILS, formatMillions, formatPercent } from "./format";
 
 describe("formatILS", () => {
   it("groups thousands and rounds to whole shekels", () => {
@@ -14,5 +14,18 @@ describe("formatPercent", () => {
     expect(formatPercent(4.75)).toBe("4.75%");
     expect(formatPercent(25)).toBe("25%");
     expect(formatPercent(3.5)).toBe("3.5%");
+  });
+});
+
+describe("formatMillions", () => {
+  it("one decimal at most", () => {
+    expect(formatMillions(2_600_000)).toBe("₪2.6M");
+    expect(formatMillions(2_000_000)).toBe("₪2M");
+  });
+});
+
+describe("formatDateDots", () => {
+  it("day.month.year", () => {
+    expect(formatDateDots("2026-12-31")).toBe("31.12.2026");
   });
 });

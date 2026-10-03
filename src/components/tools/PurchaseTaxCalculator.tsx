@@ -1,23 +1,17 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChipGroup } from "@/components/tools/ChipGroup";
 import { MoneyInput } from "@/components/tools/MoneyInput";
+import { QuickAmounts } from "@/components/tools/QuickAmounts";
+import { Range } from "@/components/tools/Range";
+import { ResultPanel } from "@/components/tools/ResultPanel";
+import { BUYER_STATUSES, STATUS_LABEL, parseStatus } from "@/components/tools/buyerStatus";
+import { useToolUse } from "@/hooks/use-tool-use";
 import { purchaseTax, type BuyerStatus } from "@/lib/calc/purchaseTax";
-import { formatILS, formatPercent } from "@/lib/format";
-import { gaToolUse } from "@/lib/analytics";
+import { formatDateDots, formatILS, formatPercent } from "@/lib/format";
 import { PURCHASE_TAX_ADDITIONAL, PURCHASE_TAX_OLEH } from "@/data/finance/rules2026";
 
-const STATUSES: readonly BuyerStatus[] = ["single", "replacement", "additional", "oleh"];
-const STATUS_LABEL: Record<BuyerStatus, string> = {
-  single: "דירה יחידה",
-  replacement: "משפרי דיור",
-  additional: "דירה נוספת",
-  oleh: "עולה חדש",
-};
 const QUICK_PRICES = [1_500_000, 2_000_000, 2_600_000, 3_500_000] as const;
 const DEFAULT_PRICE = 2_600_000;
-
-const dmy = (iso: string) => iso.split("-").reverse().join(".");
-const shortILS = (n: number) => `₪${(n / 1_000_000).toLocaleString("en-US", { maximumFractionDigits: 1 })}M`;
 
 /** What the number means for this buyer, and what it depends on. */
 function StatusNote({ status, price, overCap }: { status: BuyerStatus; price: number; overCap: boolean }) {
@@ -34,7 +28,7 @@ function StatusNote({ status, price, overCap }: { status: BuyerStatus; price: nu
   if (status === "additional") {
     return (
       <>
-        8% הם הוראת שעה שבתוקף עד {dmy(PURCHASE_TAX_ADDITIONAL.validTo!)}. ההחלטה על 2027 תתקבל אצל
+        8% הם הוראת שעה שבתוקף עד {formatDateDots(PURCHASE_TAX_ADDITIONAL.validTo!)}. ההחלטה על 2027 תתקבל אצל
         הממשלה הבאה — תכננו את העסקה כך שתחזיק גם ב-8%.
       </>
     );
@@ -65,31 +59,15 @@ function StatusNote({ status, price, overCap }: { status: BuyerStatus; price: nu
 const PurchaseTaxCalculator = () => {
   const [price, setPrice] = useState(DEFAULT_PRICE);
   const [status, setStatus] = useState<BuyerStatus>("single");
-  const used = useRef(false);
+  const touch = useToolUse("purchase-tax", { price, status });
 
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
     const p = Number(q.get("price"));
-    const s = q.get("status") as BuyerStatus | null;
+    const s = parseStatus(q.get("status"));
     if (p > 0) setPrice(Math.min(p, 100_000_000));
-    if (s && STATUSES.includes(s)) setStatus(s);
+    if (s) setStatus(s);
   }, []);
-
-  const touch = () => {
-    if (!used.current) {
-      used.current = true;
-      gaToolUse("purchase-tax");
-    }
-  };
-
-  // Keep the URL shareable without adding history entries.
-  useEffect(() => {
-    if (!used.current) return;
-    const url = new URL(window.location.href);
-    url.searchParams.set("price", String(price));
-    url.searchParams.set("status", status);
-    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
-  }, [price, status]);
 
   const r = useMemo(() => purchaseTax(price, status), [price, status]);
 
@@ -113,28 +91,20 @@ const PurchaseTaxCalculator = () => {
             }}
             max={100_000_000}
           />
-          <div className="mt-2.5 flex flex-wrap gap-2" aria-label="מחירים לדוגמה">
-            {QUICK_PRICES.map((p) => (
-              <button
-                key={p}
-                type="button"
-                onClick={() => {
-                  touch();
-                  setPrice(p);
-                }}
-                className={`min-h-[36px] rounded-full border px-3 text-xs font-bold tabular-nums transition-colors ${
-                  p === price ? "border-primary text-primary" : "border-border text-muted-foreground hover:border-primary/40"
-                }`}
-              >
-                <span dir="ltr">{shortILS(p)}</span>
-              </button>
-            ))}
-          </div>
+          <QuickAmounts
+            label="מחירים לדוגמה"
+            amounts={QUICK_PRICES}
+            value={price}
+            onPick={(p) => {
+              touch();
+              setPrice(p);
+            }}
+          />
         </div>
 
         <ChipGroup<BuyerStatus>
           label="המצב שלכם ביום הרכישה"
-          options={STATUSES}
+          options={BUYER_STATUSES}
           value={status}
           onChange={(v) => {
             touch();
@@ -145,24 +115,16 @@ const PurchaseTaxCalculator = () => {
         />
       </div>
 
-      <div className="mt-7 rounded-2xl bg-[hsl(var(--ink))] text-white p-5 md:p-6" aria-live="polite" aria-atomic="true">
-        <p className="text-sm" style={{ color: "hsl(36 33% 95% / 0.72)" }}>
-          מס רכישה · {STATUS_LABEL[status]}
-        </p>
-        <p dir="ltr" className="text-accent font-black text-4xl md:text-5xl tabular-nums leading-tight text-right">
-          {formatILS(r.total)}
-        </p>
-        <p className="text-sm mt-1" style={{ color: "hsl(36 33% 95% / 0.72)" }}>
-          {price > 0 ? (
-            <>
-              כ-<span dir="ltr" className="tabular-nums font-bold text-white">{formatPercent(r.effectiveRate * 100, 1)}</span>{" "}
-              מהמחיר
-            </>
-          ) : (
-            "הקלידו את מחיר הדירה"
-          )}
-        </p>
-      </div>
+      <ResultPanel label={<>מס רכישה · {STATUS_LABEL[status]}</>} value={formatILS(r.total)}>
+        {price > 0 ? (
+          <>
+            כ-<span dir="ltr" className="tabular-nums font-bold text-white">{formatPercent(r.effectiveRate * 100, 1)}</span>{" "}
+            מהמחיר
+          </>
+        ) : (
+          "הקלידו את מחיר הדירה"
+        )}
+      </ResultPanel>
 
       <p className="mt-4 text-sm text-foreground/85 leading-relaxed">
         <StatusNote status={status} price={price} overCap={r.olehOverCap} />
@@ -182,9 +144,7 @@ const PurchaseTaxCalculator = () => {
             {r.lines.map((l) => (
               <tr key={l.from} className="border-t border-border/70">
                 <td className="py-2 text-right">
-                  <span dir="ltr">
-                    {formatILS(l.from)}–{formatILS(l.to)}
-                  </span>
+                  <Range low={l.from} high={l.to} />
                 </td>
                 <td className="py-2 text-center" dir="ltr">
                   {formatPercent(l.rate * 100, 1)}
@@ -199,7 +159,7 @@ const PurchaseTaxCalculator = () => {
       )}
 
       <p className="mt-5 text-xs text-muted-foreground leading-relaxed">
-        לפי מדרגות סעיף 9 לחוק מיסוי מקרקעין, נכון ל-{dmy(PURCHASE_TAX_ADDITIONAL.asOf)}. החישוב לדירת
+        לפי מדרגות סעיף 9 לחוק מיסוי מקרקעין, נכון ל-{formatDateDots(PURCHASE_TAX_ADDITIONAL.asOf)}. החישוב לדירת
         מגורים ואינו ייעוץ מס: הסטטוס שלכם נקבע לפי כל התא המשפחתי ביום הרכישה, ועורך הדין מגיש את
         ההצהרה. לאימות:{" "}
         <a
