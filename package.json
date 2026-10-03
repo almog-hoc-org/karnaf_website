@@ -9,7 +9,7 @@
     "build": "vite-react-ssg build",
     "build:dev": "vite-react-ssg build --mode development",
     "build:csr": "vite build",
-    "postbuild": "node scripts/cleanup-preloads.mjs && node scripts/generate-sitemap.mjs && node scripts/check-utf8.mjs",
+    "postbuild": "node scripts/cleanup-preloads.mjs && node scripts/generate-sitemap.mjs && node scripts/check-utf8.mjs && node scripts/check-bundle.mjs",
     "lint": "eslint .",
     "test": "vitest run",
     "preview": "vite preview"

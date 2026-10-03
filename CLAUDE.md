@@ -9,8 +9,9 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 ## Commands
 
 - `npm run dev` — dev server on port 8080
-- `npm run build` — production build
+- `npm run build` — production build. Postbuild: trims preloads, writes `dist/sitemap.xml` + `dist/llms.txt` from the built HTML (`scripts/generate-sitemap.mjs`; the hand-written top of llms.txt is `scripts/llms-intro.md`), fails on broken characters (`check-utf8`) and on an entry bundle over budget (`check-bundle`)
 - `npm run lint` — ESLint
+- `npm test` — vitest unit tests (`src/**/*.test.ts`: calculators, formatters, finance rules, llms intro facts)
 - `npm run preview` — preview production build
 
 ## Architecture
@@ -31,8 +32,10 @@ Karnaf Nadlan (קרנף נדל"ן) — a Hebrew RTL marketing website for a real
 - `src/lib/analytics.ts` — env-gated GA4/Clarity loader + funnel events (mirrors Meta Pixel)
 - `src/lib/bottomBar.ts` — bottom bars (desktop `StickyCTA`, `/course` `CoursePriceBar`) publish their height to `--sticky-cta-h`; the WhatsApp FAB and accessibility button lift above it, and the FAB steps aside on `/course` while the price bar shows
 - `src/components/WebinarCapture.tsx` — the free lead magnet (webinar) as a first-class form: home, blog index, `/course` after the close, and the quiz's "עוד מוקדם" result. `WEBINAR_URL` lives in `lib/constants.ts`
-- `src/data/blog/` — the blog: one article per file in `posts/` (schema in `types.ts`: cover with photo credit/license, takeaways, sources, faq, `offer`), collected by `src/data/articles.ts`. Every figure in an article needs a dated source in `sources`
+- `src/data/blog/` — the blog: one article per file in `posts/` (schema in `types.ts`: cover with photo credit/license, takeaways, sources, faq, `offer`), collected by `src/data/articles.ts`. Every figure in an article needs a dated source in `sources`. Article data reaches pages only through build-time route loaders (`src/data/blog/ssr.ts`, wired in `App.tsx`): the blog index gets `ArticleSummary` (no body), an article page gets its own article — never import `articles` from a component, or every body lands in the entry bundle again
 - `src/components/blog/ArticleOffer.tsx` — one offer per article from `article.offer` / `offerLine` (course vs. premium), used mid-article and as the end banner; premium articles also switch off the desktop course StickyCTA (`useSuppressStickyCta`)
+- `src/data/finance/rules2026.ts` — every rate/limit a calculator uses (prime, …), each with `asOf`, optional `validTo` and a dated source; a test fails when a rule expires. `src/lib/format.ts` (`formatILS`) and `src/lib/calc/` hold the shared formatting and pure calculation logic
+- `src/components/rich-media/VideoPlayer.tsx` — click-to-play facade (Vimeo via `course/VimeoEmbed`, YouTube nocookie); no player library
 - `src/hooks/` — custom hooks
 
 **Styling:** Tailwind CSS 3 + shadcn/ui design system. Colors defined as HSL CSS variables in `src/index.css` (Navy/Cream/Amber palette). Custom display font sizes (`display-lg/md/sm`), layered shadows (`depth-1` through `depth-4`, `glow-*`). Uses `tailwindcss-animate` for animations.

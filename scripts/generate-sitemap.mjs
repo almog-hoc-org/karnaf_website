@@ -1,103 +1,112 @@
-// Build-time sitemap generator.
-// Reads the blog post files (src/data/blog/posts) for blog dates, emits `dist/sitemap.xml`
-// (and copies `public/sitemap.xml` so dev still has one).
+// Post-build: sitemap.xml and llms.txt, generated from the pre-rendered
+// pages themselves (dist/**/*.html), so neither can drift from the site.
 //
-// Run automatically as a postbuild step.
+// A page is listed only if it is indexable: no `noindex`, and its
+// canonical points at itself (redirect stubs like /program and /services
+// carry a foreign canonical or noindex and drop out on their own).
+// lastmod is written only where it is true — an article's
+// article:modified_time. Static pages get none rather than a fake
+// "today" on every deploy, which teaches Google to ignore lastmod.
+//
+// llms.txt = the curated scripts/llms-intro.md + page and article lists
+// read from the built HTML (title, meta description, dates).
 
-import { readFileSync, readdirSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { resolve, dirname } from "node:path";
+import { readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { resolve, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, "..");
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const DIST = resolve(ROOT, "dist");
 const SITE = "https://www.karnafnadlan.com";
 
-const today = new Date().toISOString().slice(0, 10);
-
-/**
- * Read slug + dates out of each post file (src/data/blog/posts/*.ts)
- * without compiling. `updated` (last fact-check) wins over `date` for
- * lastmod when present.
- */
-function readArticles() {
-  const dir = resolve(ROOT, "src/data/blog/posts");
+function htmlFiles(dir) {
   const out = [];
-  for (const file of readdirSync(dir).filter((f) => f.endsWith(".ts"))) {
-    const src = readFileSync(resolve(dir, file), "utf8");
-    const field = (name) => src.match(new RegExp(`"?${name}"?:\\s*"([^"]+)"`))?.[1];
-    const slug = field("slug");
-    const date = field("updated") ?? field("date");
-    if (slug && date) out.push({ slug, date });
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...htmlFiles(p));
+    else if (entry.name.endsWith(".html")) out.push(p);
   }
   return out;
 }
 
-/**
- * Static routes get `lastmod` = today (rebuilt on every deploy).
- * Articles get their `date` field as `lastmod`.
- */
-const STATIC_ROUTES = [
-  { loc: "/",             priority: "1.0", changefreq: "weekly"  },
-  { loc: "/course",       priority: "0.9", changefreq: "weekly"  },
-  { loc: "/premium",      priority: "0.9", changefreq: "weekly"  },
-  { loc: "/mortgage",     priority: "0.9", changefreq: "weekly"  },
-  { loc: "/about",        priority: "0.7", changefreq: "monthly" },
-  { loc: "/testimonials", priority: "0.8", changefreq: "weekly"  },
-  { loc: "/contact",      priority: "0.6", changefreq: "monthly" },
-  { loc: "/blog",         priority: "0.7", changefreq: "weekly"  },
-  { loc: "/privacy",      priority: "0.3", changefreq: "yearly"  },
-];
+const decode = (s) =>
+  s
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 
-function urlEntry(loc, lastmod, priority, changefreq) {
-  return [
-    "  <url>",
-    `    <loc>${SITE}${loc}</loc>`,
-    `    <lastmod>${lastmod}</lastmod>`,
-    `    <changefreq>${changefreq}</changefreq>`,
-    `    <priority>${priority}</priority>`,
-    "  </url>",
-  ].join("\n");
+const attr = (html, re) => {
+  const m = html.match(re);
+  return m ? decode(m[1]) : undefined;
+};
+
+function readPage(file) {
+  const rel = relative(DIST, file).replace(/\\/g, "/").replace(/\.html$/, "");
+  const path = rel === "index" ? "/" : `/${rel}`;
+  const html = readFileSync(file, "utf8");
+  return {
+    path,
+    title: attr(html, /<title[^>]*>([^<]*)<\/title>/),
+    description: attr(html, /<meta[^>]*name="description"[^>]*content="([^"]*)"/),
+    canonical: attr(html, /<link[^>]*rel="canonical"[^>]*href="([^"]*)"/),
+    noindex: /<meta[^>]*name="robots"[^>]*content="[^"]*noindex/.test(html),
+    modified: attr(html, /<meta[^>]*property="article:modified_time"[^>]*content="([^"]*)"/),
+  };
 }
 
-function buildSitemap() {
-  const articles = readArticles();
-  const entries = [];
+const noSlash = (u) => (u ?? "").replace(/\/$/, "");
+const isSelfCanonical = (p) => noSlash(p.canonical) === noSlash(SITE + p.path);
 
-  // Static routes
-  for (const r of STATIC_ROUTES) {
-    entries.push(urlEntry(r.loc, today, r.priority, r.changefreq));
-  }
+const pages = htmlFiles(DIST)
+  .map(readPage)
+  .filter((p) => !p.noindex && isSelfCanonical(p))
+  .sort((a, b) => (a.path === "/" ? -1 : b.path === "/" ? 1 : a.path.localeCompare(b.path)));
 
-  // Article routes — last update (or publish) date as lastmod
-  for (const a of articles) {
-    entries.push(
-      urlEntry(`/blog/${a.slug}`, a.date, "0.6", "monthly")
-    );
-  }
+const articles = pages
+  .filter((p) => p.path.startsWith("/blog/"))
+  .sort((a, b) => (b.modified ?? "").localeCompare(a.modified ?? ""));
+const mainPages = pages.filter((p) => !p.path.startsWith("/blog/"));
 
-  return [
-    `<?xml version="1.0" encoding="UTF-8"?>`,
-    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
-    entries.join("\n"),
-    `</urlset>`,
-    ``,
-  ].join("\n");
-}
+// ── sitemap.xml ─────────────────────────────────────────────────────────
+const xmlEscape = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const sitemap = [
+  `<?xml version="1.0" encoding="UTF-8"?>`,
+  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
+  ...pages.map((p) =>
+    [
+      "  <url>",
+      `    <loc>${xmlEscape(SITE + (p.path === "/" ? "/" : p.path))}</loc>`,
+      ...(p.modified ? [`    <lastmod>${p.modified}</lastmod>`] : []),
+      "  </url>",
+    ].join("\n")
+  ),
+  `</urlset>`,
+  ``,
+].join("\n");
+writeFileSync(resolve(DIST, "sitemap.xml"), sitemap, "utf8");
 
-function writeTo(targetPath, xml) {
-  const dir = dirname(targetPath);
-  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-  writeFileSync(targetPath, xml, "utf8");
-  return targetPath;
-}
+// ── llms.txt ────────────────────────────────────────────────────────────
+const line = (p) => {
+  const title = (p.title ?? p.path).replace(/\s*\|\s*קרנף נדל״ן\s*$/, "");
+  return `- [${title}](${SITE}${p.path === "/" ? "/" : p.path})${p.description ? `: ${p.description}` : ""}`;
+};
+const intro = readFileSync(resolve(ROOT, "scripts/llms-intro.md"), "utf8").trimEnd();
+const llms = [
+  intro,
+  "",
+  "## עמודי האתר",
+  "",
+  ...mainPages.map(line),
+  "",
+  "## מאמרים (ידע ותובנות)",
+  "",
+  ...articles.map((a) => `${line(a)}${a.modified ? ` (עודכן ${a.modified})` : ""}`),
+  "",
+].join("\n");
+writeFileSync(resolve(DIST, "llms.txt"), llms, "utf8");
 
-const xml = buildSitemap();
-const distPath = writeTo(resolve(ROOT, "dist/sitemap.xml"), xml);
-const publicPath = writeTo(resolve(ROOT, "public/sitemap.xml"), xml);
-
-const articleCount = (xml.match(/<loc>/g) || []).length;
 console.log(
-  `[sitemap] generated ${articleCount} URLs · today=${today}\n` +
-    `          → ${distPath}\n` +
-    `          → ${publicPath}`
+  `[sitemap] ${pages.length} indexable pages (${articles.length} articles) → dist/sitemap.xml, dist/llms.txt`
 );
