@@ -1,7 +1,7 @@
 import { Head } from "vite-react-ssg";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Check, PlayCircle } from "lucide-react";
+import { Check, ExternalLink, PlayCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroCity from "@/assets/hero-city.jpg";
 import heroCityAvif from "@/assets/hero-city.avif";
@@ -10,7 +10,7 @@ import { SplitReveal } from "@/components/v2/scroll";
 import { useStillMotion } from "@/hooks/use-still-motion";
 import { courseParts } from "@/data/curriculum";
 import { TOTAL_CHAPTERS, CHAPTERS_LABEL, LESSON_MINUTES } from "@/data/courseStats";
-import { COURSE_PRICE, COURSE_ACCESS_LABEL } from "@/lib/constants";
+import { COURSE_PRICE, COURSE_ACCESS_LABEL, analystLink } from "@/lib/constants";
 import {
   ACTIVE_SINCE,
   TOTAL_CLIENTS_STAT,
@@ -247,6 +247,21 @@ const Hero = () => {
               <strong className="text-white/85 tabular-nums">{YEARS_EXPERIENCE_STAT}</strong> {YEARS_EXPERIENCE_LABEL}
             </span>
           </p>
+
+          {/* The free first step for someone already holding a price: the
+              Analyst's check against real deals. A quiet third line, so the
+              two doors above stay the decision. */}
+          <a
+            href={analystLink("/check", "home-hero")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rise-in mt-5 inline-flex items-center gap-2 text-sm text-white/70 hover:text-white underline-offset-4 hover:underline min-h-[44px]"
+            style={{ ["--d" as string]: "0.8s" }}
+          >
+            כבר יש דירה על הכוונת? בדקו את המחיר מול עסקאות אמת — חינם
+            <ExternalLink size={14} aria-hidden className="text-accent" />
+            <span className="sr-only">(נפתח בחלון חדש)</span>
+          </a>
         </motion.div>
 
         {/* The window — tilts flat on scroll */}
