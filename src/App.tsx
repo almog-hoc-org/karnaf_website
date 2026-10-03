@@ -23,6 +23,8 @@ const AboutPage = lazy(() => import("./pages/AboutPage"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const BlogPage = lazy(() => import("./pages/BlogPage"));
+const ToolsPage = lazy(() => import("./pages/ToolsPage"));
+const PurchaseTaxPage = lazy(() => import("./pages/tools/PurchaseTaxPage"));
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 const BlogArticlePage = lazy(() => import("./pages/BlogArticlePage"));
 const ProgramPage = lazy(() => import("./pages/ProgramPage"));
@@ -106,6 +108,16 @@ export const routes: RouteRecord[] = [
             entry: "src/pages/BlogPage.tsx",
             loader: () =>
               import.meta.env.SSR || import.meta.env.DEV ? import("@/data/blog/ssr").then((m) => m.blogIndexData()) : null,
+          },
+          {
+            path: "tools",
+            element: <ToolsPage />,
+            entry: "src/pages/ToolsPage.tsx",
+          },
+          {
+            path: "tools/purchase-tax",
+            element: <PurchaseTaxPage />,
+            entry: "src/pages/tools/PurchaseTaxPage.tsx",
           },
           {
             path: "privacy",

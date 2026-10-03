@@ -67,6 +67,8 @@ export function pageNameFor(pathname: string): string {
   if (pathname.startsWith("/contact")) return "צור קשר";
   if (pathname.startsWith("/services")) return "השירותים שלנו";
   if (pathname.startsWith("/privacy")) return "מדיניות פרטיות";
+  if (pathname.startsWith("/tools/")) return "מחשבון";
+  if (pathname.startsWith("/tools")) return "מחשבונים וכלים";
   if (pathname.startsWith("/blog/")) return "מאמר בבלוג";
   if (pathname.startsWith("/blog")) return "בלוג — ידע ותובנות";
   return "עמוד באתר";

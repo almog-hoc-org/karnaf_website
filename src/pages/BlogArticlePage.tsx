@@ -20,6 +20,7 @@ import {
   ArticleSources,
   ArticleTakeaways,
 } from "@/components/blog/ArticleExtras";
+import { ToolCallout } from "@/components/tools/ToolCallout";
 import { ArticleTocCollapsible, ArticleTocRail, type TocItem } from "@/components/blog/ArticleToc";
 import { useArticleReading } from "@/components/blog/useArticleReading";
 import {
@@ -229,6 +230,7 @@ const BlogArticlePage = () => {
         >
           <div className="min-w-0">
             {takeaways.length > 0 && <ArticleTakeaways items={takeaways} />}
+            <ToolCallout slug={article.tool} />
             {showToc && (
               <div className={`lg:hidden ${takeaways.length > 0 ? "mt-6" : ""}`}>
                 <ArticleTocCollapsible items={tocItems} />

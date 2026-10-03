@@ -1,4 +1,5 @@
 import { useId, useMemo, useState } from "react";
+import { ChipGroup as Chips } from "@/components/tools/ChipGroup";
 import { spitzerPayment as spitzer } from "@/lib/calc/mortgage";
 import { formatILS as ils } from "@/lib/format";
 import { PRIME_RATE } from "@/data/finance/rules2026";
@@ -11,49 +12,6 @@ const BASE_RATE = PRIME_RATE.value;
 const BASE_RATE_AS_OF = PRIME_RATE.asOf.split("-").reverse().join(".");
 const TERMS = [15, 20, 25, 30] as const;
 const GAPS = [0.25, 0.5, 0.75, 1] as const;
-
-const Chips = ({
-  label,
-  options,
-  value,
-  onChange,
-  format,
-}: {
-  label: string;
-  options: readonly number[];
-  value: number;
-  onChange: (v: number) => void;
-  format: (v: number) => string;
-}) => {
-  const id = useId();
-  return (
-    <div role="group" aria-labelledby={id}>
-      <p id={id} className="text-sm font-semibold text-foreground mb-2.5">
-        {label}
-      </p>
-      <div className="grid grid-cols-4 gap-2">
-        {options.map((o) => {
-          const on = o === value;
-          return (
-            <button
-              key={o}
-              type="button"
-              aria-pressed={on}
-              onClick={() => onChange(o)}
-              className={`min-h-[44px] rounded-full border text-sm font-bold tabular-nums transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-                on
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-background text-foreground border-border hover:border-primary/40"
-              }`}
-            >
-              {format(o)}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
 
 /**
  * "Half a percent sounds small" — one loan, two rates, the difference in
@@ -113,14 +71,14 @@ const RateGapCalculator = () => {
           </div>
         </div>
 
-        <Chips
+        <Chips<number>
           label="תקופה"
           options={TERMS}
           value={years}
           onChange={setYears}
           format={(v) => `${v} שנה`}
         />
-        <Chips
+        <Chips<number>
           label="פער הריבית בין שתי ההצעות"
           options={GAPS}
           value={gap}

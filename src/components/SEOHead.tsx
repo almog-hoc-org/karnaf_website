@@ -373,6 +373,57 @@ export function reviewSchema({
   };
 }
 
+/** A free calculator page: WebApplication (FinanceApplication), free offer. */
+export function toolSchema({ name, description, path }: { name: string; description: string; path: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "@id": `${SITE_URL}${path}#app`,
+    name,
+    description,
+    url: `${SITE_URL}${path}`,
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "Any",
+    inLanguage: "he-IL",
+    isAccessibleForFree: true,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "ILS" },
+    publisher: { "@id": `${SITE_URL}/#organization` },
+  };
+}
+
+/** A hub page listing other pages (e.g. /tools). */
+export function collectionSchema({
+  name,
+  description,
+  path,
+  items,
+}: {
+  name: string;
+  description: string;
+  path: string;
+  items: Array<{ name: string; url: string }>;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${SITE_URL}${path}#collection`,
+    name,
+    description,
+    url: `${SITE_URL}${path}`,
+    inLanguage: "he-IL",
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: items.map((it, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: it.name,
+        url: it.url.startsWith("http") ? it.url : `${SITE_URL}${it.url}`,
+      })),
+    },
+  };
+}
+
 /**
  * The 1:1 investor accompaniment, for /premium only. No price (it is
  * discussed on the intro call) and no course offer: the premium funnel

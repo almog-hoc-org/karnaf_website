@@ -51,6 +51,12 @@ const FooterBar = () => (
             קרנף משכנתא
           </Link>
           <Link
+            to="/tools"
+            className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
+          >
+            מחשבונים
+          </Link>
+          <Link
             to="/contact"
             className="inline-flex items-center min-h-[44px] px-3 hover:text-primary transition-colors rounded-md"
           >
