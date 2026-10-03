@@ -43,6 +43,13 @@ export const socialLinks = [
 /** Registration page for the recurring free webinar (external landing page). */
 export const WEBINAR_URL = "https://webinar.karnafnadlan.com";
 
+/** Karnaf Analyst — the free market-data portal (city prices, price check vs real deals). */
+export const ANALYST_URL = "https://analyst.karnafnadlan.com";
+
+/** A link into the Analyst, tagged so its visits are attributed to this site. */
+export const analystLink = (path: `/${string}`, campaign: string): string =>
+  `${ANALYST_URL}${path}?utm_source=karnafnadlan.com&utm_medium=referral&utm_campaign=${encodeURIComponent(campaign)}`;
+
 export const TIKTOK_URL = "https://www.tiktok.com/@karnaf.nadlan";
 export const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@%D7%A7%D7%A8%D7%A0%D7%A3%D7%A0%D7%93%D7%9C%D7%9F";
 export const PHONE_NUMBER = "055-996-6175";

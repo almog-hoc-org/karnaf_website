@@ -49,6 +49,7 @@ const navItems = [
   { label: "מי אנחנו", to: "/about" },
   { label: "סיפורי הצלחה", to: "/testimonials" },
   { label: "בלוג", to: "/blog" },
+  { label: "מחשבונים", to: "/tools" },
   { label: "צור קשר", to: "/contact" },
 ];
 

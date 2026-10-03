@@ -187,3 +187,11 @@ export function gaLead(source: string): void {
 export function gaContactClick(channel: string, page: string): void {
   gtag("event", "contact_click", { channel, page_path: page });
 }
+
+/** First interaction with a calculator on this page view (fired once). */
+export function gaToolUse(tool: string): void {
+  gtag("event", "tool_use", {
+    tool,
+    page_path: typeof window !== "undefined" ? window.location.pathname : "",
+  });
+}

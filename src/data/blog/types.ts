@@ -86,6 +86,8 @@ export interface Article {
   faq?: ArticleFaq[];
   /** Pinned as the lead story on the blog index. */
   featured?: boolean;
+  /** Slug of the matching calculator in src/data/tools.ts, shown after the takeaways. */
+  tool?: string;
 }
 
 /**
