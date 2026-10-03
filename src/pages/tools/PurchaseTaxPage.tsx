@@ -3,6 +3,7 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 import PageHero from "@/layouts/PageHero";
 import { Reveal } from "@/components/v2/Reveal";
 import PurchaseTaxCalculator from "@/components/tools/PurchaseTaxCalculator";
+import { Range } from "@/components/tools/Range";
 import { ArticleFaq, ArticleSources } from "@/components/blog/ArticleExtras";
 import { OfferBanner } from "@/components/blog/ArticleOffer";
 import SEOHead, { organizationSchema, breadcrumbSchema, faqPageSchema, toolSchema } from "@/components/SEOHead";
@@ -87,9 +88,7 @@ const BracketTable = ({ caption, brackets }: { caption: string; brackets: TaxBra
                     עד <span dir="ltr">{formatILS(b.upTo)}</span>
                   </>
                 ) : (
-                  <span dir="ltr">
-                    {formatILS(from)}–{formatILS(b.upTo)}
-                  </span>
+                  <Range low={from} high={b.upTo} />
                 )}
               </td>
               <td className="py-2.5 text-left font-semibold" dir="ltr">
