@@ -396,6 +396,10 @@
         {
           "key": "Permissions-Policy",
           "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy-Report-Only",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://connect.facebook.net https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms https://player.vimeo.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://www.facebook.com https://i.vimeocdn.com https://i.ytimg.com https://*.google-analytics.com https://*.googletagmanager.com https://*.clarity.ms https://c.bing.com; font-src 'self' data:; connect-src 'self' https://svkzkpgccahwmyflobvn.functions.supabase.co https://hook.eu2.make.com https://vimeo.com https://www.facebook.com https://connect.facebook.net https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.clarity.ms https://c.bing.com; frame-src https://player.vimeo.com https://www.youtube-nocookie.com https://www.facebook.com; media-src 'self' https://*.vimeocdn.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
         }
       ]
     },
