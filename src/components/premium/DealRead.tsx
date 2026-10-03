@@ -5,13 +5,13 @@ import { Kicker } from "@/components/service/Kicker";
 import { Reveal } from "@/components/v2/Reveal";
 import { SplitReveal, useScrubbed } from "@/components/v2/scroll";
 import { useStillMotion } from "@/hooks/use-still-motion";
+import { formatILS as ils } from "@/lib/format";
 
 /* ── The example file ────────────────────────────────────────────────
    An illustrative presale deal, labeled as such on the card and under the
    section — never a client's deal and never a promised result. It shows
    the questions an analyst asks, not numbers we can't stand behind. */
 const LIST_PRICE = 2_000_000;
-const ils = (n: number) => `₪${n.toLocaleString("en-US")}`;
 
 type Verdict = "flag" | "fix" | "ok";
 

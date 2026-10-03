@@ -1,22 +1,16 @@
 import { useId, useMemo, useState } from "react";
+import { spitzerPayment as spitzer } from "@/lib/calc/mortgage";
+import { formatILS as ils } from "@/lib/format";
+import { PRIME_RATE } from "@/data/finance/rules2026";
 
-/* Illustrative reference rate — not an offer, not a forecast. The point of
-   the widget is the GAP between two rates on the same loan, which is what
-   a bank tender and a negotiated mix move. */
-const BASE_RATE = 4.5;
+/* Reference rate: today's prime, from the dated rules file — an anchor for
+   the illustration, not an offer and not a forecast. The point of the
+   widget is the GAP between two rates on the same loan, which is what a
+   bank tender and a negotiated mix move. */
+const BASE_RATE = PRIME_RATE.value;
+const BASE_RATE_AS_OF = PRIME_RATE.asOf.split("-").reverse().join(".");
 const TERMS = [15, 20, 25, 30] as const;
 const GAPS = [0.25, 0.5, 0.75, 1] as const;
-
-/** Monthly payment on a fixed-rate Spitzer (annuity) schedule. */
-const spitzer = (principal: number, annualRate: number, years: number) => {
-  const r = annualRate / 100 / 12;
-  const n = years * 12;
-  return r === 0 ? principal / n : (principal * r) / (1 - Math.pow(1 + r, -n));
-};
-
-/* en-US grouping renders the same on the server and every browser, so the
-   pre-rendered HTML matches hydration. */
-const ils = (n: number) => `₪${Math.round(n).toLocaleString("en-US")}`;
 
 const Chips = ({
   label,
@@ -173,8 +167,9 @@ const RateGapCalculator = () => {
 
       <p className="mt-5 text-xs text-muted-foreground leading-relaxed">
         חישוב שפיצר בריבית קבועה לכל התקופה, בלי הצמדה למדד ובלי עמלות. ריבית
-        הבסיס (<span dir="ltr">{BASE_RATE}%</span>) היא נקודת ייחוס להמחשה בלבד — לא
-        הצעה ולא תחזית. משכנתא אמיתית בנויה מכמה מסלולים, וכל מסלול מתנהג אחרת.
+        הבסיס (<span dir="ltr">{BASE_RATE}%</span>) היא ריבית הפריים נכון ל-{BASE_RATE_AS_OF},
+        כנקודת ייחוס להמחשה בלבד — לא הצעה ולא תחזית. משכנתא אמיתית בנויה מכמה
+        מסלולים, וכל מסלול מתנהג אחרת.
       </p>
     </div>
   );

@@ -167,14 +167,8 @@ export const websiteSchema = {
   publisher: { "@id": `${SITE_URL}/#organization` },
   description:
     "קורס דיגיטלי לרכישת דירה וליווי משקיעים 1:1 לרוכשי דירות בישראל. מבוסס נתונים — לא תחושות.",
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${SITE_URL}/blog?q={search_term_string}`,
-    },
-    "query-input": "required name=search_term_string",
-  },
+  // No SearchAction: the site has no search, and Google retired the
+  // sitelinks search box in 2024.
 };
 
 export const courseSchema = {
@@ -379,41 +373,23 @@ export function reviewSchema({
   };
 }
 
-/** Build a Service schema for the course / coaching offering. */
-export const serviceSchema = {
+/**
+ * The 1:1 investor accompaniment, for /premium only. No price (it is
+ * discussed on the intro call) and no course offer: the premium funnel
+ * never shows the ₪950 course — not even to crawlers. The course's own
+ * offer lives in courseSchema.
+ */
+export const premiumServiceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  serviceType: "Real estate purchase consulting",
+  "@id": `${SITE_URL}/premium#service`,
+  name: "ליווי משקיעים פרימיום",
+  serviceType: "Real estate investor accompaniment",
+  url: `${SITE_URL}/premium`,
   provider: { "@id": `${SITE_URL}/#organization` },
   areaServed: { "@type": "Country", name: "Israel" },
   description:
-    "ליווי אישי לרוכשי דירה: ניתוח עסקה, מיסוי, משא ומתן, ובחינה מקצועית של נכסים.",
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "השירותים שלנו",
-    itemListElement: [
-      {
-        "@type": "Offer",
-        price: String(COURSE_PRICE),
-        priceCurrency: "ILS",
-        itemOffered: {
-          "@type": "Service",
-          name: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי (מסלול עצמאי)",
-          description:
-            `${PARTS_LABEL} ו-${CHAPTERS_LABEL}, גישה ${COURSE_ACCESS_LABEL}.`,
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "ליווי משקיעים פרימיום",
-          description:
-            "ליווי אישי 1:1 עד חתימה על נכס — אסטרטגיה, איתור עסקאות, בדיקת נאותות ומשא ומתן.",
-        },
-      },
-    ],
-  },
+    "ליווי אישי 1:1 עד חתימה על נכס — אסטרטגיה, איתור עסקאות, בדיקת נאותות ומשא ומתן.",
 };
 
 /** Build an aggregate rating schema for use anywhere we showcase reviews. */

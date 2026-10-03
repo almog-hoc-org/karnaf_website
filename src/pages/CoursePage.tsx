@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import SEOHead, {
   courseSchema,
   organizationSchema,
-  serviceSchema,
   breadcrumbSchema,
   faqPageSchema,
 } from "@/components/SEOHead";
@@ -196,7 +195,6 @@ const CoursePage = () => {
         jsonLd={[
           organizationSchema,
           courseSchema,
-          serviceSchema,
           breadcrumbSchema([
             { name: "דף הבית", url: "/" },
             { name: "המדריך המעשי לרכישת דירה", url: "/course" },

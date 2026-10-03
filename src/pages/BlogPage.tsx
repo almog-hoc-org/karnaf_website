@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
-import { articles, CATEGORY_LABELS } from "@/data/articles";
-import type { ArticleCategory } from "@/data/blog/types";
+import { useLoaderData } from "react-router-dom";
+import { CATEGORY_LABELS, type ArticleCategory } from "@/data/blog/types";
+import type { BlogIndexData } from "@/data/blog/ssr";
 import { Reveal } from "@/components/v2/Reveal";
 import { SplitReveal } from "@/components/v2/scroll";
 import WebinarCapture from "@/components/WebinarCapture";
@@ -20,14 +21,17 @@ const SITE_URL = "https://www.karnafnadlan.com";
 type Filter = "all" | ArticleCategory;
 
 const CATEGORY_ORDER = Object.keys(CATEGORY_LABELS) as ArticleCategory[];
-const categories = usedCategories(articles, CATEGORY_ORDER);
-const lead = leadArticle(articles);
-const newestUpdate = articles.reduce((max, a) => (lastUpdated(a) > max ? lastUpdated(a) : max), "");
-
-const isCategory = (v: string | null): v is ArticleCategory =>
-  !!v && (categories as string[]).includes(v);
 
 const BlogPage = () => {
+  // Summaries only (no article bodies) — resolved at build time, see App.tsx.
+  const data = useLoaderData() as BlogIndexData | null;
+  const articles = useMemo(() => data?.articles ?? [], [data]);
+  const categories = useMemo(() => usedCategories(articles, CATEGORY_ORDER), [articles]);
+  const lead = useMemo(() => leadArticle(articles), [articles]);
+  const newestUpdate = articles.reduce((max, a) => (lastUpdated(a) > max ? lastUpdated(a) : max), "");
+  const isCategory = (v: string | null): v is ArticleCategory =>
+    !!v && (categories as string[]).includes(v);
+
   // "all" on the server and on the first client render (no hydration
   // mismatch); a ?topic= link (e.g. from an article's breadcrumb) is
   // applied right after mount.
@@ -36,6 +40,7 @@ const BlogPage = () => {
   useEffect(() => {
     const topic = new URLSearchParams(window.location.search).get("topic");
     if (isCategory(topic)) setFilter(topic);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once, after mount
   }, []);
 
   const choose = (next: Filter) => {
@@ -53,7 +58,7 @@ const BlogPage = () => {
       filter === "all"
         ? articles.filter((a) => a.slug !== lead?.slug)
         : articles.filter((a) => a.category === filter),
-    [filter]
+    [filter, articles, lead]
   );
 
   const countFor = (c: ArticleCategory) => articles.filter((a) => a.category === c).length;

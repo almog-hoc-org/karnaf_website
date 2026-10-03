@@ -87,3 +87,10 @@ export interface Article {
   /** Pinned as the lead story on the blog index. */
   featured?: boolean;
 }
+
+/**
+ * An article without its body: what lists, cards and "related" links need.
+ * The blog index and related-article strips ship this, so an article's
+ * text only reaches the visitor who opens it.
+ */
+export type ArticleSummary = Omit<Article, "content" | "takeaways" | "sources" | "faq">;

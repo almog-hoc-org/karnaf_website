@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import type { Article, ArticleCategory } from "@/data/blog/types";
+import type { ArticleCategory, ArticleSummary } from "@/data/blog/types";
 import { CATEGORY_LABELS } from "@/data/blog/types";
 import { CoverImage } from "./CoverImage";
 import { formatHebrewDate, lastUpdated, readTimeLabel, wasUpdated } from "./articleUtils";
@@ -20,7 +20,7 @@ export const CategoryTag = ({
 );
 
 /** "עודכן 28 בספטמבר 2026 · 9 דקות קריאה" */
-export const ArticleMeta = ({ article, className = "" }: { article: Article; className?: string }) => {
+export const ArticleMeta = ({ article, className = "" }: { article: ArticleSummary; className?: string }) => {
   const iso = lastUpdated(article);
   return (
     <p className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground ${className}`}>
@@ -50,7 +50,7 @@ export const ArticleCard = ({
   headingLevel = "h3",
   compactOnMobile = false,
 }: {
-  article: Article;
+  article: ArticleSummary;
   headingLevel?: "h2" | "h3";
   compactOnMobile?: boolean;
 }) => {
@@ -99,7 +99,7 @@ export const ArticleCard = ({
 };
 
 /** The index's lead story: a large cover beside (desktop) or above (mobile) the headline. */
-export const LeadStory = ({ article }: { article: Article }) => (
+export const LeadStory = ({ article }: { article: ArticleSummary }) => (
   <article className="group relative grid gap-6 lg:grid-cols-12 lg:items-center lg:gap-12">
     <CoverImage
       article={article}

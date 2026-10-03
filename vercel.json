@@ -16,6 +16,361 @@
       "source": "/services",
       "destination": "/course",
       "permanent": true
+    },
+    {
+      "source": "/challenge-page/קורס-משכנתא-עצמאית",
+      "destination": "/mortgage",
+      "permanent": true
+    },
+    {
+      "source": "/challenge-page/%D7%A7%D7%95%D7%A8%D7%A1-%D7%9E%D7%A9%D7%9B%D7%A0%D7%AA%D7%90-%D7%A2%D7%A6%D7%9E%D7%90%D7%99%D7%AA",
+      "destination": "/mortgage",
+      "permanent": true
+    },
+    {
+      "source": "/challenge-page/:path*",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/challenge-page",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/challenges",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/challenge-thanks",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/contact-1",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/contact-9",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/about-5",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/profile/:path*",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/app-landing-page",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/list",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/category/:path*",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/pricing-plans/:path*",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/plan",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/ourplans",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/theplan",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/profit-target-plan",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/services-5",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/services-9",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/שירותים",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%A9%D7%99%D7%A8%D7%95%D7%AA%D7%99%D7%9D",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/dira",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/new-home",
+      "destination": "/course",
+      "permanent": true
+    },
+    {
+      "source": "/mortgage-new",
+      "destination": "/mortgage",
+      "permanent": true
+    },
+    {
+      "source": "/משכנתא-היברידית",
+      "destination": "/mortgage",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%9E%D7%A9%D7%9B%D7%A0%D7%AA%D7%90-%D7%94%D7%99%D7%91%D7%A8%D7%99%D7%93%D7%99%D7%AA",
+      "destination": "/mortgage",
+      "permanent": true
+    },
+    {
+      "source": "/pinuibinui",
+      "destination": "/blog/urban-renewal-how-to-check-2026",
+      "permanent": true
+    },
+    {
+      "source": "/התחדשות-פינוי-בינוי",
+      "destination": "/blog/urban-renewal-how-to-check-2026",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%94%D7%AA%D7%97%D7%93%D7%A9%D7%95%D7%AA-%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%91%D7%99%D7%A0%D7%95%D7%99",
+      "destination": "/blog/urban-renewal-how-to-check-2026",
+      "permanent": true
+    },
+    {
+      "source": "/post/הנדל-ן-הישראלי-ב-2024-נתונים-מספרים-את-הסיפור-האמיתי",
+      "destination": "/blog/israel-housing-market-2026",
+      "permanent": true
+    },
+    {
+      "source": "/post/%D7%94%D7%A0%D7%93%D7%9C-%D7%9F-%D7%94%D7%99%D7%A9%D7%A8%D7%90%D7%9C%D7%99-%D7%91-2024-%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D-%D7%9E%D7%A1%D7%A4%D7%A8%D7%99%D7%9D-%D7%90%D7%AA-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8-%D7%94%D7%90%D7%9E%D7%99%D7%AA%D7%99",
+      "destination": "/blog/israel-housing-market-2026",
+      "permanent": true
+    },
+    {
+      "source": "/post/שוק-הנדל-ן-הולך-לרדת-ניתוח-דו-ח-משרד-האוצר",
+      "destination": "/blog/israel-housing-market-2026",
+      "permanent": true
+    },
+    {
+      "source": "/post/%D7%A9%D7%95%D7%A7-%D7%94%D7%A0%D7%93%D7%9C-%D7%9F-%D7%94%D7%95%D7%9C%D7%9A-%D7%9C%D7%A8%D7%93%D7%AA-%D7%A0%D7%99%D7%AA%D7%95%D7%97-%D7%93%D7%95-%D7%97-%D7%9E%D7%A9%D7%A8%D7%93-%D7%94%D7%90%D7%95%D7%A6%D7%A8",
+      "destination": "/blog/israel-housing-market-2026",
+      "permanent": true
+    },
+    {
+      "source": "/post/המדריך-המלא-להשקעה-חכמה-בנדלן",
+      "destination": "/blog/real-estate-investment-tips",
+      "permanent": true
+    },
+    {
+      "source": "/post/%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A-%D7%94%D7%9E%D7%9C%D7%90-%D7%9C%D7%94%D7%A9%D7%A7%D7%A2%D7%94-%D7%97%D7%9B%D7%9E%D7%94-%D7%91%D7%A0%D7%93%D7%9C%D7%9F",
+      "destination": "/blog/real-estate-investment-tips",
+      "permanent": true
+    },
+    {
+      "source": "/post/:path*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/עולם-התוכן",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%A2%D7%95%D7%9C%D7%9D-%D7%94%D7%AA%D7%95%D7%9B%D7%9F",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/search",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/search-results",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/מדריך-השקעה-להורדה",
+      "destination": "/blog/real-estate-investment-tips",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%9E%D7%93%D7%A8%D7%99%D7%9A-%D7%94%D7%A9%D7%A7%D7%A2%D7%94-%D7%9C%D7%94%D7%95%D7%A8%D7%93%D7%94",
+      "destination": "/blog/real-estate-investment-tips",
+      "permanent": true
+    },
+    {
+      "source": "/תוכנית-עסקית-להורדה-במתנה",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA-%D7%A2%D7%A1%D7%A7%D7%99%D7%AA-%D7%9C%D7%94%D7%95%D7%A8%D7%93%D7%94-%D7%91%D7%9E%D7%AA%D7%A0%D7%94",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-תוכנית-עסקית-קרנף",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA-%D7%A2%D7%A1%D7%A7%D7%99%D7%AA-%D7%A7%D7%A8%D7%A0%D7%A3",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/פריסייל",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%A4%D7%A8%D7%99%D7%A1%D7%99%D7%99%D7%9C",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/פריסייל-בחדרה",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%A4%D7%A8%D7%99%D7%A1%D7%99%D7%99%D7%9C-%D7%91%D7%97%D7%93%D7%A8%D7%94",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/פריסיילאמיתי",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%A4%D7%A8%D7%99%D7%A1%D7%99%D7%99%D7%9C%D7%90%D7%9E%D7%99%D7%AA%D7%99",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/קרנף-פריסייל",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%A7%D7%A8%D7%A0%D7%A3-%D7%A4%D7%A8%D7%99%D7%A1%D7%99%D7%99%D7%9C",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/סקירתפרויקטחבר",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%A1%D7%A7%D7%99%D7%A8%D7%AA%D7%A4%D7%A8%D7%95%D7%99%D7%A7%D7%98%D7%97%D7%91%D7%A8",
+      "destination": "/premium",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-עיר-בדקה",
+      "destination": "https://analyst.karnafnadlan.com/cities",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-%D7%A2%D7%99%D7%A8-%D7%91%D7%93%D7%A7%D7%94",
+      "destination": "https://analyst.karnafnadlan.com/cities",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-עיר-בדקה-:city",
+      "destination": "https://analyst.karnafnadlan.com/cities",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-%D7%A2%D7%99%D7%A8-%D7%91%D7%93%D7%A7%D7%94-:city",
+      "destination": "https://analyst.karnafnadlan.com/cities",
+      "permanent": true
+    },
+    {
+      "source": "/webinar",
+      "destination": "https://webinar.karnafnadlan.com",
+      "permanent": true
+    },
+    {
+      "source": "/וובינר",
+      "destination": "https://webinar.karnafnadlan.com",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%95%D7%95%D7%91%D7%99%D7%A0%D7%A8",
+      "destination": "https://webinar.karnafnadlan.com",
+      "permanent": true
+    },
+    {
+      "source": "/וובינר-3-צעדי-חובה-בדרך-לדירה",
+      "destination": "https://webinar.karnafnadlan.com",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%95%D7%95%D7%91%D7%99%D7%A0%D7%A8-3-%D7%A6%D7%A2%D7%93%D7%99-%D7%97%D7%95%D7%91%D7%94-%D7%91%D7%93%D7%A8%D7%9A-%D7%9C%D7%93%D7%99%D7%A8%D7%94",
+      "destination": "https://webinar.karnafnadlan.com",
+      "permanent": true
+    },
+    {
+      "source": "/event-list",
+      "destination": "https://webinar.karnafnadlan.com",
+      "permanent": true
+    },
+    {
+      "source": "/event-details/:path*",
+      "destination": "https://webinar.karnafnadlan.com",
+      "permanent": true
+    },
+    {
+      "source": "/פודקאסט",
+      "destination": "https://open.spotify.com/show/5aAgSHORYUNfYtxsxY3Dc8",
+      "permanent": false
+    },
+    {
+      "source": "/%D7%A4%D7%95%D7%93%D7%A7%D7%90%D7%A1%D7%98",
+      "destination": "https://open.spotify.com/show/5aAgSHORYUNfYtxsxY3Dc8",
+      "permanent": false
+    },
+    {
+      "source": "/miluimland",
+      "destination": "/course",
+      "permanent": false
     }
   ],
   "headers": [
@@ -41,6 +396,10 @@
         {
           "key": "Permissions-Policy",
           "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy-Report-Only",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://connect.facebook.net https://www.googletagmanager.com https://www.clarity.ms https://*.clarity.ms https://player.vimeo.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://www.facebook.com https://i.vimeocdn.com https://i.ytimg.com https://*.google-analytics.com https://*.googletagmanager.com https://*.clarity.ms https://c.bing.com; font-src 'self' data:; connect-src 'self' https://svkzkpgccahwmyflobvn.functions.supabase.co https://hook.eu2.make.com https://vimeo.com https://www.facebook.com https://connect.facebook.net https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.clarity.ms https://c.bing.com; frame-src https://player.vimeo.com https://www.youtube-nocookie.com https://www.facebook.com; media-src 'self' https://*.vimeocdn.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
         }
       ]
     },

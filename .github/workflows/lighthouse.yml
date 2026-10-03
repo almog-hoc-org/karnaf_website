@@ -15,6 +15,8 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - run: npm run lint
+      - run: npm test
       - run: npm run build
       - name: Run Lighthouse against the built site
         uses: treosh/lighthouse-ci-action@v12

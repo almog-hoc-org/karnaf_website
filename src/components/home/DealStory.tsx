@@ -15,6 +15,7 @@ import { useStillMotion } from "@/hooks/use-still-motion";
 import { courseParts } from "@/data/curriculum";
 import { CHAPTERS_LABEL } from "@/data/courseStats";
 import { COURSE_PRICE } from "@/lib/constants";
+import { formatILS as ils } from "@/lib/format";
 
 /* ── The example deal ───────────────────────────────────────────────
    Illustrative numbers, labeled as such on the card and under the
@@ -38,7 +39,6 @@ const SIGNED = TARGET;
 
 /* en-US grouping: identical on the server and in every browser, so the
    pre-rendered HTML always matches hydration. */
-const ils = (n: number) => `₪${n.toLocaleString("en-US")}`;
 
 const Price = ({ n, className = "" }: { n: number; className?: string }) => (
   <span dir="ltr" className={`tabular-nums ${className}`}>
