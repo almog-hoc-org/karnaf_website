@@ -18,7 +18,7 @@ import { isValidIsraeliPhone, PHONE_ERROR_MESSAGE } from "@/lib/validation";
 import { premiumLink } from "@/lib/whatsapp";
 import { PHONE_NUMBER, WHATSAPP_BUSINESS_NUMBER } from "@/lib/constants";
 import { testimonials, type Testimonial } from "@/data/testimonials";
-import SEOHead, { organizationSchema, serviceSchema, breadcrumbSchema } from "@/components/SEOHead";
+import SEOHead, { organizationSchema, premiumServiceSchema, breadcrumbSchema } from "@/components/SEOHead";
 import heroCity from "@/assets/hero-city.jpg";
 import foundersImg from "@/assets/team/itamar-almog-about.webp";
 import MarketingConsent from "@/components/MarketingConsent";
@@ -407,7 +407,7 @@ const PremiumPage = () => {
         keywords="ליווי משקיעים, ליווי השקעות נדל״ן, אנליסט נדל״ן אישי, ניתוח עסקאות נדל״ן, ליווי רכישת דירה להשקעה, מבצע 20/80, קרנף נדל״ן"
         jsonLd={[
           organizationSchema,
-          serviceSchema,
+          premiumServiceSchema,
           breadcrumbSchema([
             { name: "דף הבית", url: "/" },
             { name: "ליווי משקיעים", url: "/premium" },
