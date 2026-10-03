@@ -1,4 +1,4 @@
-import type { Article, ArticleCategory, ArticleCover } from "@/data/blog/types";
+import type { Article, ArticleCategory, ArticleCover, ArticleSummary } from "@/data/blog/types";
 import { CHAPTERS_LABEL, LESSON_MINUTES, PARTS_LABEL } from "@/data/courseStats";
 import { COURSE_PRICE } from "@/lib/constants";
 
@@ -58,12 +58,16 @@ export function creditLine(cover: ArticleCover): string {
 }
 
 /** The pinned lead story, else the newest article. */
-export function leadArticle(list: Article[]): Article | undefined {
+export function leadArticle<T extends ArticleSummary>(list: T[]): T | undefined {
   return list.find((a) => a.featured) ?? list[0];
 }
 
 /** Same category first (newest first inside it), then the newest of the rest. */
-export function relatedArticles(article: Article, list: Article[], n = 3): Article[] {
+export function relatedArticles<T extends ArticleSummary>(
+  article: Pick<Article, "slug" | "category">,
+  list: T[],
+  n = 3
+): T[] {
   const others = list.filter((a) => a.slug !== article.slug);
   const same = others.filter((a) => a.category === article.category);
   const rest = others.filter((a) => a.category !== article.category);
@@ -71,7 +75,7 @@ export function relatedArticles(article: Article, list: Article[], n = 3): Artic
 }
 
 /** Categories that actually have articles, in CATEGORY_LABELS order. */
-export function usedCategories(list: Article[], order: ArticleCategory[]): ArticleCategory[] {
+export function usedCategories(list: ArticleSummary[], order: ArticleCategory[]): ArticleCategory[] {
   const present = new Set(list.map((a) => a.category));
   return order.filter((c) => present.has(c));
 }

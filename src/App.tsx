@@ -8,7 +8,12 @@ import SharedLayout from "@/layouts/SharedLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import PixelTracker from "@/components/PixelTracker";
 import Index from "./pages/Index";
-import { articles } from "@/data/articles";
+
+/* Blog data is resolved at build time (or in `vite` dev) only. The
+   conditions below are compile-time constants, written inline so the
+   bundler drops the import from the client build — the browser bundle
+   keeps no article text. In the browser vite-react-ssg swaps these
+   loaders for the static-loader-data JSON it wrote at build. */
 
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 const CoursePage = lazy(() => import("./pages/CoursePage"));
@@ -99,6 +104,8 @@ export const routes: RouteRecord[] = [
             path: "blog",
             element: <BlogPage />,
             entry: "src/pages/BlogPage.tsx",
+            loader: () =>
+              import.meta.env.SSR || import.meta.env.DEV ? import("@/data/blog/ssr").then((m) => m.blogIndexData()) : null,
           },
           {
             path: "privacy",
@@ -109,7 +116,11 @@ export const routes: RouteRecord[] = [
             path: "blog/:slug",
             element: <BlogArticlePage />,
             entry: "src/pages/BlogArticlePage.tsx",
-            getStaticPaths: () => articles.map((a) => `blog/${a.slug}`),
+            loader: ({ params }) =>
+              import.meta.env.SSR || import.meta.env.DEV ? import("@/data/blog/ssr").then((m) => m.blogArticleData(params.slug)) : null,
+            getStaticPaths: import.meta.env.SSR
+              ? () => import("@/data/blog/ssr").then((m) => m.articlePaths())
+              : undefined,
           },
           {
             // Post-submit page for every lead form (noindex) — the URL the

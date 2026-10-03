@@ -1,5 +1,5 @@
 import { Fragment, useMemo, type CSSProperties } from "react";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { Link, Navigate, useLoaderData } from "react-router-dom";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
 import SEOHead, {
   articleSchema,
@@ -7,7 +7,8 @@ import SEOHead, {
   faqPageSchema,
   organizationSchema,
 } from "@/components/SEOHead";
-import { articles, CATEGORY_LABELS } from "@/data/articles";
+import { CATEGORY_LABELS } from "@/data/blog/types";
+import type { BlogArticleData } from "@/data/blog/ssr";
 import { Reveal } from "@/components/v2/Reveal";
 import { ArticleEndBanner, ArticleInlineOffer } from "@/components/blog/ArticleOffer";
 import { ArticleCard, CategoryTag } from "@/components/blog/ArticleCard";
@@ -26,7 +27,6 @@ import {
   formatHebrewDate,
   hasRealCover,
   readTimeLabel,
-  relatedArticles,
   splitSections,
   stripInlineMarkdown,
   wasUpdated,
@@ -38,8 +38,10 @@ import { useSuppressStickyCta } from "@/hooks/use-sticky-cta-suppression";
 const OFFER_BEFORE_HEADING = 3;
 
 const BlogArticlePage = () => {
-  const { slug } = useParams();
-  const article = articles.find((a) => a.slug === slug);
+  // This article and its related summaries only — resolved at build time
+  // (App.tsx), so no other article's text reaches this page.
+  const data = useLoaderData() as BlogArticleData | null;
+  const article = data?.article;
 
   const sections = useMemo(() => (article ? splitSections(article.content) : []), [article]);
   const takeaways = article?.takeaways.filter((t) => t.trim()) ?? [];
@@ -67,7 +69,7 @@ const BlogArticlePage = () => {
   const modified = article.updated || article.date;
   const hasCover = hasRealCover(article.cover);
   const credit = hasCover ? creditLine(article.cover) : "";
-  const related = relatedArticles(article, articles, 3);
+  const related = data?.related ?? [];
   const showToc = tocItems.length >= 3;
 
   // Index (in `sections`) of the section the inline offer precedes.
