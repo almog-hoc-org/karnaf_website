@@ -24,6 +24,20 @@ export const TOOLS: ToolEntry[] = [
     external: false,
   },
   {
+    slug: "total-cost",
+    title: "כמה באמת עולה לקנות דירה",
+    description: "מס רכישה, עורך דין, תיווך, שמאי, עמלות משכנתא ואגרות — בפירוט אחד, וכמה הון עצמי צריך בפועל.",
+    href: "/tools/total-cost",
+    external: false,
+  },
+  {
+    slug: "affordability",
+    title: "כמה דירה אתם יכולים להרשות לעצמכם",
+    description: "לפי ההון העצמי, ההכנסה ומגבלות בנק ישראל: המחיר המרבי, המשכנתא, ההחזר — ומה בדיוק מגביל אתכם.",
+    href: "/tools/affordability",
+    external: false,
+  },
+  {
     slug: "price-check",
     title: "בדיקת מחיר מול עסקאות אמת",
     description: "המחיר שמבקשים מכם גבוה או נמוך מהשוק? השוואה לעסקאות שדווחו לרשות המסים, באותו רחוב ובאותה שכונה.",
