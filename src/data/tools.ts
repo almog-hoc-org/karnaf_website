@@ -45,6 +45,13 @@ export const TOOLS: ToolEntry[] = [
     external: false,
   },
   {
+    slug: "rent-vs-buy",
+    title: "לקנות או לשכור",
+    description: "מאיזו עליית מחירים הקנייה משתלמת, ומה יהיה השווי הנקי שלכם בכל תרחיש — עם ריבית, שכר דירה ומס.",
+    href: "/tools/rent-vs-buy",
+    external: false,
+  },
+  {
     slug: "price-check",
     title: "בדיקת מחיר מול עסקאות אמת",
     description: "המחיר שמבקשים מכם גבוה או נמוך מהשוק? השוואה לעסקאות שדווחו לרשות המסים, באותו רחוב ובאותה שכונה.",
