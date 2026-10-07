@@ -28,6 +28,7 @@ const PurchaseTaxPage = lazy(() => import("./pages/tools/PurchaseTaxPage"));
 const TotalCostPage = lazy(() => import("./pages/tools/TotalCostPage"));
 const AffordabilityPage = lazy(() => import("./pages/tools/AffordabilityPage"));
 const DeferredDealPage = lazy(() => import("./pages/tools/DeferredDealPage"));
+const RentVsBuyPage = lazy(() => import("./pages/tools/RentVsBuyPage"));
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 const BlogArticlePage = lazy(() => import("./pages/BlogArticlePage"));
 const ProgramPage = lazy(() => import("./pages/ProgramPage"));
@@ -136,6 +137,11 @@ export const routes: RouteRecord[] = [
             path: "tools/20-80",
             element: <DeferredDealPage />,
             entry: "src/pages/tools/DeferredDealPage.tsx",
+          },
+          {
+            path: "tools/rent-vs-buy",
+            element: <RentVsBuyPage />,
+            entry: "src/pages/tools/RentVsBuyPage.tsx",
           },
           {
             path: "privacy",
