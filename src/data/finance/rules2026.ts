@@ -246,6 +246,43 @@ export const REAL_ESTATE_AGENTS_LAW: ArticleSource = {
   url: "https://he.wikisource.org/wiki/%D7%97%D7%95%D7%A7_%D7%94%D7%9E%D7%AA%D7%95%D7%95%D7%9B%D7%99%D7%9D_%D7%91%D7%9E%D7%A7%D7%A8%D7%A7%D7%A2%D7%99%D7%9F",
 };
 
+/* ── Buying from a developer (חוק המכר) ─────────────────────────────── */
+
+const SALE_LAW_AMENDMENT_9: ArticleSource = {
+  title: "חוק המכר (דירות) (תיקון מס׳ 9), התשפ״ב–2022: הצמדה ופיצוי על איחור במסירה",
+  publisher: "ספר החוקים (הכנסת)",
+  url: "https://fs.knesset.gov.il/24/law/24_lsr_628987.pdf",
+  date: "2022-06-30",
+};
+
+/**
+ * Index linkage a developer may charge (contracts from 7.7.2022): no
+ * linkage by default; by agreement, at most half of each payment, and
+ * never on the first 20% of the price. In a 20/80 deal that caps the
+ * linked part at 40% of the price.
+ */
+export const SALE_LAW_LINKAGE: FinanceRule<{ exemptShare: number; maxLinkedShare: number }> = {
+  value: { exemptShare: 0.2, maxLinkedShare: 0.5 },
+  asOf: "2026-09-28",
+  source: SALE_LAW_AMENDMENT_9,
+};
+
+/**
+ * Residential construction-inputs index, change over the last 12 months, %.
+ * A monthly statistic — validTo forces a refresh within six months.
+ */
+export const CONSTRUCTION_INDEX_12M: FinanceRule = {
+  value: 3.5,
+  asOf: "2026-09-15",
+  validTo: "2027-03-15",
+  source: {
+    title: "מדדי מחירי תשומות: אוגוסט 2026 (הודעה לתקשורת 291/2026)",
+    publisher: "הלשכה המרכזית לסטטיסטיקה",
+    url: "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/291/10_26_291b.pdf",
+    date: "2026-09-15",
+  },
+};
+
 /** All rules, for the staleness test. */
 export const FINANCE_RULES: Record<string, FinanceRule<unknown>> = {
   BOI_RATE,
@@ -260,4 +297,6 @@ export const FINANCE_RULES: Record<string, FinanceRule<unknown>> = {
   LAND_REGISTRY_FEES,
   MORTGAGE_FILE_FEE,
   MARKET_FEES,
+  SALE_LAW_LINKAGE,
+  CONSTRUCTION_INDEX_12M,
 };
