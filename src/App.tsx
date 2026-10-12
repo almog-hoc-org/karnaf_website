@@ -2,8 +2,6 @@ import { lazy } from "react";
 import { Outlet } from "react-router-dom";
 import type { RouteRecord } from "vite-react-ssg";
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import SharedLayout from "@/layouts/SharedLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import PixelTracker from "@/components/PixelTracker";
@@ -43,12 +41,9 @@ const NotFound = lazy(() => import("./pages/NotFound"));
  */
 const RootProviders = () => (
   <ErrorBoundary>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <PixelTracker />
-      <Outlet />
-    </TooltipProvider>
+    <Toaster />
+    <PixelTracker />
+    <Outlet />
   </ErrorBoundary>
 );
 

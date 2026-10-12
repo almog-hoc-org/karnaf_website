@@ -286,12 +286,14 @@ const Hero = () => {
                 : { rotateX, scale, y: windowY, transformOrigin: "50% 0%" }
             }
           >
-            <Link to="/course#program" aria-label="לסילבוס המלא של הקורס" className="block">
-              {/* A picture of the course player — the link's name is its label. */}
+            {/* A picture of the course player with a link laid over it: the
+                link has no visible text of its own, so its label is its name. */}
+            <div className="relative">
               <div aria-hidden>
                 <CourseWindow />
               </div>
-            </Link>
+              <Link to="/course#program" aria-label="לסילבוס המלא של הקורס" className="absolute inset-0 rounded-[inherit]" />
+            </div>
           </motion.div>
 
           {/* Mascot peeks from the window's edge (desktop) */}
