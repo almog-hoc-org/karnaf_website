@@ -83,7 +83,7 @@ const BlogArticlePage = () => {
   return (
     <>
       <SEOHead
-        title={`${article.title} | קרנף נדל״ן`}
+        title={`${article.seoTitle ?? article.title} | קרנף נדל״ן`}
         description={article.excerpt}
         path={url}
         type="article"

@@ -1,5 +1,4 @@
 import type { CSSProperties, ReactNode } from "react";
-import { Reveal } from "@/components/v2/Reveal";
 import { SplitReveal } from "@/components/v2/scroll";
 
 interface PageHeroProps {
@@ -77,16 +76,13 @@ const PageHero = ({
   const ink = !photo && tone === "ink";
   const dark = photo || ink;
 
-  /* Legacy heroes keep the IntersectionObserver Reveal (same delays as
-     before); split heroes use the CSS entrance so nothing above the fold
-     waits for JS. */
-  const LEGACY_DELAYS = [0, 0.12, 0.18, 0.24, 0.3];
-  const block = (i: number, children: ReactNode) =>
-    splitTitle ? (
-      <Rise d={0.12 + i * 0.08}>{children}</Rise>
-    ) : (
-      <Reveal delay={LEGACY_DELAYS[i]}>{children}</Reveal>
-    );
+  /* Every hero block uses the CSS entrance, so nothing above the fold waits
+     for JS (the framer Reveal shipped at opacity:0 until hydration — the
+     page title painted ~3s late on a mid-range phone). */
+  const DELAYS = [0, 0.12, 0.18, 0.24, 0.3];
+  const block = (i: number, children: ReactNode) => (
+    <Rise d={splitTitle ? 0.12 + i * 0.08 : DELAYS[i]}>{children}</Rise>
+  );
 
   const SubtitleTag = typeof subtitle === "string" ? "p" : "div";
 
@@ -128,9 +124,9 @@ const PageHero = ({
       {splitTitle ? (
         <div style={{ color: dark ? "hsl(36 33% 95%)" : "hsl(var(--foreground))" }}>{heading}</div>
       ) : (
-        <Reveal delay={0.06}>
+        <Rise d={0.06}>
           <div style={{ color: dark ? "hsl(36 33% 95%)" : "hsl(var(--foreground))" }}>{heading}</div>
-        </Reveal>
+        </Rise>
       )}
 
       {badge &&

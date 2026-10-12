@@ -333,9 +333,12 @@
   .rise-in {
     animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) both;
   }
+  /* Slide only — no fade from 0. Hero copy is the page's LCP element; an
+     opacity-0 start (with a stagger delay) kept it invisible until the
+     first frame after hydration's long task, ≈3s on a mid-range phone. */
   @keyframes rise-in {
-    from { opacity: 0; transform: translate3d(0, 18px, 0); }
-    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+    from { transform: translate3d(0, 18px, 0); }
+    to   { transform: translate3d(0, 0, 0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .rise-in { animation: none !important; }

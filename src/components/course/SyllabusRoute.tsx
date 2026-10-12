@@ -211,6 +211,8 @@ const SyllabusRoute = () => {
         <div
           ref={viewportRef}
           onScroll={onSwipe}
+          // Swipe mode scrolls natively — keyboard users need to reach it too.
+          {...(live ? {} : { tabIndex: 0, role: "region", "aria-label": "חלקי הקורס — גללו לצדדים" })}
           className={`relative ${
             live
               ? "overflow-hidden"

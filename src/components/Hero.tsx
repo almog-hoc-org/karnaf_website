@@ -287,7 +287,10 @@ const Hero = () => {
             }
           >
             <Link to="/course#program" aria-label="לסילבוס המלא של הקורס" className="block">
-              <CourseWindow />
+              {/* A picture of the course player — the link's name is its label. */}
+              <div aria-hidden>
+                <CourseWindow />
+              </div>
             </Link>
           </motion.div>
 

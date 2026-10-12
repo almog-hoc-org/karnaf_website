@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import SEOHead, {
@@ -241,7 +241,7 @@ const CoursePage = () => {
             className="max-w-4xl mx-auto text-center"
             style={still ? { y: 0, opacity: 1 } : { y: heroTextY, opacity: heroTextOpacity }}
           >
-            <Reveal>
+            <div className="rise-in" style={{ "--d": "0s" } as CSSProperties}>
               <p
                 className="text-eyebrow uppercase tracking-[0.28em] mb-6 flex items-center justify-center gap-3"
                 style={{ color: "hsl(36 33% 95% / 0.7)" }}
@@ -250,9 +250,9 @@ const CoursePage = () => {
                 המדריך המעשי לרכישת דירה · הקורס המקיף של קרנף נדל״ן
                 <span className="block w-10 h-px bg-accent" aria-hidden />
               </p>
-            </Reveal>
+            </div>
 
-            <Reveal delay={0.08}>
+            <div className="rise-in" style={{ "--d": "0.08s" } as CSSProperties}>
               {/* One approved headline — each line nowrap so the split stays
                   exactly two lines; the narrow-viewport size guard keeps the
                   longer first line on one row. */}
@@ -261,9 +261,9 @@ const CoursePage = () => {
                 <br />
                 <span className="text-accent whitespace-nowrap">מגיעים מוכנים</span>
               </h1>
-            </Reveal>
+            </div>
 
-            <Reveal delay={0.16}>
+            <div className="rise-in" style={{ "--d": "0.16s" } as CSSProperties}>
               <p
                 className="text-body-lg lg:text-xl leading-relaxed max-w-2xl mx-auto mb-8"
                 style={{ color: "hsl(36 33% 95% / 0.82)" }}
@@ -272,15 +272,15 @@ const CoursePage = () => {
                 מבצע מימון ולהתמקח עם מספרים. ״המדריך המעשי לרכישת דירה״ מכניס
                 אתכם לחדר עם הידע, השיטה והביטחון של הצד שהגיע מוכן.
               </p>
-            </Reveal>
+            </div>
 
-            <Reveal delay={0.24}>
+            <div className="rise-in" style={{ "--d": "0.24s" } as CSSProperties}>
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm">
                 3 חלקים · 15 פרקים · גישה מיידית
               </div>
-            </Reveal>
+            </div>
 
-            <Reveal delay={0.32}>
+            <div className="rise-in" style={{ "--d": "0.32s" } as CSSProperties}>
               <div>
                 <a
                   href={heroCheckoutHref}
@@ -305,7 +305,7 @@ const CoursePage = () => {
                   {COURSE_PRICE.toLocaleString("he-IL")}&nbsp;₪ {COURSE_INSTALLMENTS_LABEL} · גישה מלאה ל-{COURSE_ACCESS_LABEL}
                 </p>
               </div>
-            </Reveal>
+            </div>
           </motion.div>
         </div>
       </section>

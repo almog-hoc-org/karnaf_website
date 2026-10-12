@@ -31,7 +31,10 @@ const SharedLayout = () => {
       </a>
       <ScrollProgress />
       <Navigation />
-      <AnimatePresence mode="wait">
+      {/* initial={false}: the first page shows as pre-rendered. Animating it in
+          shipped <main> at opacity:0, so nothing painted until the JS ran
+          (LCP render delay ≈ 3s on mobile). Route changes still animate. */}
+      <AnimatePresence mode="wait" initial={false}>
         <motion.main
           id="main-content"
           key={location.pathname}
