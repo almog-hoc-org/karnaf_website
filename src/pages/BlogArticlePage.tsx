@@ -1,5 +1,6 @@
 import { Fragment, useMemo, type CSSProperties } from "react";
-import { Link, Navigate, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import NotFound from "@/pages/NotFound";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
 import SEOHead, {
   articleSchema,
@@ -61,8 +62,10 @@ const BlogArticlePage = () => {
   // site-wide ₪950 course bar.
   useSuppressStickyCta(article?.offer === "premium");
 
+  // Unknown slug: Vercel already answers 404 with dist/404.html — show the
+  // same page here, so the client agrees with the status and the static HTML.
   if (!article) {
-    return <Navigate to="/blog" replace />;
+    return <NotFound />;
   }
 
   const url = `/blog/${article.slug}`;

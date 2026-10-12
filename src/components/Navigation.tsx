@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ChevronDown, GraduationCap, Users, Landmark, CalendarClock } from "lucide-react";
+import { useShellPathname } from "@/hooks/use-shell-pathname";
 import { useWhatsAppLink } from "@/hooks/use-whatsapp-link";
 import { WEBINAR_URL } from "@/lib/constants";
 import karnafLogo from "@/assets/mascot/karnaf-logo.png";
@@ -60,6 +61,8 @@ const Navigation = () => {
   const servicesRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout>>();
   const location = useLocation();
+  // What the chrome renders for — the real path, except while hydrating 404.html.
+  const shellPath = useShellPathname();
   // On /premium the "בואו נדבר" button opens the human line, not the bot.
   const whatsappHref = useWhatsAppLink("general");
 
@@ -116,17 +119,15 @@ const Navigation = () => {
   };
 
   const isActive = (to: string) => {
-    if (to === "/") return location.pathname === "/";
-    return location.pathname.startsWith(to);
+    if (to === "/") return shellPath === "/";
+    return shellPath.startsWith(to);
   };
   const isServiceActive = serviceItems.some((s) => isActive(s.to));
 
   // Routes whose hero starts on a cinematic dark background.
   // When the user has not scrolled yet on these, the nav text is light.
   const darkHeroPrefixes = ["/course", "/premium", "/mortgage", "/preview/v2"];
-  const isDarkHeroPage =
-    location.pathname === "/" ||
-    darkHeroPrefixes.some((p) => location.pathname.startsWith(p));
+  const isDarkHeroPage = shellPath === "/" || darkHeroPrefixes.some((p) => shellPath.startsWith(p));
   const useLightText = isDarkHeroPage && !isScrolled;
 
   const desktopLinkClass = `relative text-sm font-medium transition-colors duration-300 py-1 ${
