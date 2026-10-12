@@ -117,7 +117,7 @@ const PageHero = ({
                 ? "hsl(36 33% 95% / 0.7)"
                 : splitTitle
                   ? "hsl(var(--foreground) / 0.8)" // amber text fails AA at 12px on cream
-                  : "hsl(var(--accent))",
+                  : "hsl(var(--accent-ink))", // bright amber is 2.8:1 on cream
             }}
           >
             <span className="block w-10 h-px" style={{ backgroundColor: "hsl(var(--accent))" }} aria-hidden />

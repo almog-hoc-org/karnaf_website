@@ -69,7 +69,7 @@ const Step = ({ step, dark }: { step: RailStep; dark: boolean }) => {
         {step.outcome && (
           <p
             className={`mt-3 text-sm font-semibold flex items-baseline gap-2 ${
-              dark ? "text-accent" : "text-[hsl(var(--accent-deep))]"
+              dark ? "text-accent" : "text-accent"
             }`}
           >
             <span aria-hidden>←</span>

@@ -14,6 +14,16 @@ export default {
       },
     },
     extend: {
+      // text-accent follows the surface (see --accent-text in index.css);
+      // bg-/border-accent keep the brand fill colour.
+      textColor: {
+        accent: {
+          DEFAULT: "hsl(var(--accent-text))",
+          foreground: "hsl(var(--accent-foreground))",
+          deep: "hsl(var(--accent-deep))",
+          ink: "hsl(var(--accent-ink))",
+        },
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -39,6 +49,7 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          deep: "hsl(var(--accent-deep))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",

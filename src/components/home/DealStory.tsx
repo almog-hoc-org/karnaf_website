@@ -187,7 +187,7 @@ const Marker = ({
       <motion.span
         className={`absolute right-0 translate-x-1/2 whitespace-nowrap text-[10px] md:text-[11px] font-bold ${
           side === "above" ? "bottom-[calc(50%+10px)]" : "top-[calc(50%+10px)]"
-        } ${tone === "accent" ? "text-[hsl(var(--accent-deep))]" : "text-muted-foreground"}`}
+        } ${tone === "accent" ? "text-accent" : "text-muted-foreground"}`}
         style={{ opacity: labelOpacity }}
       >
         {label}
@@ -206,7 +206,7 @@ const PriceTrack = ({ t, stage }: { t: ReturnType<typeof useTrack> | ReturnType<
       style={{ right: `${pct(MARKET)}%`, width: `${pct(ASKING) - pct(MARKET)}%`, scaleX: t.gapScale }}
     />
     <motion.span
-      className="absolute bottom-[calc(50%+10px)] whitespace-nowrap text-[10px] md:text-[11px] font-black text-[hsl(var(--accent-deep))] translate-x-1/2"
+      className="absolute bottom-[calc(50%+10px)] whitespace-nowrap text-[10px] md:text-[11px] font-black text-accent translate-x-1/2"
       style={{ right: `${(pct(MARKET) + pct(ASKING)) / 2}%`, opacity: t.gapLabelO }}
     >
       {stage >= 3 ? (
@@ -236,7 +236,7 @@ const PriceTrack = ({ t, stage }: { t: ReturnType<typeof useTrack> | ReturnType<
       style={{ right: `${pct(SIGNED)}%`, opacity: t.signedO }}
     />
     <motion.span
-      className="absolute top-[calc(50%+14px)] translate-x-1/2 whitespace-nowrap text-[10px] md:text-[11px] font-black text-[hsl(var(--accent-deep))]"
+      className="absolute top-[calc(50%+14px)] translate-x-1/2 whitespace-nowrap text-[10px] md:text-[11px] font-black text-accent"
       style={{ right: `${pct(SIGNED)}%`, opacity: t.signedO }}
     >
       נחתם

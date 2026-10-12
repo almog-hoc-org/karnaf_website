@@ -495,7 +495,7 @@ const PremiumPage = () => {
                   delay={(i % 2) * 0.08}
                   className="h-full border-t border-primary/15 pt-6 pb-10 grid grid-cols-[3rem_minmax(0,1fr)] gap-4"
                 >
-                  <span className="font-mono text-sm font-bold text-[hsl(var(--accent-deep))] tabular-nums pt-1">
+                  <span className="font-mono text-sm font-bold text-accent tabular-nums pt-1">
                     {trap.num}
                   </span>
                   <div>
