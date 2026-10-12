@@ -37,6 +37,9 @@ const SharedLayout = () => {
       <AnimatePresence mode="wait" initial={false}>
         <motion.main
           id="main-content"
+          // Focusable so the skip link actually moves focus here.
+          tabIndex={-1}
+          className="outline-none"
           key={location.pathname}
           // A page that arrives from below leaves back down the same way —
           // enter and exit share one path, with mirrored easing, so the
