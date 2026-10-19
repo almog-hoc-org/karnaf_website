@@ -62,6 +62,18 @@ const AccessibilityWidget = () => {
   // (React #418 on every route).
   const [settings, setSettings] = useState<AccessibilitySettings>(DEFAULT_SETTINGS);
   const [loaded, setLoaded] = useState(false);
+
+  // Escape closes the panel and returns focus to the button that opened it.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setIsOpen(false);
+      document.querySelector<HTMLButtonElement>("[data-a11y-toggle]")?.focus();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [isOpen]);
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -137,6 +149,7 @@ const AccessibilityWidget = () => {
     <>
       {/* Floating button */}
       <motion.button
+        data-a11y-toggle
         onClick={() => setIsOpen(true)}
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -176,6 +189,7 @@ const AccessibilityWidget = () => {
               className="fixed top-0 left-0 bottom-0 z-[90] w-[340px] max-w-[90vw] bg-card shadow-2xl overflow-y-auto"
               dir="rtl"
               role="dialog"
+              aria-modal="true"
               aria-label="תפריט נגישות"
             >
               {/* Header */}

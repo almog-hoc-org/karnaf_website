@@ -2,8 +2,6 @@ import { lazy } from "react";
 import { Outlet } from "react-router-dom";
 import type { RouteRecord } from "vite-react-ssg";
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import SharedLayout from "@/layouts/SharedLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import PixelTracker from "@/components/PixelTracker";
@@ -28,6 +26,7 @@ const PurchaseTaxPage = lazy(() => import("./pages/tools/PurchaseTaxPage"));
 const TotalCostPage = lazy(() => import("./pages/tools/TotalCostPage"));
 const AffordabilityPage = lazy(() => import("./pages/tools/AffordabilityPage"));
 const DeferredDealPage = lazy(() => import("./pages/tools/DeferredDealPage"));
+const RentVsBuyPage = lazy(() => import("./pages/tools/RentVsBuyPage"));
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 const BlogArticlePage = lazy(() => import("./pages/BlogArticlePage"));
 const ProgramPage = lazy(() => import("./pages/ProgramPage"));
@@ -42,12 +41,9 @@ const NotFound = lazy(() => import("./pages/NotFound"));
  */
 const RootProviders = () => (
   <ErrorBoundary>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <PixelTracker />
-      <Outlet />
-    </TooltipProvider>
+    <Toaster />
+    <PixelTracker />
+    <Outlet />
   </ErrorBoundary>
 );
 
@@ -136,6 +132,11 @@ export const routes: RouteRecord[] = [
             path: "tools/20-80",
             element: <DeferredDealPage />,
             entry: "src/pages/tools/DeferredDealPage.tsx",
+          },
+          {
+            path: "tools/rent-vs-buy",
+            element: <RentVsBuyPage />,
+            entry: "src/pages/tools/RentVsBuyPage.tsx",
           },
           {
             path: "privacy",

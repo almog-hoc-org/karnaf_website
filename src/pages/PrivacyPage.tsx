@@ -118,7 +118,7 @@ const PrivacyPage = () => (
               {sections.map((s, i) => (
                 <article key={s.id} id={s.id} className="py-8 md:py-10 scroll-mt-28">
                   <h2 className="flex items-baseline gap-3 text-xl md:text-2xl font-bold text-foreground mb-4 tracking-[-0.015em]">
-                    <span className="font-mono text-sm text-primary/60 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="font-mono text-sm text-primary/75 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                     {s.title}
                   </h2>
                   {s.body.map((p, j) => (

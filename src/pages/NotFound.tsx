@@ -38,7 +38,7 @@ const NotFound = () => {
               height={180}
               className="h-[150px] md:h-[180px] w-auto object-contain mx-auto mb-4 drop-shadow-[0_24px_48px_hsl(217_42%_15%/0.18)]"
             />
-            <p className="font-mono text-display-lg text-[hsl(var(--accent-deep))] leading-none mb-5 tabular-nums" aria-hidden>
+            <p className="font-mono text-display-lg text-accent leading-none mb-5 tabular-nums" aria-hidden>
               404
             </p>
             <h1 className="text-display-md md:text-display-lg text-foreground mb-4">

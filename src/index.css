@@ -26,7 +26,7 @@
     --muted: 214 32% 95%;
     /* 215 16% 44% = 5.2:1 on white, 4.75:1 on cream — WCAG AA for body text
        (the previous 53% lightness sat at 3.4-3.8:1 and failed audits) */
-    --muted-foreground: 215 16% 44%;
+    --muted-foreground: 215 16% 42%;
 
     /* Accent: Rich Amber.
        Foreground is deep navy, not white — white-on-amber sat at 3.1:1
@@ -68,6 +68,15 @@
 
     /* Accent variants */
     --accent-deep: 24 90% 42%;
+    --accent-ink: 24 90% 33%;
+
+    /* Orange as TEXT (text-accent). --accent is a fill colour: as text on
+       cream it reaches only 2.8:1. On light surfaces text-accent is
+       --accent-deep (3.8:1, WCAG AA for large text) and small text
+       --accent-ink (5.4:1, AA); dark surfaces switch both back to the
+       bright accent (see .bg-primary… in @layer base). */
+    --accent-text: var(--accent-deep);
+    --accent-text-sm: var(--accent-ink);
     --accent-soft: 24 80% 52% / 0.12;
     --accent-glow: 24 80% 60%;
 
@@ -324,9 +333,12 @@
   .rise-in {
     animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) both;
   }
+  /* Slide only — no fade from 0. Hero copy is the page's LCP element; an
+     opacity-0 start (with a stagger delay) kept it invisible until the
+     first frame after hydration's long task, ≈3s on a mid-range phone. */
   @keyframes rise-in {
-    from { opacity: 0; transform: translate3d(0, 18px, 0); }
-    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+    from { transform: translate3d(0, 18px, 0); }
+    to   { transform: translate3d(0, 0, 0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .rise-in { animation: none !important; }
@@ -589,3 +601,23 @@
    .exp-<id>-b { display: none; }
    html[data-exp-<id>="b"] .exp-<id>-a { display: none; }
    html[data-exp-<id>="b"] .exp-<id>-b { display: inline; } */
+
+/* Orange text: bright on dark surfaces, deeper on light ones (tokens in :root).
+   A light card nested in a dark section resets to the light values. */
+.bg-background,
+.bg-card,
+.bg-secondary,
+.bg-white {
+  --accent-text: var(--accent-deep);
+  --accent-text-sm: var(--accent-ink);
+}
+.bg-primary,
+.bg-foreground,
+[class*="bg-[hsl(var(--ink))]"],
+.surface-dark {
+  --accent-text: var(--accent);
+  --accent-text-sm: var(--accent);
+}
+.text-accent:is(.text-xs, .text-sm, .text-eyebrow, .text-\[0\.8125rem\]) {
+  color: hsl(var(--accent-text-sm));
+}

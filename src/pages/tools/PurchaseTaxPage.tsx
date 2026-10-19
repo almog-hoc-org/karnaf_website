@@ -107,7 +107,7 @@ const BracketTable = ({ caption, brackets }: { caption: string; brackets: TaxBra
 const PurchaseTaxPage = () => (
   <>
     <SEOHead
-      title={`${TITLE} — דירה יחידה, משפרי דיור, דירה נוספת ועולים | קרנף נדל״ן`}
+      title={`${TITLE} — כל המדרגות, לכל סוג רוכש | קרנף נדל״ן`}
       description={DESCRIPTION}
       path={PATH}
       keywords="מחשבון מס רכישה, מס רכישה 2026, מדרגות מס רכישה, מס רכישה דירה יחידה, מס רכישה דירה נוספת, מס רכישה משפרי דיור, מס רכישה עולה חדש"

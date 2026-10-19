@@ -43,9 +43,9 @@ const PartCard = ({ part }: { part: (typeof courseParts)[number] }) => (
     >
       {pad(part.id)}
     </span>
-    <p className="mt-auto text-eyebrow uppercase tracking-[0.2em] font-bold opacity-80">חלק {part.id}</p>
+    <p className="mt-auto text-eyebrow uppercase tracking-[0.2em] font-bold">חלק {part.id}</p>
     <h3 className="text-2xl lg:text-[1.7rem] font-black leading-tight tracking-[-0.02em] mt-1">{part.title}</h3>
-    <p className="text-sm mt-2 opacity-85 leading-snug">{part.subtitle}</p>
+    <p className="text-sm mt-2 leading-snug">{part.subtitle}</p>
     <p className="text-sm font-bold mt-4">{part.modules.length} פרקים ←</p>
   </div>
 );
@@ -186,7 +186,7 @@ const SyllabusRoute = () => {
               <span className="font-mono tabular-nums text-accent font-bold">
                 פרק {pad(current.num)}
               </span>
-              <span className="text-white/40 font-mono tabular-nums"> / {TOTAL_CHAPTERS}</span>
+              <span className="text-white/60 font-mono tabular-nums"> / {TOTAL_CHAPTERS}</span>
             </p>
             <p className="text-xs text-white/45 lg:hidden">החליקו לצד ←</p>
             <p className="text-xs text-white/45 hidden lg:block">{live ? "גללו — המסלול זז איתכם" : "גללו לצד ←"}</p>
@@ -211,6 +211,8 @@ const SyllabusRoute = () => {
         <div
           ref={viewportRef}
           onScroll={onSwipe}
+          // Swipe mode scrolls natively — keyboard users need to reach it too.
+          {...(live ? {} : { tabIndex: 0, role: "region", "aria-label": "חלקי הקורס — גללו לצדדים" })}
           className={`relative ${
             live
               ? "overflow-hidden"

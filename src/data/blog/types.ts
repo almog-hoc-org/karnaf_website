@@ -64,6 +64,8 @@ export interface ArticleFaq {
 export interface Article {
   slug: string;
   title: string;
+  /** Shorter <title> for search results (≈60 chars with the brand) when the headline runs long. */
+  seoTitle?: string;
   /** 1–2 sentences for cards and meta description (≤ 160 chars ideal). */
   excerpt: string;
   category: ArticleCategory;

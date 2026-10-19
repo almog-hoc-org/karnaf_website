@@ -283,6 +283,68 @@ export const CONSTRUCTION_INDEX_12M: FinanceRule = {
   },
 };
 
+/* ── Market statistics and tax for the rent-vs-buy comparison ───────── */
+
+const CBS_SEPTEMBER_2026: ArticleSource = {
+  title: "אפקט הריבית? מחירי הדירות שוב עולים, האינפלציה מרוסנת",
+  publisher: "N12 / mako (נתוני הלמ״ס)",
+  url: "https://www.mako.co.il/news-money/2026_q3/Article-cc1b459fe95a0a1026.htm",
+  date: "2026-09-15",
+};
+
+/**
+ * Rent change over the last year, % (CBS, published 15.9.2026): tenants
+ * who renewed a lease vs. new tenants. Monthly statistics — validTo forces
+ * a refresh within six months.
+ */
+export const RENT_CHANGE_12M: FinanceRule<{ renewals: number; newTenants: number }> = {
+  value: { renewals: 2.6, newTenants: 4.4 },
+  asOf: "2026-09-15",
+  validTo: "2027-03-15",
+  source: CBS_SEPTEMBER_2026,
+};
+
+/** Consumer-price inflation over the 12 months to August 2026, %. */
+export const INFLATION_12M: FinanceRule = {
+  value: 1.5,
+  asOf: "2026-09-15",
+  validTo: "2027-03-15",
+  source: CBS_SEPTEMBER_2026,
+};
+
+/** Home price index, June–July 2026 against a year earlier, %. */
+export const HOME_PRICES_12M: FinanceRule = {
+  value: -1.2,
+  asOf: "2026-09-15",
+  validTo: "2027-03-15",
+  source: CBS_SEPTEMBER_2026,
+};
+
+/** Gross rental yield on an average apartment, July 2026 — lowest and highest city in the analysis. */
+export const GROSS_RENT_YIELD: FinanceRule<[number, number]> = {
+  value: [0.0231, 0.0321],
+  asOf: "2026-09-08",
+  validTo: "2027-09-08",
+  source: {
+    title: "המשקיעים חוזרים? למה רכישת דירה הפכה להיות אטרקטיבית ביחס להשקעות סולידיות",
+    publisher: "ביזפורטל",
+    url: "https://www.bizportal.co.il/realestates/news/article/20041549",
+    date: "2026-09-08",
+  },
+};
+
+/** Tax on an individual's real capital gain from securities (not a substantial shareholder). */
+export const CAPITAL_GAINS_TAX: FinanceRule = {
+  value: 0.25,
+  asOf: "2026-07-25",
+  source: {
+    title: "מיסוי רווחי הון ודיבידנד למשקיע הפרטי: כמה תשלמו על כל שקל רווח",
+    publisher: "ביזפורטל",
+    url: "https://www.bizportal.co.il/guides/news/article/20036860",
+    date: "2026-07-25",
+  },
+};
+
 /** All rules, for the staleness test. */
 export const FINANCE_RULES: Record<string, FinanceRule<unknown>> = {
   BOI_RATE,
@@ -299,4 +361,9 @@ export const FINANCE_RULES: Record<string, FinanceRule<unknown>> = {
   MARKET_FEES,
   SALE_LAW_LINKAGE,
   CONSTRUCTION_INDEX_12M,
+  RENT_CHANGE_12M,
+  INFLATION_12M,
+  HOME_PRICES_12M,
+  GROSS_RENT_YIELD,
+  CAPITAL_GAINS_TAX,
 };

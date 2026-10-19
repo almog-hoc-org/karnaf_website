@@ -187,7 +187,7 @@ const ContactPage = () => {
               <SplitReveal
                 text="השאירו פרטים — נחזור אליכם."
                 highlight={["נחזור", "אליכם."]}
-                className="text-display-sm md:text-display-md text-foreground mb-3"
+                className="text-display-sm md:text-display-md font-bold text-foreground mb-3"
               />
               <Reveal delay={0.06}>
                 <p className="text-muted-foreground mb-8">{RESPONSE}, בשעות הפעילות.</p>

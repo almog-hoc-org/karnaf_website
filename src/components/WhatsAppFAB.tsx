@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { useShellPathname } from "@/hooks/use-shell-pathname";
 import { useWhatsAppLink } from "@/hooks/use-whatsapp-link";
 import { useBottomBarHeight } from "@/hooks/use-bottom-bar";
 import mascotIcon from "@/assets/mascot/mascot-thumbsup.webp";
@@ -18,7 +18,7 @@ import mascotIcon from "@/assets/mascot/mascot-thumbsup.webp";
  */
 const WhatsAppFAB = () => {
   const href = useWhatsAppLink("general");
-  const { pathname } = useLocation();
+  const pathname = useShellPathname();
   const barHeight = useBottomBarHeight();
   const hidden = pathname.startsWith("/course") && barHeight > 0;
   // The 2s delay is for the first arrival only — stepping back in after the

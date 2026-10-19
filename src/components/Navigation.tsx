@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ChevronDown, GraduationCap, Users, Landmark, CalendarClock } from "lucide-react";
+import { useShellPathname } from "@/hooks/use-shell-pathname";
 import { useWhatsAppLink } from "@/hooks/use-whatsapp-link";
 import { WEBINAR_URL } from "@/lib/constants";
 import karnafLogo from "@/assets/mascot/karnaf-logo.png";
@@ -60,6 +61,8 @@ const Navigation = () => {
   const servicesRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout>>();
   const location = useLocation();
+  // What the chrome renders for — the real path, except while hydrating 404.html.
+  const shellPath = useShellPathname();
   // On /premium the "בואו נדבר" button opens the human line, not the bot.
   const whatsappHref = useWhatsAppLink("general");
 
@@ -86,10 +89,22 @@ const Navigation = () => {
     setServicesOpen(false);
   }, [location.pathname]);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll when mobile menu is open; Escape closes it and hands
+  // focus back to the toggle.
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (!isMenuOpen) return () => { document.body.style.overflow = ""; };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setIsMenuOpen(false);
+      menuButtonRef.current?.focus();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKey);
+    };
   }, [isMenuOpen]);
 
   // Close the services dropdown on outside click / Escape
@@ -116,17 +131,15 @@ const Navigation = () => {
   };
 
   const isActive = (to: string) => {
-    if (to === "/") return location.pathname === "/";
-    return location.pathname.startsWith(to);
+    if (to === "/") return shellPath === "/";
+    return shellPath.startsWith(to);
   };
   const isServiceActive = serviceItems.some((s) => isActive(s.to));
 
   // Routes whose hero starts on a cinematic dark background.
   // When the user has not scrolled yet on these, the nav text is light.
   const darkHeroPrefixes = ["/course", "/premium", "/mortgage", "/preview/v2"];
-  const isDarkHeroPage =
-    location.pathname === "/" ||
-    darkHeroPrefixes.some((p) => location.pathname.startsWith(p));
+  const isDarkHeroPage = shellPath === "/" || darkHeroPrefixes.some((p) => shellPath.startsWith(p));
   const useLightText = isDarkHeroPage && !isScrolled;
 
   const desktopLinkClass = `relative text-sm font-medium transition-colors duration-300 py-1 ${
@@ -287,9 +300,11 @@ const Navigation = () => {
           {/* Hamburger — animated 3 lines */}
           <button
             className={`lg:hidden relative ${isScrolled ? "me-1" : "-m-3"} p-3 flex items-center justify-center transition-colors ${useLightText ? "text-white" : "text-foreground"}`}
+            ref={menuButtonRef}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
             aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
           >
             <span className="relative w-8 h-6 flex flex-col justify-between">
               <span className={`block w-full h-0.5 bg-current transition-all duration-300 origin-right ${isMenuOpen ? "rotate-[-45deg] translate-y-[1px]" : ""}`} />
@@ -308,6 +323,7 @@ const Navigation = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
+            id="mobile-menu"
             className="fixed inset-0 z-40 lg:hidden bg-background/95 backdrop-blur-xl flex flex-col justify-center items-center overflow-y-auto py-24"
           >
             <div className="flex flex-col items-center gap-5">

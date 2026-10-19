@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useShellPathname } from "@/hooks/use-shell-pathname";
 import { chatLink, premiumLink, type ChatIntent } from "@/lib/whatsapp";
 
 /**
@@ -13,6 +13,6 @@ import { chatLink, premiumLink, type ChatIntent } from "@/lib/whatsapp";
  *               on /premium, which has its own.
  */
 export function useWhatsAppLink(intent: ChatIntent): string {
-  const { pathname } = useLocation();
+  const pathname = useShellPathname();
   return pathname.startsWith("/premium") ? premiumLink() : chatLink(intent);
 }
