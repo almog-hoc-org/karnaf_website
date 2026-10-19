@@ -31,6 +31,9 @@ dist-ssr
 
 # Claude Code session lock
 .claude/scheduled_tasks.lock
-.claude/
+# Local Claude state stays out; shared settings and project skills are kept.
+.claude/*
+!.claude/settings.json
+!.claude/skills/
 .vercel
 .lighthouseci/
