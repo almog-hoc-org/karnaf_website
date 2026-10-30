@@ -18,6 +18,7 @@ import Index from "./pages/Index";
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 const CoursePage = lazy(() => import("./pages/CoursePage"));
 const PremiumPage = lazy(() => import("./pages/PremiumPage"));
+const PremiumLandingPage = lazy(() => import("./pages/PremiumLandingPage"));
 const MortgagePage = lazy(() => import("./pages/MortgagePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
@@ -61,6 +62,13 @@ export const routes: RouteRecord[] = [
         path: "program",
         element: <ProgramPage />,
         entry: "src/pages/ProgramPage.tsx",
+      },
+      {
+        // Paid-social landing page for 1:1 accompaniment — standalone (no
+        // nav, popups or cross-sell), noindex, one job: leave name + phone.
+        path: "lp/premium",
+        element: <PremiumLandingPage />,
+        entry: "src/pages/PremiumLandingPage.tsx",
       },
       {
         element: <SharedLayout />,

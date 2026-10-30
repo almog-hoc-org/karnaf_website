@@ -60,6 +60,7 @@ export function pageNameFor(pathname: string): string {
   if (pathname === "/") return "דף הבית";
   if (pathname.startsWith("/course")) return "המדריך המעשי לרכישת דירה — הקורס";
   if (pathname.startsWith("/premium")) return "ליווי משקיעים פרימיום";
+  if (pathname.startsWith("/lp/premium")) return "דף נחיתה — קמפיין ליווי משקיעים";
   if (pathname.startsWith("/mortgage")) return "קרנף משכנתא — ייעוץ משכנתא";
   if (pathname.startsWith("/program")) return "המדריך המעשי לרכישת דירה — עמוד תוכנית";
   if (pathname.startsWith("/about")) return "אודות — סיפורו של קרנף";
@@ -81,7 +82,7 @@ export function trackPageView(pathname: string): void {
 
   // Key service pages also count as "ViewContent" so ad campaigns that
   // send people to them can optimize toward the page-view.
-  if (pathname.startsWith("/premium") || pathname.startsWith("/course")) {
+  if (pathname.startsWith("/premium") || pathname.startsWith("/lp/premium") || pathname.startsWith("/course")) {
     fbq("track", "ViewContent", {
       content_name: name,
       content_category: "עמוד שירות",
@@ -93,6 +94,7 @@ export function trackPageView(pathname: string): void {
 /** Which form was submitted — maps the technical source to a Hebrew label. */
 export const FORM_LABELS: Record<string, { name: string; category: string }> = {
   "premium-investors": { name: "טופס ליווי משקיעים פרימיום", category: "ליווי משקיעים" },
+  "premium-campaign": { name: "קמפיין ליווי משקיעים (דף נחיתה)", category: "ליווי משקיעים" },
   "research-waitlist": { name: "רשימת המתנה — מערכת המחקר", category: "מערכת המחקר" },
   mortgage: { name: "טופס קרנף משכנתא", category: "ייעוץ משכנתא" },
   website: { name: "טופס יצירת קשר באתר", category: "יצירת קשר" },
@@ -110,6 +112,7 @@ export const FORM_LABELS: Record<string, { name: string; category: string }> = {
  */
 const LEAD_VALUES: Record<string, number> = {
   "premium-investors": 5000,
+  "premium-campaign": 5000,
   mortgage: 1500,
   website: 500,
   footer: 500,

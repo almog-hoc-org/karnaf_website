@@ -36,7 +36,11 @@ Only when both channels fail does the visitor see an error.
 
 Product classification (`productFor` in leadSubmission.ts):
 - source `mortgage` → mortgage sheet
-- source `premium-investors` → premium-investors sheet
+- source `premium-investors` (/premium) or `premium-campaign` (/lp/premium,
+  the paid-social landing page) → premium-investors sheet + the shared
+  accompaniment sheet. Campaign leads show "קמפיין ליווי משקיעים (דף נחיתה)"
+  in the shared sheet's "איפה פנה" column, and the ad they came from
+  (`utm_content`) in its notes.
 - everything else (course, webinar, general contact) → course sheet,
   with the actual variant spelled out in the "מוצר" column
 

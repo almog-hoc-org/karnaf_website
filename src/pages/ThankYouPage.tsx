@@ -97,7 +97,7 @@ function variantFrom(search: string): Variant {
   const src = params.get("src") ?? "";
   const service = params.get("service") ?? "";
   if (service === "webinar") return "webinar";
-  if (src === "premium-investors" || service === "premium") return "premium";
+  if (src === "premium-investors" || src === "premium-campaign" || service === "premium") return "premium";
   if (src === "mortgage" || service === "mortgage") return "mortgage";
   return "contact";
 }

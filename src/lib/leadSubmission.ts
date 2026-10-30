@@ -45,7 +45,7 @@ function productFor(payload: WebsiteLeadPayload): { product: string; productLabe
   if (payload.source === "mortgage" || payload.service === "mortgage") {
     return { product: "mortgage", productLabel: "קרנף משכנתא" };
   }
-  if (payload.source === "premium-investors" || payload.service === "premium") {
+  if (payload.source === "premium-investors" || payload.source === "premium-campaign" || payload.service === "premium") {
     return { product: "premium", productLabel: "ליווי משקיעים פרימיום" };
   }
   if (payload.source === "research-waitlist") {
