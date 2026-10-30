@@ -27,6 +27,10 @@ export interface WebsiteLeadPayload {
   message?: string;
   /** Opted in to marketing messages (unchecked by default — lib/consent.ts). */
   marketingConsent?: boolean;
+  /** The exact consent wording the visitor saw, when a page uses its own
+   *  (defaults to MARKETING_CONSENT_TEXT / _VERSION). */
+  consentText?: string;
+  consentVersion?: string;
 }
 
 /** The consent record sent with every lead: yes/no, the exact text, when. */
@@ -34,8 +38,8 @@ function consentRecord(payload: WebsiteLeadPayload) {
   const yes = !!payload.marketingConsent;
   return {
     yes,
-    text: yes ? MARKETING_CONSENT_TEXT : "",
-    version: MARKETING_CONSENT_VERSION,
+    text: yes ? payload.consentText || MARKETING_CONSENT_TEXT : "",
+    version: payload.consentVersion || MARKETING_CONSENT_VERSION,
     at: yes ? new Date().toISOString() : "",
   };
 }
@@ -156,7 +160,7 @@ export async function submitWebsiteLead(payload: WebsiteLeadPayload): Promise<vo
   const ctx = getLeadContext();
   const { product, productLabel } = productFor(payload);
   const consent = consentRecord(payload);
-  const { marketingConsent: _consent, ...lead } = payload;
+  const { marketingConsent: _consent, consentText: _text, consentVersion: _version, ...lead } = payload;
 
   // Mirror to the backup sheet first — even if the CRM call fails, the
   // lead is not lost.
