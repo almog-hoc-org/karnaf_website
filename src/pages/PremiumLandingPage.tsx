@@ -1,5 +1,6 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { Check } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
@@ -7,7 +8,12 @@ import { useToast } from "@/hooks/use-toast";
 import { submitWebsiteLead } from "@/lib/leadSubmission";
 import { getLeadContext } from "@/lib/leadContext";
 import { isValidIsraeliPhone, PHONE_ERROR_MESSAGE } from "@/lib/validation";
-import { premiumLink } from "@/lib/whatsapp";
+import { setBottomBarHeight } from "@/lib/bottomBar";
+import { useStillMotion } from "@/hooks/use-still-motion";
+import BuildingBackdrop from "@/components/premium/BuildingBackdrop";
+import JourneyRail from "@/components/premium/JourneyRail";
+import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
+import mascotThumbs from "@/assets/mascot/mascot-thumbsup.webp";
 import logo from "@/assets/mascot/karnaf-logo.png";
 
 /**
@@ -15,8 +21,11 @@ import logo from "@/assets/mascot/karnaf-logo.png";
  * accompaniment. One job: a visitor from an ad leaves their details and an
  * investor-accompaniment advisor calls them back.
  *
- * Calm and centred on purpose: near-white surface, navy ink, one green
- * accent for action and selection. No figures anywhere on the page.
+ * Centred single column on a fixed "architect's sheet" backdrop where a
+ * house is drawn as the visitor scrolls (BuildingBackdrop); the journey
+ * below the form fills with scroll (JourneyRail). Navy ink, green for
+ * action and progress, orange only in the lit windows. No figures on the
+ * page and no WhatsApp: the one action is leaving details.
  *
  * Standalone (no nav, popups or cross-sell) and noindex. Leads go through
  * the same submitWebsiteLead pipeline as /premium (CRM + Make → the premium
@@ -36,20 +45,6 @@ const GOALS = ["השקעה", "מגורים"] as const;
 /** Estimated equity, in words — same brackets as /premium, merged to four. */
 const EQUITY_OPTIONS = ["עד רבע מיליון ₪", "רבע עד חצי מיליון ₪", "חצי מיליון עד מיליון ₪", "מעל מיליון ₪"];
 
-const VALUES = [
-  {
-    title: "אסטרטגיה שמתאימה לכם",
-    body: "מגדירים יחד מה מחפשים, איפה ובאיזה תקציב, לפני שמתחילים לחפש.",
-  },
-  {
-    title: "בדיקה מעמיקה של כל עסקה",
-    body: "מחיר מול עסקאות אמת, מצב תכנוני ומשפטי ותנאי החוזה, כדי שתחליטו בעיניים פקוחות.",
-  },
-  {
-    title: "משא ומתן וליווי עד החתימה",
-    body: "יושבים לצדכם מול המוכר, היזם והבנק, ונשארים איתכם עד שהחוזה חתום.",
-  },
-];
 
 const ink = "text-[hsl(217_42%_18%)]";
 const muted = "text-[hsl(215_14%_42%)]";
@@ -107,7 +102,7 @@ const LeadForm = () => {
     } catch {
       toast({
         title: "הפרטים לא נשלחו",
-        description: "בדקו את החיבור לאינטרנט ונסו שוב, או כתבו לנו בוואטסאפ.",
+        description: "בדקו את החיבור לאינטרנט ונסו שוב בעוד רגע.",
         variant: "destructive",
       });
     } finally {
@@ -302,98 +297,201 @@ const LeadForm = () => {
   );
 };
 
-const PremiumLandingPage = () => (
-  <div className="min-h-screen bg-[hsl(40_33%_98%)]">
-    <SEOHead
-      title="שיחת היכרות עם מלווה משקיעים | קרנף נדל״ן"
-      description="ליווי אישי ברכישת נכס להשקעה או למגורים: אסטרטגיה, בדיקת עסקאות, משא ומתן וליווי עד החתימה. השאירו פרטים לשיחת היכרות ללא עלות וללא התחייבות."
-      path="/lp/premium"
-      noindex
-    />
+const FORM_ID = "lead-form";
 
-    <main id="main-content" className="mx-auto max-w-[34rem] px-5 pb-16 pt-8 text-center sm:pt-12">
-      <Link to="/" className="inline-flex flex-col items-center gap-2" aria-label="קרנף נדל״ן — לדף הבית">
-        <img src={logo} alt="" width={56} height={56} className="h-14 w-14 rounded-full object-contain" />
-        <span className={`text-[0.95rem] font-semibold tracking-wide ${ink}`}>קרנף נדל״ן</span>
-      </Link>
+const scrollToForm = () => {
+  const el = document.getElementById(FORM_ID);
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
+  window.setTimeout(() => el.querySelector<HTMLInputElement>("input")?.focus({ preventScroll: true }), 500);
+};
 
-      <h1 className={`mx-auto mt-8 max-w-[22rem] text-balance text-[2rem] font-bold leading-[1.2] sm:max-w-none sm:text-[2.4rem] ${ink}`}>
-        מישהו בצד שלכם של השולחן
-      </h1>
-      <span aria-hidden className="mx-auto mt-5 block h-[3px] w-10 rounded-full bg-[hsl(152_42%_30%)]" />
-      <p className={`mx-auto mt-5 max-w-[30rem] text-pretty text-[1.05rem] leading-[1.8] ${muted}`}>
-        בכל עסקת נדל״ן יושבים מולכם מוכר, יזם, מתווך ובנק, ולכל אחד מהם אינטרס משלו. מלווה המשקיעים של קרנף
-        נדל״ן עובד רק בשבילכם, מהשיחה הראשונה ועד החתימה על החוזה.
-      </p>
+const PremiumLandingPage = () => {
+  const still = useStillMotion();
+  const formRef = useRef<HTMLElement>(null);
+  const closeRef = useRef<HTMLElement>(null);
+  const [formInView, setFormInView] = useState(true);
+  const [closeInView, setCloseInView] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-      <section
-        aria-labelledby="form-title"
-        className="mt-10 rounded-2xl border border-[hsl(36_16%_88%)] bg-white p-6 shadow-[0_1px_2px_hsl(30_20%_20%/0.04),0_12px_32px_-18px_hsl(30_20%_20%/0.18)] sm:p-8"
-      >
-        <h2 id="form-title" className={`text-[1.3rem] font-semibold leading-snug ${ink}`}>
-          השאירו פרטים ונחזור אליכם
-        </h2>
-        <p className={`mt-1.5 mb-7 text-[0.95rem] leading-relaxed ${muted}`}>
-          מלווה משקיעים מהצוות שלנו ייצור איתכם קשר לשיחת היכרות קצרה.
-        </p>
-        <LeadForm />
-      </section>
+  useEffect(() => {
+    const el = formRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => (e.target === el ? setFormInView(e.isIntersecting) : setCloseInView(e.isIntersecting))),
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+    if (closeRef.current) io.observe(closeRef.current);
+    const onScroll = () => setScrolled(window.scrollY > 300);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
-      <section aria-labelledby="values-title" className="mt-16">
-        <h2 id="values-title" className={`text-[1.35rem] font-semibold ${ink}`}>
-          מה כולל הליווי
-        </h2>
-        <ul className="mt-8 space-y-8">
-          {VALUES.map((v) => (
-            <li key={v.title}>
-              <span
-                aria-hidden
-                className="mx-auto mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-[hsl(150_35%_94%)] text-[hsl(152_45%_26%)]"
-              >
-                <Check size={18} strokeWidth={2.25} />
-              </span>
-              <h3 className={`text-[1.08rem] font-semibold ${ink}`}>{v.title}</h3>
-              <p className={`mx-auto mt-1.5 max-w-[26rem] leading-[1.75] ${muted}`}>{v.body}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+  const showBar = scrolled && !formInView && !closeInView;
+  useEffect(() => {
+    const mobile = window.matchMedia("(max-width: 767px)").matches;
+    setBottomBarHeight("lp-premium-bar", showBar && mobile ? 80 : 0);
+    return () => setBottomBarHeight("lp-premium-bar", 0);
+  }, [showBar]);
 
-      <figure className="mt-16 border-t border-[hsl(36_16%_88%)] pt-12">
-        <blockquote className={`mx-auto max-w-[28rem] text-[1.1rem] leading-[1.85] ${ink}`}>
-          ״אחרי שנים של חשיבה על השקעה בנדל״ן, סוף סוף מצאתי את האנשים הנכונים. הניתוח הפיננסי שקיבלתי היה מדויק,
-          והליווי האישי גרם לי להרגיש שאני לא לבד בתהליך.״
-        </blockquote>
-        <figcaption className={`mt-4 text-[0.95rem] ${muted}`}>אירית מ., משקיעה בנדל״ן</figcaption>
-      </figure>
+  return (
+    <div className="relative isolate min-h-screen">
+      <SEOHead
+        title="שיחת היכרות עם מלווה משקיעים | קרנף נדל״ן"
+        description="ליווי אישי ברכישת נכס להשקעה או למגורים: אסטרטגיה, בדיקת עסקאות, משא ומתן וליווי עד החתימה. השאירו פרטים לשיחת היכרות אישית ללא עלות וללא התחייבות."
+        path="/lp/premium"
+        noindex
+      />
+      <BuildingBackdrop />
 
-      <p className={`mt-14 text-[0.95rem] ${muted}`}>
-        מעדיפים לכתוב?{" "}
-        <a
-          href={premiumLink()}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-medium text-[hsl(152_45%_26%)] underline underline-offset-4 hover:text-[hsl(152_45%_20%)]"
+      <main id="main-content" className="relative z-10 mx-auto max-w-[34rem] px-5 pt-7 text-center sm:pt-10">
+        {/* brand */}
+        <Link
+          to="/"
+          className="rise-in inline-flex items-center gap-2.5 rounded-full border border-[hsl(36_16%_86%)] bg-white/80 py-1.5 pe-4 ps-1.5 backdrop-blur-sm"
+          aria-label="קרנף נדל״ן — לדף הבית"
         >
-          שלחו לנו הודעה בוואטסאפ
-        </a>
-      </p>
-    </main>
+          <img src={logo} alt="" width={32} height={32} className="h-8 w-8 rounded-full object-contain" />
+          <span className={`text-[0.92rem] font-semibold ${ink}`}>קרנף נדל״ן</span>
+        </Link>
 
-    <footer className={`border-t border-[hsl(36_16%_90%)] px-5 py-6 text-center text-[0.85rem] ${muted}`}>
-      <Link to="/privacy" className="hover:text-[hsl(217_42%_18%)]">
-        מדיניות פרטיות
-      </Link>
-      <span className="mx-3" aria-hidden>
-        |
-      </span>
-      <Link to="/" className="hover:text-[hsl(217_42%_18%)]">
-        לאתר קרנף נדל״ן
-      </Link>
-    </footer>
+        <h1
+          className={`rise-in mx-auto mt-8 max-w-[24rem] text-balance text-[2.15rem] font-bold leading-[1.18] sm:max-w-none sm:text-[2.6rem] ${ink}`}
+          style={{ "--d": "0.08s" } as React.CSSProperties}
+        >
+          מלווה משקיעים אישי, לצדכם עד החתימה
+        </h1>
+        <span
+          aria-hidden
+          className="rise-in mx-auto mt-5 block h-[3px] w-10 rounded-full bg-[hsl(152_42%_30%)]"
+          style={{ "--d": "0.16s" } as React.CSSProperties}
+        />
+        <p
+          className={`rise-in mx-auto mt-5 max-w-[30rem] text-pretty text-[1.06rem] leading-[1.8] ${muted}`}
+          style={{ "--d": "0.2s" } as React.CSSProperties}
+        >
+          בכל עסקת נדל״ן יושבים מולכם מוכר, יזם, מתווך ובנק, ולכל אחד מהם אינטרס משלו. מלווה המשקיעים של קרנף
+          נדל״ן עובד רק בשבילכם ומייצג את האינטרס שלכם בכל שלב בדרך.
+        </p>
 
-    <AccessibilityWidget />
-  </div>
-);
+        {/* form, with the rhino pointing at it */}
+        <section
+          id={FORM_ID}
+          ref={formRef}
+          aria-labelledby="form-title"
+          className="relative mt-28 scroll-mt-28 rounded-2xl border border-[hsl(36_16%_88%)] bg-white px-6 pb-7 pt-10 shadow-[0_1px_2px_hsl(30_20%_20%/0.04),0_18px_40px_-22px_hsl(30_20%_20%/0.25)] sm:px-8 sm:pb-8"
+        >
+          <motion.img
+            src={mascotWelcome}
+            alt="הקרנף של קרנף נדל״ן מצביע על הטופס"
+            width={362}
+            height={500}
+            className="pointer-events-none absolute -top-[7.6rem] right-1 h-[9.5rem] w-auto select-none drop-shadow-[0_8px_12px_hsl(217_40%_20%/0.15)] sm:right-3"
+            initial={{ opacity: 0, y: 16 }}
+            animate={still ? { opacity: 1, y: 0 } : { opacity: 1, y: [0, -5, 0] }}
+            transition={
+              still
+                ? { duration: 0 }
+                : { opacity: { duration: 0.6, delay: 0.3 }, y: { duration: 4, delay: 0.9, repeat: Infinity, ease: "easeInOut" } }
+            }
+          />
+          <h2 id="form-title" className={`text-[1.35rem] font-semibold leading-snug ${ink}`}>
+            השאירו פרטים לשיחת היכרות
+          </h2>
+          <p className={`mx-auto mb-7 mt-2 max-w-[24rem] text-[0.98rem] leading-relaxed ${muted}`}>
+            זה כל מה שצריך. מלווה משקיעים מהצוות שלנו יחזור אליכם לשיחה אישית, ללא עלות וללא התחייבות.
+          </p>
+          <LeadForm />
+        </section>
+
+        {/* the journey */}
+        <section aria-labelledby="journey-title" className="mt-24">
+          <h2 id="journey-title" className={`text-balance text-[1.6rem] font-bold leading-tight sm:text-[1.85rem] ${ink}`}>
+            הכול מתחיל בשיחה אחת
+          </h2>
+          <p className={`mx-auto mt-3 max-w-[26rem] text-pretty leading-[1.75] ${muted}`}>
+            לא צריך להחליט שום דבר מראש. משאירים פרטים, ומשם ממשיכים יחד, צעד אחרי צעד.
+          </p>
+          <JourneyRail />
+        </section>
+
+        <figure className="mt-20 rounded-2xl border border-[hsl(36_16%_88%)] bg-white/85 px-6 py-8 backdrop-blur-sm">
+          <blockquote className={`mx-auto max-w-[28rem] text-[1.08rem] leading-[1.85] ${ink}`}>
+            ״אחרי שנים של חשיבה על השקעה בנדל״ן, סוף סוף מצאתי את האנשים הנכונים. הניתוח הפיננסי שקיבלתי היה מדויק,
+            והליווי האישי גרם לי להרגיש שאני לא לבד בתהליך.״
+          </blockquote>
+          <figcaption className={`mt-4 text-[0.95rem] ${muted}`}>אירית מ., משקיעה בנדל״ן</figcaption>
+        </figure>
+      </main>
+
+      {/* close */}
+      <section ref={closeRef} className="relative z-10 mt-20 bg-[hsl(158_34%_14%)] px-5 pb-28 pt-14 text-center text-white md:pb-16">
+        <div className="mx-auto max-w-[34rem]">
+          <img
+            src={mascotThumbs}
+            alt=""
+            width={500}
+            height={281}
+            loading="lazy"
+            className="mx-auto -mt-28 h-36 w-auto"
+          />
+          <h2 className="mt-4 text-balance text-[1.7rem] font-bold leading-tight sm:text-[2rem]">
+            השאירו פרטים, ואת השאר נעשה יחד
+          </h2>
+          <p className="mx-auto mt-3 max-w-[26rem] text-pretty leading-[1.75] text-white/75">
+            שיחת היכרות אישית עם מלווה משקיעים, ללא עלות וללא התחייבות.
+          </p>
+          <button
+            type="button"
+            onClick={scrollToForm}
+            className="mt-8 h-14 w-full max-w-[22rem] rounded-xl bg-[hsl(40_38%_97%)] text-[1.05rem] font-semibold text-[hsl(158_40%_16%)] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
+          >
+            לשיחת היכרות ללא עלות
+          </button>
+        </div>
+        <p className="mt-12 text-[0.85rem] text-white/55">
+          <Link to="/privacy" className="hover:text-white">
+            מדיניות פרטיות
+          </Link>
+          <span className="mx-3" aria-hidden>
+            |
+          </span>
+          <Link to="/" className="hover:text-white">
+            לאתר קרנף נדל״ן
+          </Link>
+        </p>
+      </section>
+
+      {/* mobile: one bar back to the form once it has scrolled away */}
+      <AnimatePresence>
+        {showBar && (
+          <motion.div
+            className="fixed inset-x-0 bottom-0 z-40 border-t border-[hsl(36_16%_86%)] bg-[hsl(40_38%_97%/0.95)] px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur md:hidden"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <button
+              type="button"
+              onClick={scrollToForm}
+              className="h-[3.25rem] w-full rounded-xl bg-[hsl(152_42%_28%)] text-[1.02rem] font-semibold text-white"
+            >
+              השאירו פרטים לשיחת היכרות
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AccessibilityWidget />
+    </div>
+  );
+};
 
 export default PremiumLandingPage;
