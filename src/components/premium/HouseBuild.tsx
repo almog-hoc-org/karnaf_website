@@ -183,7 +183,7 @@ const HouseBuild = ({ onProgress }: { onProgress?: (p: number) => void }) => {
           ref={svgRef}
           viewBox="0 0 400 300"
           aria-hidden="true"
-          className="h-auto max-h-[44svh] w-[min(92vw,34rem)] overflow-visible lg:max-h-[52svh] lg:w-[44rem]"
+          className="h-auto max-h-[44svh] w-[min(92vw,34rem)] overflow-visible lg:max-h-[54svh] lg:w-full lg:max-w-[42rem]"
         >
           <g data-crane fill="none" stroke={ink} strokeWidth={1.1} strokeLinecap="round" strokeLinejoin="round">
             <path d={CRANE_MAST} vectorEffect="non-scaling-stroke" />

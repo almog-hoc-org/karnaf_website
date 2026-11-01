@@ -12,6 +12,7 @@ import { setBottomBarHeight } from "@/lib/bottomBar";
 import { useStillMotion } from "@/hooks/use-still-motion";
 import HouseBuild from "@/components/premium/HouseBuild";
 import founders from "@/assets/team/founders-campaign.webp";
+import { YEARS_EXPERIENCE } from "@/data/companyStats";
 import mascotWelcome from "@/assets/mascot/mascot-welcome.webp";
 import mascotThumbs from "@/assets/mascot/mascot-thumbsup.webp";
 import logo from "@/assets/mascot/karnaf-logo.png";
@@ -37,9 +38,11 @@ import logo from "@/assets/mascot/karnaf-logo.png";
 const LEAD_SOURCE = "premium-campaign";
 const LEAD_SERVICE = "premium";
 
-/* The page's own consent wording — recorded verbatim with the lead. */
-const CONSENT_TEXT = "אני מאשר/ת לקרנף נדל״ן לשמור את הפרטים שלי ולשלוח לי עדכונים ותוכן מקצועי.";
-const CONSENT_VERSION = "lp-premium-2026-10-30";
+/* Required agreement to store the details and call back about this
+   request. It is NOT marketing (spam-law 30A) consent, so leads from this
+   page go out with marketingConsent: false; the wording is recorded in the
+   lead's message instead. */
+const AGREE_TEXT = "אני מאשר/ת לקרנף נדל״ן לשמור את הפרטים וליצור איתי קשר.";
 
 /** One label for every control that leads to (or submits) the form. */
 const CTA_LABEL = "לתיאום שיחת היכרות";
@@ -47,7 +50,7 @@ const CTA_LABEL = "לתיאום שיחת היכרות";
 const GOALS = ["השקעה", "מגורים"] as const;
 
 /** Estimated equity, in words — same brackets as /premium, merged to four. */
-const EQUITY_OPTIONS = ["עד רבע מיליון ₪", "רבע עד חצי מיליון ₪", "חצי מיליון עד מיליון ₪", "מעל מיליון ₪"];
+const EQUITY_OPTIONS = ["עד 250,000 ש״ח", "250,000 עד 500,000 ש״ח", "500,000 עד 1,000,000 ש״ח", "מעל 1,000,000 ש״ח"];
 
 
 const ink = "text-[hsl(217_42%_18%)]";
@@ -62,7 +65,7 @@ const LeadForm = () => {
   const [equity, setEquity] = useState("");
   const [consent, setConsent] = useState(false);
   const [company, setCompany] = useState(""); // honeypot
-  const [errors, setErrors] = useState<{ name?: string; phone?: string; email?: string }>({});
+  const [errors, setErrors] = useState<{ name?: string; phone?: string; email?: string; consent?: string }>({});
   const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -74,6 +77,7 @@ const LeadForm = () => {
     if (!name.trim()) next.name = "נא למלא שם";
     if (!isValidIsraeliPhone(phone)) next.phone = phone.trim() ? PHONE_ERROR_MESSAGE : "נא למלא מספר טלפון";
     if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) next.email = "כתובת המייל אינה תקינה";
+    if (!consent) next.consent = "כדי שנוכל לחזור אליכם, סמנו את האישור";
     setErrors(next);
     if (Object.keys(next).length) {
       document.getElementById(`${uid}-${Object.keys(next)[0]}`)?.focus();
@@ -89,6 +93,7 @@ const LeadForm = () => {
       const parts = ["מהות הפנייה: שיחת היכרות ללא התחייבות, קמפיין ליווי משקיעים"];
       if (goal) parts.push(`מטרה: ${goal}`);
       if (ad) parts.push(`מודעה: ${ad}`);
+      parts.push(`אישר/ה: ${AGREE_TEXT}`);
       await submitWebsiteLead({
         name: name.trim(),
         phone,
@@ -98,9 +103,7 @@ const LeadForm = () => {
         service: LEAD_SERVICE,
         source: LEAD_SOURCE,
         message: parts.join(" | "),
-        marketingConsent: consent,
-        consentText: CONSENT_TEXT,
-        consentVersion: CONSENT_VERSION,
+        marketingConsent: false,
       });
       navigate(thankYou);
     } catch {
@@ -115,7 +118,7 @@ const LeadForm = () => {
   };
 
   const field = (hasError?: string) =>
-    `block w-full h-[3.25rem] rounded-xl border bg-white px-4 text-base ${ink} placeholder:text-[hsl(215_12%_60%)] outline-none transition-[border-color,box-shadow] duration-150 ${
+    `block w-full h-[3.25rem] lg:h-12 rounded-xl border bg-white px-4 text-base ${ink} placeholder:text-[hsl(215_12%_60%)] outline-none transition-[border-color,box-shadow] duration-150 ${
       hasError
         ? "border-[hsl(0_65%_50%)] focus:ring-4 focus:ring-[hsl(0_65%_50%/0.12)]"
         : "border-[hsl(36_14%_84%)] hover:border-[hsl(36_10%_72%)] focus:border-[hsl(152_42%_30%)] focus:ring-4 focus:ring-[hsl(152_42%_30%/0.12)]"
@@ -130,7 +133,7 @@ const LeadForm = () => {
     ) : null;
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5 text-right">
+    <form onSubmit={handleSubmit} noValidate className="grid gap-5 text-right lg:grid-cols-2 lg:gap-x-3 lg:gap-y-3">
       <div>
         <label htmlFor={`${uid}-name`} className={label}>
           שם מלא
@@ -191,31 +194,6 @@ const LeadForm = () => {
         {error("email")}
       </div>
 
-      <fieldset>
-        <legend className={label}>מה המטרה?{optional}</legend>
-        <div className="grid grid-cols-2 gap-2.5" role="radiogroup">
-          {GOALS.map((g) => {
-            const on = goal === g;
-            return (
-              <button
-                key={g}
-                type="button"
-                role="radio"
-                aria-checked={on}
-                onClick={() => setGoal(on ? "" : g)}
-                className={`h-[3.25rem] rounded-xl border text-base font-medium transition-[background-color,border-color,color,transform] duration-150 ease-out active:scale-[0.97] ${
-                  on
-                    ? "border-[hsl(152_42%_30%)] bg-[hsl(150_35%_95%)] text-[hsl(152_45%_24%)]"
-                    : `border-[hsl(36_14%_84%)] bg-white ${ink} hover:border-[hsl(36_10%_72%)]`
-                }`}
-              >
-                {g === "השקעה" ? "נכס להשקעה" : "דירה למגורים"}
-              </button>
-            );
-          })}
-        </div>
-      </fieldset>
-
       <div>
         <label htmlFor={`${uid}-equity`} className={label}>
           הון עצמי משוער{optional}
@@ -244,6 +222,31 @@ const LeadForm = () => {
         </div>
       </div>
 
+      <fieldset className="lg:col-span-2">
+        <legend className={label}>מה המטרה?{optional}</legend>
+        <div className="grid grid-cols-2 gap-2.5" role="radiogroup">
+          {GOALS.map((g) => {
+            const on = goal === g;
+            return (
+              <button
+                key={g}
+                type="button"
+                role="radio"
+                aria-checked={on}
+                onClick={() => setGoal(on ? "" : g)}
+                className={`h-[3.25rem] lg:h-12 rounded-xl border text-base font-medium transition-[background-color,border-color,color,transform] duration-150 ease-out active:scale-[0.97] ${
+                  on
+                    ? "border-[hsl(152_42%_30%)] bg-[hsl(150_35%_95%)] text-[hsl(152_45%_24%)]"
+                    : `border-[hsl(36_14%_84%)] bg-white ${ink} hover:border-[hsl(36_10%_72%)]`
+                }`}
+              >
+                {g === "השקעה" ? "נכס להשקעה" : "דירה למגורים"}
+              </button>
+            );
+          })}
+        </div>
+      </fieldset>
+
       {/* Honeypot — invisible to people */}
       <div className="absolute -z-10 h-0 w-0 overflow-hidden opacity-0" aria-hidden="true">
         <label htmlFor={`${uid}-company`}>חברה</label>
@@ -257,41 +260,51 @@ const LeadForm = () => {
         />
       </div>
 
-      <label
-        htmlFor={`${uid}-consent`}
-        className="flex cursor-pointer items-start gap-3 rounded-xl bg-[hsl(40_30%_96%)] p-4"
-      >
-        <span className="relative mt-0.5 flex h-5 w-5 shrink-0">
-          <input
-            id={`${uid}-consent`}
-            type="checkbox"
-            checked={consent}
-            onChange={(e) => setConsent(e.target.checked)}
-            aria-describedby={`${uid}-consent-note`}
-            className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-[hsl(36_10%_68%)] bg-white transition-colors checked:border-[hsl(152_42%_30%)] checked:bg-[hsl(152_42%_30%)] focus-visible:ring-4 focus-visible:ring-[hsl(152_42%_30%/0.18)]"
-          />
-          <Check
-            size={14}
-            strokeWidth={3}
-            aria-hidden
-            className="pointer-events-none absolute left-[3px] top-[3px] text-white opacity-0 peer-checked:opacity-100"
-          />
-        </span>
-        <span className="text-[0.93rem] leading-relaxed">
-          <span className={ink}>{CONSENT_TEXT}</span>
-          <span id={`${uid}-consent-note`} className={`mt-1 block text-[0.85rem] ${muted}`}>
-            הפרטים שלכם נשמרים אצלנו בלבד ולעולם לא יועברו לצד שלישי.{" "}
-            <Link to="/privacy" className="underline underline-offset-2 hover:text-[hsl(152_42%_28%)]">
-              מדיניות הפרטיות
-            </Link>
+      <div className="lg:col-span-2">
+        <label
+          htmlFor={`${uid}-consent`}
+          className={`flex cursor-pointer items-start gap-3 rounded-xl p-3.5 transition-colors duration-150 ${
+            errors.consent ? "bg-[hsl(0_70%_97%)] ring-1 ring-[hsl(0_65%_50%/0.45)]" : "bg-[hsl(40_30%_96%)]"
+          }`}
+        >
+          <span className="relative mt-0.5 flex h-5 w-5 shrink-0">
+            <input
+              id={`${uid}-consent`}
+              type="checkbox"
+              checked={consent}
+              required
+              onChange={(e) => {
+                setConsent(e.target.checked);
+                if (e.target.checked) setErrors((prev) => ({ ...prev, consent: undefined }));
+              }}
+              aria-invalid={!!errors.consent}
+              aria-describedby={`${uid}-consent-note${errors.consent ? ` ${uid}-consent-error` : ""}`}
+              className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-[hsl(36_10%_62%)] bg-white transition-colors checked:border-[hsl(152_42%_30%)] checked:bg-[hsl(152_42%_30%)] focus-visible:ring-4 focus-visible:ring-[hsl(152_42%_30%/0.18)]"
+            />
+            <Check
+              size={14}
+              strokeWidth={3}
+              aria-hidden
+              className="pointer-events-none absolute left-[3px] top-[3px] text-white opacity-0 peer-checked:opacity-100"
+            />
           </span>
-        </span>
-      </label>
+          <span className="text-[0.93rem] leading-relaxed">
+            <span className={ink}>{AGREE_TEXT}</span>
+            <span id={`${uid}-consent-note`} className={`block text-[0.84rem] ${muted}`}>
+              הפרטים לא יועברו לצד שלישי.{" "}
+              <Link to="/privacy" className="underline underline-offset-2 hover:text-[hsl(152_42%_28%)]">
+                מדיניות הפרטיות
+              </Link>
+            </span>
+          </span>
+        </label>
+        {error("consent")}
+      </div>
 
       <button
         type="submit"
         disabled={submitting}
-        className="flex h-14 w-full items-center justify-center gap-2.5 rounded-xl bg-[hsl(152_42%_28%)] text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_-14px_hsl(152_45%_20%/0.7)] transition-[background-color,transform] duration-150 ease-out hover:bg-[hsl(152_45%_23%)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[hsl(152_42%_30%/0.3)] disabled:opacity-75"
+        className="flex h-14 w-full lg:col-span-2 lg:h-[3.25rem] items-center justify-center gap-2.5 rounded-xl bg-[hsl(152_42%_28%)] text-[1.05rem] font-semibold text-white shadow-[0_10px_24px_-14px_hsl(152_45%_20%/0.7)] transition-[background-color,transform] duration-150 ease-out hover:bg-[hsl(152_45%_23%)] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[hsl(152_42%_30%/0.3)] disabled:opacity-75"
       >
         {submitting ? (
           <>
@@ -302,7 +315,7 @@ const LeadForm = () => {
           CTA_LABEL
         )}
       </button>
-      <p className={`text-center text-[0.9rem] ${muted}`}>שיחת ההיכרות ללא עלות וללא התחייבות.</p>
+      <p className={`text-center text-[0.9rem] lg:col-span-2 ${muted}`}>שיחת ההיכרות ללא עלות וללא התחייבות.</p>
     </form>
   );
 };
@@ -389,12 +402,16 @@ const PremiumLandingPage = () => {
         />
       </div>
 
-      <main id="main-content" className="text-center">
-        <div className="mx-auto max-w-[34rem] px-5 pt-7 sm:pt-10">
+      <main
+        id="main-content"
+        className="text-center lg:mx-auto lg:grid lg:max-w-[88rem] lg:grid-cols-[minmax(26rem,33rem)_minmax(0,1fr)] lg:gap-10 lg:px-8 xl:gap-16"
+      >
+        {/* right on desktop: everything needed to leave details, always in view */}
+        <div className="mx-auto max-w-[34rem] px-5 pt-7 sm:pt-10 lg:sticky lg:top-0 lg:flex lg:h-[100svh] lg:w-full lg:max-w-none lg:flex-col lg:overflow-y-auto lg:px-0 lg:py-5 lg:[justify-content:safe_center]">
           {/* brand */}
           <Link
             to="/"
-            className="rise-in inline-flex items-center gap-2.5 rounded-full border border-[hsl(150_12%_85%)] bg-white/85 py-1.5 pe-4 ps-1.5"
+            className="rise-in inline-flex items-center gap-2.5 self-center rounded-full border border-[hsl(150_12%_85%)] bg-white/85 py-1.5 pe-4 ps-1.5"
             aria-label="קרנף נדל״ן, לדף הבית"
           >
             <img src={logo} alt="" width={32} height={32} className="h-8 w-8 rounded-full object-contain" />
@@ -402,18 +419,18 @@ const PremiumLandingPage = () => {
           </Link>
 
           <h1
-            className={`rise-in mx-auto mt-8 max-w-[24rem] text-balance text-[2.15rem] font-bold leading-[1.16] tracking-[-0.01em] sm:max-w-none sm:text-[2.6rem] ${ink}`}
+            className={`rise-in mx-auto mt-8 max-w-[24rem] text-balance text-[2.15rem] font-bold leading-[1.16] tracking-[-0.01em] sm:max-w-none sm:text-[2.6rem] lg:mt-5 lg:text-[2.2rem] [@media(min-width:1024px)_and_(max-height:820px)]:mt-3 [@media(min-width:1024px)_and_(max-height:820px)]:text-[1.9rem] ${ink}`}
             style={{ "--d": "0.08s" } as React.CSSProperties}
           >
             מלווה משקיעים אישי, לצדכם עד החתימה
           </h1>
           <span
             aria-hidden
-            className="rise-in mx-auto mt-5 block h-[3px] w-10 rounded-full bg-[hsl(152_42%_30%)]"
+            className="rise-in mx-auto mt-5 block h-[3px] w-10 rounded-full bg-[hsl(152_42%_30%)] lg:mt-4"
             style={{ "--d": "0.16s" } as React.CSSProperties}
           />
           <p
-            className={`rise-in mx-auto mt-5 max-w-[28rem] text-pretty text-[1.06rem] leading-[1.8] ${muted}`}
+            className={`rise-in mx-auto mt-5 max-w-[28rem] text-pretty text-[1.06rem] leading-[1.8] lg:mt-4 lg:text-[1rem] lg:leading-[1.7] [@media(min-width:1024px)_and_(max-height:820px)]:hidden ${muted}`}
             style={{ "--d": "0.2s" } as React.CSSProperties}
           >
             לכל צד בעסקת נדל״ן יש אינטרס משלו. מלווה המשקיעים של קרנף נדל״ן מייצג רק אתכם, מהשיחה הראשונה ועד החתימה.
@@ -424,35 +441,37 @@ const PremiumLandingPage = () => {
             id={FORM_ID}
             ref={formRef}
             aria-labelledby="form-title"
-            className="relative mt-28 scroll-mt-28 rounded-[1.25rem] sm:mt-36 border border-[hsl(150_10%_87%)] bg-white px-6 pb-7 pt-10 shadow-[0_1px_2px_hsl(160_30%_15%/0.04),0_22px_48px_-26px_hsl(160_30%_15%/0.3)] sm:px-8 sm:pb-8"
+            className="relative mt-28 scroll-mt-28 rounded-[1.25rem] sm:mt-36 lg:mt-20 lg:shrink-0 lg:px-6 lg:pb-4 lg:pt-6 border border-[hsl(150_10%_87%)] bg-white px-6 pb-7 pt-10 shadow-[0_1px_2px_hsl(160_30%_15%/0.04),0_22px_48px_-26px_hsl(160_30%_15%/0.3)] sm:px-8 sm:pb-8"
           >
             <motion.img
               src={mascotWelcome}
               alt="הקרנף של קרנף נדל״ן מצביע על הטופס"
               width={362}
               height={500}
-              className="pointer-events-none absolute -top-[7.6rem] right-1 h-[9.5rem] w-auto select-none drop-shadow-[0_8px_12px_hsl(217_40%_20%/0.15)] sm:right-3"
+              className="pointer-events-none absolute -top-[7.6rem] right-1 h-[9.5rem] w-auto select-none lg:-top-[4.9rem] lg:h-[6rem] drop-shadow-[0_8px_12px_hsl(217_40%_20%/0.15)] sm:right-3"
               initial={still ? false : { opacity: 0, transform: "translate3d(0, 14px, 0)" }}
               animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
               transition={{ duration: 0.6, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
             />
-            <h2 id="form-title" className={`text-[1.35rem] font-semibold leading-snug ${ink}`}>
+            <h2 id="form-title" className={`text-[1.35rem] font-semibold leading-snug lg:mb-4 lg:text-[1.25rem] ${ink}`}>
               השאירו פרטים לשיחת היכרות
             </h2>
-            <p className={`mx-auto mb-7 mt-2 max-w-[24rem] text-pretty text-[0.98rem] leading-relaxed ${muted}`}>
+            <p className={`mx-auto mb-7 mt-2 max-w-[24rem] text-pretty text-[0.98rem] leading-relaxed lg:hidden ${muted}`}>
               זה כל מה שצריך. מלווה משקיעים מהצוות שלנו יחזור אליכם לשיחה אישית, ללא עלות וללא התחייבות.
             </p>
             <LeadForm />
           </section>
         </div>
 
+        {/* left on desktop: the house, then who we are */}
+        <div className="min-w-0">
         {/* the house, drawn stage by stage */}
-        <div className="mt-20">
+        <div className="mt-20 lg:mt-0">
           <HouseBuild onProgress={tintSheet} />
         </div>
 
         {/* founders */}
-        <section aria-labelledby="founders-title" className="mx-auto mt-12 max-w-[34rem] px-5">
+        <section aria-labelledby="founders-title" className="mx-auto mt-12 max-w-[34rem] px-5 lg:mt-4">
           <h2 id="founders-title" className={`text-balance text-[1.6rem] font-bold leading-tight sm:text-[2rem] ${ink}`}>
             מי עומד מאחורי קרנף נדל״ן
           </h2>
@@ -472,12 +491,14 @@ const PremiumLandingPage = () => {
           </figure>
           <div className={`mx-auto mt-7 max-w-[30rem] space-y-4 text-pretty text-[1.04rem] leading-[1.85] ${muted}`}>
             <p>
-              שנינו שירתנו כקצינים בצה״ל, ובמקביל התחלנו להשקיע בנדל״ן. העסקה הראשונה שלנו הייתה רכישה, שיפוץ ומכירה.
-              מאז השקענו בארץ ובחו״ל, בהתחדשות עירונית, בקרקעות וביזמות.
+              התחלנו להשקיע בנדל״ן כשעוד שירתנו כקצינים בצה״ל. מאז צברנו{" "}
+              <span className={`font-semibold ${ink}`}>מעל {YEARS_EXPERIENCE} שנות ניסיון</span>, והשקענו בעצמנו כמעט
+              בכל סוג של עסקת נדל״ן, בארץ ובחו״ל: יד שנייה ושיפוץ, דירות מקבלן, התחדשות עירונית, קרקעות ויזמות.
             </p>
             <p>
-              הקמנו את קרנף נדל״ן אחרי שראינו חברים ובני משפחה קונים דירה בלי ידע ומשלמים על זה ביוקר. בליווי תקבלו את
-              הניסיון שצברנו בדרך, כדי שלא תצטרכו לשלם עליו שכר לימוד.
+              בדרך ראינו מקרוב <span className={`font-semibold ${ink}`}>מאות עסקאות</span> ולמדנו לזהות מה עובד ומה עולה
+              ביוקר. הקמנו את קרנף נדל״ן אחרי שראינו חברים ובני משפחה קונים דירה בלי ידע ומשלמים על זה. בליווי תקבלו את
+              הניסיון הזה, כדי שלא תצטרכו לשלם עליו שכר לימוד.
             </p>
           </div>
           <p className={`mt-5 text-[1.05rem] font-semibold ${ink}`}>איתמר ואלמוג</p>
@@ -492,12 +513,24 @@ const PremiumLandingPage = () => {
             <figcaption className={`mt-4 text-[0.95rem] ${muted}`}>אירית מ., משקיעה בנדל״ן</figcaption>
           </div>
         </figure>
+        <p className={`hidden pb-10 pt-14 text-[0.85rem] lg:block ${muted}`}>
+          <Link to="/privacy" className="underline-offset-4 hover:text-[hsl(217_42%_18%)] hover:underline">
+            מדיניות פרטיות
+          </Link>
+          <span className="mx-3" aria-hidden>
+            |
+          </span>
+          <Link to="/" className="underline-offset-4 hover:text-[hsl(217_42%_18%)] hover:underline">
+            לאתר קרנף נדל״ן
+          </Link>
+        </p>
+        </div>
       </main>
 
       {/* close: a deeper shade of the same paper, never a jump to dark */}
       <section
         ref={closeRef}
-        className="relative mt-32 bg-[hsl(150_30%_90%)] px-5 pb-28 pt-px text-center md:pb-14"
+        className="relative mt-32 bg-[hsl(150_30%_90%)] px-5 pb-28 pt-px text-center md:pb-14 lg:hidden"
         aria-labelledby="close-title"
       >
         <div className="mx-auto max-w-[34rem]">
