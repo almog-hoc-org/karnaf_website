@@ -487,7 +487,6 @@ const PremiumLandingPage = () => {
                 className="absolute inset-x-0 bottom-0 h-[94%] w-full object-contain object-bottom"
               />
             </div>
-            <figcaption className={`mt-3 text-[0.9rem] ${muted}`}>מימין: איתמר נחליאל, משמאל: אלמוג חכמה</figcaption>
           </figure>
           <div className={`mx-auto mt-7 max-w-[30rem] space-y-4 text-pretty text-[1.04rem] leading-[1.85] ${muted}`}>
             <p>
