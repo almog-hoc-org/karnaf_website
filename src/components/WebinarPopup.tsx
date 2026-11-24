@@ -182,7 +182,7 @@ const WebinarPopup = () => {
 
               <button
                 onClick={dismiss}
-                className="mt-3 text-sm text-muted-foreground/70 hover:text-foreground transition-colors"
+                className="mt-3 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 אולי אחר כך
               </button>

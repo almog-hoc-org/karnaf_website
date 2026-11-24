@@ -109,7 +109,7 @@ export const ResearchWaitlistStrip = () => (
           <Sparkles size={16} className="text-accent" />
         </span>
         <p className="text-sm md:text-base text-foreground">
-          <span className="font-bold text-accent ml-1">בקרוב:</span>
+          <span className="font-bold text-sm text-accent ml-1">בקרוב:</span>
           <span className="font-bold">
             {" "}מערכת מחקר נדל״ן מקצועית במנוי חודשי.
           </span>{" "}

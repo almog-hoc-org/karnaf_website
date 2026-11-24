@@ -50,7 +50,7 @@ const findings: { q: string; a: string; verdict: Verdict; tag: string }[] = [
 
 /* Chip text stays navy (AA at 12px); only the icon carries the verdict color. */
 const verdictStyle: Record<Verdict, { icon: typeof CircleCheck; chip: string; icon_: string }> = {
-  flag: { icon: TriangleAlert, chip: "bg-accent/10 border-accent/30", icon_: "text-[hsl(var(--accent-deep))]" },
+  flag: { icon: TriangleAlert, chip: "bg-accent/10 border-accent/30", icon_: "text-accent" },
   fix: { icon: PenLine, chip: "bg-primary/[0.05] border-primary/15", icon_: "text-primary" },
   ok: { icon: CircleCheck, chip: "bg-card border-border", icon_: "text-[hsl(var(--whatsapp-deep))]" },
 };

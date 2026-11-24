@@ -27,6 +27,10 @@ export const Reveal = ({
   const reduce = useReducedMotion() || still;
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
+  // Revealed by the safety timeout while still off screen: nobody sees an
+  // entrance there, so skip it. Animating every pending Reveal at once (45
+  // blur filters on /course) cost ~600ms of style & layout on a phone.
+  const [instant, setInstant] = useState(false);
 
   useEffect(() => {
     if (reduce) {
@@ -50,7 +54,11 @@ export const Reveal = ({
           )
         : null;
     io?.observe(el);
-    const t = window.setTimeout(() => setShown(true), SAFETY_TIMEOUT_MS);
+    const t = window.setTimeout(() => {
+      const r = el.getBoundingClientRect();
+      if (r.top > window.innerHeight || r.bottom < 0) setInstant(true);
+      setShown(true);
+    }, SAFETY_TIMEOUT_MS);
     return () => {
       window.clearTimeout(t);
       io?.disconnect();
@@ -72,8 +80,8 @@ export const Reveal = ({
       initial={reduce ? false : hidden}
       animate={shown ? visible : hidden}
       transition={{
-        duration: reduce ? 0 : 0.9,
-        delay: reduce ? 0 : delay,
+        duration: reduce || instant ? 0 : 0.9,
+        delay: reduce || instant ? 0 : delay,
         ease: [0.16, 1, 0.3, 1],
       }}
     >

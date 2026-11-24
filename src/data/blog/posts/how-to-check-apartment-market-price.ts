@@ -3,6 +3,7 @@ import type { Article } from "../types";
 const article: Article = {
   slug: "how-to-check-apartment-market-price",
   title: "כמה הדירה באמת שווה? כך בודקים מחיר שוק לפני שמגישים הצעה",
+  seoTitle: "כמה הדירה באמת שווה? כך בודקים מחיר שוק",
   excerpt:
     "המחיר במודעה הוא עמדת פתיחה של המוכר. כך מוצאים עסקאות אמת, משווים דירות דומות, מנטרלים מחירים מטעים ומשתמשים בשמאות מוקדמת.",
   category: "guide",

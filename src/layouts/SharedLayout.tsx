@@ -23,15 +23,23 @@ const SharedLayout = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <div className="min-h-screen">
+    // data-ssr-path records the path this HTML was rendered for (see
+    // useShellPathname); the client value may differ on 404.html.
+    <div className="min-h-screen" data-ssr-path={location.pathname} suppressHydrationWarning>
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-accent focus:text-accent-foreground focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold">
         דלג לתוכן הראשי
       </a>
       <ScrollProgress />
       <Navigation />
-      <AnimatePresence mode="wait">
+      {/* initial={false}: the first page shows as pre-rendered. Animating it in
+          shipped <main> at opacity:0, so nothing painted until the JS ran
+          (LCP render delay ≈ 3s on mobile). Route changes still animate. */}
+      <AnimatePresence mode="wait" initial={false}>
         <motion.main
           id="main-content"
+          // Focusable so the skip link actually moves focus here.
+          tabIndex={-1}
+          className="outline-none"
           key={location.pathname}
           // A page that arrives from below leaves back down the same way —
           // enter and exit share one path, with mirrored easing, so the

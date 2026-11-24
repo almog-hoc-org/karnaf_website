@@ -3,6 +3,7 @@ import type { Article } from "../types";
 const article: Article = {
   slug: "construction-index-linkage",
   title: "מדד תשומות הבנייה: כמה ההצמדה תוסיף לדירה מקבלן, ועל מה אפשר להתמקח",
+  seoTitle: "מדד תשומות הבנייה: כמה ההצמדה תוסיף לדירה מקבלן",
   excerpt:
     "מה המדד מודד, מה חוק המכר מתיר להצמיד מאז 2022, איך לוח התשלומים משנה את החשיפה, ואילו ערבויות ופיצויים מגיעים לכם מהקבלן.",
   category: "new-build",

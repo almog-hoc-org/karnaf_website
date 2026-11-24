@@ -170,7 +170,7 @@ const AboutPage = () => {
             {principles.map((p, i) => (
               <li key={p.num}>
                 <Reveal delay={i * 0.08} className="h-full border-t border-primary/15 pt-6 pb-10 md:pb-0">
-                  <span className="block font-mono text-sm font-bold text-[hsl(var(--accent-deep))] tabular-nums mb-3">
+                  <span className="block font-mono text-sm font-bold text-accent tabular-nums mb-3">
                     {p.num}
                   </span>
                   <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 leading-snug tracking-[-0.015em]">
@@ -236,7 +236,7 @@ const AboutPage = () => {
                   </div>
                   <div className="p-6 md:p-8 border-t border-border flex-1">
                     <h3 className="text-foreground font-bold text-2xl tracking-[-0.015em]">{member.name}</h3>
-                    <p className="text-sm font-bold text-[hsl(var(--accent-deep))] mt-1 mb-4">{member.role}</p>
+                    <p className="text-sm font-bold text-accent mt-1 mb-4">{member.role}</p>
                     <p className="text-muted-foreground leading-[1.85]">{member.bio}</p>
                   </div>
                 </div>

@@ -251,7 +251,7 @@ const MortgagePage = () => {
                   delay={i * 0.08}
                   className="h-full border-t border-primary/15 pt-6 pb-8 md:pb-0"
                 >
-                  <span className="block font-mono text-sm font-bold text-[hsl(var(--accent-deep))] tabular-nums mb-3">
+                  <span className="block font-mono text-sm font-bold text-accent tabular-nums mb-3">
                     {s.num}
                   </span>
                   <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 leading-snug tracking-[-0.015em]">

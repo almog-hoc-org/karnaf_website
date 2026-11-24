@@ -50,7 +50,7 @@ const TestimonialVideoCard = ({ testimonial, index = 0 }: TestimonialVideoCardPr
             ))}
           </div>
           {testimonial.metric && (
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-accent/10 text-accent-deep whitespace-nowrap">
+            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-accent/10 text-accent whitespace-nowrap">
               {testimonial.metric}
             </span>
           )}

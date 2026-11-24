@@ -47,7 +47,7 @@ const sources: ArticleSource[] = [MAX_LTV.source, PRIME_RATE.source, PURCHASE_TA
 const AffordabilityPage = () => (
   <>
     <SEOHead
-      title={`${TITLE}? מחשבון יכולת רכישה 2026 | קרנף נדל״ן`}
+      title={`${TITLE}? מחשבון 2026 | קרנף נדל״ן`}
       description={DESCRIPTION}
       path={PATH}
       keywords="כמה דירה אני יכול להרשות לעצמי, מחשבון יכולת רכישה, כמה משכנתא אפשר לקבל, הון עצמי לדירה ראשונה, מחשבון החזר משכנתא לפי משכורת"

@@ -3,6 +3,7 @@ import type { Article } from "../types";
 const article: Article = {
   slug: "developer-financing-deals-2026",
   title: "מבצעי מימון של קבלנים ב-2026: כמה באמת עולה דירה ב-20/80",
+  seoTitle: "מבצע 20/80 של קבלנים: כמה הדירה עולה באמת",
   excerpt:
     "20/80, 10/90, הלוואות בלון, שכר דירה על חשבון היזם ופטור מהצמדה: איך מתרגמים מבצע מימון למחיר אמיתי, ואילו שאלות לשאול לפני החתימה.",
   category: "new-build",

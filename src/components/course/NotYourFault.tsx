@@ -29,7 +29,7 @@ const NotYourFault = () => {
       <Reveal delay={0.16}>
         <p className="text-lg md:text-xl font-bold text-foreground max-w-2xl mx-auto leading-snug">
           החדשות הטובות? לקנות דירה נכון זה לא כישרון מולד.{" "}
-          <span className="text-accent">זו מיומנות</span> — ומיומנות לומדים:
+          <span className="text-accent-ink">זו מיומנות</span> — ומיומנות לומדים:
           בסדר הנכון, בשיטה הנכונה, ומהר משנדמה לכם.
         </p>
       </Reveal>
