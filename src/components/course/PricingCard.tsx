@@ -117,13 +117,13 @@ const PricingCard = () => {
         </div>
 
         {/* Proof at the decision point */}
-        <figure className="max-w-sm mx-auto mb-8 text-right border-r-2 border-accent/50 pr-4">
-          <blockquote className="text-sm text-muted-foreground leading-relaxed">
+        <figure className="max-w-sm mx-auto mb-8 text-center">
+          <blockquote className="font-serif text-lg text-foreground/85 leading-relaxed">
             {personalized
               ? personalized.testimonial.quote
               : "״רכשתי דירה מתחת למחיר השוק בזכות מה שלמדתי בתוכנית.״"}
           </blockquote>
-          <figcaption className="text-xs font-bold text-foreground mt-1">
+          <figcaption className="text-xs font-bold text-muted-foreground mt-2">
             {personalized ? personalized.testimonial.author : "— נועם ד., בוגר התוכנית"}
           </figcaption>
         </figure>
