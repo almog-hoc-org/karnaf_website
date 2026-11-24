@@ -77,7 +77,7 @@ const Footer = () => {
               </div>
 
               <div>
-                <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mb-4">
+                <p className="text-eyebrow text-muted-foreground mb-4">
                   עקבו אחרינו
                 </p>
                 <div className="flex items-center gap-3">

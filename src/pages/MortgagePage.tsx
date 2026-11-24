@@ -180,7 +180,7 @@ const MortgagePage = () => {
         footnote="שיחת היכרות ראשונה ללא עלות וללא התחייבות"
         aside={
           <div className="hidden lg:block rounded-3xl border border-white/12 bg-white/[0.04] p-7">
-            <p className="text-eyebrow uppercase tracking-[0.24em] text-white/60 mb-5">
+            <p className="text-eyebrow text-white/60 mb-5">
               מה יוצא לכם מהשיחה הראשונה
             </p>
             <ul className="space-y-4">

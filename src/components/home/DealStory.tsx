@@ -322,7 +322,7 @@ const StageBody = ({ stage, still }: { stage: number; still: boolean }) => {
 
   return (
     <div className="rounded-2xl bg-[hsl(var(--ink))] text-white p-3.5 md:p-5">
-      <p className="text-eyebrow uppercase tracking-[0.2em] text-white/60 flex items-center gap-2">
+      <p className="text-eyebrow text-white/60 flex items-center gap-2">
         <Check size={14} className="text-accent" aria-hidden />
         נחתם · במחיר היעד
       </p>
@@ -365,7 +365,7 @@ const DealCard = ({
     <div className="relative rounded-3xl bg-background text-foreground border border-border shadow-depth-4 overflow-hidden">
       <div className="p-4 md:p-6">
         <div className="flex items-center justify-between gap-3">
-          <span className="inline-flex items-center gap-2 text-eyebrow uppercase tracking-[0.2em] text-muted-foreground font-bold">
+          <span className="inline-flex items-center gap-2 text-eyebrow text-muted-foreground font-bold">
             <FolderOpen size={14} aria-hidden />
             תיק עסקה
           </span>
@@ -487,7 +487,7 @@ const Beat = ({ i, still, finalCta }: { i: number; still: boolean; finalCta?: Re
       <div className="font-mono text-accent text-xs md:text-sm font-bold tabular-nums mb-2 md:mb-3 tracking-[0.2em]">
         0{i + 1} · {beat.stage}
       </div>
-      <h3 className="text-[1.6rem] leading-[1.15] md:text-display-md text-white mb-2 md:mb-4 font-black tracking-[-0.02em]">
+      <h3 className="text-[1.6rem] leading-[1.15] md:text-display-md text-white mb-2 md:mb-4 font-serif font-bold">
         {beat.lead} <span className="text-accent">{beat.accent}</span>
       </h3>
       <p className="text-[0.95rem] md:text-body-lg text-white/70 leading-[1.7] md:leading-[1.85] max-w-[46ch] [@media(max-height:700px)]:hidden">

@@ -170,7 +170,7 @@ const PricingCard = () => {
 
         {/* What happens after you join — removes the fear of the unknown. */}
         <div className="mt-8 pt-6 border-t border-border text-right max-w-sm mx-auto">
-          <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mb-4 text-center">
+          <p className="text-eyebrow text-muted-foreground mb-4 text-center">
             מה קורה אחרי הרכישה?
           </p>
           <ol className="space-y-3">

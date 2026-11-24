@@ -371,7 +371,7 @@ const LeadCapture = ({
 /** Track label on every story — accompaniment results are never read as course results. */
 const TrackTag = ({ dark = false }: { dark?: boolean }) => (
   <span
-    className={`inline-block text-eyebrow uppercase tracking-[0.16em] border rounded-full px-3 py-1 ${
+    className={`inline-block text-eyebrow border rounded-full px-3 py-1 ${
       dark ? "border-white/20 text-white/70" : "border-border text-muted-foreground"
     }`}
   >
@@ -447,7 +447,7 @@ const PremiumPage = () => {
         footnote="שיחת היכרות ללא עלות וללא התחייבות · חוזרים תוך 24 שעות"
         aside={
           <div className="hidden lg:block rounded-3xl border border-white/15 bg-[hsl(217_50%_8%/0.88)] p-7 shadow-depth-4">
-            <p className="text-eyebrow uppercase tracking-[0.24em] text-white/60 mb-5">מי יושב סביב השולחן</p>
+            <p className="text-eyebrow text-white/60 mb-5">מי יושב סביב השולחן</p>
             <ul className="space-y-3 mb-5">
               {table.map((row) => (
                 <li
@@ -612,7 +612,7 @@ const PremiumPage = () => {
                   </li>
                 ))}
               </ul>
-              <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mb-3">ולמי לא</p>
+              <p className="text-eyebrow text-muted-foreground mb-3">ולמי לא</p>
               <ul className="space-y-3">
                 {notFor.map((item) => (
                   <li key={item} className="flex items-start gap-3 text-muted-foreground leading-relaxed">

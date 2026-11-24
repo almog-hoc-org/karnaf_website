@@ -13,7 +13,7 @@ interface KickerProps {
  */
 export const Kicker = ({ children, dark = false, align = "start", className = "" }: KickerProps) => (
   <p
-    className={`flex items-center gap-3 text-eyebrow uppercase tracking-[0.24em] ${
+    className={`flex items-center gap-3 text-eyebrow ${
       dark ? "text-accent" : "text-foreground/80"
     } ${align === "center" ? "justify-center" : ""} ${className}`}
   >

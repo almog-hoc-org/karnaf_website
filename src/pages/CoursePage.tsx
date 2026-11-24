@@ -243,7 +243,7 @@ const CoursePage = () => {
           >
             <div className="rise-in" style={{ "--d": "0s" } as CSSProperties}>
               <p
-                className="text-eyebrow uppercase tracking-[0.28em] mb-6 flex items-center justify-center gap-3"
+                className="text-eyebrow mb-6 flex items-center justify-center gap-3"
                 style={{ color: "hsl(36 33% 95% / 0.7)" }}
               >
                 <span className="block w-10 h-px bg-accent" aria-hidden />
@@ -424,7 +424,7 @@ const CoursePage = () => {
         <div ref={storyRef} className="container mx-auto px-6 max-w-3xl text-center">
           <Reveal>
             <p
-              className="text-eyebrow uppercase tracking-[0.28em] mb-4"
+              className="text-eyebrow mb-4"
               style={{ color: "hsl(36 33% 95% / 0.6)" }}
             >
               למה קרנף בכלל קיים
@@ -504,7 +504,7 @@ const CoursePage = () => {
                   <p className="text-display-md text-foreground tabular-nums leading-none mb-2">
                     <StatValue count={stat.count} value={stat.value} suffix={stat.suffix} />
                   </p>
-                  <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
+                  <p className="text-eyebrow text-muted-foreground">
                     {stat.label}
                   </p>
                 </div>
@@ -539,7 +539,7 @@ const CoursePage = () => {
           {/* Honesty guard — accompaniment outcomes are labeled as such and
               never presented as results of the self-serve course. */}
           <Reveal delay={0.12}>
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground text-center mt-10 mb-6">
+            <p className="text-eyebrow text-muted-foreground text-center mt-10 mb-6">
               ומהלקוחות שליווינו יד ביד בליווי האישי:
             </p>
           </Reveal>

@@ -16,7 +16,7 @@ export const Eyebrow = ({
 
   return (
     <div
-      className={`inline-flex items-center gap-3 text-eyebrow uppercase tracking-[0.28em] ${color} ${
+      className={`inline-flex items-center gap-3 text-eyebrow ${color} ${
         align === "center" ? "justify-center" : ""
       } ${className}`}
     >

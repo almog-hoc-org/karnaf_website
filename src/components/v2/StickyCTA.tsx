@@ -86,7 +86,7 @@ export const StickyCTA = ({
               className="w-2 h-2 rounded-full"
               style={{ backgroundColor: "hsl(var(--accent))" }}
             />
-            <span className="text-eyebrow uppercase tracking-[0.18em] text-white/75">
+            <span className="text-eyebrow text-white/75">
               {label}
             </span>
           </div>

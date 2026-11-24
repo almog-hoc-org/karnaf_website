@@ -55,7 +55,7 @@ const StoryCard = ({ t, cream = false }: { t: Testimonial; cream?: boolean }) =>
     className={`h-full flex flex-col ${cream ? "bg-background" : "bg-card"} border border-border rounded-2xl p-6 md:p-7 shadow-depth-1`}
   >
     <div className="flex items-center justify-between gap-3 mb-4">
-      <span className="text-eyebrow uppercase tracking-[0.16em] border border-border text-muted-foreground rounded-full px-3 py-1">
+      <span className="text-eyebrow border border-border text-muted-foreground rounded-full px-3 py-1">
         {trackLabel(t.service)}
       </span>
       {t.metric && (

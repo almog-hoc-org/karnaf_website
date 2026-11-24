@@ -142,7 +142,7 @@ const DealRead = () => {
               >
                 <header className="flex items-start justify-between gap-4 pb-5 mb-5 border-b border-border">
                   <div>
-                    <p className="text-eyebrow uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2 mb-2">
+                    <p className="text-eyebrow text-muted-foreground flex items-center gap-2 mb-2">
                       <FolderOpen size={14} aria-hidden />
                       תיק עסקה
                     </p>
@@ -184,7 +184,7 @@ const DealRead = () => {
                   className="mt-6 rounded-2xl bg-[hsl(var(--ink))] text-white p-5 md:p-6"
                   style={{ opacity: still ? 1 : verdictOpacity }}
                 >
-                  <p className="text-eyebrow uppercase tracking-[0.2em] text-accent mb-2">השורה התחתונה</p>
+                  <p className="text-eyebrow text-accent mb-2">השורה התחתונה</p>
                   <p className="font-bold text-lg leading-snug">
                     להגיש הצעה — על המחיר בלי המבצע, עם סעיף איחורים מתוקן.
                   </p>

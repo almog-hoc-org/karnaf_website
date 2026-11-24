@@ -72,17 +72,18 @@ export default {
       },
       fontFamily: {
         sans: ['Rubik Variable', 'Rubik', 'system-ui', 'sans-serif'],
-        display: ['Rubik Variable', 'Rubik', 'system-ui', 'sans-serif'],
+        display: ['Frank Ruhl Libre Variable', 'Frank Ruhl Libre', 'serif'],
+        serif: ['Frank Ruhl Libre Variable', 'Frank Ruhl Libre', 'serif'],
       },
       fontSize: {
-        'eyebrow': ['0.75rem', { lineHeight: '1.4', letterSpacing: '0.12em', fontWeight: '600' }],
+        'eyebrow': ['0.8125rem', { lineHeight: '1.45', letterSpacing: '0.02em', fontWeight: '700' }],
         'label': ['0.875rem', { lineHeight: '1.4', letterSpacing: '0', fontWeight: '500' }],
         'body': ['1rem', { lineHeight: '1.65' }],
         'body-lg': ['1.125rem', { lineHeight: '1.7' }],
         'display-sm': ['clamp(1.375rem, 2vw, 1.75rem)', { lineHeight: '1.2', letterSpacing: '-0.01em', fontWeight: '600' }],
-        'display-md': ['clamp(1.75rem, 3vw, 2.75rem)', { lineHeight: '1.1', letterSpacing: '-0.015em', fontWeight: '700' }],
-        'display-lg': ['clamp(2.25rem, 4vw, 3.75rem)', { lineHeight: '1.05', letterSpacing: '-0.02em', fontWeight: '800' }],
-        'display-xl': ['clamp(3rem, 7vw, 6.5rem)', { lineHeight: '0.95', letterSpacing: '-0.03em', fontWeight: '900' }],
+        'display-md': ['clamp(1.75rem, 3vw, 2.75rem)', { lineHeight: '1.15', letterSpacing: '-0.005em', fontWeight: '700' }],
+        'display-lg': ['clamp(2.25rem, 4vw, 3.75rem)', { lineHeight: '1.08', letterSpacing: '-0.01em', fontWeight: '700' }],
+        'display-xl': ['clamp(3rem, 7vw, 6rem)', { lineHeight: '1.02', letterSpacing: '-0.015em', fontWeight: '700' }],
       },
       boxShadow: {
         'depth-1': 'var(--shadow-sm)',

@@ -107,7 +107,7 @@ const PageHero = ({
       {tag &&
         block(0,
           <div
-            className="text-eyebrow uppercase tracking-[0.28em] mb-5 flex items-center gap-3"
+            className="text-eyebrow mb-5 flex items-center gap-3"
             style={{
               color: dark
                 ? "hsl(36 33% 95% / 0.7)"

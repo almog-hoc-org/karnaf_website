@@ -33,8 +33,9 @@ function shouldDrop(tag) {
   if (!tag.includes('rel="preload"')) return false;
   if (tag.includes('as="font"')) {
     if (tag.includes("-italic")) return true;
-    // Keep only the subsets the site actually renders: hebrew + latin.
-    return !/rubik-hebrew-wght-normal|rubik-latin-wght-normal/.test(tag);
+    // Keep only the subsets the site actually renders: Rubik hebrew + latin,
+    // and the Hebrew cut of the display serif (the H1 sets in it).
+    return !/rubik-hebrew-wght-normal|rubik-latin-wght-normal|frank-ruhl-libre-hebrew-wght-normal/.test(tag);
   }
   if (tag.includes('as="image"')) {
     // JPEG fallback of the AVIF hero — preloading it doubles the hero download.

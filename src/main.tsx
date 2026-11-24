@@ -3,6 +3,8 @@ import { routes } from "./App";
 // Self-hosted variable font (hebrew + latin subsets, all weights in one file
 // per subset, loaded by unicode-range) — replaces render-blocking Google Fonts.
 import "@fontsource-variable/rubik";
+// The editorial display serif for headings (text-display-md and up).
+import "@fontsource-variable/frank-ruhl-libre";
 import "./index.css";
 
 export const createRoot = ViteReactSSG({ routes });

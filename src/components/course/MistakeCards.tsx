@@ -39,7 +39,7 @@ const MistakeCards = () => {
         {/* Card A — the big number */}
         <Arrive i={0} progress={scrollYProgress} still={still}>
           <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
+            <p className="text-eyebrow text-accent font-bold mb-4">
               פער של 3% במחיר
             </p>
             <p className="text-display-md text-foreground tabular-nums leading-none mb-4">
@@ -58,7 +58,7 @@ const MistakeCards = () => {
         {/* Card B — the mortgage mix */}
         <Arrive i={1} progress={scrollYProgress} still={still}>
           <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
+            <p className="text-eyebrow text-accent font-bold mb-4">
               תמהיל משכנתא שגוי
             </p>
             <p className="text-lg font-bold text-foreground leading-snug mb-4">
@@ -74,7 +74,7 @@ const MistakeCards = () => {
         {/* Card C — urban-renewal potential */}
         <Arrive i={2} progress={scrollYProgress} still={still}>
           <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
+            <p className="text-eyebrow text-accent font-bold mb-4">
               פוטנציאל פינוי בינוי
             </p>
             <p className="text-lg font-bold text-foreground leading-snug mb-4">
@@ -89,7 +89,7 @@ const MistakeCards = () => {
         {/* Card D — 2026's own trap: the developer financing deal */}
         <Arrive i={3} progress={scrollYProgress} still={still}>
           <article className="h-full rounded-2xl p-6 md:p-8 bg-card border border-border shadow-depth-1 text-center">
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-accent font-bold mb-4">
+            <p className="text-eyebrow text-accent font-bold mb-4">
               מבצע 20/80 של קבלן
             </p>
             <p className="text-lg font-bold text-foreground leading-snug mb-4">

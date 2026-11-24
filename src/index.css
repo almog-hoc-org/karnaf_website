@@ -621,3 +621,15 @@
 .text-accent:is(.text-xs, .text-sm, .text-eyebrow, .text-\[0\.8125rem\]) {
   color: hsl(var(--accent-text-sm));
 }
+
+/* Editorial display voice: headings from text-display-md up set in the
+   Hebrew serif (Frank Ruhl Libre); body, UI, numbers and calculators stay
+   in Rubik. A component layer, so an explicit font-sans still wins. */
+@layer components {
+  .text-display-md,
+  .text-display-lg,
+  .text-display-xl {
+    font-family: theme("fontFamily.display");
+    font-optical-sizing: auto;
+  }
+}
