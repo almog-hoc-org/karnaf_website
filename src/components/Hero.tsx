@@ -44,7 +44,7 @@ const Hero = () => (
           </p>
 
           <div
-            className="rise-in flex flex-col items-stretch sm:items-start xl:flex-row xl:items-center gap-4 xl:gap-7"
+            className="rise-in flex flex-col items-stretch sm:items-start gap-4"
             style={{ ["--d" as string]: "0.45s" }}
           >
             {/* One primary door; the second track is one quiet link away. */}
