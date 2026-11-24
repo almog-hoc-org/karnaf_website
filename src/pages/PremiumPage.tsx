@@ -19,7 +19,6 @@ import { premiumLink } from "@/lib/whatsapp";
 import { PHONE_NUMBER, WHATSAPP_BUSINESS_NUMBER } from "@/lib/constants";
 import { testimonials, type Testimonial } from "@/data/testimonials";
 import SEOHead, { organizationSchema, premiumServiceSchema, breadcrumbSchema } from "@/components/SEOHead";
-import heroCity from "@/assets/hero-city.jpg";
 import foundersImg from "@/assets/team/itamar-almog-about.webp";
 import MarketingConsent from "@/components/MarketingConsent";
 
@@ -421,7 +420,6 @@ const PremiumPage = () => {
         accentWords={["בצד", "שלכם"]}
         splitTitle
         subtitle="המוכר, היזם, המתווך והבנק — לכל אחד מהם יש אינטרס בעסקה. בליווי האישי, אנליסט נדל״ן מהצוות שלנו עובד רק בשבילכם: מניתוח העסקה, דרך המשא ומתן, ועד החתימה על החוזה."
-        backgroundImage={heroCity}
         actions={
           <>
             <a href="#contact" className="inline-block w-full sm:w-auto">
@@ -437,7 +435,7 @@ const PremiumPage = () => {
               href={WA_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center sm:justify-start gap-2 text-white/85 hover:text-white font-semibold underline-offset-4 hover:underline min-h-[44px]"
+              className="inline-flex items-center justify-center sm:justify-start gap-2 text-foreground/85 hover:text-foreground font-semibold underline-offset-4 hover:underline min-h-[44px]"
             >
               <MessageCircle size={18} aria-hidden className="text-[hsl(var(--whatsapp))]" />
               או בוואטסאפ, עכשיו
@@ -446,23 +444,23 @@ const PremiumPage = () => {
         }
         footnote="שיחת היכרות ללא עלות וללא התחייבות · חוזרים תוך 24 שעות"
         aside={
-          <div className="hidden lg:block rounded-3xl border border-white/15 bg-[hsl(217_50%_8%/0.88)] p-7 shadow-depth-4">
-            <p className="text-eyebrow text-white/60 mb-5">מי יושב סביב השולחן</p>
+          <div className="hidden lg:block rounded-3xl border border-border bg-card p-7 shadow-depth-2">
+            <p className="font-serif text-xl font-bold text-foreground mb-5">מי יושב סביב השולחן</p>
             <ul className="space-y-3 mb-5">
               {table.map((row) => (
                 <li
                   key={row.who}
-                  className="flex items-baseline justify-between gap-4 pb-3 border-b border-white/10"
+                  className="flex items-baseline justify-between gap-4 pb-3 border-b border-border"
                 >
-                  <span className="font-bold text-white">{row.who}</span>
-                  <span className="text-sm text-white/65">{row.wants}</span>
+                  <span className="font-bold text-foreground">{row.who}</span>
+                  <span className="text-sm text-muted-foreground">{row.wants}</span>
                 </li>
               ))}
             </ul>
-            <div className="rounded-2xl bg-accent text-accent-foreground p-4">
-              <p className="font-black text-lg leading-tight">אנחנו — בצד שלכם.</p>
-              <p className="text-sm font-medium mt-1">בלי עמלה מיזם ובלי אינטרס בעסקה מסוימת.</p>
-            </div>
+            <p className="font-black text-lg leading-tight text-foreground">
+              <span className="text-accent">אנחנו</span> — בצד שלכם.
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">בלי עמלה מיזם ובלי אינטרס בעסקה מסוימת.</p>
           </div>
         }
       />
