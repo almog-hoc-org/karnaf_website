@@ -43,7 +43,7 @@ const PartCard = ({ part }: { part: (typeof courseParts)[number] }) => (
     >
       {pad(part.id)}
     </span>
-    <p className="mt-auto text-eyebrow uppercase tracking-[0.2em] font-bold">חלק {part.id}</p>
+    <p className="mt-auto text-eyebrow font-bold">חלק {part.id}</p>
     <h3 className="text-2xl lg:text-[1.7rem] font-black leading-tight tracking-[-0.02em] mt-1">{part.title}</h3>
     <p className="text-sm mt-2 leading-snug">{part.subtitle}</p>
     <p className="text-sm font-bold mt-4">{part.modules.length} פרקים ←</p>

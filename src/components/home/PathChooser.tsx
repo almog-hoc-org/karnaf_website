@@ -55,7 +55,7 @@ export const PathChooser = () => {
       <div className="container mx-auto px-5 md:px-6 max-w-6xl">
         <Reveal>
           <div className="text-center mb-12 lg:mb-16">
-            <p className="text-eyebrow uppercase tracking-[0.28em] text-muted-foreground mb-4">
+            <p className="text-eyebrow text-muted-foreground mb-4">
               שני מסלולים · מטרה אחת
             </p>
             <SplitReveal
@@ -87,7 +87,7 @@ export const PathChooser = () => {
               <div className="absolute top-0 inset-x-0 h-1 bg-accent" />
               <div className="relative flex flex-col h-full">
                 <div className="flex items-center justify-between mb-6">
-                  <span className="inline-flex items-center gap-2 text-eyebrow uppercase tracking-[0.18em] text-accent font-bold">
+                  <span className="inline-flex items-center gap-2 text-eyebrow text-accent font-bold">
                     <GraduationCap size={16} />
                     עצמאי · דיגיטלי
                   </span>
@@ -148,7 +148,7 @@ export const PathChooser = () => {
               <div className="absolute top-0 inset-x-0 h-1 bg-primary" />
               <div className="relative flex flex-col h-full">
                 <div className="flex items-center justify-between mb-6">
-                  <span className="inline-flex items-center gap-2 text-eyebrow uppercase tracking-[0.18em] text-primary font-bold">
+                  <span className="inline-flex items-center gap-2 text-eyebrow text-primary font-bold">
                     <Users size={16} />
                     אישי · 1:1
                   </span>

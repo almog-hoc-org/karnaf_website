@@ -117,13 +117,13 @@ const PricingCard = () => {
         </div>
 
         {/* Proof at the decision point */}
-        <figure className="max-w-sm mx-auto mb-8 text-right border-r-2 border-accent/50 pr-4">
-          <blockquote className="text-sm text-muted-foreground leading-relaxed">
+        <figure className="max-w-sm mx-auto mb-8 text-center">
+          <blockquote className="font-serif text-lg text-foreground/85 leading-relaxed">
             {personalized
               ? personalized.testimonial.quote
               : "״רכשתי דירה מתחת למחיר השוק בזכות מה שלמדתי בתוכנית.״"}
           </blockquote>
-          <figcaption className="text-xs font-bold text-foreground mt-1">
+          <figcaption className="text-xs font-bold text-muted-foreground mt-2">
             {personalized ? personalized.testimonial.author : "— נועם ד., בוגר התוכנית"}
           </figcaption>
         </figure>
@@ -170,7 +170,7 @@ const PricingCard = () => {
 
         {/* What happens after you join — removes the fear of the unknown. */}
         <div className="mt-8 pt-6 border-t border-border text-right max-w-sm mx-auto">
-          <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground mb-4 text-center">
+          <p className="text-eyebrow text-muted-foreground mb-4 text-center">
             מה קורה אחרי הרכישה?
           </p>
           <ol className="space-y-3">

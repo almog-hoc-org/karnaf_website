@@ -1,5 +1,4 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import SEOHead, {
   courseSchema,
@@ -7,7 +6,6 @@ import SEOHead, {
   breadcrumbSchema,
   faqPageSchema,
 } from "@/components/SEOHead";
-import { Head } from "vite-react-ssg";
 import { BookOpen, FileText, MessageCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,7 +35,6 @@ import { SectionDark } from "@/components/v2/Section";
 import SyllabusRoute from "@/components/course/SyllabusRoute";
 import DealStory from "@/components/home/DealStory";
 import { useCountUp } from "@/hooks/use-count-up";
-import { useStillMotion } from "@/hooks/use-still-motion";
 import { useSectionView } from "@/hooks/use-section-view";
 import {
   gaFaqOpen,
@@ -45,8 +42,6 @@ import {
   type CheckoutCtaLocation,
 } from "@/lib/analytics";
 import { trackInitiateCheckout } from "@/lib/pixel";
-import heroCity from "@/assets/hero-city.jpg";
-import heroCityAvif from "@/assets/hero-city.avif";
 import foundersImg from "@/assets/team/itamar-almog-about.webp";
 import {
   TOTAL_CLIENTS,
@@ -160,15 +155,6 @@ const CheckoutCta = ({
 };
 
 const CoursePage = () => {
-  // The hero settles as the page starts to move: the city pulls back to
-  // rest and the headline drifts up and fades. Page-level scrollY (no
-  // target), so the range form of useTransform is safe here.
-  const still = useStillMotion();
-  const { scrollY } = useScroll();
-  const heroImgScale = useTransform(scrollY, [0, 700], [1.08, 1]);
-  const heroTextY = useTransform(scrollY, [0, 600], [0, 70]);
-  const heroTextOpacity = useTransform(scrollY, [0, 520], [1, 0.25]);
-
   // Hero CTA: plain URL for the pre-hydration render, enriched after.
   const [heroCheckoutHref, setHeroCheckoutHref] = useState(CHECKOUT_URL);
   useEffect(() => {
@@ -203,125 +189,70 @@ const CoursePage = () => {
         ]}
       />
 
-      <Head>
-        <link rel="preload" as="image" href={heroCityAvif} type="image/avif" />
-      </Head>
-
-      {/* S1 — Hero: name the moment they're living in, not the product */}
-      <section
-        className="relative min-h-[80svh] flex items-end overflow-hidden"
-        style={{ backgroundColor: "hsl(217 50% 8%)" }}
-      >
-        <motion.div className="absolute inset-0" style={{ scale: still ? 1 : heroImgScale }}>
-          <picture>
-            <source srcSet={heroCityAvif} type="image/avif" />
-            <img src={heroCity} alt="" className="w-full h-full object-cover" loading="eager" decoding="async" {...{ fetchpriority: "high" }} />
-          </picture>
-        </motion.div>
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden
-          style={{
-            background:
-              "linear-gradient(180deg, hsl(217 50% 8% / 0.65) 0%, hsl(217 50% 8% / 0.35) 35%, hsl(217 50% 8% / 0.92) 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden
-          style={{
-            background:
-              "radial-gradient(70% 80% at 70% 30%, hsl(24 80% 52% / 0.18) 0%, transparent 70%)",
-          }}
-        />
-        <div className="absolute inset-0 grain-texture pointer-events-none" />
-
-        <div className="relative z-10 container mx-auto px-5 md:px-6 pt-32 pb-16 lg:pt-40 lg:pb-20">
-          <motion.div
-            className="max-w-4xl mx-auto text-center"
-            style={still ? { y: 0, opacity: 1 } : { y: heroTextY, opacity: heroTextOpacity }}
-          >
+      {/* S1 — Hero: name the moment they're living in, not the product.
+          Cream and type, like the home page; the one dark island on this
+          page is the syllabus route below. */}
+      <section className="relative bg-background pt-32 pb-section-sm lg:pt-40">
+        <div className="container mx-auto px-5 md:px-6">
+          <div className="max-w-4xl mx-auto text-center">
             <div className="rise-in" style={{ "--d": "0s" } as CSSProperties}>
-              <p
-                className="text-eyebrow uppercase tracking-[0.28em] mb-6 flex items-center justify-center gap-3"
-                style={{ color: "hsl(36 33% 95% / 0.7)" }}
-              >
-                <span className="block w-10 h-px bg-accent" aria-hidden />
-                המדריך המעשי לרכישת דירה · הקורס המקיף של קרנף נדל״ן
-                <span className="block w-10 h-px bg-accent" aria-hidden />
-              </p>
-            </div>
-
-            <div className="rise-in" style={{ "--d": "0.08s" } as CSSProperties}>
               {/* One approved headline — each line nowrap so the split stays
                   exactly two lines; the narrow-viewport size guard keeps the
                   longer first line on one row. */}
-              <h1 className="text-display-lg max-[380px]:text-[2rem] md:text-display-xl text-white mb-6">
+              <h1 className="text-display-lg max-[380px]:text-[2rem] md:text-display-xl text-foreground mb-7">
                 <span className="whitespace-nowrap">לעסקה הגדולה בחיים</span>
                 <br />
                 <span className="text-accent whitespace-nowrap">מגיעים מוכנים</span>
               </h1>
             </div>
 
-            <div className="rise-in" style={{ "--d": "0.16s" } as CSSProperties}>
-              <p
-                className="text-body-lg lg:text-xl leading-relaxed max-w-2xl mx-auto mb-8"
-                style={{ color: "hsl(36 33% 95% / 0.82)" }}
-              >
+            <div className="rise-in" style={{ "--d": "0.1s" } as CSSProperties}>
+              <p className="text-body-lg lg:text-xl leading-relaxed max-w-2xl mx-auto mb-8 text-foreground/85">
                 ב-2026 כוח המיקוח עבר לקונים — אבל רק למי שיודע לבדוק מחיר, לקרוא
                 מבצע מימון ולהתמקח עם מספרים. ״המדריך המעשי לרכישת דירה״ מכניס
                 אתכם לחדר עם הידע, השיטה והביטחון של הצד שהגיע מוכן.
               </p>
             </div>
 
-            <div className="rise-in" style={{ "--d": "0.24s" } as CSSProperties}>
-              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white font-bold text-sm px-5 py-2 rounded-full mb-8 backdrop-blur-sm">
-                3 חלקים · 15 פרקים · גישה מיידית
-              </div>
-            </div>
-
-            <div className="rise-in" style={{ "--d": "0.32s" } as CSSProperties}>
-              <div>
-                <a
-                  href={heroCheckoutHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-no-btn-track
-                  className="inline-block w-full sm:w-auto"
-                  onClick={() => {
-                    trackInitiateCheckout("hero");
-                    gaBeginCheckout("hero");
-                  }}
+            <div className="rise-in" style={{ "--d": "0.2s" } as CSSProperties}>
+              <a
+                href={heroCheckoutHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-no-btn-track
+                className="inline-block w-full sm:w-auto"
+                onClick={() => {
+                  trackInitiateCheckout("hero");
+                  gaBeginCheckout("hero");
+                }}
+              >
+                <Button
+                  size="lg"
+                  className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all w-full sm:w-auto active:scale-[0.98]"
                 >
-                  <Button
-                    size="lg"
-                    className="group inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base md:text-lg px-10 py-6 rounded-full transition-all w-full sm:w-auto active:scale-[0.98]"
-                  >
-                    קחו אותי לתוכנית
-                    <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
-                  </Button>
-                </a>
-                <p className="text-sm mt-3" style={{ color: "hsl(36 33% 95% / 0.6)" }}>
-                  {COURSE_PRICE.toLocaleString("he-IL")}&nbsp;₪ {COURSE_INSTALLMENTS_LABEL} · גישה מלאה ל-{COURSE_ACCESS_LABEL}
-                </p>
-              </div>
+                  קחו אותי לתוכנית
+                  <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
+                </Button>
+              </a>
+              <p className="text-sm mt-4 text-muted-foreground">
+                <span className="tabular-nums">{COURSE_PRICE.toLocaleString("he-IL")}&nbsp;₪</span> {COURSE_INSTALLMENTS_LABEL} · {TOTAL_PARTS} חלקים, {TOTAL_CHAPTERS} פרקים · גישה מלאה ל-{COURSE_ACCESS_LABEL}
+              </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* S1.5 — the explainer video, in the classic VSL position right
           under the hero. Click-to-play facade: nothing loads from Vimeo
           until the visitor asks for it. */}
-      <SectionDark size="sm" glow="none">
+      <section className="bg-background pb-section-md">
         <div className="container mx-auto px-6 max-w-4xl">
           <Reveal>
-            <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-3 tracking-[-0.02em]">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-3">
               רגע לפני שממשיכים — צפו בזה
             </h2>
             <p
-              className="text-center mb-8 leading-relaxed"
-              style={{ color: "hsl(36 33% 95% / 0.7)" }}
+              className="text-center mb-8 leading-relaxed text-muted-foreground"
             >
               שתי דקות על התוכנית: מה יש בפנים, איך היא בנויה ולמי היא מתאימה.
             </p>
@@ -330,7 +261,7 @@ const CoursePage = () => {
             <VimeoEmbed videoId={COURSE_VIDEO_ID} title="המדריך המעשי לרכישת דירה — הסבר על התוכנית" />
           </Reveal>
         </div>
-      </SectionDark>
+      </section>
 
       {/* Program — what's inside: structure + open syllabus, right under
           the video. id="program" stays as a deep-link anchor even though
@@ -424,7 +355,7 @@ const CoursePage = () => {
         <div ref={storyRef} className="container mx-auto px-6 max-w-3xl text-center">
           <Reveal>
             <p
-              className="text-eyebrow uppercase tracking-[0.28em] mb-4"
+              className="text-eyebrow mb-4"
               style={{ color: "hsl(36 33% 95% / 0.6)" }}
             >
               למה קרנף בכלל קיים
@@ -504,7 +435,7 @@ const CoursePage = () => {
                   <p className="text-display-md text-foreground tabular-nums leading-none mb-2">
                     <StatValue count={stat.count} value={stat.value} suffix={stat.suffix} />
                   </p>
-                  <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">
+                  <p className="text-eyebrow text-muted-foreground">
                     {stat.label}
                   </p>
                 </div>
@@ -539,7 +470,7 @@ const CoursePage = () => {
           {/* Honesty guard — accompaniment outcomes are labeled as such and
               never presented as results of the self-serve course. */}
           <Reveal delay={0.12}>
-            <p className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground text-center mt-10 mb-6">
+            <p className="text-eyebrow text-muted-foreground text-center mt-10 mb-6">
               ומהלקוחות שליווינו יד ביד בליווי האישי:
             </p>
           </Reveal>

@@ -20,7 +20,7 @@ const CountStat = ({ value, label }: { value: number; label: string }) => {
       <div className="text-display-md text-accent tabular-nums leading-none mb-1">
         <span ref={ref}>{shown}</span>+
       </div>
-      <div className="text-eyebrow uppercase tracking-[0.18em] text-muted-foreground">{label}</div>
+      <div className="text-eyebrow text-muted-foreground">{label}</div>
     </div>
   );
 };

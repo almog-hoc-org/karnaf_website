@@ -97,7 +97,7 @@ const PrivacyPage = () => (
         <div className="grid lg:grid-cols-[14rem_minmax(0,1fr)] gap-10 lg:gap-16 items-start">
           {/* Index — sticky beside the text on desktop */}
           <nav aria-label="תוכן העניינים" className="hidden lg:block lg:sticky lg:top-28">
-            <p className="text-eyebrow uppercase tracking-[0.2em] text-muted-foreground mb-3">בעמוד הזה</p>
+            <p className="text-eyebrow text-muted-foreground mb-3">בעמוד הזה</p>
             <ol className="space-y-1 border-s border-primary/15">
               {sections.map((s, i) => (
                 <li key={s.id}>

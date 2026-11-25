@@ -56,7 +56,7 @@ const StoryCard = ({ t, i }: { t: Testimonial; i: number }) => {
     >
       <div className="flex flex-col">
         <span
-          className={`self-start text-eyebrow uppercase tracking-[0.16em] border rounded-full px-3 py-1 mb-6 ${s.muted} ${s.rule}`}
+          className={`self-start text-eyebrow border rounded-full px-3 py-1 mb-6 ${s.muted} ${s.rule}`}
         >
           {trackLabel(t.service)}
         </span>

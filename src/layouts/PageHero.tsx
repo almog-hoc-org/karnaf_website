@@ -11,8 +11,7 @@ interface PageHeroProps {
   /** CTA row under the subtitle — a cold visitor should never have to scroll to find the first door. */
   actions?: ReactNode;
   /**
-   * "ink" — the dark cinematic surface of the homepage hero (drafting-grid
-   * backdrop, no photo). Without it the hero is dark only when a
+   * "ink" — a dark island hero (flat ink with grain, no photo). Without it the hero is dark only when a
    * `backgroundImage` is given, light otherwise.
    */
   tone?: "light" | "ink";
@@ -107,7 +106,7 @@ const PageHero = ({
       {tag &&
         block(0,
           <div
-            className="text-eyebrow uppercase tracking-[0.28em] mb-5 flex items-center gap-3"
+            className="text-eyebrow mb-5 flex items-center gap-3"
             style={{
               color: dark
                 ? "hsl(36 33% 95% / 0.7)"
@@ -212,15 +211,6 @@ const PageHero = ({
 
       {ink && (
         <>
-          <div className="absolute inset-0 hero-grid pointer-events-none" aria-hidden />
-          <div
-            className="absolute inset-0 pointer-events-none"
-            aria-hidden
-            style={{
-              background:
-                "radial-gradient(60% 70% at 85% 10%, hsl(24 80% 52% / 0.16) 0%, transparent 70%)",
-            }}
-          />
           <div className="absolute inset-0 grain-texture pointer-events-none" />
         </>
       )}

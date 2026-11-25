@@ -38,8 +38,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
+    --border: 36 22% 85%;
+    --input: 36 22% 85%;
     --ring: 24 80% 52%;
 
     --radius: 0.75rem;
@@ -197,7 +197,7 @@
 
   /* Button press feedback — global */
   button, a[role="button"] {
-    transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease, box-shadow 0.3s ease;
   }
   button:active, a[role="button"]:active {
     transform: scale(0.97);
@@ -344,30 +344,6 @@
     .rise-in { animation: none !important; }
   }
 
-  /* Hero backdrop: a faint architectural grid that fades out from the
-     center — a drafting-table surface under the headline. */
-  .hero-grid {
-    background-image:
-      linear-gradient(to right, hsl(36 33% 95% / 0.06) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(36 33% 95% / 0.06) 1px, transparent 1px);
-    background-size: 72px 72px;
-    background-position: center top;
-    -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, black 20%, transparent 75%);
-    mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, black 20%, transparent 75%);
-  }
-
-  /* Live-status dot (hero chip) */
-  @keyframes live-ping {
-    0%   { transform: scale(1); opacity: 0.7; }
-    80%, 100% { transform: scale(2.4); opacity: 0; }
-  }
-  .live-ping {
-    animation: live-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .live-ping { animation: none !important; }
-  }
-
   .text-heading {
     @apply font-bold leading-tight;
   }
@@ -419,11 +395,10 @@
   /* Success checkmark */
   @keyframes checkmark-burst {
     0% { transform: scale(0) rotate(-45deg); opacity: 0; }
-    50% { transform: scale(1.2) rotate(0deg); opacity: 1; }
     100% { transform: scale(1) rotate(0deg); opacity: 1; }
   }
   .animate-checkmark-burst {
-    animation: checkmark-burst 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: checkmark-burst 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
   /* Mascot utilities */
@@ -474,16 +449,6 @@
     @apply absolute bottom-0 left-1/2 -translate-x-1/2 h-px;
     width: min(80%, 600px);
     background: linear-gradient(to right, transparent, hsl(var(--primary) / 0.15), transparent);
-  }
-
-  /* Problem/solution backgrounds */
-  .problem-bg {
-    background: linear-gradient(135deg, hsl(220 15% 95%) 0%, hsl(220 10% 92%) 100%);
-  }
-
-  .solution-bg {
-    background: linear-gradient(135deg, hsl(24 80% 52% / 0.04) 0%, hsl(24 80% 52% / 0.06) 100%);
-    border-inline-start: 3px solid hsl(24 80% 52% / 0.3);
   }
 
   /* Pricing glow */
@@ -620,4 +585,16 @@
 }
 .text-accent:is(.text-xs, .text-sm, .text-eyebrow, .text-\[0\.8125rem\]) {
   color: hsl(var(--accent-text-sm));
+}
+
+/* Editorial display voice: headings from text-display-md up set in the
+   Hebrew serif (Frank Ruhl Libre); body, UI, numbers and calculators stay
+   in Rubik. A component layer, so an explicit font-sans still wins. */
+@layer components {
+  .text-display-md,
+  .text-display-lg,
+  .text-display-xl {
+    font-family: theme("fontFamily.display");
+    font-optical-sizing: auto;
+  }
 }

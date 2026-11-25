@@ -138,8 +138,8 @@ const Navigation = () => {
 
   // Routes whose hero starts on a cinematic dark background.
   // When the user has not scrolled yet on these, the nav text is light.
-  const darkHeroPrefixes = ["/course", "/premium", "/mortgage", "/preview/v2"];
-  const isDarkHeroPage = shellPath === "/" || darkHeroPrefixes.some((p) => shellPath.startsWith(p));
+  const darkHeroPrefixes = ["/mortgage", "/preview/v2"];
+  const isDarkHeroPage = darkHeroPrefixes.some((p) => shellPath.startsWith(p));
   const useLightText = isDarkHeroPage && !isScrolled;
 
   const desktopLinkClass = `relative text-sm font-medium transition-colors duration-300 py-1 ${
@@ -352,7 +352,7 @@ const Navigation = () => {
                 transition={{ delay: 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="flex flex-col items-center gap-3 py-2"
               >
-                <span className="text-eyebrow uppercase tracking-[0.28em] text-muted-foreground">
+                <span className="text-eyebrow text-muted-foreground">
                   השירותים שלנו
                 </span>
                 {serviceItems.map((item) =>
