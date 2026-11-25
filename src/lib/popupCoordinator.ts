@@ -16,14 +16,16 @@ export const COURSE_POPUP_SEEN_KEY = "karnaf_course_popup_seen_at";
 export const FREQUENCY_CAP_MS = 7 * 24 * 60 * 60 * 1000;
 
 /**
- * A dialog only earns an interruption while the visitor is still browsing —
- * never on the pages where they're already converting (course, premium,
- * contact). Shared so both popups can't drift apart on scope.
+ * A dialog only earns an interruption while the visitor is still browsing:
+ * the homepage and the blog index. Never on the pages where they're already
+ * converting (course, premium, contact), and never on an article — every
+ * article already carries its own offer mid-way and at the end, and a third
+ * ask on top of those is nagging. Shared so both popups can't drift apart.
  */
-const DISCOVERY_PREFIXES = ["/blog"];
+const DISCOVERY_PATHS = new Set(["/", "/blog"]);
 
 export const isDiscoveryPath = (pathname: string): boolean =>
-  pathname === "/" || DISCOVERY_PREFIXES.some((p) => pathname.startsWith(p));
+  DISCOVERY_PATHS.has(pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname);
 
 let active: string | null = null;
 const listeners = new Set<() => void>();

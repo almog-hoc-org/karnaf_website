@@ -156,15 +156,18 @@ const AccessibilityWidget = () => {
         transition={{ delay: 2.2, type: "spring", stiffness: 200, damping: 20 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed left-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 transition-[bottom,colors] duration-500 ease-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        className={`fixed left-6 z-50 flex items-center justify-center w-12 h-12 rounded-full border shadow-depth-1 transition-[bottom,colors] duration-500 ease-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${
+          hasActiveSettings
+            ? "bg-primary text-primary-foreground border-primary"
+            : "bg-background text-foreground border-foreground/25 hover:border-foreground/50"
+        }`}
         style={{ bottom: 'calc(1.5rem + var(--sticky-cta-h, 0px))' }}
         aria-label="פתח תפריט נגישות"
         title="נגישות"
       >
-        <Accessibility className="w-6 h-6" />
-        {hasActiveSettings && (
-          <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-destructive" />
-        )}
+        {/* Quiet ink outline: the button is always findable but never
+            competes with the page's CTA. Filled navy = a profile is on. */}
+        <Accessibility className="w-5 h-5" />
       </motion.button>
 
       {/* Panel */}

@@ -69,7 +69,7 @@ const SharedLayout = () => {
           accompaniment, mortgage) or on a 1:1-offer article
           (useSuppressStickyCta). */}
       <StickyCTA
-        label="המדריך המעשי לרכישת דירה · הקורס הדיגיטלי המקיף בישראל"
+        label="המדריך המעשי לרכישת דירה · קורס דיגיטלי, גישה מיידית"
         ctaLabel="לפרטים ולרכישה"
         ctaHref="/course#pricing"
         hideOn={["/contact", "/course", "/premium", "/mortgage"]}

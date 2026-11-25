@@ -34,7 +34,6 @@ import { Reveal } from "@/components/v2/Reveal";
 import { SectionDark } from "@/components/v2/Section";
 import SyllabusRoute from "@/components/course/SyllabusRoute";
 import DealStory from "@/components/home/DealStory";
-import { useCountUp } from "@/hooks/use-count-up";
 import { useSectionView } from "@/hooks/use-section-view";
 import {
   gaFaqOpen,
@@ -44,12 +43,11 @@ import {
 import { trackInitiateCheckout } from "@/lib/pixel";
 import foundersImg from "@/assets/team/itamar-almog-about.webp";
 import {
-  TOTAL_CLIENTS,
   TOTAL_CLIENTS_STAT,
   TOTAL_CLIENTS_LABEL,
-  YEARS_EXPERIENCE,
+  YEARS_EXPERIENCE_STAT,
   YEARS_EXPERIENCE_LABEL,
-  COURSE_STUDENTS,
+  COURSE_STUDENTS_STAT,
   COURSE_STUDENTS_LABEL,
   ACTIVE_SINCE,
 } from "@/data/companyStats";
@@ -57,13 +55,13 @@ import {
 /*
  * Sales page — product-first spine (owner round 3), told as a scroll
  * story (2026-09 round):
- * hero (settles as you scroll) → explainer video → the vehicle: the
+ * hero (cream, serif) → explainer video → the vehicle: the
  * syllabus as a route you travel (SyllabusRoute — pinned sideways travel
  * on desktop, swipe carousel on phones, real lesson titles) → amplification
  * (the four costs of the mistake, incl. 2026's financing-deal trap) →
  * relief (not your fault) → empathy+authority (our experience) → future
  * pacing played out on one deal (DealStory — the pinned stage from the
- * homepage, ending in checkout) → proof numbers (counting) → testimonials
+ * homepage, ending in checkout) → proof sentence → testimonials
  * → self-selection (quiz) → price choreography → safety → objections →
  * the keys. "מספרים, לא תחושות" is the texture of every beat.
  */
@@ -72,26 +70,6 @@ import {
 const COURSE_VIDEO_ID = "1213042212";
 
 /* Advertised numbers — single source of truth in courseStats.ts */
-
-/* S2 — authority stats: the guide's credentials, not the product's specs.
-   Counts run up when they scroll into view; the year doesn't count. */
-const authorityStats: { count?: number; value: string; suffix?: string; label: string }[] = [
-  { count: TOTAL_CLIENTS, value: TOTAL_CLIENTS_STAT, suffix: "+", label: TOTAL_CLIENTS_LABEL },
-  { count: YEARS_EXPERIENCE, value: `${YEARS_EXPERIENCE}+`, suffix: "+", label: YEARS_EXPERIENCE_LABEL },
-  { count: COURSE_STUDENTS, value: `${COURSE_STUDENTS}`, label: COURSE_STUDENTS_LABEL },
-  { value: `${ACTIVE_SINCE}`, label: "פועלים מאז" },
-];
-
-const StatValue = ({ count, value, suffix = "" }: { count?: number; value: string; suffix?: string }) => {
-  const c = useCountUp(count ?? 0);
-  if (count === undefined) return <>{value}</>;
-  return (
-    <>
-      <span ref={c.ref}>{c.value}</span>
-      {suffix}
-    </>
-  );
-};
 
 /* Program section — compact feature strip. */
 const featureStrip = [
@@ -174,8 +152,8 @@ const CoursePage = () => {
   return (
     <>
       <SEOHead
-        title="המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל | קרנף נדל״ן"
-        description={`הקורס הדיגיטלי המקיף בישראל לרכישת דירה: 3 חלקים ו-15 פרקים שמכסים את כל הדרך, בשיעורים קצרים של 3-10 דקות. ₪950, גישה מיידית ל-${COURSE_ACCESS_LABEL} — לגמרי בקצב שלכם.`}
+        title="המדריך המעשי לרכישת דירה — קורס דיגיטלי מהתקציב ועד החתימה | קרנף נדל״ן"
+        description={`קורס דיגיטלי לרכישת דירה: 3 חלקים ו-15 פרקים שמכסים את כל הדרך, בשיעורים קצרים של 3-10 דקות. ₪950, גישה מיידית ל-${COURSE_ACCESS_LABEL} — לגמרי בקצב שלכם.`}
         path="/course"
         keywords="קורס נדל״ן, קורס נדל״ן דיגיטלי, המדריך המעשי לרכישת דירה, הדרך לדירה, דירה ראשונה, מס רכישה, השקעה בנדל״ן"
         jsonLd={[
@@ -234,7 +212,14 @@ const CoursePage = () => {
                   <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">←</span>
                 </Button>
               </a>
-              <p className="text-sm mt-4 text-muted-foreground">
+              <a
+                href="#program"
+                className="mt-4 inline-flex items-center gap-2 font-semibold text-foreground/85 hover:text-foreground underline underline-offset-4 decoration-border hover:decoration-foreground min-h-[44px]"
+              >
+                קודם לראות מה יש בפנים — לסילבוס המלא
+                <span aria-hidden>←</span>
+              </a>
+              <p className="text-sm mt-2 text-muted-foreground">
                 <span className="tabular-nums">{COURSE_PRICE.toLocaleString("he-IL")}&nbsp;₪</span> {COURSE_INSTALLMENTS_LABEL} · {TOTAL_PARTS} חלקים, {TOTAL_CHAPTERS} פרקים · גישה מלאה ל-{COURSE_ACCESS_LABEL}
               </p>
             </div>
@@ -264,8 +249,8 @@ const CoursePage = () => {
       </section>
 
       {/* Program — what's inside: structure + open syllabus, right under
-          the video. id="program" stays as a deep-link anchor even though
-          the hero CTA now goes straight to checkout. */}
+          the video. id="program" is the hero's second door ("see what's
+          inside first") beside the checkout CTA. */}
       <SectionDark id="program" size="md" glow="top-end" className="pb-4 md:pb-6">
         <div ref={curriculumRef} className="container mx-auto px-6 max-w-5xl">
           <Reveal>
@@ -428,21 +413,14 @@ const CoursePage = () => {
           human proof (testimonials) per the owner's direction. */}
       <section className="py-section-sm bg-card border-y border-border">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            {authorityStats.map((stat, i) => (
-              <Reveal key={stat.label} delay={i * 0.06}>
-                <div className="text-center">
-                  <p className="text-display-md text-foreground tabular-nums leading-none mb-2">
-                    <StatValue count={stat.count} value={stat.value} suffix={stat.suffix} />
-                  </p>
-                  <p className="text-eyebrow text-muted-foreground">
-                    {stat.label}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <p className="text-center text-sm font-bold text-muted-foreground mt-8 tracking-wide">
+          <Reveal>
+            <p className="font-serif text-2xl md:text-[2rem] leading-snug text-foreground text-center text-balance max-w-3xl mx-auto">
+              <strong className="tabular-nums">{TOTAL_CLIENTS_STAT}</strong> {TOTAL_CLIENTS_LABEL},{" "}
+              <strong className="tabular-nums">{COURSE_STUDENTS_STAT}</strong> {COURSE_STUDENTS_LABEL}, ו-
+              <strong className="tabular-nums">{YEARS_EXPERIENCE_STAT}</strong> {YEARS_EXPERIENCE_LABEL} — מאז {ACTIVE_SINCE}.
+            </p>
+          </Reveal>
+          <p className="text-center text-sm font-bold text-muted-foreground mt-6">
             מספרים, לא תחושות.
           </p>
         </div>

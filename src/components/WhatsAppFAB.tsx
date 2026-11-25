@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useShellPathname } from "@/hooks/use-shell-pathname";
 import { useWhatsAppLink } from "@/hooks/use-whatsapp-link";
 import { useBottomBarHeight } from "@/hooks/use-bottom-bar";
-import mascotIcon from "@/assets/mascot/mascot-thumbsup.webp";
+import { MessageCircle } from "lucide-react";
 
 /**
  * The floating chat button follows the page it's floating over — on /premium
@@ -40,7 +40,7 @@ const WhatsAppFAB = () => {
     }}
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.95 }}
-    className="fixed z-50 flex items-center gap-2 bg-[hsl(var(--whatsapp))] hover:bg-[hsl(var(--whatsapp-deep))] text-white font-bold px-5 py-3 rounded-full shadow-lg transition-[bottom,right] duration-500 ease-out"
+    className="fixed z-50 flex items-center gap-2 bg-[hsl(var(--whatsapp-ink))] hover:bg-[hsl(var(--whatsapp-ink-hover))] text-white font-bold px-5 py-3 rounded-full shadow-depth-2 transition-[bottom,right] duration-500 ease-out"
     style={{
       bottom: 'calc(max(1.5rem, env(safe-area-inset-bottom, 0px)) + var(--sticky-cta-h, 0px))',
       right: 'max(1.5rem, env(safe-area-inset-right, 0px))',
@@ -50,8 +50,8 @@ const WhatsAppFAB = () => {
     aria-hidden={hidden}
     tabIndex={hidden ? -1 : 0}
   >
-    <img src={mascotIcon} alt="" className="w-6 h-6 rounded-full object-cover" />
-    <span className="hidden sm:inline">דברו עם הקרנף</span>
+    <MessageCircle size={22} aria-hidden className="shrink-0" />
+    <span className="hidden sm:inline">שאלה? בוואטסאפ</span>
   </motion.a>
   );
 };

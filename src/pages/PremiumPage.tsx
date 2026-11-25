@@ -624,34 +624,15 @@ const PremiumPage = () => {
             </Reveal>
             <Reveal delay={0.1}>
               <div className="h-full flex flex-col rounded-3xl border border-border bg-background p-7 md:p-9 shadow-depth-2">
-                <Kicker className="mb-4">כמה זה עולה</Kicker>
-                <p className="text-display-md text-foreground leading-tight mb-2">
-                  <span dir="ltr" className="tabular-nums">2.5%–3%</span> משווי העסקה
-                </p>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-foreground leading-tight mb-4">
+                  כמה זה עולה?
+                </h3>
                 <p className="text-muted-foreground leading-[1.85] mb-5">
-                  הטווח המקובל בשוק לליווי אישי מלא — וזה גם המחיר שלנו. אין עמלות
-                  מיזמים ואין אינטרס בעסקה מסוימת, רק בעסקה הנכונה לכם.
+                  המחיר נקבע לפי העסקה — היקף, סוג הנכס ומה נדרש לבדוק — ונאמר בשיחת
+                  ההיכרות, בכתב ולפני כל התחייבות.
                 </p>
-                <div className="rounded-2xl bg-secondary/70 px-5 py-4 mb-6">
-                  <p className="text-xs font-semibold text-muted-foreground mb-1">דוגמה להמחשה</p>
-                  <p className="text-foreground">
-                    בעסקה של{" "}
-                    <span dir="ltr" className="tabular-nums font-bold">
-                      ₪2,000,000
-                    </span>{" "}
-                    — בין{" "}
-                    <span dir="ltr" className="tabular-nums font-bold">
-                      ₪50,000
-                    </span>{" "}
-                    ל-
-                    <span dir="ltr" className="tabular-nums font-bold">
-                      ₪60,000
-                    </span>
-                    .
-                  </p>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                  מבנה התשלום המדויק ומה בדיוק כלול — בשיחת ההיכרות, לפני כל התחייבות.
+                <p className="text-foreground leading-[1.85] mb-8">
+                  אין עמלות מיזמים ואין אינטרס בעסקה מסוימת, רק בעסקה הנכונה לכם.
                 </p>
                 <a href="#contact-end" className="inline-block w-full mt-auto">
                   <Button className="group w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-full h-14 text-base gap-2">

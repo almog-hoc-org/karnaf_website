@@ -107,7 +107,7 @@ export const organizationSchema = {
   logo: `${SITE_URL}/favicon.png`,
   image: DEFAULT_IMAGE,
   description:
-    "חברת ידע והשקעות נדל״ן בישראל. הקורס הדיגיטלי המקיף \"המדריך המעשי לרכישת דירה\" לרכישה חכמה, וליווי משקיעים פרימיום 1:1 עד חתימה על נכס.",
+    "חברת ידע והשקעות נדל״ן בישראל. הקורס הדיגיטלי \"המדריך המעשי לרכישת דירה\" לרכישה חכמה, וליווי משקיעים פרימיום 1:1 עד חתימה על נכס.",
   foundingDate: "2017",
   slogan: "מספרים, לא תחושות.",
   founders: [
@@ -175,9 +175,9 @@ export const courseSchema = {
   "@context": "https://schema.org",
   "@type": "Course",
   "@id": `${SITE_URL}/course#course`,
-  name: "המדריך המעשי לרכישת דירה — הקורס הדיגיטלי המקיף בישראל",
+  name: "המדריך המעשי לרכישת דירה — קורס דיגיטלי לרכישת דירה",
   description:
-    `הקורס הדיגיטלי המקיף לרכישת דירה בישראל — מסלול עצמאי לחלוטין. ${PARTS_LABEL} ו-${CHAPTERS_LABEL} שמכסים את כל הדרך בשיעורים קצרים, וגישה ל-${COURSE_ACCESS_LABEL}.`,
+    `קורס דיגיטלי לרכישת דירה בישראל, מהתקציב ועד החתימה — מסלול עצמאי לחלוטין. ${PARTS_LABEL} ו-${CHAPTERS_LABEL} שמכסים את כל הדרך בשיעורים קצרים, וגישה ל-${COURSE_ACCESS_LABEL}.`,
   url: `${SITE_URL}/course`,
   provider: {
     "@type": "EducationalOrganization",
