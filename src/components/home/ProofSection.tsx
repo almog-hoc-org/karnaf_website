@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/v2/Reveal";
 import { SplitReveal, StackCards } from "@/components/v2/scroll";
 import { testimonials, type Testimonial } from "@/data/testimonials";
+import { COURSE_SHORT_NAME } from "@/lib/constants";
 
 /**
  * Homepage proof section — "show, don't tell" (PRODUCT.md design principle 1).
@@ -24,7 +25,7 @@ const featured = testimonials
   .slice(0, 3);
 
 const trackLabel = (service: "course" | "premium") =>
-  service === "course" ? "התוכנית הדיגיטלית" : "ליווי אישי 1:1";
+  service === "course" ? COURSE_SHORT_NAME : "ליווי אישי 1:1";
 
 /* Three surfaces so each card reads as its own sheet as they stack. */
 const surfaces = [
@@ -100,7 +101,7 @@ const ProofSection = () => (
         <div className="text-center mt-12 flex flex-col items-center gap-4">
           <Link to="/course" className="inline-block">
             <Button className="group bg-accent hover:bg-accent/90 text-accent-foreground gap-2 rounded-full px-8 py-6 font-bold text-base">
-              לתוכנית הדיגיטלית
+              ל{COURSE_SHORT_NAME}
               <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
             </Button>
           </Link>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { SplitReveal } from "@/components/v2/scroll";
 import HeroCostCheck from "@/components/home/HeroCostCheck";
 import { TOTAL_CHAPTERS } from "@/data/courseStats";
-import { COURSE_PRICE, analystLink } from "@/lib/constants";
+import { COURSE_PRICE, COURSE_SHORT_NAME, analystLink } from "@/lib/constants";
 import {
   TOTAL_CLIENTS_STAT,
   TOTAL_CLIENTS_LABEL,
@@ -53,7 +53,7 @@ const Hero = () => (
                 size="lg"
                 className="group inline-flex items-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base md:text-lg px-8 md:px-9 py-5 md:py-6 rounded-full w-full sm:w-auto shadow-depth-2"
               >
-                לתוכנית הדיגיטלית — ₪{COURSE_PRICE.toLocaleString("he-IL")}
+                ל{COURSE_SHORT_NAME} — ₪{COURSE_PRICE.toLocaleString("he-IL")}
                 <span aria-hidden className="inline-block transition-transform group-hover:-translate-x-1">
                   ←
                 </span>

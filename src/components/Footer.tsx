@@ -14,10 +14,10 @@ const Footer = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 max-w-5xl mx-auto">
           <Reveal>
             <h2 className="text-display-md md:text-display-lg text-foreground mb-3">
-              נשמח להכיר אתכם
+              מעדיפים לדבר עם אדם?
             </h2>
-            <p className="text-display-sm font-bold text-muted-foreground leading-snug mb-10">
-              השאירו פרטים ונתחיל לדבר.
+            <p className="text-body-lg text-muted-foreground leading-relaxed mb-10">
+              השאירו פרטים ונחזור אליכם — על הקורס, על ליווי אישי, או סתם עם שאלה.
             </p>
 
             <ContactForm source="footer" />
@@ -25,7 +25,7 @@ const Footer = () => {
 
           <Reveal delay={0.15}>
             <div>
-              <h3 className="text-display-sm md:text-display-md text-foreground mb-6">דרכי יצירת קשר</h3>
+              <h3 className="text-display-sm text-foreground mb-6">או ישירות</h3>
 
               <div className="space-y-3 mb-10">
                 <a

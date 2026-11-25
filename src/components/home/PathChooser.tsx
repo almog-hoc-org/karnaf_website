@@ -63,7 +63,7 @@ export const PathChooser = () => {
               className="text-display-md md:text-display-lg text-foreground mb-4"
             />
             <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              לומדים לבד עם הקורס הדיגיטלי המקיף בישראל — או הולכים יחד, יד ביד,
+              לומדים לבד עם הקורס הדיגיטלי — או הולכים יחד, יד ביד,
               עם אנליסט אישי עד המפתח. בלי בלבול: זה כל מה שקרנף מציעה.
             </p>
           </div>
@@ -99,7 +99,7 @@ export const PathChooser = () => {
                   className="text-base leading-relaxed mb-6"
                   style={{ color: "hsl(36 33% 95% / 0.75)" }}
                 >
-                  הקורס המקיף בישראל לרכישת דירה חכמה. לומדים לבד, בקצב שלכם —
+                  כל הדרך לדירה, מהתקציב ועד החתימה. לומדים לבד, בקצב שלכם —
                   עם כל הכלים לקבל החלטה מבוססת נתונים.
                 </p>
                 <ul className="space-y-3 mb-8">

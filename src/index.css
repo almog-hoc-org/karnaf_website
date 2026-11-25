@@ -83,6 +83,10 @@
     /* Brand fixed colors (3rd-party marks, must match exact spec) */
     --whatsapp: 142 70% 49%;
     --whatsapp-deep: 142 75% 39%;
+    /* WhatsApp green dark enough to carry white text (5.5:1) — the brand
+       green is a fill for icons, not for a labelled button. */
+    --whatsapp-ink: 142 70% 28%;
+    --whatsapp-ink-hover: 142 72% 23%;
 
     /* Surface alpha scale (for glass / overlays) */
     --surface-1: 0 0% 100% / 0.5;
