@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
-import { chatLink } from "@/lib/whatsapp";
 import { COURSE_PRICE } from "@/lib/constants";
 import { SectionDark } from "@/components/v2/Section";
 import { Reveal } from "@/components/v2/Reveal";
@@ -10,8 +8,9 @@ import { ExpandOnScroll, SplitReveal } from "@/components/v2/scroll";
 /**
  * The closing ask. The dark panel arrives as an inset card and opens to
  * full bleed as it rises (ExpandOnScroll) — the page "opens the door"
- * right where it asks the visitor to walk through one. One primary action
- * (the course), with a human on WhatsApp for whoever still has a question.
+ * right where it asks the visitor to walk through one. One action (the
+ * course); the contact block right under it (Footer, #contact) is the same
+ * ending's second half — "prefer to talk to a person?" — not a second close.
  */
 const BigCTA = () => {
   return (
@@ -20,8 +19,8 @@ const BigCTA = () => {
         <SectionDark size="md" glow="bottom">
           <div className="container mx-auto px-5 md:px-6 text-center max-w-3xl">
             <SplitReveal
-              text="לעסקה הגדולה בחיים מגיעים מוכנים."
-              highlight={["מוכנים"]}
+              text="הדירה הבאה מתחילה במספרים."
+              highlight={["במספרים"]}
               className="text-display-md md:text-display-xl mb-6 text-white"
             />
             <Reveal delay={0.1}>
@@ -45,13 +44,11 @@ const BigCTA = () => {
                   </Button>
                 </Link>
                 <a
-                  href={chatLink("general")}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#contact"
                   className="inline-flex items-center gap-2 font-semibold text-white/80 hover:text-white underline-offset-4 hover:underline min-h-[44px]"
                 >
-                  <MessageCircle size={18} aria-hidden />
-                  יש שאלה? דברו איתנו בוואטסאפ
+                  מעדיפים לדבר עם אדם?
+                  <span aria-hidden>↓</span>
                 </a>
               </div>
             </Reveal>

@@ -623,7 +623,7 @@ const PremiumPage = () => {
               </ul>
             </Reveal>
             <Reveal delay={0.1}>
-              <div className="h-full flex flex-col rounded-3xl border border-border bg-background p-7 md:p-9 shadow-depth-2">
+              <div className="flex flex-col rounded-3xl border border-border bg-background p-7 md:p-9 shadow-depth-2">
                 <h3 className="font-serif text-2xl md:text-3xl font-bold text-foreground leading-tight mb-4">
                   כמה זה עולה?
                 </h3>
@@ -634,7 +634,7 @@ const PremiumPage = () => {
                 <p className="text-foreground leading-[1.85] mb-8">
                   אין עמלות מיזמים ואין אינטרס בעסקה מסוימת, רק בעסקה הנכונה לכם.
                 </p>
-                <a href="#contact-end" className="inline-block w-full mt-auto">
+                <a href="#contact-end" className="inline-block w-full">
                   <Button className="group w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-full h-14 text-base gap-2">
                     לתיאום שיחת היכרות
                     <ArrowLeft size={16} aria-hidden className="transition-transform group-hover:-translate-x-1" />

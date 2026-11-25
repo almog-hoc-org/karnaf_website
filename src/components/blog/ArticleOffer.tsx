@@ -3,7 +3,7 @@ import { ArrowLeft, GraduationCap, Users } from "lucide-react";
 import { Reveal } from "@/components/v2/Reveal";
 import { COURSE_PRICE_LABEL, offerLineFor } from "./articleUtils";
 import type { Article } from "@/data/blog/types";
-import { COURSE_ACCESS_LABEL } from "@/lib/constants";
+import { COURSE_ACCESS_LABEL, COURSE_SHORT_NAME } from "@/lib/constants";
 
 /**
  * One commercial offer per article, declared by the article itself
@@ -30,7 +30,7 @@ export const ArticleInlineOffer = ({ article }: { article: Pick<Article, "offer"
   const Icon = course ? GraduationCap : Users;
   return (
     <aside
-      aria-label={course ? "התוכנית הדיגיטלית" : "ליווי משקיעים אישי"}
+      aria-label={course ? COURSE_SHORT_NAME : "ליווי משקיעים אישי"}
       className="my-12 rounded-2xl border border-border bg-card p-6 md:p-7 shadow-depth-1"
     >
       <div className="flex items-start gap-4 md:gap-5">
@@ -52,7 +52,7 @@ export const ArticleInlineOffer = ({ article }: { article: Pick<Article, "offer"
               to={DESTINATION[article.offer]}
               className="group inline-flex min-h-[44px] items-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              {course ? `לתוכנית הדיגיטלית · ${COURSE_PRICE_LABEL}` : "לשיחת היכרות — חינם"}
+              {course ? `ל${COURSE_SHORT_NAME} · ${COURSE_PRICE_LABEL}` : "לשיחת היכרות — חינם"}
               <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-0.5" aria-hidden />
             </Link>
             <span className="text-sm text-muted-foreground">

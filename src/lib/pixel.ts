@@ -9,7 +9,7 @@
  * breaks — the function simply does nothing.
  */
 
-import { COURSE_PRICE } from "@/lib/constants";
+import { COURSE_NAME, COURSE_PRICE, COURSE_SHORT_NAME } from "@/lib/constants";
 
 type PixelParams = Record<string, string | number | boolean | undefined>;
 
@@ -152,7 +152,7 @@ export function trackLead(source: string, extra?: PixelParams): void {
  *  מ-Schooler דרך ה-CRM ב-Conversions API). */
 export function trackInitiateCheckout(ctaLocation?: string): void {
   fbq("track", "InitiateCheckout", {
-    content_name: "המדריך המעשי לרכישת דירה — התוכנית הדיגיטלית",
+    content_name: `${COURSE_NAME} — ${COURSE_SHORT_NAME}`,
     content_category: "רכישה",
     // content_ids + content_type mirror the Purchase event fired on the
     // Schooler/Grow thank-you page, so both feed the same product audiences.

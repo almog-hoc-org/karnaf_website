@@ -20,6 +20,11 @@ export const WHATSAPP_BUSINESS_NUMBER: string =
  * buildCheckoutUrl() (src/lib/checkout.ts) so utm/click-id attribution
  * carries through to the payment page.
  */
+/** The product's one name, and the one short form copy uses after it —
+    never "התוכנית", "הדרך לדירה" or other variants. */
+export const COURSE_NAME = "המדריך המעשי לרכישת דירה";
+export const COURSE_SHORT_NAME = "הקורס הדיגיטלי";
+
 export const COURSE_PRICE = 950;
 /** Access period, months — matches the Schooler course setting (547 days). */
 export const COURSE_ACCESS_MONTHS = 18;
